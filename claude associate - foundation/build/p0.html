@@ -1,0 +1,143 @@
+<section class="part" id="p0">
+  <div class="dhead"><h2>Mở đầu: hiểu đề trước khi học</h2><p class="dsub">3 bài · 25 phút · đọc xong mới học domain</p><div class="dprog"><div class="wb"><i></i></div><span></span></div><button class="tog" type="button">Thu gọn</button></div>
+  <div class="dbody">
+
+<article class="lesson" id="l-0-1" data-domain="0" data-ts="0.1" data-min="8">
+  <header class="lh"><span class="ts">Mở đầu</span><h3>Đề này chấm cái gì, và bao nhiêu là đậu</h3><span class="rt">~8 phút</span></header>
+  <div class="defs"><b>Khái niệm của bài</b><dl>
+    <dt>Exam Guide</dt><dd>Tài liệu chính thức 11 trang của Anthropic cho đề CCAO-F, bản 1.0 (7/2026). Mọi thứ trong notes này bám theo nó.</dd>
+    <dt>Domain</dt><dd>Một mảng kiến thức của đề. CCAO-F có 7 domain, mỗi domain chiếm một tỉ lệ câu hỏi cố định.</dd>
+    <dt>Task statement (mục tiêu)</dt><dd>Một việc cụ thể bạn phải làm được, ví dụ “Iterate prompts to improve output quality” (lặp lại prompt để output tốt hơn). Có 30 mục tiêu. Guide viết: câu hỏi được viết theo đúng các mục tiêu này.</dd>
+    <dt>Scaled score (điểm quy đổi)</dt><dd>Số câu đúng được quy ra thang 100–1000. Đậu từ 720. Guide không nói cách quy đổi.</dd>
+  </dl></div>
+  <div class="story"><b>Tình huống.</b> Bạn vừa ôn xong CCAR-F (bản Architect) và muốn thi luôn bản Associate. Mở guide ra thì thấy khác hẳn: không có Agent SDK, không có Claude Code, không có kịch bản cố định. Đề này hỏi một người làm văn phòng dùng Claude có <i>dùng đúng</i> hay không.</div>
+  <h4>Thông tin đề</h4>
+  <ul>
+    <li><b>60 câu</b>, có câu một đáp án và câu nhiều đáp án. Câu nhiều đáp án ghi rõ chọn mấy. Guide không nói cách tính điểm cho loại câu này, nên chọn đúng số đáp án đề yêu cầu.</li>
+    <li><b>120 phút</b>, tức 2 phút một câu. Câu Associate ngắn hơn CCAR-F nên thường dư giờ.</li>
+    <li><b>Đậu: 720 trên thang 100–1000.</b> Guide không nói 720 ứng với bao nhiêu % câu đúng, nên cứ đặt mục tiêu luyện đề ≥ 80% cho an toàn.</li>
+    <li><b>Lệ phí $99.</b> Thi qua Pearson VUE, online có giám thị hoặc tại trung tâm.</li>
+    <li><b>Hiệu lực 12 tháng.</b> Gia hạn đúng hạn bằng một bài đánh giá miễn phí, không giám thị.</li>
+    <li><b>Phiếu điểm</b> ghi đậu/rớt, điểm quy đổi, và % câu đúng theo từng domain. % theo domain chỉ để tham khảo; đậu hay rớt tính theo tổng.</li>
+  </ul>
+  <h4>7 domain và tỉ trọng</h4>
+  <div class="tw"><table>
+    <tr><th>Domain</th><th>Tỉ trọng</th><th>≈ câu / 60</th><th>Số mục tiêu</th></tr>
+    <tr><td><a href="#d1">D1 Prompting and Task Execution</a></td><td>14%</td><td>8</td><td>4</td></tr>
+    <tr><td><a href="#d2">D2 Output Evaluation and Validation</a></td><td><b>21%</b></td><td><b>13</b></td><td>6</td></tr>
+    <tr><td><a href="#d3">D3 Product and Model Selection</a></td><td>12%</td><td>7</td><td>4</td></tr>
+    <tr><td><a href="#d4">D4 Workflow Integration and Solution Design</a></td><td>16%</td><td>10</td><td>5</td></tr>
+    <tr><td><a href="#d5">D5 Configuration and Knowledge Management</a></td><td>12%</td><td>7</td><td>4</td></tr>
+    <tr><td><a href="#d6">D6 Governance, Risk, and Responsible Use</a></td><td>15%</td><td>9</td><td>4</td></tr>
+    <tr><td><a href="#d7">D7 Troubleshooting and Optimization</a></td><td>10%</td><td>6</td><td>3</td></tr>
+  </table></div>
+  <p>Cột “≈ câu” là tỉ trọng nhân 60, làm tròn. D2 (kiểm output) và D6 (dùng có trách nhiệm) cộng lại đã hơn 1/3 đề. Cả hai đều xoay quanh một ý: <b>output của Claude chưa phải sản phẩm cuối</b>, bạn chịu trách nhiệm kiểm và quyết.</p>
+  <h4>Khác gì so với CCAR-F bạn vừa ôn</h4>
+  <div class="tw"><table>
+    <tr><th></th><th>CCAR-F (Architect)</th><th>CCAO-F (Associate)</th></tr>
+    <tr><td>Người thi</td><td>Người xây hệ thống trên API, Agent SDK, Claude Code, MCP</td><td>Người dùng app Claude và Projects trong công việc: vận hành, marketing, PM, giáo dục, truyền thông</td></tr>
+    <tr><td>Domain</td><td>5</td><td>7</td></tr>
+    <tr><td>Kịch bản</td><td>Bốc 4 trong 6 kịch bản cố định, mỗi kịch bản ~15 câu</td><td>Guide không nhắc kịch bản. 3 câu mẫu đều là ca ngắn, độc lập</td></tr>
+    <tr><td>Kiến thức kỹ thuật</td><td>stop_reason, hook, tool_choice, CLAUDE.md…</td><td>Không cần code hay API. Cần biết tính năng của app: Projects, artifact, Research, connector, memory, model</td></tr>
+    <tr><td>Kiểu đáp án đúng</td><td>Luật bắt buộc thì đưa vào code</td><td>Kiểm với nguồn, ẩn dữ liệu nhạy cảm, chọn đúng model/tính năng, biết lúc nào cần người duyệt</td></tr>
+  </table></div>
+  <div class="note"><b>Ngoài 30 mục tiêu:</b> phần “How to Prepare” của guide còn bảo đọc help center về Projects, Artifacts, Memory, <b>Skills, Code Execution</b>. Memory có trong mục tiêu 3.4 (“memory considerations”); Skills và Code Execution thì không có tên trong mục tiêu nào, nhưng đã được nhắc thì có thể ra đề. Domain 3 có dạy cả ba.</div>
+  <div class="rule">Quy tắc: D2 nặng nhất (21%). Ôn kỹ D2 và D6 trước, vì hai domain này cộng lại quyết định hơn 1/3 số điểm.</div>
+  <div class="remember"><b>Nhớ nhanh</b><ul>
+    <li>60 câu, 120 phút, đậu 720/1000, $99, hiệu lực 12 tháng.</li>
+    <li>7 domain, 30 mục tiêu. D2 21% nặng nhất, D7 10% nhẹ nhất.</li>
+    <li>Không có API, không có code. Hỏi cách dùng Claude đúng trong công việc.</li>
+  </ul></div>
+  <div class="src">Đọc thêm: <a href="https://anthropic-partners.skilljar.com/">Anthropic Partner Academy</a> · Exam Guide: file <code>nguon/ccao-f-exam-guide.pdf</code> trong thư mục này</div>
+  <label class="done"><input type="checkbox" data-lesson="l-0-1"> Đã học bài này</label>
+</article>
+
+<article class="lesson" id="l-0-2" data-domain="0" data-ts="0.2" data-min="7">
+  <header class="lh"><span class="ts">Mở đầu</span><h3>Đề hình dung bạn là ai, và vì sao điều đó quyết định đáp án</h3><span class="rt">~7 phút</span></header>
+  <div class="defs"><b>Khái niệm của bài</b><dl>
+    <dt>MQC (minimally qualified candidate)</dt><dd>“Thí sinh vừa đủ chuẩn”: chân dung người vừa đủ giỏi để đậu. Hội đồng chuyên gia đặt điểm đậu bằng cách hình dung người này làm từng câu.</dd>
+    <dt>Escalate (chuyển lên)</dt><dd>Đưa việc vượt tầm cho người có chuyên môn: kỹ thuật thì cho Claude Architect, Developer; pháp lý thì cho bộ phận pháp chế; quyết định lớn thì cho người có thẩm quyền.</dd>
+  </dl></div>
+  <h4>Chân dung người thi, theo guide</h4>
+  <ul>
+    <li>Dùng Claude <b>hằng ngày</b> trong công việc, và tự dựng <b>Claude Projects</b>.</li>
+    <li>Làm vận hành, marketing, quản lý dự án, giáo dục, truyền thông, nhân sự, tư vấn.</li>
+    <li>Kỹ thuật <b>từ ít đến vừa</b>. Đứng giữa “người hỏi đáp linh tinh” và “người làm AI chuyên nghiệp”.</li>
+    <li>Biết: biến mục tiêu công việc thành prompt tốt, chọn đúng tính năng, kiểm output có phê phán, sửa output cho từng người đọc, biết lúc nào cần chuyên gia, cần kiểm chứng hoặc cần chuyển lên.</li>
+    <li>Hiểu giới hạn của AI: hallucination (bịa thông tin), giới hạn context, dữ liệu nhạy cảm.</li>
+  </ul>
+  <h4>Đề <b>không</b> dành cho ai</h4>
+  <ul>
+    <li>Lập trình viên gọi API hay thiết kế hệ agent.</li>
+    <li>Chuyên gia machine learning, kỹ sư phần mềm.</li>
+    <li>Người thiết kế kiến trúc AI cấp doanh nghiệp. Guide nói rõ: việc đó thuộc chứng chỉ Architect và Developer, và <b>Associate chuyển những việc phức tạp hoặc kỹ thuật sang cho họ</b>.</li>
+  </ul>
+  <h4>Hệ quả khi chọn đáp án</h4>
+  <p>Vai trò này loại sẵn nhiều đáp án. Đáp án đòi bạn tự viết script gọi API, tự fine-tune model, hay tự dựng tích hợp riêng thường nằm ngoài vai. Với người Associate, thứ tự hợp lý là:</p>
+  <ol>
+    <li>Dùng tính năng có sẵn của app: Projects, artifact, connector, Research, chọn model.</li>
+    <li>Sửa cách mình làm: prompt rõ hơn, chia việc, thêm ví dụ, kiểm output.</li>
+    <li>Việc vượt tầm (tích hợp hệ thống, tự động hóa bằng code, rủi ro pháp lý) thì chuyển cho đúng người.</li>
+  </ol>
+  <div class="vs">
+    <div class="bad"><b>Tệ</b><ul>
+      <li>Thấy output sai là đòi đổi nền tảng AI khác.</li>
+      <li>Muốn tự động hóa thì tự viết script gọi API.</li>
+      <li>Tin Claude vì nó trả lời rất tự tin.</li>
+    </ul></div>
+    <div class="good"><b>Tốt</b><ul>
+      <li>Thử lại với prompt, ngữ cảnh, tính năng phù hợp hơn.</li>
+      <li>Tận dụng Projects, connector; phần cần code thì chuyển cho đội kỹ thuật.</li>
+      <li>Kiểm chi tiết quan trọng với nguồn gốc trước khi dùng.</li>
+    </ul></div>
+  </div>
+  <div class="rule">Quy tắc: đặt mình vào vai người văn phòng dùng Claude giỏi. Đáp án đúng là việc người đó làm được ngay bằng app, cộng với kiểm tra và chuyển lên đúng lúc.</div>
+  <div class="remember"><b>Nhớ nhanh</b><ul>
+    <li>Người thi = người dùng app Claude và Projects, kỹ thuật ít đến vừa.</li>
+    <li>Việc kỹ thuật, tích hợp, kiến trúc → chuyển cho Architect / Developer.</li>
+    <li>Thứ tự: tính năng có sẵn → sửa cách làm → chuyển lên.</li>
+  </ul></div>
+  <div class="src">Đọc thêm: <a href="https://support.claude.com/">Claude Help Center</a></div>
+  <label class="done"><input type="checkbox" data-lesson="l-0-2"> Đã học bài này</label>
+</article>
+
+<article class="lesson" id="l-0-3" data-domain="0" data-ts="0.3" data-min="10">
+  <header class="lh"><span class="ts">Mở đầu</span><h3>Khẩu vị chọn đáp án, rút từ 3 câu mẫu của Anthropic</h3><span class="rt">~10 phút</span></header>
+  <div class="defs"><b>Khái niệm của bài</b><dl>
+    <dt>Câu mẫu (sample question)</dt><dd>3 câu Anthropic in trong guide, kèm lời giải. Không lấy từ đề thật, nhưng cùng giọng và cùng độ khó.</dd>
+    <dt>Lời giải (rationale)</dt><dd>Đoạn giải thích vì sao đáp án đúng và vì sao từng đáp án còn lại sai. Đây là chỗ lộ ra cách người ra đề nghĩ.</dd>
+  </dl></div>
+  <div class="story"><b>Tình huống.</b> Ba câu mẫu thuộc D2, D3, D6. Cả ba đều có đáp án đúng là B. Đọc lời giải thì thấy những đáp án sai lặp lại vài kiểu rất rõ. Thuộc mấy kiểu này, bạn loại được phương án ngay cả khi chưa chắc kiến thức.</div>
+  <h4>Ba câu mẫu, tóm tắt</h4>
+  <div class="tw"><table>
+    <tr><th>Câu</th><th>Đề kể</th><th>Đáp án đúng</th><th>Đáp án sai bị chê vì</th></tr>
+    <tr><td>1 · D2</td><td>Claude tóm tắt một quy định mới, rất tự tin, có trích số tiểu mục. Sắp gửi cho bộ phận compliance.</td><td>Kiểm số tiểu mục với văn bản gốc trước khi gửi</td><td>Tin độ tự tin của Claude; nhờ Claude tự chấm độ tin cậy; viết lại cho trang trọng hơn</td></tr>
+    <tr><td>2 · D3</td><td>Cần viết rất nhiều bản nháp trả lời khách, ngắn. Tốc độ và chi phí quan trọng hơn lập luận sâu.</td><td>Dùng model nhanh, rẻ hơn, hợp việc đơn giản số lượng lớn</td><td>Luôn dùng model mạnh nhất; tắt tính năng; đổi sang nền tảng khác</td></tr>
+    <tr><td>3 · D6</td><td>Muốn đưa file có tên khách và số tài khoản lên cho Claude phân tích. Chính sách cấm chia sẻ dữ liệu cá nhân được quản lý.</td><td>Xóa hoặc ẩn danh định danh cá nhân trước khi tải lên</td><td>Tải nguyên vì “dùng nội bộ”; tải lên rồi dặn Claude đừng lưu; bỏ luôn việc phân tích</td></tr>
+  </table></div>
+  <p>Câu đầy đủ bằng tiếng Anh và phần tự làm nằm ở <a href="#l-8-2">bài ôn tập 3 câu mẫu</a>. Nên làm ở đó trước khi thi thử.</p>
+  <h4>Bảy luật rút ra</h4>
+  <p>Luật 1–6 đọc thẳng từ lời giải của guide. Luật 7 suy ra từ phần mô tả người thi.</p>
+  <ol>
+    <li><b>Độ tự tin của Claude không phải bằng chứng.</b> Lời giải câu 1 viết: độ tự tin tự báo “is not a reliable accuracy signal” (không phải tín hiệu đáng tin về độ chính xác). Cả đáp án “tin vì nó tự tin” lẫn “bảo nó tự chấm điểm” đều sai.</li>
+    <li><b>Chi tiết cụ thể là chỗ hay bịa.</b> Số điều khoản, trích dẫn, con số, tên riêng trông rất thật nhưng có thể là hallucination. Kiểm với nguồn có thẩm quyền, nhất là khi người nhận là compliance, pháp chế, khách hàng.</li>
+    <li><b>Sửa hình thức không sửa được nội dung.</b> Viết lại cho trang trọng, đổi định dạng, làm đẹp: không đụng tới chuyện đúng hay sai.</li>
+    <li><b>Khớp model với việc.</b> Việc đơn giản, số lượng lớn → model nhanh, rẻ. Để model mạnh nhất cho lập luận phức tạp. “Luôn dùng model xịn nhất” là phí tiền và thời gian.</li>
+    <li><b>Đáp án né vấn đề là sai.</b> Tắt tính năng, đổi nền tảng, bỏ hẳn việc: không giải quyết đánh đổi mà đề đặt ra. Lời giải câu 3 nói bỏ việc là không cần thiết khi đã có cách làm an toàn.</li>
+    <li><b>Dữ liệu nhạy cảm: xử lý trước khi đưa vào, đừng dặn sau.</b> “Tải lên rồi bảo Claude đừng nhớ” không đáp ứng chính sách. “Chỉ dùng nội bộ” không phải lý do được phá chính sách.</li>
+    <li><b>Ưu tiên cách làm tiếp được mà vẫn an toàn.</b> Cả ba đáp án đúng đều là bước cẩn trọng vừa đủ: việc vẫn xong, rủi ro được chặn. Không liều, cũng không bỏ cuộc.</li>
+  </ol>
+  <div class="trap"><b>Bẫy “nghe có vẻ cẩn thận”:</b> “Ask Claude to double-check its answer” (bảo Claude tự kiểm lại) nghe rất có trách nhiệm, nhưng vẫn là Claude chấm Claude. Kiểm thật là so với nguồn bên ngoài: văn bản gốc, dữ liệu gốc, chuyên gia.</div>
+  <div class="rule">Quy tắc: loại trước các đáp án “tin vì tự tin”, “làm đẹp thay vì kiểm”, “dùng thứ đắt nhất”, “bỏ việc / đổi nền tảng”. Còn lại, chọn bước kiểm với nguồn hoặc bước giảm rủi ro mà vẫn làm xong việc.</div>
+  <div class="remember"><b>Nhớ nhanh</b><ul>
+    <li>Tự tin ≠ đúng. Kiểm với nguồn gốc.</li>
+    <li>Model theo việc: nhanh rẻ cho việc đơn giản nhiều; mạnh cho việc khó.</li>
+    <li>Ẩn danh trước khi tải lên. Không bỏ việc khi có đường an toàn.</li>
+  </ul></div>
+  <div class="src">Đọc thêm: <a href="https://support.claude.com/">Claude Help Center</a> · Exam Guide mục 8 (Sample Questions)</div>
+  <label class="done"><input type="checkbox" data-lesson="l-0-3"> Đã học bài này</label>
+</article>
+
+  <div class="quiz" data-course="p0"></div>
+  </div>
+</section>

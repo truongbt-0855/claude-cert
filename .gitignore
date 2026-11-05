@@ -1,0 +1,10 @@
+# Local tool state
+.claude/settings.local.json
+.playwright-mcp/
+
+# DrillPark is a private client repo: keep the full notes local.
+# The public copy is built by: node tools/build-public-ccarf-notes.mjs
+claude architect - foundation/claude-architect-foundations-notes-drillpark.html
+
+# Raw data from a paid Udemy course
+claude architect - foundation/nguon-udemy/

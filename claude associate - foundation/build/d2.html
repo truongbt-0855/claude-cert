@@ -1,0 +1,1330 @@
+<section class="domain" id="d2" data-domain="2">
+  <div class="dhead"><h2>Domain 2 · Output Evaluation and Validation</h2><p class="dsub">21% · 1 bài nền tảng + 6 bài · ~90 phút</p><div class="dprog"><div class="wb"><i></i></div><span></span></div><button class="tog" type="button">Thu gọn</button></div>
+  <div class="dbody">
+<div class="dintro">
+  <p>Domain 2 chiếm 21% đề, khoảng 13 trên 60 câu. Đây là domain nặng nhất.</p>
+  <p>Cả domain xoay quanh một câu hỏi: <b>output này đã đúng, đủ và hợp với người nhận chưa, và ai phải kiểm trước khi nó được dùng?</b></p>
+  <p>Đọc bài Nền tảng trước. Cuối mỗi bài có “Khi đi thi”: chọn đáp án trước rồi mới xem giải thích.</p>
+</div>
+
+<article class="lesson" id="l-2-0" data-domain="2" data-ts="2.0" data-min="15">
+  <header class="lh"><span class="ts">Nền tảng</span><h3>Vì sao output của Claude có thể sai, và “kiểm” thật sự là làm gì</h3><span class="rt">~15 phút</span></header>
+  <p>Sáu bài của Domain 2 cùng trả lời một câu: trước khi dùng một output của Claude, bạn kiểm cái gì, kiểm bằng gì, và khi nào phải nhờ người khác kiểm. Bài này dựng nền theo thứ tự: Claude viết ra chữ như thế nào → vì sao giọng tự tin không chứng minh được gì → các kiểu lỗi hay gặp → “kiểm” là so với cái gì → khung 4D gọi việc này là gì.</p>
+
+  <h4>1. Claude viết ra câu trả lời như thế nào</h4>
+  <div class="defs"><b>Định nghĩa</b><dl>
+    <dt>Mô hình ngôn ngữ (language model)</dt><dd>Chương trình học từ một lượng chữ rất lớn để đoán phần chữ tiếp theo hợp lý nhất. Claude là một mô hình ngôn ngữ. Câu trả lời được viết ra từng chút một, mỗi bước chọn phần tiếp theo nghe hợp nhất với những gì đứng trước.</dd>
+    <dt>Training cutoff (mốc dữ liệu huấn luyện)</dt><dd>Thời điểm dữ liệu học của model dừng lại. Chuyện xảy ra sau mốc này Claude không biết, trừ khi bạn bật công cụ lấy thông tin mới hoặc tự đưa tài liệu vào. Công cụ đó là web search (tìm trên web), Research (nghiên cứu qua nhiều lượt tìm kiếm), hay connector (kết nối tới app khác như Gmail, Google Drive).</dd>
+    <dt>Hallucination (bịa thông tin)</dt><dd>Khi model nói một điều nghe rất hợp lý nhưng sai, hoặc không có nguồn nào chứng minh. Ví dụ: một số điều luật không tồn tại, một bài báo không có thật, một con số thị phần tự nghĩ ra.</dd>
+  </dl></div>
+  <p>Ba điều rút ra từ cơ chế đó:</p>
+  <ul>
+    <li><b>Claude không tra một kho dữ kiện.</b> Nó không có một bảng “sự thật” để mở ra đối chiếu. Kiến thức nằm lẫn trong cách nó viết, nên nó thường không chỉ ra được một ý lấy từ đâu.</li>
+    <li><b>Cùng một cơ chế tạo ra câu đúng và câu sai.</b> Hỏi một trích dẫn, Claude viết ra thứ có hình dạng của một trích dẫn: tên tác giả, năm, tên tạp chí. Trích dẫn đó có thật hay không là chuyện khác.</li>
+    <li><b>Kiến thức có hạn sử dụng.</b> Các model Claude hiện tại có mốc dữ liệu là tháng 6/2026 (trang Models overview). Hỏi về một quy định vừa sửa tháng trước mà không bật web search, câu trả lời có thể đã cũ, hoặc được “điền cho đủ”.</li>
+  </ul>
+
+  <h4>2. Giọng tự tin không phải là bằng chứng</h4>
+  <p>Claude viết trôi chảy, có cấu trúc, giọng chắc chắn, cả khi nội dung đúng lẫn khi nội dung sai. Trang trợ giúp của Anthropic viết: Claude “can write things that might look correct but are very mistaken” (có thể viết ra những thứ trông có vẻ đúng nhưng sai rất xa).</p>
+  <div class="tw"><table>
+    <tr><th>Dấu hiệu bạn thấy</th><th>Nó cho biết gì</th><th>Nó <b>không</b> cho biết gì</th></tr>
+    <tr><td>Giọng chắc chắn, không rào đón</td><td>Cách Claude viết câu đó</td><td>Câu đó có đúng không</td></tr>
+    <tr><td>Trình bày đẹp: tiêu đề, bảng, số liệu gọn</td><td>Output dễ đọc</td><td>Số trong bảng có khớp nguồn không</td></tr>
+    <tr><td>Có số cụ thể, tên riêng, số điều khoản</td><td>Output có chỗ để kiểm</td><td>Chi tiết đó có thật hay không. Chi tiết càng cụ thể càng phải kiểm</td></tr>
+    <tr><td>Claude tự chấm “độ tin cậy: cao”</td><td>Claude viết ra một con số tự đánh giá</td><td>Độ chính xác thật. Lời giải câu mẫu 1 của guide: độ tin cậy tự báo “is not a reliable accuracy signal” (không phải tín hiệu đáng tin về độ chính xác)</td></tr>
+    <tr><td>Có link hoặc chú thích nguồn</td><td>Chỗ để bạn mở ra xem</td><td>Nguồn đó có nói đúng như câu tóm tắt không</td></tr>
+  </table></div>
+  <p>Cũng trang trợ giúp đó khuyên đừng coi Claude là nguồn sự thật duy nhất. Câu gốc: người dùng “should carefully scrutinize any high-stakes advice given by Claude” (nên soi kỹ mọi lời khuyên hệ trọng mà Claude đưa ra).</p>
+
+  <h4>3. Sáu kiểu lỗi hay gặp</h4>
+  <p>Output sai không chỉ có một kiểu. Gọi đúng tên lỗi thì mới chọn đúng cách kiểm.</p>
+  <div class="tw"><table>
+    <tr><th>Kiểu lỗi</th><th>Trông thế nào</th><th>Ví dụ trong văn phòng</th><th>Bài</th></tr>
+    <tr><td><b>Bịa chi tiết</b> (fabricated detail)</td><td>Một chi tiết cụ thể không có nguồn: tên, ngày, con số, trích dẫn, link</td><td>Báo cáo thị trường dẫn “Báo cáo Bán lẻ 2025, trang 14: 64% khách hàng…”, tìm không ra báo cáo nào như vậy</td><td>2.2, 2.3</td></tr>
+    <tr><td><b>Thông tin cũ</b> (outdated fact)</td><td>Từng đúng, nhưng đã đổi sau mốc dữ liệu</td><td>Mức lương tối thiểu vùng của năm trước, trình bày như đang áp dụng</td><td>2.1, 2.3</td></tr>
+    <tr><td><b>Đọc sai nguồn</b> (misread source)</td><td>Bạn đưa tài liệu, nhưng bản tóm tắt nói khác tài liệu: mạnh hơn, hoặc bỏ mất điều kiện</td><td>Chính sách ghi “hoàn tiền trong 14 ngày nếu còn hóa đơn”, bản tóm tắt ghi “hoàn tiền trong 14 ngày”</td><td>2.2, 2.3</td></tr>
+    <tr><td><b>Bỏ sót</b> (omission)</td><td>Mọi câu đều đúng, nhưng thiếu phần được hỏi</td><td>Hỏi 4 câu về nhà cung cấp, Claude trả lời kỹ 3 câu, câu thứ 4 biến mất</td><td>2.1</td></tr>
+    <tr><td><b>Tự mâu thuẫn</b> (internal contradiction)</td><td>Hai chỗ trong cùng output, hay cùng cuộc chat, nói hai điều khác nhau về một việc</td><td>Đoạn đầu ghi phòng họp 12 chỗ, đoạn sau xếp 20 người vào phòng đó</td><td>2.2</td></tr>
+    <tr><td><b>Thiên lệch</b> (bias)</td><td>Một độ lệch lặp lại: coi một nhóm là “bình thường”, thiếu góc nhìn, đánh giá không đều</td><td>Mô tả “ứng viên lý tưởng” lúc nào cũng là nam, trẻ, không có con nhỏ</td><td>2.2</td></tr>
+  </table></div>
+  <p>Hai kiểu đầu hay rơi vào cùng một chỗ: <b>chi tiết cụ thể</b> (con số, tên, ngày, trích dẫn) và <b>chủ đề ít người viết</b> (mới, ngách, địa phương, gây tranh cãi). Kiểu bỏ sót khó thấy nhất: phần bị thiếu không để lại câu nào kỳ lạ để bạn để ý.</p>
+
+  <h4>4. “Kiểm” là so với một nguồn nằm ngoài Claude</h4>
+  <div class="defs"><b>Định nghĩa</b><dl>
+    <dt>Kiểm chứng (verify)</dt><dd>So một khẳng định với nguồn đang thật sự nắm sự thật đó, rồi ghi lại kết quả: khớp, không khớp, hay không tìm thấy.</dd>
+    <dt>Nguồn có thẩm quyền (authoritative source)</dt><dd>Nơi gốc của sự thật: văn bản quy định chính thức, file dữ liệu gốc, hợp đồng đã ký, tài liệu quy trình nội bộ, hệ thống quản lý, hoặc người phụ trách mảng đó.</dd>
+  </dl></div>
+  <div class="tw"><table>
+    <tr><th>Trông giống kiểm, nhưng không phải</th><th>Vì sao không đủ</th><th>Kiểm thật</th></tr>
+    <tr><td>Hỏi Claude “Bạn chắc không?”</td><td>Vẫn là Claude chấm Claude. Nó có thể giữ nguyên câu sai, hoặc đổi một câu đúng để chiều bạn</td><td>Mở văn bản gốc, tìm đúng đoạn</td></tr>
+    <tr><td>Hỏi lại ở chat mới, ra cùng đáp án</td><td>Lặp lại giống nhau không chứng minh là đúng. Hai lần viết có thể cùng sai</td><td>So con số với file dữ liệu gốc</td></tr>
+    <tr><td>Thấy có chú thích nguồn</td><td>Chú thích chỉ là chỗ để xem. Chưa mở thì chưa biết nguồn nói gì</td><td>Mở nguồn, đọc đúng câu, xem cả điều kiện và ngày</td></tr>
+    <tr><td>Viết lại cho trang trọng, đẹp hơn</td><td>Đổi hình thức không đổi chuyện đúng sai</td><td>Hỏi người phụ trách hoặc chuyên gia của mảng đó</td></tr>
+  </table></div>
+  <p>Có những cách hỏi Claude giúp kiểm nhanh hơn: bảo nó trích nguyên văn đoạn tài liệu làm căn cứ, chạy lại câu hỏi để xem chỗ nào đổi, cho phép nó nói “không biết” (bài 2.3). Những cách này <b>chỉ cho bạn chỗ cần kiểm</b>, không thay cho bước so với nguồn.</p>
+  <p>Câu mẫu 1 của guide (tóm tắt quy định có trích số tiểu mục, sắp gửi bộ phận compliance, tức bộ phận tuân thủ) dùng đúng bài học này. Phân tích đầy đủ ở <a href="#l-8-2">bài ôn 3 câu mẫu</a>. Các bài D2 đi tiếp từ đó: kiểm chỗ nào trước, kiểm bằng cách nào, khi nào cần người khác duyệt.</p>
+
+  <h4>5. Khung 4D gọi việc này là Discernment</h4>
+  <p>Khóa “Evaluating &amp; Validating Claude's Output” trong lộ trình Associate dựa trên khung AI Fluency 4D của Anthropic. Ba thuật ngữ của khung này có thể xuất hiện trong đề:</p>
+  <div class="defs"><b>Định nghĩa</b><dl>
+    <dt>Discernment (phán đoán)</dt><dd>“Accurately assessing the usefulness of AI outputs and behaviors” (đánh giá chính xác output và cách làm việc của AI có hữu ích không). Gồm ba phần: <b>Product</b> (sản phẩm: output có đúng, hợp, mạch lạc, liên quan không), <b>Process</b> (quá trình: AI đi tới kết quả bằng lập luận có lỗi không), <b>Performance</b> (cách tương tác: cách AI trao đổi có hợp với nhu cầu của bạn không).</dd>
+    <dt>Deployment Diligence (trách nhiệm khi đem dùng)</dt><dd>Chịu trách nhiệm kiểm và đứng ra bảo đảm cho output bạn dùng hoặc chia sẻ. Output gửi đi mang tên bạn, không mang tên Claude.</dd>
+    <dt>Vòng Description–Discernment (mô tả và phán đoán)</dt><dd>Bạn mô tả việc cần làm (Description), phán đoán output (Discernment), rồi dùng điều vừa thấy để mô tả lại rõ hơn. Bài 2.1 và 2.5 dùng vòng này.</dd>
+  </dl></div>
+
+  <h4>6. Bản đồ Domain 2</h4>
+  <div class="tw"><table>
+    <tr><th>Bài</th><th>Câu hỏi của bài</th><th>Dựa trên mục nào ở trên</th></tr>
+    <tr><td>2.1</td><td>Output có đúng và đủ so với yêu cầu không? Kiểm chỗ nào trước?</td><td>Mục 3 (bỏ sót, thông tin cũ), mục 4 (so với nguồn)</td></tr>
+    <tr><td>2.2</td><td>Lỗi này là bịa, mâu thuẫn hay thiên lệch?</td><td>Mục 1, 3 (cơ chế sinh lỗi, gọi đúng tên lỗi)</td></tr>
+    <tr><td>2.3</td><td>Kiểm từng khẳng định bằng cách nào? Trích dẫn, chạy lại, rút lại ra sao?</td><td>Mục 4 (so với nguồn có thẩm quyền)</td></tr>
+    <tr><td>2.4</td><td>Khi nào phải có người duyệt, ai duyệt, duyệt sâu tới đâu?</td><td>Mục 2, 5 (tự tin không phải bằng chứng, Deployment Diligence)</td></tr>
+    <tr><td>2.5</td><td>Sửa output cho đúng người đọc, so các bản nháp bằng tiêu chí nào?</td><td>Mục 5 (vòng Description–Discernment)</td></tr>
+    <tr><td>2.6</td><td>Trả lời ngay trong chat, làm artifact, hay xuất bảng, CSV, JSON?</td><td>Mục 2 (trình bày đẹp không phải đã kiểm)</td></tr>
+  </table></div>
+
+  <h4>Tự kiểm tra</h4>
+  <p class="need">Câu hỏi viết bằng tiếng Anh như đề thật. Bấm vào câu hỏi để xem nghĩa và đáp án.</p>
+  <details class="chk"><summary>1. Claude gives a specific, confident answer about a regulation that was amended last month. Web search is off. How should you treat the answer?</summary>
+    <span class="vi">Nghĩa: Claude trả lời cụ thể, rất chắc chắn về một quy định vừa sửa tháng trước. Web search đang tắt. Bạn nên coi câu trả lời này thế nào?</span>
+    <span class="ans"><b>Đáp:</b> coi là chưa kiểm, có thể đã cũ hoặc bị điền cho đủ. Chuyện sau mốc dữ liệu Claude không biết nếu không có công cụ. Mở văn bản gốc, hoặc bật web search rồi vẫn đọc nguồn.</span></details>
+  <details class="chk"><summary>2. You ask the same question in two new chats and get the same figure both times. Is the figure verified?</summary>
+    <span class="vi">Nghĩa: bạn hỏi cùng một câu ở hai chat mới và cả hai lần ra cùng một con số. Con số đó đã được kiểm chưa?</span>
+    <span class="ans"><b>Đáp:</b> chưa. Hai lần giống nhau chỉ là hai lần viết giống nhau, vẫn là Claude. Kiểm là so với nguồn nằm ngoài Claude, ví dụ file dữ liệu gốc.</span></details>
+  <details class="chk"><summary>3. Your refund policy says “within 14 days with a receipt,” but Claude's summary says “within 14 days.” Which kind of error is this?</summary>
+    <span class="vi">Nghĩa: chính sách hoàn tiền ghi “trong 14 ngày nếu có hóa đơn”, bản tóm tắt của Claude ghi “trong 14 ngày”. Đây là kiểu lỗi nào?</span>
+    <span class="ans"><b>Đáp:</b> đọc sai nguồn: bản tóm tắt bỏ mất điều kiện, nên nói mạnh hơn tài liệu. Bài 2.2 gọi đây là mâu thuẫn với tài liệu. Bắt bằng cách đặt câu tóm tắt cạnh đoạn gốc.</span></details>
+
+  <div class="remember"><b>Nhớ nhanh</b><ul>
+    <li>Claude đoán phần chữ hợp lý tiếp theo. Câu đúng và câu sai đi ra từ cùng một cơ chế.</li>
+    <li>Giọng tự tin, trình bày đẹp, tự chấm điểm cao: không cái nào là bằng chứng.</li>
+    <li>Sáu kiểu lỗi: bịa, cũ, đọc sai nguồn, bỏ sót, mâu thuẫn, thiên lệch.</li>
+    <li>Kiểm = so với nguồn có thẩm quyền nằm ngoài Claude.</li>
+  </ul></div>
+  <div class="src">Đọc thêm: <a href="https://support.claude.com/en/articles/8525154-claude-is-providing-incorrect-or-misleading-responses-what-s-going-on">Claude is providing incorrect or misleading responses</a> · <a href="https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-hallucinations">Reduce hallucinations</a> · <a href="https://platform.claude.com/docs/en/models/overview">Models overview</a> · <a href="https://anthropic.skilljar.com/ai-fluency-framework-foundations">AI Fluency: Framework &amp; Foundations</a> · <a href="https://anthropic-partners.skilljar.com/path/claude-associate/evaluating-validating-claudes-output">Evaluating &amp; Validating Claude's Output</a></div>
+  <label class="done"><input type="checkbox" data-lesson="l-2-0"> Đã học bài này</label>
+</article>
+
+<article class="lesson" id="l-2-1" data-domain="2" data-ts="2.1" data-min="12">
+  <header class="lh"><span class="ts">TS 2.1</span><h3>Đúng và đủ: kiểm chỗ dễ sai trước, đo độ đủ bằng chính yêu cầu</h3><span class="rt">~12 phút</span></header>
+  <p class="need">Cần biết trước: sáu kiểu lỗi và “kiểm là so với nguồn bên ngoài” ở <a href="#l-2-0">bài Nền tảng</a>.</p>
+  <div class="defs"><b>Khái niệm của bài</b><dl>
+    <dt>Accuracy (độ chính xác)</dt><dd>Các khẳng định trong output có đúng với nguồn không.</dd>
+    <dt>Completeness (độ đầy đủ)</dt><dd>Output có làm hết những gì yêu cầu đòi không. Đo bằng <b>yêu cầu</b>, không đo bằng chủ đề. Một bài giải thích chung, đúng hết, mà không trả lời câu được hỏi vẫn là thiếu.</dd>
+    <dt>Kiểm theo rủi ro (verification triage)</dt><dd>Không đủ thời gian kiểm mọi câu, nên xếp thứ tự: câu nào <b>dễ sai</b> và <b>sai thì thiệt nhiều</b> thì kiểm trước.</dd>
+    <dt>Rubric (bảng tiêu chí chấm)</dt><dd>Danh sách tiêu chí viết sẵn, mỗi tiêu chí mô tả rõ từng mức điểm, để hai người chấm cùng một output ra cùng kết quả.</dd>
+  </dl></div>
+
+  <h4>Hai câu hỏi tách riêng</h4>
+  <ul>
+    <li><b>Có đúng không?</b> Từng con số, tên, ngày, trích dẫn có khớp nguồn không.</li>
+    <li><b>Có làm đúng việc không?</b> Có trả lời đủ các phần được hỏi, đúng người đọc, đúng mục đích không.</li>
+  </ul>
+  <p>Văn viết trơn tru không trả lời được câu nào trong hai câu này. Một output có thể đúng từng câu mà vẫn không làm việc được giao. Ngược lại, một output trả lời đủ các ý vẫn có thể sai một con số quan trọng.</p>
+
+  <h4>Kiểm theo rủi ro: chỗ nào trước</h4>
+  <p>Xếp từng khẳng định theo hai trục: khả năng sai, và thiệt hại nếu sai. Kiểm trước chỗ cả hai đều cao.</p>
+  <div class="tw"><table>
+    <tr><th></th><th>Ít khả năng sai hơn</th><th>Dễ sai hơn</th></tr>
+    <tr><td>Chủ đề</td><td>Phổ biến, nhiều người viết, ít thay đổi: khái niệm kế toán cơ bản, cách viết thư xin lỗi khách</td><td>Hiếm, mới (sau mốc dữ liệu), ngách, địa phương, đang tranh cãi</td></tr>
+    <tr><td>Loại nội dung</td><td>Tóm tắt, sắp xếp lại, đổi định dạng tài liệu bạn đưa</td><td>Con số chính xác, thống kê, câu trích có tên người nói, số điều khoản, link</td></tr>
+    <tr><td>Nguồn gốc</td><td>Lấy từ tài liệu bạn đưa, có trích đoạn</td><td>Không truy được nguồn: Claude không nói được ý đó lấy từ đâu</td></tr>
+  </table></div>
+  <p>Thiệt hại tùy output được dùng làm gì. Cùng một con số, trong buổi brainstorm (cùng nghĩ ý tưởng) sai cũng ít hại, trong tờ trình ban giám đốc sai là quyết định sai. Hỏi mình: quyết định nào dựa vào câu này?</p>
+  <ul>
+    <li><b>Ưu tiên câu mà kết luận dựa vào</b>, nhất là con số ngách lại đang nghiêng về phía điều người đọc muốn nghe.</li>
+    <li><b>Đừng chỉ kiểm câu nghe lạ.</b> Chi tiết bịa thường nghe rất chuyên nghiệp. “Nghe lạ” là bộ lọc kém.</li>
+    <li><b>Bảo Claude ghi nguồn cho từng con số</b> ngay trong prompt. Lúc đó kiểm chỉ còn là mở đúng chỗ ra xem (bài 2.3).</li>
+  </ul>
+
+  <h4>Đo độ đủ bằng một danh sách viết trước</h4>
+  <p>Phần bị thiếu không để lại câu nào kỳ lạ. Đọc lướt để tìm chỗ sai sẽ bắt được lỗi, nhưng không bắt được chỗ thiếu. Cách làm:</p>
+  <ol>
+    <li>Trước khi đọc output, chép yêu cầu thành danh sách: mỗi câu hỏi, mỗi phần phải có là một dòng.</li>
+    <li>Đọc output, đánh dấu từng dòng: đã trả lời, trả lời một nửa, hay chưa có.</li>
+    <li>Rồi mới kiểm độ chính xác theo rủi ro.</li>
+    <li>Ghi lại phần thiếu và chỗ sai để đưa vào lần yêu cầu sửa.</li>
+  </ol>
+  <p>Một dạng thiếu hay gặp: <b>trôi sang chủ đề chung</b>. Bạn hỏi “vì sao doanh số quý 3 của chi nhánh Đà Nẵng giảm”, Claude giải thích rất đúng “các yếu tố làm doanh số bán lẻ giảm”. Đúng hết, nhưng chưa trả lời.</p>
+  <p>Đừng rút gọn một output chưa kiểm, cũng đừng chuyển cho người khác “tự xem còn thiếu gì”. Người nhận không có danh sách câu hỏi của bạn, nên họ khó phát hiện chỗ thiếu hơn bạn.</p>
+
+  <h4>Chấm trên nhiều tiêu chí, không chỉ “đúng sai”</h4>
+  <p>Độ chính xác là mức sàn. Tài liệu của Anthropic về đặt tiêu chí thành công viết: “Most use cases need multidimensional evaluation” (đa số trường hợp cần đánh giá theo nhiều tiêu chí). Các tiêu chí họ nêu, áp vào việc văn phòng:</p>
+  <div class="tw"><table>
+    <tr><th>Tiêu chí</th><th>Câu hỏi</th><th>Ví dụ hỏng</th></tr>
+    <tr><td>Task fidelity (làm đúng việc)</td><td>Làm tốt việc được giao, cả với ca khó hay ca hiếm?</td><td>Trả lời tốt câu hỏi thường, nhưng ca khách đòi bồi thường thì hướng dẫn sai quy trình</td></tr>
+    <tr><td>Consistency (nhất quán)</td><td>Câu hỏi giống nhau có được trả lời cùng ý không?</td><td>Hai khách hỏi cùng một chính sách, nhận hai câu trả lời khác nghĩa</td></tr>
+    <tr><td>Relevance and coherence (liên quan, mạch lạc)</td><td>Có trả lời thẳng câu hỏi, theo thứ tự hợp lý không?</td><td>Kết luận nằm ở đoạn cuối, sau ba đoạn nền</td></tr>
+    <tr><td>Tone and style (giọng, văn phong)</td><td>Giọng có hợp người đọc không?</td><td>Trả lời đúng nhưng đầy thuật ngữ cho khách lần đầu dùng dịch vụ</td></tr>
+    <tr><td>Privacy preservation (giữ kín thông tin)</td><td>Có tránh nêu những chi tiết đã được dặn không nêu không?</td><td>Thư trả lời nhắc tới thông tin tài khoản của một khách khác</td></tr>
+    <tr><td>Context utilization (dùng ngữ cảnh)</td><td>Có dùng thông tin đã được cho không?</td><td>Bảo khách gửi lại mã đơn mà khách đã ghi ngay trong thư</td></tr>
+  </table></div>
+  <p>Tiêu chí định tính như giọng văn vẫn chấm được, miễn là chấm nhất quán: ví dụ thang 1–5, mỗi mức có mô tả. Viết thành rubric, kiểu “câu đầu tiên của bản tóm tắt phải nêu tổng doanh thu quý”, thì hai người chấm sẽ ra cùng kết quả. Thêm tiêu chí rõ ràng không làm kết quả chấm kém tin cậy đi.</p>
+
+  <h4>Biến điều vừa thấy thành prompt tốt hơn</h4>
+  <p>Kết quả kiểm là nguyên liệu cho lần mô tả tiếp theo (vòng Description–Discernment ở <a href="#l-2-0">bài Nền tảng</a>). Mỗi phát hiện đổi thành một yêu cầu cụ thể:</p>
+  <div class="tw"><table>
+    <tr><th>Phát hiện khi kiểm</th><th>Đổi thành yêu cầu</th></tr>
+    <tr><td>Một câu hỏi không được trả lời</td><td>“Trả lời từng câu thành một mục đánh số, kể cả câu 3.”</td></tr>
+    <tr><td>Một con số không kiểm được</td><td>“Ghi nguồn cho mọi con số. Không có nguồn thì ghi ‘chưa có số liệu’.”</td></tr>
+    <tr><td>Sai người đọc</td><td>“Người đọc là khách lần đầu dùng dịch vụ, không biết thuật ngữ kỹ thuật.”</td></tr>
+    <tr><td>Thiếu thông tin chỉ bạn có</td><td>Dán thông tin đó vào prompt: số liệu nội bộ, kết quả dự án cũ</td></tr>
+  </table></div>
+  <p>“Làm tốt hơn đi” vứt bỏ hết những gì bạn vừa phát hiện. Sửa prompt, thay vì chỉ sửa tay bản nháp, thì những lần chạy sau cũng tốt lên. Cách lặp prompt dạy ở <a href="#l-1-3">bài 1.3</a>. Chẩn đoán output kém dạy ở <a href="#l-7-1">bài 7.1</a>.</p>
+
+  <div class="story"><b>Tình huống.</b> Chị Hà, trưởng nhóm mua hàng, nhờ Claude viết bản so sánh ba nhà cung cấp bao bì để trả lời bốn câu của giám đốc: giá, thời gian giao, rủi ro, và nên bỏ nhà cung cấp nào. Bản nháp gọn, có bảng đẹp, có câu “nhà cung cấp C trễ hạn 23% đơn hàng ở khu vực miền Trung năm nay”. Chị định chuyển luôn. Có hai vấn đề. Câu thứ tư (bỏ ai) không được trả lời, chỉ có một đoạn chung chung về “tiêu chí chọn nhà cung cấp”. Còn con số 23% là số ngách, địa phương, mới, lại chính là lý do để bỏ C, trong khi chị chưa hề đưa số liệu giao hàng nào cho Claude.</div>
+  <div class="vs">
+    <div class="bad"><b>Tệ</b><ul>
+      <li>Đọc một lượt, thấy trơn tru, gửi đi.</li>
+      <li>Chỉ kiểm câu nghe lạ.</li>
+      <li>Coi output “không có câu nào sai” là đã đủ.</li>
+      <li>Rút gọn rồi chuyển cho giám đốc tự xem còn thiếu gì.</li>
+      <li>Yêu cầu sửa: “làm kỹ hơn đi”.</li>
+    </ul></div>
+    <div class="good"><b>Tốt</b><ul>
+      <li>Chép bốn câu của giám đốc thành danh sách trước khi đọc.</li>
+      <li>Kiểm con số 23% với dữ liệu giao hàng của công ty trước tiên.</li>
+      <li>Câu 4 chưa có: đánh dấu thiếu.</li>
+      <li>Yêu cầu sửa: “Trả lời câu 4 thành mục riêng, ghi nguồn cho mọi con số.”</li>
+    </ul></div>
+  </div>
+
+  <h4>Khi đi thi</h4>
+  <p class="need">Bài này thường ra 2 dạng câu hỏi. Đọc đề, <b>chọn một đáp án trước</b>; phần giải thích chỉ hiện ra sau khi bạn chọn.</p>
+
+  <div class="qcase" data-answer="C">
+    <h5 class="sub">Dạng 1: ít thời gian, kiểm câu nào trước</h5>
+    <span class="lbl">Đề sẽ viết kiểu này</span>
+    <div class="qtext">
+      <span class="en">“A retail operations manager has 15 minutes before a leadership call. Claude drafted a one-page recommendation to close two branches. The draft contains general background on retail trends, a short history of the company, and the claim that foot traffic at the two branches fell 38% after a new metro line opened nearby in March. The recommendation rests mainly on that figure. What should the manager check first?”</span>
+      <span class="vi">Dịch: Một quản lý vận hành chuỗi bán lẻ còn 15 phút trước cuộc họp với lãnh đạo. Claude đã soạn bản đề xuất một trang về việc đóng hai chi nhánh. Bản nháp có phần bối cảnh chung về xu hướng bán lẻ, một đoạn lịch sử công ty, và khẳng định lượng khách tới hai chi nhánh giảm 38% sau khi một tuyến metro gần đó khai trương vào tháng 3. Đề xuất dựa chủ yếu vào con số này. Quản lý nên kiểm cái gì trước?</span>
+    </div>
+    <span class="lbl">Bạn chọn đáp án nào?</span>
+    <div class="qopts">
+      <button type="button" class="qopt" data-k="A"><b class="k">A.</b><span class="body"><span class="en">“Read the whole page once and check any sentence that sounds unusual.”</span><span class="vi">Đọc cả trang một lượt và kiểm câu nào nghe lạ.</span></span></button>
+      <button type="button" class="qopt" data-k="B"><b class="k">B.</b><span class="body"><span class="en">“Ask Claude to rate its confidence in each paragraph and check the lowest-rated one.”</span><span class="vi">Nhờ Claude chấm độ tin cậy từng đoạn, rồi kiểm đoạn bị chấm thấp nhất.</span></span></button>
+      <button type="button" class="qopt" data-k="C"><b class="k">C.</b><span class="body"><span class="en">“The 38% foot-traffic figure, against the company's own traffic data.”</span><span class="vi">Con số giảm 38% lượng khách, so với dữ liệu lượt khách của chính công ty.</span></span></button>
+      <button type="button" class="qopt" data-k="D"><b class="k">D.</b><span class="body"><span class="en">“The retail-trends background, since it takes up most of the page.”</span><span class="vi">Phần bối cảnh xu hướng bán lẻ, vì nó chiếm nhiều chỗ nhất.</span></span></button>
+    </div>
+    <p class="qfb" hidden></p>
+    <div class="qexp" hidden>
+      <span class="lbl">Phân tích đề</span>
+      <ul>
+        <li><b>Đề kể:</b> bản đề xuất đóng hai chi nhánh, gồm ba loại nội dung: bối cảnh chung, lịch sử công ty, và một con số 38% gắn với một sự kiện địa phương hồi tháng 3.</li>
+        <li><b>Chỗ khó:</b> chỉ có 15 phút, không kiểm hết được. Đề còn nói thẳng: đề xuất dựa chủ yếu vào con số đó.</li>
+        <li><b>Đề hỏi:</b> kiểm cái gì <i>trước</i>, tức là hỏi thứ tự ưu tiên.</li>
+      </ul>
+      <span class="lbl">Cần biết để chọn</span>
+      <ol>
+        <li>Kiểm theo rủi ro: ưu tiên câu vừa dễ sai vừa thiệt nhiều nếu sai, tức là câu mà kết luận dựa vào.</li>
+        <li>Dễ sai nhất là con số chính xác, chủ đề địa phương, sự kiện mới.</li>
+        <li>Độ tin cậy Claude tự chấm không phải bằng chứng. “Nghe lạ” là bộ lọc kém vì chi tiết bịa thường nghe rất ổn.</li>
+      </ol>
+      <span class="lbl">Từng đáp án</span>
+      <ul class="verdict">
+        <li><b>A sai.</b> Đọc đều cả trang tốn hết 15 phút, và chi tiết bịa thường không “nghe lạ” (ý 3). Hấp dẫn vì nghe như cẩn thận.</li>
+        <li><b>B sai.</b> Vẫn là Claude chấm Claude (ý 3). Một con số bịa hoàn toàn có thể nằm trong đoạn được tự chấm cao.</li>
+        <li class="ok"><b>C đúng.</b> Con số chính xác, địa phương, mới (ý 2), và cả đề xuất dựa vào nó (ý 1). So với dữ liệu lượt khách nội bộ là so với nguồn gốc.</li>
+        <li><b>D sai.</b> Bối cảnh chung là chủ đề phổ biến, ít khả năng sai, và kết luận không dựa vào nó (ý 1). Dài nhất không có nghĩa rủi ro nhất.</li>
+      </ul>
+      <button type="button" class="qreset">Làm lại câu này</button>
+    </div>
+  </div>
+
+  <div class="qcase" data-answer="B">
+    <h5 class="sub">Dạng 2: đúng hết mà vẫn thiếu</h5>
+    <span class="lbl">Đề sẽ viết kiểu này</span>
+    <div class="qtext">
+      <span class="en">“A client asked a project manager five questions about a delayed software rollout: the new go-live date, the cause, the cost impact, which teams are affected, and what the client must do now. Claude returns two accurate, well-written paragraphs explaining why software rollouts commonly slip. What is the best assessment and next step?”</span>
+      <span class="vi">Dịch: Khách hàng hỏi quản lý dự án năm câu về đợt triển khai phần mềm bị trễ: ngày chạy chính thức mới, nguyên nhân, ảnh hưởng chi phí, những nhóm nào bị ảnh hưởng, và khách phải làm gì bây giờ. Claude trả về hai đoạn văn đúng, viết hay, giải thích vì sao các đợt triển khai phần mềm thường bị trễ. Đánh giá và bước tiếp theo nào là tốt nhất?</span>
+    </div>
+    <span class="lbl">Bạn chọn đáp án nào?</span>
+    <div class="qopts">
+      <button type="button" class="qopt" data-k="A"><b class="k">A.</b><span class="body"><span class="en">“The response is complete, because every statement in it is accurate.”</span><span class="vi">Câu trả lời đã đủ, vì mọi câu trong đó đều đúng.</span></span></button>
+      <button type="button" class="qopt" data-k="B"><b class="k">B.</b><span class="body"><span class="en">“It is incomplete. List the five questions and re-prompt for a numbered answer to each one.”</span><span class="vi">Chưa đủ. Chép năm câu hỏi ra rồi yêu cầu lại, mỗi câu một mục trả lời đánh số.</span></span></button>
+      <button type="button" class="qopt" data-k="C"><b class="k">C.</b><span class="body"><span class="en">“Shorten it and forward it to the client, who can follow up on anything that is missing.”</span><span class="vi">Rút gọn rồi gửi khách, thiếu gì khách sẽ hỏi tiếp.</span></span></button>
+      <button type="button" class="qopt" data-k="D"><b class="k">D.</b><span class="body"><span class="en">“Ask Claude whether the response fully answers the client, and forward it if Claude confirms that it does.”</span><span class="vi">Hỏi Claude câu trả lời đã trả lời đủ cho khách chưa, nếu Claude xác nhận là đủ thì chuyển đi.</span></span></button>
+    </div>
+    <p class="qfb" hidden></p>
+    <div class="qexp" hidden>
+      <span class="lbl">Phân tích đề</span>
+      <ul>
+        <li><b>Đề kể:</b> khách hỏi năm câu cụ thể. Claude trả lời bằng một bài giải thích chung, đúng và viết hay.</li>
+        <li><b>Chỗ khó:</b> không có câu nào sai, nên dễ tưởng là xong. Nhưng không câu nào trong năm câu hỏi được trả lời thẳng.</li>
+        <li><b>Đề hỏi:</b> output này đủ hay thiếu, và làm gì tiếp.</li>
+      </ul>
+      <span class="lbl">Cần biết để chọn</span>
+      <ol>
+        <li>Độ đủ đo bằng yêu cầu, không bằng chủ đề. Trôi sang chủ đề chung là thiếu.</li>
+        <li>Chỗ thiếu không để lại câu sai nào, nên phải đối chiếu với danh sách yêu cầu viết trước.</li>
+        <li>Phát hiện khi kiểm nên đổi thành yêu cầu cụ thể trong prompt sau.</li>
+      </ol>
+      <span class="lbl">Từng đáp án</span>
+      <ul class="verdict">
+        <li><b>A sai.</b> Nhầm đúng với đủ (ý 1). Hấp dẫn vì đúng là không có câu nào sai.</li>
+        <li class="ok"><b>B đúng.</b> Đối chiếu với năm câu hỏi (ý 2) rồi đổi phát hiện thành yêu cầu đánh số (ý 3).</li>
+        <li><b>C sai.</b> Rút gọn một output thiếu vẫn là output thiếu. Việc tìm chỗ thiếu bị đẩy sang khách, đúng người đang chờ câu trả lời.</li>
+        <li><b>D sai.</b> Claude tự nhận xét thay cho bước đối chiếu của bạn (ý 2). Nó không có danh sách năm câu để soát như bạn.</li>
+      </ul>
+      <button type="button" class="qreset">Làm lại câu này</button>
+    </div>
+  </div>
+
+  <div class="more"><b>Biết thêm</b><ul>
+    <li><b>“Không biết thì Claude sẽ từ chối” là sai.</b> Claude không đáng tin trong việc tự từ chối câu hỏi về chuyện sau mốc dữ liệu. Con số cụ thể về sự kiện hôm qua, khi không bật web search, phải so với nguồn hiện tại.</li>
+    <li><b>Một chỗ đáng ngờ không có nghĩa vứt cả output.</b> Kiểm đúng chỗ đó. Bỏ hết là làm quá tay.</li>
+    <li><b>Claude dùng web search thì đọc nguồn nó dẫn.</b> Trang trợ giúp nhắc: nguồn gốc có thể chứa ngữ cảnh mà bản tóm tắt bỏ mất.</li>
+    <li><b>Thứ tự cho tài liệu dài:</b> danh sách yêu cầu → độ đủ → độ chính xác theo rủi ro → ghi chỗ cần sửa.</li>
+  </ul></div>
+  <div class="rule">Quy tắc: chép yêu cầu thành danh sách trước khi đọc, rồi kiểm trước câu mà quyết định dựa vào.</div>
+  <div class="remember"><b>Nhớ nhanh</b><ul>
+    <li>Đúng chưa chắc đã đủ. Đủ đo bằng yêu cầu.</li>
+    <li>Kiểm trước: con số chính xác, chủ đề mới, ngách, địa phương, câu mà kết luận dựa vào.</li>
+    <li>Chấm trên nhiều tiêu chí, viết thành rubric.</li>
+    <li>Mỗi phát hiện thành một yêu cầu cụ thể ở prompt sau.</li>
+  </ul></div>
+  <div class="src">Đọc thêm: <a href="https://platform.claude.com/docs/en/test-and-evaluate/define-success">Define your success criteria</a> · <a href="https://support.claude.com/en/articles/8525154-claude-is-providing-incorrect-or-misleading-responses-what-s-going-on">Claude is providing incorrect or misleading responses</a> · <a href="https://anthropic-partners.skilljar.com/path/claude-associate/evaluating-validating-claudes-output">Evaluating &amp; Validating Claude's Output</a></div>
+  <label class="done"><input type="checkbox" data-lesson="l-2-1"> Đã học bài này</label>
+</article>
+
+<article class="lesson" id="l-2-2" data-domain="2" data-ts="2.2" data-min="13">
+  <header class="lh"><span class="ts">TS 2.2</span><h3>Gọi đúng tên lỗi: bịa, mâu thuẫn hay thiên lệch</h3><span class="rt">~13 phút</span></header>
+  <p class="need">Cần biết trước: cơ chế “đoán phần chữ tiếp theo” và bảng sáu kiểu lỗi ở <a href="#l-2-0">bài Nền tảng</a>.</p>
+  <div class="defs"><b>Khái niệm của bài</b><dl>
+    <dt>Hallucination (bịa)</dt><dd>Nội dung không có cơ sở trong bất cứ thứ gì bạn đưa hay kiểm được: trích dẫn không tồn tại, con số không có nguồn. Đọc lên trơn tru y như câu đúng.</dd>
+    <dt>Inconsistency (mâu thuẫn)</dt><dd>Hai khẳng định về cùng một sự việc không khớp nhau: với tài liệu bạn đưa, với chính nó trong cùng cuộc chat, hoặc giữa hai lần hỏi.</dd>
+    <dt>Bias (thiên lệch)</dt><dd>Một độ lệch <b>lặp lại</b> theo một hướng: coi một nhóm là mặc định, thiếu góc nhìn của nhóm bị ảnh hưởng, hoặc đánh giá cùng một loại ý theo hai cách khác nhau. Một chi tiết bịa đơn lẻ không phải bias.</dd>
+    <dt>Sycophancy (chiều lòng)</dt><dd>Claude đồng ý với tiền đề của bạn thay vì thử thách nó. Ví dụ: khen kế hoạch “rất chắc” mà không nêu rủi ro nào.</dd>
+  </dl></div>
+
+  <h4>Ba kiểu lỗi, phân biệt bằng cái bạn nhìn thấy</h4>
+  <div class="tw"><table>
+    <tr><th>Kiểu</th><th>Bạn thấy gì</th><th>Ví dụ</th><th>Làm gì tiếp</th></tr>
+    <tr><td>Hallucination</td><td>Một khẳng định không tìm được nguồn nào</td><td>Báo cáo dẫn một bài nghiên cứu, tra tên tác giả và tạp chí không ra</td><td>Bỏ đi, hoặc tìm nguồn thật thay vào</td></tr>
+    <tr><td>Inconsistency</td><td>Hai giá trị cho cùng một sự việc</td><td>Đầu chat nói hạn đổi trả 14 ngày, cuối chat nói 30 ngày, giữa hai câu không có thông tin mới</td><td>Chưa dùng giá trị nào. Kiểm với nguồn gốc</td></tr>
+    <tr><td>Bias</td><td>Một hướng lệch lặp lại qua nhiều câu</td><td>Mọi ví dụ “khách hàng tiêu biểu” đều là nam giới ở thành phố lớn</td><td>Hỏi ai đang vắng mặt, yêu cầu viết lại cân bằng</td></tr>
+  </table></div>
+  <p>Luật phân loại: <b>gọi theo cái quan sát được</b>. Thấy hai con số khác nhau là thấy mâu thuẫn. Chưa biết con số nào sai thì chưa gọi là bịa. Còn một trích dẫn tra không ra là bịa: nó là thứ được <i>thêm vào</i>, không phải thứ bị rơi mất vì tài liệu quá dài.</p>
+
+  <h4>Hallucination hay nằm ở đâu</h4>
+  <ul>
+    <li><b>Chi tiết chính xác:</b> tên người, ngày, thống kê, trích dẫn, link, câu trích nguyên văn. Càng chính xác càng phải kiểm.</li>
+    <li><b>Mép kiến thức:</b> chủ đề hiếm, mới, ngách, địa phương, gây tranh cãi.</li>
+    <li><b>Chuyện sau mốc dữ liệu, khi không bật công cụ tìm kiếm:</b> chi tiết cụ thể về sự kiện tuần trước được viết cho khớp câu hỏi, không lấy từ đâu cả.</li>
+    <li><b>Ít rủi ro hơn:</b> tóm tắt, định dạng lại tài liệu bạn đưa, giải thích khái niệm phổ biến. Ít rủi ro hơn, không phải không có.</li>
+  </ul>
+  <div class="trap"><b>Bẫy: Claude bịa cả về việc nó đã làm.</b> Claude có thể viết “Mình đã gửi email cho khách” hay “Đã lưu file vào thư mục chung”, trong khi cuộc chat không có connector nào làm được việc đó. Claude chỉ hành động được qua công cụ đã được kết nối. Thấy Claude kể đã làm một việc, kiểm hai thứ: công cụ đó có thật trong cuộc chat không, và việc đó có thật đã xảy ra không (mở hộp thư đã gửi, mở thư mục). Ngay cả với connector Gmail, lệnh gửi thư mặc định còn cần bạn duyệt.</div>
+
+  <h4>Ba kiểu mâu thuẫn</h4>
+  <div class="tw"><table>
+    <tr><th>Mâu thuẫn với…</th><th>Ví dụ</th><th>Cách bắt</th></tr>
+    <tr><td><b>Tài liệu bạn đưa</b></td><td>Chính sách dán vào ghi đổi trả 14 ngày, bản tóm tắt ghi 30 ngày. Hoặc bỏ mất điều kiện “còn hóa đơn”</td><td>Đặt câu tóm tắt cạnh đoạn gốc</td></tr>
+    <tr><td><b>Chính nó</b>, trong một câu trả lời hay một cuộc chat</td><td>Đoạn trên ghi phòng họp 12 chỗ, đoạn dưới xếp 20 người vào phòng đó</td><td>Đọc lại các con số liên quan nhau. Mở phần tóm tắt suy nghĩ (Thinking) của Claude để tìm bước lập luận sai</td></tr>
+    <tr><td><b>Lần hỏi khác</b></td><td>Hỏi năm thành lập một hiệp hội ở hai chat mới, ra hai năm khác nhau</td><td>Không có tài liệu gốc thì coi cả hai là chưa kiểm. Tra nguồn gốc</td></tr>
+  </table></div>
+  <p>Cái sai hay gặp: hai lần hỏi ra hai đáp án, rồi chọn cái “nghe hợp lý hơn”. Không có tài liệu làm gốc thì cả hai đều có thể chỉ là viết ra cho khớp câu hỏi. Kiểu “đọc sai nguồn” ở bài Nền tảng chính là mâu thuẫn với tài liệu.</p>
+
+  <h4>Giọng văn cũng là tín hiệu</h4>
+  <p>Giọng văn gắn với độ đúng rất lỏng. Bốn kiểu cần nhận ra:</p>
+  <div class="tw"><table>
+    <tr><th>Kiểu</th><th>Trông thế nào</th><th>Xử lý</th></tr>
+    <tr><td>Tự tin không có căn cứ</td><td>Chủ đề phổ biến hay chủ đề ngách đều trả lời chắc như nhau. Một con số chính xác về chủ đề ít người biết, không rào đón gì</td><td>Coi độ chắc chắn là không mang thông tin. Kiểm con số</td></tr>
+    <tr><td>Chiều lòng</td><td>Bạn hỏi “Kế hoạch này ổn đúng không?”, Claude khen, không nêu điểm yếu nào</td><td>Mời phản biện rõ ràng: “Chỉ ra ba lý do kế hoạch này có thể thất bại.”</td></tr>
+    <tr><td>Rào đón theo phản xạ</td><td>Câu nào cũng “có thể”, “tùy trường hợp”, “nên hỏi chuyên gia”</td><td>Rào đều mọi câu thì không biết câu nào thật sự yếu. Yêu cầu nêu cụ thể chỗ chưa chắc</td></tr>
+    <tr><td>Rào đón có ích</td><td>Nêu đúng một chỗ hổng cụ thể: “Chưa rõ phần mềm kế toán hiện tại có xuất được file theo định dạng này không.”</td><td>Giữ lại, kiểm đúng chỗ đó</td></tr>
+  </table></div>
+
+  <h4>Bias: thường là thiếu hoặc lệch, không phải câu sai</h4>
+  <p>Kiểm từng câu không bắt được bias, vì từng câu có thể đều đúng. Bias nằm ở toàn bộ bức tranh. Ba dạng:</p>
+  <ul>
+    <li><b>Mặc định lệch:</b> một nhóm, một trường hợp được coi là “bình thường”, học từ dữ liệu huấn luyện. Ví dụ “nhân viên kho” trong mọi ví dụ đều là nam.</li>
+    <li><b>Thiếu góc nhìn:</b> mọi câu đúng, nhưng nhóm bị ảnh hưởng không xuất hiện. Bản phân tích đổi ca làm việc chỉ nói chi phí, không nhắc tới nhân viên có con nhỏ.</li>
+    <li><b>Đánh giá không đều:</b> cùng một loại ý, đối xử khác nhau tùy của ai. Bài viết “cân bằng” về một chủ đề tranh cãi nhưng chỉ rào đón một phía. Hoặc lời lẽ nhấn vào cái thiếu của người được giúp (“nhóm yếu kém”) thay vì nói hoàn cảnh của họ.</li>
+  </ul>
+  <p>Cách soi: hỏi “ai đang vắng mặt trong output này?”. Đổi nhóm trong prompt (nữ thay nam, chi nhánh tỉnh thay thành phố) rồi so hai output. Yêu cầu Claude trình bày góc nhìn của nhóm bị ảnh hưởng. Khía cạnh đạo đức của bias khi dùng AI học ở <a href="#l-6-4">bài 6.4</a>.</p>
+
+  <div class="story"><b>Tình huống.</b> Anh Minh ở phòng marketing nhờ Claude viết chân dung “khách hàng tiêu biểu” cho một ứng dụng tiết kiệm mới, kèm số liệu thị trường. Bản nháp có ba vấn đề, mỗi cái một kiểu. Một: dẫn “Báo cáo Tài chính Cá nhân 2025, trang 12” mà tra không ra (bịa). Hai: đoạn đầu ghi nhóm khách chính 25–34 tuổi, bảng cuối ghi 18–24 tuổi (mâu thuẫn). Ba: cả năm ví dụ khách hàng đều là nhân viên văn phòng nam ở Hà Nội và TP.HCM, không ai ở tỉnh, không ai làm nghề tự do (thiên lệch). Mỗi lỗi phải xử lý theo một kiểu riêng.</div>
+  <div class="vs">
+    <div class="bad"><b>Tệ</b><ul>
+      <li>Gọi mọi lỗi là “hallucination” rồi bảo Claude viết lại.</li>
+      <li>Hai con số tuổi khác nhau: chọn cái nghe hợp lý hơn.</li>
+      <li>Kiểm từng câu thấy đúng, kết luận không có bias.</li>
+      <li>Claude nói “đã gửi file cho sếp”, tin là đã gửi.</li>
+    </ul></div>
+    <div class="good"><b>Tốt</b><ul>
+      <li>Báo cáo tra không ra: bỏ, hoặc thay bằng nguồn thật.</li>
+      <li>Hai con số tuổi: chưa dùng số nào, kiểm với dữ liệu khách hàng thật.</li>
+      <li>Ví dụ lệch: yêu cầu thêm khách ở tỉnh, khách làm tự do, rồi so lại.</li>
+      <li>Việc Claude kể đã làm: kiểm có công cụ đó không, việc có thật xảy ra không.</li>
+    </ul></div>
+  </div>
+
+  <h4>Khi đi thi</h4>
+  <p class="need">Bài này thường ra 3 dạng câu hỏi. Đọc đề, <b>chọn một đáp án trước</b>; phần giải thích chỉ hiện ra sau khi bạn chọn.</p>
+
+  <div class="qcase" data-answer="A">
+    <h5 class="sub">Dạng 1: hai con số cho cùng một việc</h5>
+    <span class="lbl">Đề sẽ viết kiểu này</span>
+    <div class="qtext">
+      <span class="en">“Early in a chat, Claude tells an HR assistant that new hires must complete safety training within 14 days. Later in the same chat, with no new documents added, Claude says the deadline is 30 days. The assistant is about to put the deadline into the onboarding email. Which description and next step are most accurate?”</span>
+      <span class="vi">Dịch: Đầu cuộc chat, Claude nói với trợ lý nhân sự rằng nhân viên mới phải hoàn thành khóa an toàn lao động trong 14 ngày. Về sau, cùng cuộc chat đó, không có tài liệu mới nào được thêm vào, Claude lại nói hạn là 30 ngày. Trợ lý sắp đưa hạn này vào email chào đón nhân viên mới. Mô tả và bước tiếp theo nào chính xác nhất?</span>
+    </div>
+    <span class="lbl">Bạn chọn đáp án nào?</span>
+    <div class="qopts">
+      <button type="button" class="qopt" data-k="A"><b class="k">A.</b><span class="body"><span class="en">“An inconsistency. Check the official training policy before using either figure.”</span><span class="vi">Đây là mâu thuẫn. Kiểm chính sách đào tạo chính thức trước khi dùng con số nào.</span></span></button>
+      <button type="button" class="qopt" data-k="B"><b class="k">B.</b><span class="body"><span class="en">“It is a hallucination of the later figure, so use 14 days, since Claude stated it first.”</span><span class="vi">Đây là bịa ở con số sau, nên dùng 14 ngày vì Claude nói con số đó trước.</span></span></button>
+      <button type="button" class="qopt" data-k="C"><b class="k">C.</b><span class="body"><span class="en">“It is bias toward longer deadlines, so ask Claude to answer more neutrally.”</span><span class="vi">Đây là thiên lệch về phía hạn dài hơn, nên yêu cầu Claude trả lời trung lập hơn.</span></span></button>
+      <button type="button" class="qopt" data-k="D"><b class="k">D.</b><span class="body"><span class="en">“The context window is full. Start a new chat, ask again, and use that answer.”</span><span class="vi">Cửa sổ ngữ cảnh đã đầy. Mở chat mới, hỏi lại, rồi dùng câu trả lời đó.</span></span></button>
+    </div>
+    <p class="qfb" hidden></p>
+    <div class="qexp" hidden>
+      <span class="lbl">Phân tích đề</span>
+      <ul>
+        <li><b>Đề kể:</b> cùng một cuộc chat, cùng một sự việc (hạn học an toàn lao động), hai con số 14 và 30. Không có tài liệu mới xen giữa.</li>
+        <li><b>Chỗ khó:</b> con số sắp vào email gửi nhân viên mới. Đáp án bắt bạn vừa gọi đúng tên lỗi vừa chọn đúng bước tiếp.</li>
+        <li><b>Đề hỏi:</b> mô tả nào đúng, và làm gì tiếp.</li>
+      </ul>
+      <span class="lbl">Cần biết để chọn</span>
+      <ol>
+        <li>Hai giá trị cho cùng một sự việc là mâu thuẫn. Chưa biết cái nào sai thì chưa gọi là bịa.</li>
+        <li>Không có tài liệu gốc thì cả hai giá trị đều chưa kiểm. Hỏi lại chỉ cho thêm một lần viết nữa.</li>
+        <li>Bias là độ lệch lặp lại theo một hướng, không phải một lần nói khác.</li>
+      </ol>
+      <span class="lbl">Từng đáp án</span>
+      <ul class="verdict">
+        <li class="ok"><b>A đúng.</b> Gọi tên theo cái quan sát được (ý 1), và kiểm với nguồn gốc là chính sách đào tạo (ý 2).</li>
+        <li><b>B sai.</b> Đoán con số nào bịa mà không có căn cứ (ý 1). Nói trước không làm một con số đúng hơn.</li>
+        <li><b>C sai.</b> Một lần nói khác không phải độ lệch lặp lại (ý 3). Bảo Claude “trung lập hơn” cũng không cho biết hạn thật.</li>
+        <li><b>D sai.</b> Đề không có dấu hiệu chat quá dài. Câu trả lời ở chat mới chỉ là thêm một lần viết, vẫn chưa kiểm (ý 2). Hấp dẫn vì “làm lại từ đầu” nghe gọn.</li>
+      </ul>
+      <button type="button" class="qreset">Làm lại câu này</button>
+    </div>
+  </div>
+
+  <div class="qcase" data-answer="C">
+    <h5 class="sub">Dạng 2: từng câu đều đúng, cả bản vẫn lệch</h5>
+    <span class="lbl">Đề sẽ viết kiểu này</span>
+    <div class="qtext">
+      <span class="en">“An HR coordinator asks Claude to draft a ‘typical successful candidate’ profile and interview questions for a warehouse supervisor role. Each sentence is reasonable, but the profile assumes the candidate is a young man without caregiving duties, and questions about shift flexibility are written only for candidates who mention children. What is the main problem?”</span>
+      <span class="vi">Dịch: Một điều phối viên nhân sự nhờ Claude soạn chân dung “ứng viên thành công tiêu biểu” và bộ câu hỏi phỏng vấn cho vị trí giám sát kho. Từng câu đều hợp lý, nhưng chân dung mặc định ứng viên là nam giới trẻ, không phải chăm sóc ai, và các câu hỏi về khả năng linh hoạt ca làm chỉ viết cho ứng viên có nhắc tới con cái. Vấn đề chính là gì?</span>
+    </div>
+    <span class="lbl">Bạn chọn đáp án nào?</span>
+    <div class="qopts">
+      <button type="button" class="qopt" data-k="A"><b class="k">A.</b><span class="body"><span class="en">“A hallucination, because the profile invents job requirements that are not in the job description.”</span><span class="vi">Hallucination, vì chân dung bịa ra yêu cầu công việc không có trong bản mô tả công việc.</span></span></button>
+      <button type="button" class="qopt" data-k="B"><b class="k">B.</b><span class="body"><span class="en">“An inconsistency between the profile and the interview questions.”</span><span class="vi">Mâu thuẫn giữa chân dung ứng viên và bộ câu hỏi phỏng vấn.</span></span></button>
+      <button type="button" class="qopt" data-k="C"><b class="k">C.</b><span class="body"><span class="en">“Bias: a skewed default plus uneven framing across candidates.”</span><span class="vi">Thiên lệch: mặc định lệch, cộng với đánh giá không đều giữa các ứng viên.</span></span></button>
+      <button type="button" class="qopt" data-k="D"><b class="k">D.</b><span class="body"><span class="en">“There is no problem, because every individual statement in the draft is accurate.”</span><span class="vi">Không có vấn đề gì, vì từng câu trong bản nháp đều đúng.</span></span></button>
+    </div>
+    <p class="qfb" hidden></p>
+    <div class="qexp" hidden>
+      <span class="lbl">Phân tích đề</span>
+      <ul>
+        <li><b>Đề kể:</b> chân dung ứng viên và câu hỏi phỏng vấn, từng câu đều hợp lý.</li>
+        <li><b>Chỗ khó:</b> không có câu nào sai để bắt. Vấn đề là cả bản mặc định một kiểu người, và một nhóm (người có con) bị hỏi riêng.</li>
+        <li><b>Đề hỏi:</b> vấn đề chính là gì, tức là gọi đúng tên lỗi.</li>
+      </ul>
+      <span class="lbl">Cần biết để chọn</span>
+      <ol>
+        <li>Bias thường là mặc định lệch hoặc đánh giá không đều, không phải câu sai. Kiểm từng câu không bắt được.</li>
+        <li>Hallucination là khẳng định không có nguồn. Mâu thuẫn là hai giá trị trái nhau cho cùng một sự việc.</li>
+        <li>Tài liệu tuyển dụng dẫn tới quyết định về con người, nên lệch ở đây gây thiệt hại thật (xem bài 2.4).</li>
+      </ol>
+      <span class="lbl">Từng đáp án</span>
+      <ul class="verdict">
+        <li><b>A sai.</b> Đề không nói có yêu cầu nào bịa ra. Vấn đề là ai được coi là “mặc định” (ý 2).</li>
+        <li><b>B sai.</b> Chân dung và câu hỏi không nói hai điều trái nhau. Chúng cùng lệch về một hướng (ý 1, 2).</li>
+        <li class="ok"><b>C đúng.</b> Mặc định “nam, trẻ, không con nhỏ” và chỉ hỏi người có con về ca làm là đúng hai dạng bias (ý 1). Cách sửa: viết lại theo tiêu chí gắn với công việc, áp như nhau cho mọi ứng viên, vì tài liệu này dẫn tới quyết định về người (ý 3).</li>
+        <li><b>D sai.</b> Câu nào cũng đúng vẫn có thể lệch cả bản (ý 1). Hấp dẫn vì người ta quen kiểm từng câu.</li>
+      </ul>
+      <button type="button" class="qreset">Làm lại câu này</button>
+    </div>
+  </div>
+
+  <div class="qcase" data-answer="D">
+    <h5 class="sub">Dạng 3: Claude kể một việc nó không thể làm</h5>
+    <span class="lbl">Đề sẽ viết kiểu này</span>
+    <div class="qtext">
+      <span class="en">“At the end of a chat, Claude writes: ‘I've emailed the revised proposal to the client and saved a copy to the team drive.’ No email or Drive connector is enabled in this chat. What should the account manager do?”</span>
+      <span class="vi">Dịch: Cuối cuộc chat, Claude viết: “Mình đã gửi email bản đề xuất đã sửa cho khách và lưu một bản vào ổ chung của nhóm.” Cuộc chat này không bật connector email hay Drive nào. Người quản lý khách hàng nên làm gì?</span>
+    </div>
+    <span class="lbl">Bạn chọn đáp án nào?</span>
+    <div class="qopts">
+      <button type="button" class="qopt" data-k="A"><b class="k">A.</b><span class="body"><span class="en">“Nothing, since Claude stated clearly that both actions were completed.”</span><span class="vi">Không cần làm gì, vì Claude đã nói rõ cả hai việc đều xong.</span></span></button>
+      <button type="button" class="qopt" data-k="B"><b class="k">B.</b><span class="body"><span class="en">“Ask Claude to confirm the email was delivered and to paste the delivery receipt.”</span><span class="vi">Yêu cầu Claude xác nhận email đã tới nơi và dán biên nhận gửi thư vào.</span></span></button>
+      <button type="button" class="qopt" data-k="C"><b class="k">C.</b><span class="body"><span class="en">“Open a new chat and ask whether the proposal was sent, to cross-check the claim.”</span><span class="vi">Mở chat mới và hỏi xem bản đề xuất đã được gửi chưa, để đối chiếu.</span></span></button>
+      <button type="button" class="qopt" data-k="D"><b class="k">D.</b><span class="body"><span class="en">“Treat both actions as not done, then send and save the proposal herself.”</span><span class="vi">Coi như cả hai việc chưa làm, rồi tự gửi và tự lưu bản đề xuất.</span></span></button>
+    </div>
+    <p class="qfb" hidden></p>
+    <div class="qexp" hidden>
+      <span class="lbl">Phân tích đề</span>
+      <ul>
+        <li><b>Đề kể:</b> Claude kể đã làm hai hành động. Cuộc chat không bật connector email hay Drive.</li>
+        <li><b>Chỗ khó:</b> lời kể cụ thể và tự nhiên, nghe như việc đã xong.</li>
+        <li><b>Đề hỏi:</b> người quản lý khách hàng nên làm gì.</li>
+      </ul>
+      <span class="lbl">Cần biết để chọn</span>
+      <ol>
+        <li>Claude chỉ hành động được qua công cụ đã kết nối. Không có công cụ thì không có hành động, dù lời kể nói gì.</li>
+        <li>Claude có thể bịa cả về khả năng của chính nó, kèm cả “bằng chứng” bịa.</li>
+        <li>Hỏi lại Claude, hay hỏi ở chat khác, vẫn là Claude chấm Claude.</li>
+      </ol>
+      <span class="lbl">Từng đáp án</span>
+      <ul class="verdict">
+        <li><b>A sai.</b> Lời kể không phải bằng chứng hành động (ý 1). Hấp dẫn vì câu viết rất chắc.</li>
+        <li><b>B sai.</b> Claude có thể viết ra một “biên nhận” trông như thật (ý 2, 3).</li>
+        <li><b>C sai.</b> Chat mới không biết gì về chat cũ, và người trả lời vẫn là Claude (ý 3).</li>
+        <li class="ok"><b>D đúng.</b> Không có connector thì không có email nào được gửi (ý 1). Tự gửi, tự lưu, rồi kiểm hộp thư đã gửi.</li>
+      </ul>
+      <button type="button" class="qreset">Làm lại câu này</button>
+    </div>
+  </div>
+
+  <div class="more"><b>Biết thêm</b><ul>
+    <li><b>Hai giá trị khác nhau trong cùng một chat là mâu thuẫn</b>, không tự động là bịa. Gọi là bịa khi đã biết giá trị nào không có cơ sở.</li>
+    <li><b>Câu trả lời tự tin, không rào đón không đáng tin hơn.</b> Mức tự tin chỉ gắn rất lỏng với độ đúng.</li>
+    <li><b>Rào đón chỉ một phía</b> của một chủ đề tranh cãi là dấu hiệu bias.</li>
+    <li><b>Trích dẫn tra không ra là bịa</b>, không phải do tài liệu quá dài làm rơi thông tin.</li>
+  </ul></div>
+  <div class="rule">Quy tắc: gọi tên lỗi theo cái nhìn thấy được, rồi kiểm với nguồn gốc. Hai đáp án không có nguồn thì cả hai đều chưa kiểm.</div>
+  <div class="remember"><b>Nhớ nhanh</b><ul>
+    <li>Tra không ra nguồn = bịa. Hai giá trị cho một việc = mâu thuẫn. Lệch lặp lại = bias.</li>
+    <li>Bịa hay nằm ở chi tiết chính xác và chủ đề mới, ngách, địa phương.</li>
+    <li>Claude có thể bịa cả việc nó đã làm. Không có công cụ thì không có hành động.</li>
+    <li>Bias không bắt được bằng kiểm từng câu. Hỏi ai đang vắng mặt.</li>
+  </ul></div>
+  <div class="src">Đọc thêm: <a href="https://support.claude.com/en/articles/8525154-claude-is-providing-incorrect-or-misleading-responses-what-s-going-on">Claude is providing incorrect or misleading responses</a> · <a href="https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-hallucinations">Reduce hallucinations</a> · <a href="https://support.claude.com/en/articles/10166901-use-google-workspace-connectors">Use Google Workspace connectors</a> · <a href="https://support.claude.com/en/articles/10574485-using-extended-thinking">Using extended thinking</a></div>
+  <label class="done"><input type="checkbox" data-lesson="l-2-2"> Đã học bài này</label>
+</article>
+
+<article class="lesson" id="l-2-3" data-domain="2" data-ts="2.3" data-min="12">
+  <header class="lh"><span class="ts">TS 2.3</span><h3>Kiểm từng khẳng định: bám nguồn, rút lại khi không có căn cứ, đối chiếu chéo</h3><span class="rt">~12 phút</span></header>
+  <p class="need">Cần biết trước: “kiểm là so với nguồn có thẩm quyền” ở <a href="#l-2-0">bài Nền tảng</a>, những chỗ hay bịa ở <a href="#l-2-2">bài 2.2</a>.</p>
+  <div class="defs"><b>Khái niệm của bài</b><dl>
+    <dt>Claim (khẳng định)</dt><dd>Một câu nói một điều có thể đúng hoặc sai: “Hợp đồng cho phép chấm dứt với báo trước 30 ngày”, “Doanh thu quý 2 tăng 12%”.</dd>
+    <dt>Grounding (bám nguồn)</dt><dd>Đưa tài liệu cho Claude và yêu cầu chỉ dựa vào tài liệu đó, không dùng hiểu biết chung.</dd>
+    <dt>Retraction (rút lại)</dt><dd>Sau khi viết, Claude tìm đoạn trích nguyên văn ủng hộ từng khẳng định. Không tìm được thì xóa khẳng định đó và đánh dấu chỗ trống bằng <code>[]</code>.</dd>
+    <dt>Citation (trích dẫn nguồn)</dt><dd>Con trỏ tới một chỗ trong nguồn: link, số trang, đoạn văn. Nó cho bạn biết <b>xem ở đâu</b>, chưa cho biết nguồn nói gì.</dd>
+  </dl></div>
+
+  <h4>Trước khi Claude viết: xin một output kiểm được</h4>
+  <p>Trang “Reduce hallucinations” (giảm bịa thông tin) của Anthropic nêu ba cách cơ bản. Đổi sang việc văn phòng:</p>
+  <div class="tw"><table>
+    <tr><th>Cách</th><th>Viết vào prompt thế nào</th><th>Vì sao giúp</th></tr>
+    <tr><td>Cho phép nói “không biết”</td><td>“Nếu tài liệu không đủ thông tin, hãy nói ‘Không đủ thông tin để kết luận’.”</td><td>Docs viết cách này “can drastically reduce false information” (có thể giảm mạnh thông tin sai). Không được phép thì model có xu hướng điền cho đủ</td></tr>
+    <tr><td>Trích nguyên văn trước</td><td>“Bước 1: trích nguyên văn các đoạn liên quan, đánh số. Không có thì ghi ‘Không tìm thấy đoạn liên quan’. Bước 2: chỉ phân tích dựa trên các đoạn đã trích.”</td><td>Mỗi kết luận truy được về một đoạn. Docs gợi ý cách này cho tài liệu dài, trên khoảng 20.000 token (token là đơn vị model dùng để đếm chữ, mỗi token cỡ một mẩu từ)</td></tr>
+    <tr><td>Ghi nguồn rồi rút lại</td><td>“Viết xong, với mỗi khẳng định hãy tìm một đoạn trích nguyên văn ủng hộ. Không có thì xóa khẳng định đó, đánh dấu bằng [].”</td><td>Chỗ không có căn cứ hiện ra thành chỗ trống, không bị che bằng câu văn đẹp</td></tr>
+  </table></div>
+  <p>Thêm một cách nữa: <b>chỉ dùng tài liệu được đưa</b> (“chỉ dùng thông tin trong các file này, không dùng hiểu biết chung”). Khi cần truy được nguồn của từng câu, đây là cách chặt nhất.</p>
+  <p>Những yêu cầu kiểu “viết giọng chuyên gia, chắc chắn hơn” hay “trả lời ngắn thôi” không làm giảm bịa. Chúng chỉ đổi cách trình bày một câu đoán. Bắt trả lời thật ngắn còn lấy mất chỗ cho câu “chưa chắc”.</p>
+
+  <h4>Sau khi Claude viết: kiểm từng khẳng định</h4>
+  <ol>
+    <li><b>Tách bản nháp thành từng khẳng định.</b> Mỗi khẳng định đạt hay trượt riêng.</li>
+    <li><b>Xếp theo hệ quả.</b> Ít thời gian thì kiểm trước những khẳng định mà quyết định dựa vào. Không đi theo thứ tự trong bài, không chọn câu dễ tra trước.</li>
+    <li><b>So với nguồn đang nắm sự thật đó.</b> Quy trình nội bộ thì so với tài liệu quy trình của công ty, không so với một bài báo về “thông lệ ngành”.</li>
+    <li><b>Ghi lại nguồn của từng khẳng định</b> để đồng nghiệp kiểm lại được.</li>
+    <li><b>Đã qua bước rút lại vẫn phải kiểm phần còn lại.</b> Trích dẫn gắn vào sau khi viết có thể nằm cạnh một câu mà nó không thật sự ủng hộ.</li>
+  </ol>
+  <div class="trap"><b>Bẫy:</b> “Ask Claude which of its claims are least reliable” (hỏi Claude khẳng định nào của nó kém tin nhất) nghe như khoanh vùng thông minh. Nhưng đó là bắt chính nguồn đang bị kiểm tự chấm mình. Thứ tự ưu tiên lấy từ hệ quả của quyết định, không lấy từ Claude.</div>
+
+  <h4>Trích dẫn là con trỏ, không phải bằng chứng</h4>
+  <p>Khi Claude dùng web search, câu trả lời có kèm trích dẫn (trang trợ giúp về web search). Như vậy output <b>kiểm được</b>, chưa phải <b>đã kiểm</b>. Mở nguồn ra và xem:</p>
+  <ul>
+    <li><b>Nguồn có nói đúng điều câu tóm tắt nói không.</b> Một nguồn thật bị diễn giải thành khẳng định mạnh hơn vẫn là lỗi. Báo cáo ghi “mục tiêu đạt 100% bao bì tái chế vào năm 2028”, bản tóm tắt ghi “đang dùng 100% bao bì tái chế”.</li>
+    <li><b>Điều kiện, ngày, phạm vi</b> mà bản tóm tắt bỏ mất: chỉ áp dụng cho một dòng sản phẩm, một khu vực, một gói dịch vụ.</li>
+    <li><b>Nguồn có đáng tin không.</b> Trích một nguồn yếu không làm khẳng định mạnh hơn. Trang tự giới thiệu của một công ty là lời công ty đó tự nói về mình.</li>
+    <li><b>Câu trích nguyên văn kiểm chặt nhất:</b> từng chữ phải khớp.</li>
+  </ul>
+
+  <h4>Đối chiếu chéo: chạy lại, đọc lập luận, hỏi dồn</h4>
+  <p>Docs nêu thêm bốn kỹ thuật. Chúng giúp <b>tìm chỗ cần kiểm</b>, không thay cho bước so với nguồn.</p>
+  <div class="tw"><table>
+    <tr><th>Kỹ thuật</th><th>Làm trong app thế nào</th><th>Bắt được</th><th>Không bắt được</th></tr>
+    <tr><td>Best-of-N verification (chạy lại N lần)</td><td>Hỏi cùng câu ở vài chat mới, so kết quả</td><td>Con số, ngày tháng đổi giữa các lần: dấu hiệu bịa, kiểm trước</td><td>Các lần giống nhau nhưng cùng sai</td></tr>
+    <tr><td>Chain-of-thought verification (soi lập luận)</td><td>Mở phần tóm tắt suy nghĩ (Thinking) khi câu trả lời có vẻ sai</td><td>Một bước suy luận sai, một giả định sai nằm dưới câu trả lời trơn tru</td><td>Dữ kiện đầu vào sai mà lập luận vẫn hợp lý</td></tr>
+    <tr><td>Iterative refinement (hỏi dồn)</td><td>Đưa lại output, yêu cầu kiểm hoặc giải thích kỹ một câu cụ thể</td><td>Câu đổ vỡ khi bị hỏi kỹ, tức là câu không vững</td><td>Vẫn là Claude kiểm Claude</td></tr>
+    <tr><td>External knowledge restriction (chỉ dùng tài liệu)</td><td>“Chỉ dùng các file đính kèm.”</td><td>Ý lấy từ hiểu biết chung, không truy được nguồn</td><td>Claude đọc sai chính tài liệu đó</td></tr>
+  </table></div>
+  <p>Docs chốt lại: các kỹ thuật này giảm đáng kể hallucination nhưng “don't eliminate them entirely” (không loại bỏ hoàn toàn). Câu tiếp theo: “Always validate critical information, especially for high-stakes decisions” (luôn kiểm thông tin quan trọng, nhất là với quyết định hệ trọng).</p>
+  <p>Chuyện sau mốc dữ liệu mà không bật công cụ nào: một câu trả lời cụ thể, chắc chắn (giá cổ phiếu hôm qua, quy định vừa sửa tháng trước) nên coi là có thể bịa. Bật web search hoặc Research để tìm nguồn hiện tại, rồi vẫn mở nguồn ra đọc.</p>
+
+  <div class="story"><b>Tình huống.</b> Chị Lan ở phòng truyền thông nhờ Claude viết thông cáo báo chí cho phần mềm chấm công mới, dựa trên hai file mô tả sản phẩm. Bản nháp có câu “đạt chứng nhận bảo mật ISO 27001” và “được hơn 500 doanh nghiệp tin dùng”, trong khi hai file không nhắc chuyện nào. Chị yêu cầu Claude làm bước rút lại: mỗi câu phải có đoạn trích ủng hộ, không có thì xóa và để []. Bản mới còn hai chỗ []. Chị hỏi đội sản phẩm: chứng nhận đang trong quá trình xin, chưa có. Con số 500 là số doanh nghiệp dùng thử, không phải khách hàng.</div>
+  <div class="vs">
+    <div class="bad"><b>Tệ</b><ul>
+      <li>Dặn Claude “viết giọng chắc chắn, chuyên nghiệp” cho bớt sai.</li>
+      <li>Thấy có link nguồn là coi như đã kiểm.</li>
+      <li>Hỏi Claude câu nào của nó yếu nhất rồi chỉ kiểm câu đó.</li>
+      <li>Kiểm theo thứ tự từ trên xuống, câu dễ tra trước.</li>
+    </ul></div>
+    <div class="good"><b>Tốt</b><ul>
+      <li>Cho phép nói “không đủ thông tin”, chỉ dùng tài liệu được đưa.</li>
+      <li>Mở nguồn, đọc đúng đoạn, xem điều kiện và ngày.</li>
+      <li>Rút lại câu không có trích dẫn, để [] cho thấy chỗ trống.</li>
+      <li>Kiểm trước câu mà quyết định dựa vào, ghi nguồn từng câu.</li>
+    </ul></div>
+  </div>
+
+  <h4>Khi đi thi</h4>
+  <p class="need">Bài này thường ra 2 dạng câu hỏi. Đọc đề, <b>chọn một đáp án trước</b>; phần giải thích chỉ hiện ra sau khi bạn chọn.</p>
+
+  <div class="qcase" data-answer="D">
+    <h5 class="sub">Dạng 1: sửa prompt để bớt bịa</h5>
+    <span class="lbl">Đề sẽ viết kiểu này</span>
+    <div class="qtext">
+      <span class="en">“A training coordinator asks Claude for a short history of a small regional trade association for a new-member welcome pack. Earlier drafts included founding dates and founder names that staff could not find in any record. Which prompt change is most likely to reduce invented details?”</span>
+      <span class="vi">Dịch: Một điều phối viên đào tạo nhờ Claude viết đoạn lịch sử ngắn về một hiệp hội ngành nhỏ ở địa phương, để đưa vào bộ tài liệu chào đón hội viên mới. Các bản nháp trước có ngày thành lập và tên người sáng lập mà nhân viên không tìm thấy trong hồ sơ nào. Thay đổi prompt nào có khả năng giảm chi tiết bịa nhất?</span>
+    </div>
+    <span class="lbl">Bạn chọn đáp án nào?</span>
+    <div class="qopts">
+      <button type="button" class="qopt" data-k="A"><b class="k">A.</b><span class="body"><span class="en">“Ask Claude to write in a more authoritative, encyclopedic tone so the history reads as well researched.”</span><span class="vi">Yêu cầu Claude viết giọng uy tín, kiểu bách khoa toàn thư, để đoạn lịch sử nghe như được nghiên cứu kỹ.</span></span></button>
+      <button type="button" class="qopt" data-k="B"><b class="k">B.</b><span class="body"><span class="en">“Limit the answer to three sentences so there is less room for error.”</span><span class="vi">Giới hạn câu trả lời trong ba câu để ít chỗ sai hơn.</span></span></button>
+      <button type="button" class="qopt" data-k="C"><b class="k">C.</b><span class="body"><span class="en">“Ask for even more specific dates and names, so that any errors are easier for staff to spot and correct.”</span><span class="vi">Yêu cầu ngày tháng và tên cụ thể hơn nữa, để nhân viên dễ phát hiện và sửa lỗi.</span></span></button>
+      <button type="button" class="qopt" data-k="D"><b class="k">D.</b><span class="body"><span class="en">“Attach the association's records, tell Claude to use only them, and allow ‘not stated in the records’.”</span><span class="vi">Đính kèm hồ sơ của hiệp hội, dặn Claude chỉ dùng hồ sơ đó, và cho phép ghi “hồ sơ không nêu”.</span></span></button>
+    </div>
+    <p class="qfb" hidden></p>
+    <div class="qexp" hidden>
+      <span class="lbl">Phân tích đề</span>
+      <ul>
+        <li><b>Đề kể:</b> chủ đề ngách, địa phương. Các bản trước có ngày và tên không tìm được ở đâu.</li>
+        <li><b>Chỗ khó:</b> cả bốn phương án đều là “đổi prompt”. Phải chọn thay đổi đánh đúng nguyên nhân sinh ra chi tiết bịa.</li>
+        <li><b>Đề hỏi:</b> thay đổi nào có khả năng giảm chi tiết bịa nhất.</li>
+      </ul>
+      <span class="lbl">Cần biết để chọn</span>
+      <ol>
+        <li>Chủ đề ngách, địa phương nằm ở mép kiến thức. Ở đó model hay điền cho đủ.</li>
+        <li>Cho phép nói “không biết” và bám tài liệu được đưa là hai cách docs nêu để giảm bịa.</li>
+        <li>Đổi giọng hay đổi độ dài chỉ đổi cách trình bày một câu đoán.</li>
+      </ol>
+      <span class="lbl">Từng đáp án</span>
+      <ul class="verdict">
+        <li><b>A sai.</b> Giọng bách khoa làm câu bịa trông đáng tin hơn, không làm nó ít đi (ý 3).</li>
+        <li><b>B sai.</b> Ngắn hơn không làm đúng hơn, còn lấy mất chỗ để nói “chưa chắc” (ý 3).</li>
+        <li><b>C sai.</b> Đòi thêm chi tiết là tăng áp lực phải bịa, đúng ở loại chủ đề hay bịa nhất (ý 1).</li>
+        <li class="ok"><b>D đúng.</b> Có nguồn thật, chỉ dùng nguồn đó, và được phép ghi “hồ sơ không nêu” (ý 2). Chỗ trống hiện ra thay vì bị điền bằng chi tiết bịa.</li>
+      </ul>
+      <button type="button" class="qreset">Làm lại câu này</button>
+    </div>
+  </div>
+
+  <div class="qcase" data-answer="A">
+    <h5 class="sub">Dạng 2: có trích dẫn rồi, đã đủ chưa</h5>
+    <span class="lbl">Đề sẽ viết kiểu này</span>
+    <div class="qtext">
+      <span class="en">“Claude's supplier review, written with web search, states that a packaging supplier ‘uses 100% recycled materials,’ with a citation to the supplier's sustainability report. The procurement team will use this claim to choose a supplier next week. What should the analyst do before relying on it?”</span>
+      <span class="vi">Dịch: Bản đánh giá nhà cung cấp Claude viết có dùng web search, ghi rằng một nhà cung cấp bao bì “dùng 100% vật liệu tái chế”, kèm trích dẫn tới báo cáo phát triển bền vững của chính nhà cung cấp đó. Tuần sau đội mua hàng sẽ dựa vào khẳng định này để chọn nhà cung cấp. Chuyên viên phân tích nên làm gì trước khi dựa vào nó?</span>
+    </div>
+    <span class="lbl">Bạn chọn đáp án nào?</span>
+    <div class="qopts">
+      <button type="button" class="qopt" data-k="A"><b class="k">A.</b><span class="body"><span class="en">“Open the cited report and read the exact passage, checking for limits on product lines, dates or targets.”</span><span class="vi">Mở báo cáo được trích, đọc đúng đoạn đó, xem có giới hạn về dòng sản phẩm, thời điểm hay đó chỉ là mục tiêu không.</span></span></button>
+      <button type="button" class="qopt" data-k="B"><b class="k">B.</b><span class="body"><span class="en">“Accept the claim, because it cites the supplier's own official report.”</span><span class="vi">Chấp nhận khẳng định, vì nó trích báo cáo chính thức của chính nhà cung cấp.</span></span></button>
+      <button type="button" class="qopt" data-k="C"><b class="k">C.</b><span class="body"><span class="en">“Ask Claude to re-check the citation and confirm that it supports the claim.”</span><span class="vi">Yêu cầu Claude kiểm lại trích dẫn và xác nhận nó ủng hộ khẳng định.</span></span></button>
+      <button type="button" class="qopt" data-k="D"><b class="k">D.</b><span class="body"><span class="en">“Confirm that the link opens and that the report's title matches the citation.”</span><span class="vi">Kiểm xem link mở được không và tên báo cáo có khớp trích dẫn không.</span></span></button>
+    </div>
+    <p class="qfb" hidden></p>
+    <div class="qexp" hidden>
+      <span class="lbl">Phân tích đề</span>
+      <ul>
+        <li><b>Đề kể:</b> khẳng định “100% vật liệu tái chế”, có trích dẫn tới báo cáo của chính nhà cung cấp, sẽ dùng để chọn nhà cung cấp.</li>
+        <li><b>Chỗ khó:</b> đã có trích dẫn, lại là báo cáo chính thức, nên dễ tưởng là xong. Nhưng chưa ai đọc xem nguồn thật sự nói gì.</li>
+        <li><b>Đề hỏi:</b> làm gì <i>trước khi dựa vào</i> khẳng định.</li>
+      </ul>
+      <span class="lbl">Cần biết để chọn</span>
+      <ol>
+        <li>Trích dẫn là con trỏ: cho biết xem ở đâu, chưa cho biết nguồn nói gì.</li>
+        <li>Bản tóm tắt hay bỏ mất điều kiện, phạm vi, ngày, hoặc biến “mục tiêu” thành “đã đạt”.</li>
+        <li>Nhờ Claude kiểm lại trích dẫn của chính nó vẫn là Claude chấm Claude.</li>
+      </ol>
+      <span class="lbl">Từng đáp án</span>
+      <ul class="verdict">
+        <li class="ok"><b>A đúng.</b> Đọc đúng đoạn trong nguồn, xem phạm vi, ngày, và đó là kết quả hay chỉ là mục tiêu (ý 1, 2).</li>
+        <li><b>B sai.</b> Nguồn chính thức vẫn có thể nói khác câu tóm tắt (ý 2). Báo cáo của chính nhà cung cấp còn là lời họ tự nói về mình.</li>
+        <li><b>C sai.</b> Claude chấm Claude (ý 3). Hấp dẫn vì nghe như có thêm một lớp kiểm.</li>
+        <li><b>D sai.</b> Link mở được và tên khớp chỉ chứng minh nguồn có tồn tại, không chứng minh nó nói “100%” (ý 1).</li>
+      </ul>
+      <button type="button" class="qreset">Làm lại câu này</button>
+    </div>
+  </div>
+
+  <div class="more"><b>Biết thêm</b><ul>
+    <li><b>Quy trình nội bộ thì kiểm với tài liệu nội bộ.</b> Một bài báo về thông lệ ngành không phải nguồn của quy trình công ty bạn. “Nghe giống thông lệ” cũng không phải bằng chứng.</li>
+    <li><b>Trích nguyên văn là nguyên văn.</b> Docs dùng chữ “exact quotes” (trích chính xác từng chữ). Câu “diễn đạt lại” hay “tóm ý” có thể đã lệch khỏi bản gốc.</li>
+    <li><b>Ghi nguồn cho từng khẳng định</b> trong bản cuối, để người duyệt sau bạn kiểm lại được mà không phải tìm lại từ đầu.</li>
+    <li><b>Một con số kiểm cách đây vài tháng có thể đã cũ.</b> Số liệu thay đổi thường xuyên (giá, tỉ giá, quy định) thì kiểm lại gần thời điểm dùng.</li>
+  </ul></div>
+  <div class="rule">Quy tắc: một khẳng định chỉ được tính là đã kiểm khi bạn đã đặt nó cạnh nguồn đang nắm sự thật đó.</div>
+  <div class="remember"><b>Nhớ nhanh</b><ul>
+    <li>Trước khi viết: cho phép nói “không biết”, chỉ dùng tài liệu, trích nguyên văn trước.</li>
+    <li>Sau khi viết: tách từng khẳng định, kiểm theo hệ quả, rút lại câu không có trích dẫn, để [].</li>
+    <li>Trích dẫn là con trỏ. Mở nguồn, xem điều kiện, ngày, phạm vi.</li>
+    <li>Chạy lại, soi lập luận, hỏi dồn: chỉ chỗ cần kiểm, không thay nguồn.</li>
+  </ul></div>
+  <div class="src">Đọc thêm: <a href="https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-hallucinations">Reduce hallucinations</a> · <a href="https://support.claude.com/en/articles/10684626-enabling-and-using-web-search">Enabling and using web search</a> · <a href="https://support.claude.com/en/articles/11088861-using-research-on-claude-ai">Using Research</a></div>
+  <label class="done"><input type="checkbox" data-lesson="l-2-3"> Đã học bài này</label>
+</article>
+
+<article class="lesson" id="l-2-4" data-domain="2" data-ts="2.4" data-min="12">
+  <header class="lh"><span class="ts">TS 2.4</span><h3>Khi nào phải có người duyệt, ai duyệt, và duyệt sâu tới đâu</h3><span class="rt">~12 phút</span></header>
+  <p class="need">Cần biết trước: giọng tự tin không phải bằng chứng (<a href="#l-2-0">bài Nền tảng</a>), các kỹ thuật kiểm chéo và giới hạn của chúng (<a href="#l-2-3">bài 2.3</a>).</p>
+  <div class="defs"><b>Khái niệm của bài</b><dl>
+    <dt>Human review (người duyệt)</dt><dd>Một người đọc, kiểm và quyết output có được dùng không, <b>trước khi</b> nó tới người nhận.</dd>
+    <dt>Stakes (mức hệ trọng)</dt><dd>Sai thì thiệt tới đâu: sức khỏe, cam kết pháp lý, tiền, việc làm của một người.</dd>
+    <dt>Irreversible (không rút lại được)</dt><dd>Hành động sai rồi không gỡ được: email đã gửi khách, hợp đồng đã ký, bài đã đăng công khai, khoản tiền đã chuyển.</dd>
+    <dt>Qualified reviewer (người duyệt đủ chuẩn)</dt><dd>Người có chuyên môn để phán nội dung đó đúng hay sai, và là người chịu trách nhiệm về kết quả. Khi luật đòi giấy phép hành nghề thì người đó phải có giấy phép.</dd>
+  </dl></div>
+
+  <h4>Output nào cũng được xem, nhưng sâu tới đâu thì tùy tín hiệu</h4>
+  <p>Không có output nào được dùng mà không ai đọc. Câu hỏi là ai đọc và đọc kỹ tới đâu. Năm tín hiệu nâng mức duyệt:</p>
+  <div class="tw"><table>
+    <tr><th>Tín hiệu</th><th>Duyệt nhẹ</th><th>Duyệt kỹ, cần người có chuyên môn</th></tr>
+    <tr><td>Mức hệ trọng</td><td>Ý tưởng, bản nháp nội bộ, sai thì sửa lại</td><td>Sức khỏe, pháp lý, tiền, việc làm hay quyền lợi của một người</td></tr>
+    <tr><td>Người nhận</td><td>Chính bạn, nhóm của bạn</td><td>Khách hàng, cơ quan quản lý, đối tác, công chúng. Người sẽ làm theo mà không hỏi lại</td></tr>
+    <tr><td>Rút lại được không</td><td>Sửa, xóa, làm lại dễ dàng</td><td>Gửi, ký, đăng, chuyển tiền rồi thì không gỡ được</td></tr>
+    <tr><td>Loại nội dung</td><td>Tóm tắt, định dạng lại, ý tưởng</td><td>Con số, trích dẫn, điều khoản, chủ đề mới hay ngách</td></tr>
+    <tr><td>Lĩnh vực được quản lý</td><td>Việc hành chính thường ngày</td><td>Pháp lý, y tế, tài chính, quyết định nhân sự về một người cụ thể</td></tr>
+  </table></div>
+  <p>Trước khi duyệt, hỏi: tín hiệu nào đang có, và vì vậy ai phải kiểm? Cách nhớ: <b>nháp thoải mái, gửi đi có chọn lọc</b>. Dùng Claude tự do khi thử ý tưởng. Siết lại khi output sắp rời tay bạn.</p>
+
+  <h4>Ai duyệt: người phán được nội dung và chịu trách nhiệm</h4>
+  <ul>
+    <li><b>Chỉ kiểm được cái mình phán được.</b> Lời khuyên bảo hiểm cần người am hiểu bảo hiểm. Điều khoản hợp đồng cần luật sư. Một biên tập viên giỏi văn không phán được lời khuyên có phù hợp với khách không.</li>
+    <li><b>Người duyệt là người chịu trách nhiệm.</b> Người ký duyệt phải là người trả lời nếu kết quả sai.</li>
+    <li><b>Duyệt trước khi gửi.</b> Lỗi đã tới khách, tới cơ quan quản lý, tới đối tác thì không thu hồi được. “Gửi trước, ai báo sai thì sửa” là quá muộn.</li>
+    <li><b>Duyệt giọng văn không phải duyệt nội dung.</b> Với output hệ trọng, sửa câu chữ là chưa đủ.</li>
+  </ul>
+  <p>Trình tự mẫu cho một thông báo gửi khách do Claude soạn: kiểm từng chi tiết (ngày, số tiền, điều kiện) với hệ thống gốc → người phụ trách mảng đó duyệt → gửi.</p>
+
+  <h4>Duyệt sâu tới đâu: tự kiểm thêm hay giao chuyên gia</h4>
+  <div class="tw"><table>
+    <tr><th>Ca</th><th>Mức kiểm phù hợp</th></tr>
+    <tr><td>Mười tiêu đề cho bản tin nội bộ, để mình chọn</td><td>Tự đọc, chọn, sửa</td></tr>
+    <tr><td>Tờ trình nội bộ có số liệu cho cuộc họp</td><td>Tự kiểm các con số mà kết luận dựa vào, so với dữ liệu gốc</td></tr>
+    <tr><td>Thông báo gửi toàn bộ khách hàng về thay đổi phí</td><td>Kiểm từng chi tiết với nguồn gốc, người phụ trách duyệt trước khi gửi</td></tr>
+    <tr><td>Output dựa nhiều vào trích dẫn, nhiều chi tiết, sai thì đắt</td><td>Mở từng nguồn gốc. Hỏi lại ở một chat mới để so. Rồi mới tới người duyệt</td></tr>
+    <tr><td>Tư vấn pháp lý, y tế, tài chính cho một người, hay quyết định nhân sự về một người</td><td>Người có chuyên môn (và giấy phép nếu luật đòi) duyệt từng output trước khi nó tới người đó</td></tr>
+  </table></div>
+  <p>Duyệt theo rủi ro có hai chiều. Bỏ qua người duyệt ở ca hệ trọng là liều. Bắt cả danh sách ý tưởng nội bộ phải qua chuyên gia là làm quá tay, tốn thời gian của người có chuyên môn vào chỗ không cần.</p>
+
+  <h4>Kiểm bằng model không thay được người duyệt</h4>
+  <p>Các kỹ thuật ở bài 2.3 làm output tốt hơn, nhưng output hệ trọng vẫn phải tới tay người:</p>
+  <ul>
+    <li><b>Claude tự kiểm, rút lại câu không có trích dẫn:</b> giảm lỗi, nhưng bản nháp vẫn phải qua người duyệt.</li>
+    <li><b>Chạy lại nhiều lần:</b> chỗ khác nhau giúp lộ chỗ bịa, nhưng các lần giống nhau vẫn có thể cùng sai.</li>
+    <li><b>Đọc lập luận:</b> lộ bước suy luận sai, nhưng giả định có hợp lý không vẫn cần người phán.</li>
+    <li><b>Chỉ dùng tài liệu được đưa:</b> không phán được kết luận có an toàn để làm theo không.</li>
+    <li><b>Một cuộc chat Claude thứ hai rà soát:</b> vẫn là Claude kiểm Claude.</li>
+    <li><b>Ghi “nội dung do AI tạo”:</b> chỉ lo phần minh bạch. Nhãn không bắt được lỗi, cũng không chặn được một lời khuyên sai gây hại.</li>
+  </ul>
+  <div class="note"><b>Usage Policy (chính sách sử dụng) của Anthropic</b> có yêu cầu riêng cho các ca dùng rủi ro cao (high-risk) như pháp lý, y tế, tài chính, việc làm: một người đủ chuẩn phải thật sự duyệt output trước khi nó tới người bị ảnh hưởng, và người đó phải được cho biết có dùng AI. Phần này học kỹ ở <a href="#l-6-1">bài 6.1</a>. Ở D2, bạn chỉ cần nhận ra tín hiệu “đây là ca cần người duyệt”.</div>
+
+  <div class="story"><b>Tình huống.</b> Phòng khám nha khoa của chị Thảo dùng Claude soạn tin nhắn dặn dò sau điều trị cho từng bệnh nhân, có tên thuốc giảm đau và liều dùng. Tin nhắn soạn rất chuẩn, giọng ân cần. Lễ tân đề xuất gửi tự động, thêm dòng “nội dung do AI hỗ trợ soạn” cho minh bạch. Mọi tín hiệu đều đỏ: sức khỏe, người nhận là bệnh nhân sẽ làm theo, tin đã gửi không rút lại được, liều thuốc là chi tiết cụ thể. Dòng ghi chú chỉ lo phần minh bạch. Cách đúng: bác sĩ phụ trách duyệt từng tin trước khi gửi, nhất là phần thuốc và liều.</div>
+  <div class="vs">
+    <div class="bad"><b>Tệ</b><ul>
+      <li>Output có trích dẫn, trình bày chuẩn: bỏ qua bước duyệt.</li>
+      <li>Nhờ biên tập viên sửa giọng cho một lời khuyên tài chính.</li>
+      <li>Gửi trước, ai báo sai thì sửa sau.</li>
+      <li>Thêm nhãn “do AI tạo” thay cho người duyệt.</li>
+      <li>Bắt mọi output, kể cả danh sách ý tưởng, phải qua chuyên gia.</li>
+    </ul></div>
+    <div class="good"><b>Tốt</b><ul>
+      <li>Xem năm tín hiệu: hệ trọng, người nhận, rút lại được không, loại nội dung, lĩnh vực.</li>
+      <li>Ca hệ trọng: người có chuyên môn, chịu trách nhiệm, duyệt trước khi gửi.</li>
+      <li>Ca nhẹ: tự đọc và sửa là đủ.</li>
+      <li>Nhãn AI, nếu cần, là thêm vào chứ không thay cho người duyệt.</li>
+    </ul></div>
+  </div>
+
+  <h4>Khi đi thi</h4>
+  <p class="need">Bài này thường ra 2 dạng câu hỏi. Đọc đề, <b>chọn một đáp án trước</b>; phần giải thích chỉ hiện ra sau khi bạn chọn.</p>
+
+  <div class="qcase" data-answer="B">
+    <h5 class="sub">Dạng 1: ai phải duyệt một quyết định về con người</h5>
+    <span class="lbl">Đề sẽ viết kiểu này</span>
+    <div class="qtext">
+      <span class="en">“An HR team uses Claude to summarize 40 annual performance reviews and recommend which employees should be placed on a performance improvement plan. The output cites passages from each review and reads professionally. What review process is most appropriate before any decision is communicated?”</span>
+      <span class="vi">Dịch: Đội nhân sự dùng Claude tóm tắt 40 bản đánh giá hiệu suất năm và đề xuất nhân viên nào nên vào chương trình cải thiện hiệu suất (performance improvement plan). Output có trích đoạn từ từng bản đánh giá và viết rất chuyên nghiệp. Quy trình duyệt nào phù hợp nhất trước khi thông báo bất kỳ quyết định nào?</span>
+    </div>
+    <span class="lbl">Bạn chọn đáp án nào?</span>
+    <div class="qopts">
+      <button type="button" class="qopt" data-k="A"><b class="k">A.</b><span class="body"><span class="en">“An HR assistant checks the summaries for tone and formatting, since the citations already show where each point comes from.”</span><span class="vi">Một trợ lý nhân sự kiểm giọng văn và định dạng các bản tóm tắt, vì trích đoạn đã cho thấy mỗi ý lấy từ đâu.</span></span></button>
+      <button type="button" class="qopt" data-k="B"><b class="k">B.</b><span class="body"><span class="en">“Each employee's manager and an HR lead, who own the decision, check every recommendation against the original reviews.”</span><span class="vi">Quản lý trực tiếp của từng nhân viên và một trưởng nhóm nhân sự, những người chịu trách nhiệm về quyết định, đối chiếu từng đề xuất với bản đánh giá gốc.</span></span></button>
+      <button type="button" class="qopt" data-k="C"><b class="k">C.</b><span class="body"><span class="en">“A second Claude conversation reviews the recommendations and flags any that look inconsistent.”</span><span class="vi">Một cuộc chat Claude thứ hai rà các đề xuất và đánh dấu đề xuất nào có vẻ mâu thuẫn.</span></span></button>
+      <button type="button" class="qopt" data-k="D"><b class="k">D.</b><span class="body"><span class="en">“Communicate the decisions with a note that they were AI-assisted, and correct any recommendation an employee later disputes.”</span><span class="vi">Thông báo quyết định kèm ghi chú có AI hỗ trợ, sau này nhân viên nào phản đối đề xuất nào thì sửa đề xuất đó.</span></span></button>
+    </div>
+    <p class="qfb" hidden></p>
+    <div class="qexp" hidden>
+      <span class="lbl">Phân tích đề</span>
+      <ul>
+        <li><b>Đề kể:</b> Claude đề xuất ai vào chương trình cải thiện hiệu suất. Output có trích đoạn, viết chuyên nghiệp.</li>
+        <li><b>Chỗ khó:</b> output trông đã “có căn cứ”. Nhưng đây là quyết định về việc làm của từng người, và người nhận là chính nhân viên.</li>
+        <li><b>Đề hỏi:</b> quy trình duyệt phù hợp nhất, <i>trước khi</i> thông báo.</li>
+      </ul>
+      <span class="lbl">Cần biết để chọn</span>
+      <ol>
+        <li>Hệ trọng, người nhận bị ảnh hưởng trực tiếp, lĩnh vực nhân sự: cần người có chuyên môn, chịu trách nhiệm, duyệt trước.</li>
+        <li>Trích dẫn làm output kiểm được, chưa làm nó đã kiểm.</li>
+        <li>Claude kiểm Claude, nhãn AI, sửa sau khi gửi đều không thay được người duyệt trước.</li>
+      </ol>
+      <span class="lbl">Từng đáp án</span>
+      <ul class="verdict">
+        <li><b>A sai.</b> Duyệt giọng không phải duyệt nội dung, và trích dẫn chưa phải là đã kiểm (ý 2). Hấp dẫn vì có “một người” trong vòng.</li>
+        <li class="ok"><b>B đúng.</b> Người hiểu công việc của nhân viên và chịu trách nhiệm quyết định, đối chiếu với hồ sơ gốc, trước khi dùng (ý 1, 2).</li>
+        <li><b>C sai.</b> Claude kiểm Claude (ý 3). Trong vòng đó không có ai chịu trách nhiệm về quyết định.</li>
+        <li><b>D sai.</b> Nhãn chỉ lo minh bạch, và sửa sau khi đã thông báo là quá muộn với quyết định về con người (ý 3).</li>
+      </ul>
+      <button type="button" class="qreset">Làm lại câu này</button>
+    </div>
+  </div>
+
+  <div class="qcase" data-answer="C">
+    <h5 class="sub">Dạng 2: cái nào duyệt nhẹ là đủ</h5>
+    <span class="lbl">Đề sẽ viết kiểu này</span>
+    <div class="qtext">
+      <span class="en">“Which of these Claude outputs can a marketing coordinator reasonably use after her own quick read, without further expert review?”</span>
+      <span class="vi">Dịch: Trong các output dưới đây do Claude tạo, cái nào một điều phối viên marketing có thể dùng sau khi tự đọc nhanh, không cần thêm chuyên gia duyệt?</span>
+    </div>
+    <span class="lbl">Bạn chọn đáp án nào?</span>
+    <div class="qopts">
+      <button type="button" class="qopt" data-k="A"><b class="k">A.</b><span class="body"><span class="en">“A reply to a customer's formal complaint that states a refund amount and a legal deadline.”</span><span class="vi">Thư trả lời một khiếu nại chính thức của khách, có nêu số tiền hoàn và một thời hạn pháp lý.</span></span></button>
+      <button type="button" class="qopt" data-k="B"><b class="k">B.</b><span class="body"><span class="en">“A summary of a supplier contract's termination clauses that the team will use to decide whether to exit the contract early, which may trigger penalty fees.”</span><span class="vi">Bản tóm tắt điều khoản chấm dứt trong hợp đồng nhà cung cấp, đội sẽ dựa vào để quyết có rút khỏi hợp đồng sớm không, việc có thể phát sinh phí phạt.</span></span></button>
+      <button type="button" class="qopt" data-k="C"><b class="k">C.</b><span class="body"><span class="en">“Ten subject-line ideas for the internal staff newsletter, which she will choose from and edit.”</span><span class="vi">Mười ý tưởng tiêu đề cho bản tin nội bộ, cô sẽ tự chọn và sửa.</span></span></button>
+      <button type="button" class="qopt" data-k="D"><b class="k">D.</b><span class="body"><span class="en">“A public social media post announcing the results of the product's safety tests.”</span><span class="vi">Bài đăng công khai trên mạng xã hội công bố kết quả kiểm định an toàn của sản phẩm.</span></span></button>
+    </div>
+    <p class="qfb" hidden></p>
+    <div class="qexp" hidden>
+      <span class="lbl">Phân tích đề</span>
+      <ul>
+        <li><b>Đề kể:</b> bốn output, cùng một người dùng.</li>
+        <li><b>Chỗ khó:</b> đề hỏi ngược. Không hỏi cái nào cần duyệt, mà hỏi cái nào duyệt nhẹ là đủ. Phải xét tín hiệu của từng cái.</li>
+        <li><b>Đề hỏi:</b> cái nào tự đọc nhanh là đủ.</li>
+      </ul>
+      <span class="lbl">Cần biết để chọn</span>
+      <ol>
+        <li>Năm tín hiệu: mức hệ trọng, người nhận, rút lại được không, loại nội dung, lĩnh vực được quản lý.</li>
+        <li>Duyệt theo rủi ro: ca nhẹ thì duyệt nhẹ. Bắt mọi thứ qua chuyên gia là làm quá tay.</li>
+      </ol>
+      <span class="lbl">Từng đáp án</span>
+      <ul class="verdict">
+        <li><b>A sai.</b> Gửi khách bên ngoài, có số tiền và hạn pháp lý, gửi rồi không rút được (ý 1).</li>
+        <li><b>B sai.</b> Dùng nội bộ, nhưng là điều khoản hợp đồng, quyết định chấm dứt dựa vào đó, và chấm dứt sớm có thể mất phí phạt. Cần người hiểu hợp đồng kiểm (ý 1).</li>
+        <li class="ok"><b>C đúng.</b> Nội bộ, chỉ là ý tưởng, chính cô chọn và sửa, sai thì không hại ai (ý 2).</li>
+        <li><b>D sai.</b> Công khai, về an toàn sản phẩm, là kết quả kiểm định cụ thể, đăng rồi khó gỡ (ý 1).</li>
+      </ul>
+      <button type="button" class="qreset">Làm lại câu này</button>
+    </div>
+  </div>
+
+  <div class="more"><b>Biết thêm</b><ul>
+    <li><b>Người đọc làm theo mà không hỏi lại</b> (bệnh nhân, khách hàng cá nhân, nhân viên mới) là tín hiệu nâng mức duyệt, kể cả khi nội dung nghe đơn giản.</li>
+    <li><b>Việc vượt chuyên môn của bạn thì chuyển lên</b> cho đúng người: pháp chế, compliance, chuyên gia của mảng đó (xem “escalate” ở <a href="#l-0-2">bài 0.2</a>).</li>
+    <li><b>Kiểm thêm khác với giao chuyên gia.</b> Output nhiều trích dẫn thì mở từng nguồn. Nhiều chi tiết thì so từng chi tiết với nguồn gốc. Sai thì đắt thì hỏi lại ở chat mới để so. Khi đó vẫn có thể cần người duyệt sau cùng.</li>
+    <li><b>Trang trợ giúp của Anthropic</b> dặn soi kỹ mọi lời khuyên hệ trọng từ Claude. Đề hay đặt đáp án đúng ở bước duyệt trước khi gửi, không phải ở bước sửa sau.</li>
+  </ul></div>
+  <div class="rule">Quy tắc: output càng hệ trọng, càng ra ngoài, càng khó rút lại thì càng cần một người có chuyên môn, chịu trách nhiệm, duyệt trước khi gửi.</div>
+  <div class="remember"><b>Nhớ nhanh</b><ul>
+    <li>Năm tín hiệu: hệ trọng, người nhận, rút lại được không, loại nội dung, lĩnh vực được quản lý.</li>
+    <li>Người duyệt phải phán được nội dung và chịu trách nhiệm. Duyệt trước khi gửi.</li>
+    <li>Claude thứ hai, chạy lại, nhãn AI: không thay được người duyệt.</li>
+    <li>Ca nhẹ thì duyệt nhẹ. Không bắt mọi thứ qua chuyên gia.</li>
+  </ul></div>
+  <div class="src">Đọc thêm: <a href="https://support.claude.com/en/articles/8525154-claude-is-providing-incorrect-or-misleading-responses-what-s-going-on">Claude is providing incorrect or misleading responses</a> · <a href="https://www.anthropic.com/legal/aup">Usage Policy</a> · <a href="https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-hallucinations">Reduce hallucinations</a></div>
+  <label class="done"><input type="checkbox" data-lesson="l-2-4"> Đã học bài này</label>
+</article>
+
+<article class="lesson" id="l-2-5" data-domain="2" data-ts="2.5" data-min="14">
+  <header class="lh"><span class="ts">TS 2.5</span><h3>Sửa output cho đúng người đọc, và so các bản nháp bằng tiêu chí viết trước</h3><span class="rt">~14 phút</span></header>
+  <p class="need">Cần biết trước: vòng Description–Discernment ở <a href="#l-2-0">bài Nền tảng</a>, cách đổi phát hiện thành yêu cầu ở <a href="#l-2-1">bài 2.1</a>.</p>
+  <div class="defs"><b>Khái niệm của bài</b><dl>
+    <dt>Người đọc đích (intended audience)</dt><dd>Người sẽ đọc và dùng output: họ biết gì rồi, cần gì, đọc xong phải làm gì.</dd>
+    <dt>Register (giọng, cấp độ ngôn ngữ)</dt><dd>Mức trang trọng và mức chuyên môn của câu chữ. Thư gửi ban giám đốc khác tin nhắn cho đồng nghiệp. Hướng dẫn cho kỹ sư khác hướng dẫn cho khách.</dd>
+    <dt>Đúng chữ, sai ý (letter over spirit)</dt><dd>Claude làm đúng y lời dặn, nhưng mục đích thật của bạn vẫn chưa đạt. Dặn “ngắn hơn” thì bài ngắn hơn, nhưng người đọc vẫn không thấy điều quan trọng.</dd>
+    <dt>Fit (độ hợp người đọc)</dt><dd>Output có đúng thứ người đọc cần, ở đúng mức họ hiểu, theo đúng thứ tự họ quan tâm không. Khác với độ chính xác: hai bản đúng như nhau có thể hợp người đọc rất khác nhau.</dd>
+  </dl></div>
+  <p>Guide dùng bốn động từ. <b>Edit</b> (sửa câu chữ), <b>adapt</b> (đổi cho một người đọc khác), <b>refine</b> (làm tốt dần qua nhiều vòng), <b>compare</b> (so các bản theo tiêu chí). Bài này đi lần lượt.</p>
+
+  <h4>Bản nháp đầu là điểm xuất phát</h4>
+  <p>Bản nháp đầu lệch người đọc là chuyện bình thường, không phải dấu hiệu Claude không hợp việc này. Nó cho bạn biết lần trước mô tả còn thiếu gì. Mỗi vòng:</p>
+  <ol>
+    <li><b>Discernment:</b> tìm chỗ bản nháp không hợp người đọc.</li>
+    <li><b>Description:</b> mô tả cách sửa rõ hơn lần trước.</li>
+    <li>Lặp lại tới khi bản nháp hợp người đọc.</li>
+  </ol>
+  <p>Ví dụ: tài liệu hướng dẫn nghỉ phép viết như cho quản lý nhưng lại gửi nhân viên mới, quá nhiều thuật ngữ nội bộ. Lần sau nói rõ: người đọc là nhân viên vào làm tuần đầu, chưa biết tên các hệ thống, thuật ngữ nào cũng phải giải thích ngay trong câu. Bấm tạo lại với prompt cũ thì bỏ qua bước Discernment. Hỏi Claude “bản này ổn chưa” thì thay phán đoán của bạn bằng phán đoán của nó.</p>
+
+  <h4>Yêu cầu sửa phải làm theo được</h4>
+  <div class="tw"><table>
+    <tr><th>Mơ hồ</th><th>Làm theo được</th></tr>
+    <tr><td>“Viết hấp dẫn hơn”</td><td>“Mở đầu bằng kết quả dự án tháng 3: 120 hộ có nước sạch. Bỏ đoạn giới thiệu chung về tổ chức.”</td></tr>
+    <tr><td>“Thân thiện hơn”</td><td>“Xưng ‘chúng tôi’, gọi khách là ‘anh/chị’, bỏ các câu bị động.”</td></tr>
+    <tr><td>“Chuyên nghiệp hơn”</td><td>“Câu đầu nêu việc cần duyệt và hạn thứ Sáu. Lý do để sau.”</td></tr>
+    <tr><td>“Làm lại cho tốt hơn”</td><td>“Rút phần phương pháp khảo sát xuống một câu, đưa ba phát hiện chính lên đầu.”</td></tr>
+  </table></div>
+  <p>Tính từ như “hấp dẫn”, “tốt hơn” để Claude tự đoán phải đổi cái gì. Một lời nhận xét đúng (“bản này nhạt”) chưa phải là một yêu cầu làm theo được, bạn phải dịch nó ra thay đổi cụ thể. Nhiều thay đổi còn cần thông tin chỉ bạn có: kết quả dự án cũ, tên đối tác, kinh nghiệm của nhóm. Diễn đạt lại bao nhiêu lần cũng không tạo ra được thông tin đó.</p>
+
+  <h4>Đúng chữ, sai ý: nói mục đích bên cạnh lời dặn</h4>
+  <div class="tw"><table>
+    <tr><th>Lời dặn</th><th>Claude làm</th><th>Vấn đề thật</th><th>Sửa</th></tr>
+    <tr><td>“Viết ngắn lại”</td><td>Cắt mỗi đoạn một nửa</td><td>Cấu trúc: việc cần quyết nằm giữa bài</td><td>“Giám đốc tài chính phải thấy ngay trong hai dòng đầu: cần duyệt ngân sách trước thứ Sáu.”</td></tr>
+    <tr><td>“Viết trang trọng hơn”</td><td>Đổi từ ngữ cho lịch sự</td><td>Thư chôn mất lời đề nghị</td><td>“Mục tiêu: đối tác đồng ý dời lịch họp. Nêu đề nghị ở câu đầu.”</td></tr>
+  </table></div>
+  <ul>
+    <li><b>Mục đích</b> nói người đọc phải nhận ra, tin, hay làm gì. <b>Định dạng</b> nói hình dạng output: “ba gạch đầu dòng”, “dưới 200 chữ”.</li>
+    <li>Lời dặn nghĩa đen cho kết quả vô dụng thì <b>nói mục đích bên cạnh lời dặn</b>. Nhắc lại lời dặn mạnh hơn (“NGẮN HƠN NỮA”) không giúp, vì cái thiếu là ý, không phải chữ.</li>
+    <li>Cách thử: đưa lời dặn trần → xem kết quả → đưa lại kèm mục đích → so hai kết quả.</li>
+  </ul>
+
+  <h4>Ba cần gạt chỉnh giọng và độ sâu</h4>
+  <ul>
+    <li><b>Vai:</b> “Bạn là chuyên viên chăm sóc khách hàng, viết cho khách lần đầu dùng dịch vụ.” Vai dùng lâu dài thì đặt trong project instructions (<a href="#l-5-1">bài 5.1</a>).</li>
+    <li><b>Ngữ cảnh và lý do:</b> ai đọc, đọc để làm gì, vì sao quan trọng. Claude suy rộng được từ lý do.</li>
+    <li><b>Ví dụ:</b> muốn một giọng mà Claude chưa viết ra, đưa một mẫu viết đúng giọng đó. Tải lên tài liệu cũ của bạn (thư đã gửi, báo cáo đã duyệt) để Claude bắt được giọng và độ kỹ.</li>
+  </ul>
+  <p>Cấu trúc prompt dạy ở <a href="#l-1-1">bài 1.1</a>. Ở đây chỉ dùng ba cần gạt này để chỉnh output cho người đọc.</p>
+
+  <h4>Một nội dung, nhiều người đọc</h4>
+  <ul>
+    <li>Hai nhóm người đọc khác nền thì xin <b>hai bản</b>, mỗi bản đúng mức của nhóm đó. Một bản kỹ thuật kèm bảng thuật ngữ vẫn bắt người không chuyên tự dịch.</li>
+    <li>Cắt ngắn không sửa được chuyện sai mức từ ngữ. Bản ngắn mà đầy thuật ngữ vẫn khó hiểu.</li>
+    <li><b>Độ chính xác áp cho mọi bản.</b> Bản cho người mới được đổi cách giải thích, không được đổi sự thật. Bỏ mất điều kiện “còn hóa đơn” cho dễ hiểu là làm sai.</li>
+  </ul>
+
+  <h4>So bản nháp bằng tiêu chí viết trước</h4>
+  <p>Chọn bản “đọc thấy hay hơn” cho bạn một lựa chọn bạn không giải thích được, không bảo vệ được. Viết tiêu chí <b>trước khi</b> đọc bản nào.</p>
+  <ol>
+    <li><b>Lấy tiêu chí từ người đọc:</b> điều họ đã nói là ưu tiên, điều họ đã biết, điều họ phải làm sau khi đọc.</li>
+    <li><b>Viết sao cho đồng nghiệp áp dụng được</b> lên một bản không phải của bạn.</li>
+    <li><b>Thử tiêu chí trên một bài cũ</b> của bạn: nó có tách được bài tạm được với bài xuất sắc không.</li>
+    <li><b>Chấm mọi bản trên cùng một danh sách.</b> Mỗi bản một thước đo thì so sánh không nói lên gì.</li>
+  </ol>
+  <div class="tw"><table>
+    <tr><th>Tiêu chí “hợp người đọc”</th><th>Bắt được lỗi gì</th></tr>
+    <tr><td>Có đúng giọng thật của tổ chức, hay nghe chung chung như ai cũng viết được?</td><td>Bản nháp “đúng mà nhạt”</td></tr>
+    <tr><td>Có trả lời ưu tiên người đọc đã nêu, hay chỉ kể về mình?</td><td>Thư xin tài trợ chỉ mô tả chương trình, không nối với điều nhà tài trợ quan tâm</td></tr>
+    <tr><td>Có đúng mức người đọc, thuật ngữ có được giải thích không?</td><td>Hướng dẫn quá khó hoặc quá sơ sài</td></tr>
+    <tr><td>Điều quan trọng nhất có đứng đầu không?</td><td>Việc cần làm nằm ở cuối thư</td></tr>
+    <tr><td>Có câu chữ nào làm người liên quan khó chịu, hay nhấn vào cái thiếu của họ?</td><td>Lời lẽ coi thường người được giúp</td></tr>
+    <tr><td>Thiếu gì mà chỉ bạn biết?</td><td>Chỗ trống Claude không thể tự điền</td></tr>
+  </table></div>
+  <p>Độ chính xác vẫn là một bước kiểm riêng, bắt buộc. Hai bản đúng như nhau chưa chắc hợp người đọc như nhau.</p>
+
+  <h4>Bạn quyết, và bạn chịu trách nhiệm</h4>
+  <ul>
+    <li>Không bắt buộc chọn nguyên bản A hay nguyên bản B. Giữ phần tốt của mỗi bản, viết lại phần yếu.</li>
+    <li>Claude giúp chấm theo tiêu chí của bạn được, nhưng hỏi “bản nào hay hơn” không chốt được câu hỏi. Quyết định là của bạn.</li>
+    <li>Bản trơn tru, đúng vẫn có thể là lựa chọn sai cho người đọc. “Nó có dùng được không?” khác “nó có đúng là thứ người đọc cần không?”.</li>
+    <li>Người gửi phải đứng ra chịu được từng chữ trong bản gửi đi. Claude viết, nhưng không chịu trách nhiệm thay bạn.</li>
+  </ul>
+
+  <div class="story"><b>Tình huống.</b> Anh Tuấn, quản lý cơ sở vật chất, nhờ Claude soạn thông báo chuyển văn phòng gửi 120 nhân viên. Bản nháp đúng hết, nhưng ba đoạn đầu kể lịch của công ty vận chuyển, tới đoạn thứ tư mới nói nhân viên phải đóng thùng đồ trước thứ Năm. Anh dặn “viết ngắn lại”. Bản mới ngắn hơn, vẫn đúng thứ tự cũ. Anh đổi cách dặn: “Người đọc là nhân viên. Họ cần biết ba việc phải làm và hạn của từng việc, đặt ngay đầu thư. Lịch vận chuyển để một dòng cuối.” Bản thứ ba dùng được. Anh xin thêm một bản riêng cho đội IT, có lịch tháo lắp thiết bị chi tiết, và kiểm cả hai bản cùng ghi đúng ngày giờ.</div>
+  <div class="vs">
+    <div class="bad"><b>Tệ</b><ul>
+      <li>“Viết hay hơn đi” rồi chờ.</li>
+      <li>Bài vẫn chưa ổn: dặn “ngắn hơn nữa”.</li>
+      <li>Một bản kỹ thuật cho mọi người, kèm bảng thuật ngữ.</li>
+      <li>Bản cho người mới bỏ bớt điều kiện cho dễ hiểu.</li>
+      <li>Đọc hai bản, chọn bản thấy hay, rồi mới nghĩ lý do.</li>
+    </ul></div>
+    <div class="good"><b>Tốt</b><ul>
+      <li>Nêu thay đổi cụ thể: thêm gì, bỏ gì, đưa gì lên đầu.</li>
+      <li>Nói mục đích: người đọc phải thấy gì, làm gì.</li>
+      <li>Mỗi nhóm người đọc một bản, cùng sự thật đã kiểm.</li>
+      <li>Viết tiêu chí trước, chấm mọi bản trên cùng danh sách, ghép phần tốt.</li>
+    </ul></div>
+  </div>
+
+  <h4>Khi đi thi</h4>
+  <p class="need">Bài này thường ra 3 dạng câu hỏi. Đọc đề, <b>chọn một đáp án trước</b>; phần giải thích chỉ hiện ra sau khi bạn chọn.</p>
+
+  <div class="qcase" data-answer="A">
+    <h5 class="sub">Dạng 1: yêu cầu sửa nào làm theo được</h5>
+    <span class="lbl">Đề sẽ viết kiểu này</span>
+    <div class="qtext">
+      <span class="en">“A bank branch manager's Claude-drafted letter to small-business customers about a new fee schedule is accurate, but customers keep calling, confused. The letter opens with three paragraphs on the bank's digital strategy and states the new fees and their effective date only at the end. Which follow-up instruction is most likely to fix the letter?”</span>
+      <span class="vi">Dịch: Thư do Claude soạn của một giám đốc chi nhánh ngân hàng gửi khách hàng doanh nghiệp nhỏ về biểu phí mới viết đúng, nhưng khách cứ gọi tới hỏi vì không hiểu. Thư mở đầu bằng ba đoạn về chiến lược số của ngân hàng, tới cuối mới nêu mức phí mới và ngày áp dụng. Yêu cầu sửa nào có khả năng sửa được lá thư nhất?</span>
+    </div>
+    <span class="lbl">Bạn chọn đáp án nào?</span>
+    <div class="qopts">
+      <button type="button" class="qopt" data-k="A"><b class="k">A.</b><span class="body"><span class="en">“Put the new fees, the effective date and customers' options first, and cut the strategy part to one line.”</span><span class="vi">Đưa mức phí mới, ngày áp dụng và những gì khách có thể làm lên đầu, rút phần chiến lược còn một dòng.</span></span></button>
+      <button type="button" class="qopt" data-k="B"><b class="k">B.</b><span class="body"><span class="en">“Make the letter more engaging and customer-friendly, so that small-business owners actually read it to the end.”</span><span class="vi">Viết thư hấp dẫn và thân thiện hơn, để chủ doanh nghiệp nhỏ chịu đọc tới cuối.</span></span></button>
+      <button type="button" class="qopt" data-k="C"><b class="k">C.</b><span class="body"><span class="en">“Shorten the letter by about half.”</span><span class="vi">Rút thư ngắn đi khoảng một nửa.</span></span></button>
+      <button type="button" class="qopt" data-k="D"><b class="k">D.</b><span class="body"><span class="en">“Rewrite the letter in a more formal, professional tone that suits a message from a bank.”</span><span class="vi">Viết lại thư với giọng trang trọng, chuyên nghiệp hơn, hợp với thư của một ngân hàng.</span></span></button>
+    </div>
+    <p class="qfb" hidden></p>
+    <div class="qexp" hidden>
+      <span class="lbl">Phân tích đề</span>
+      <ul>
+        <li><b>Đề kể:</b> thư đúng, nhưng khách gọi hỏi vì phí mới và ngày áp dụng nằm cuối thư, sau ba đoạn chiến lược.</li>
+        <li><b>Chỗ khó:</b> thư không sai gì. Vấn đề là thứ tự và điều người đọc cần. Ba phương án còn lại đều là yêu cầu sửa nghe hợp lý.</li>
+        <li><b>Đề hỏi:</b> yêu cầu sửa nào có khả năng sửa được thư nhất.</li>
+      </ul>
+      <span class="lbl">Cần biết để chọn</span>
+      <ol>
+        <li>Yêu cầu sửa phải nói thay đổi cụ thể: thêm gì, bỏ gì, đưa gì lên đầu. Tính từ để Claude tự đoán.</li>
+        <li>Lời dặn về hình thức (ngắn hơn, trang trọng hơn) có thể được làm đúng chữ mà vẫn sai ý.</li>
+        <li>Người đọc ở đây cần biết: phí mới, ngày áp dụng, họ làm được gì.</li>
+      </ol>
+      <span class="lbl">Từng đáp án</span>
+      <ul class="verdict">
+        <li class="ok"><b>A đúng.</b> Nói đúng thay đổi cụ thể, theo đúng điều khách cần biết (ý 1, 3).</li>
+        <li><b>B sai.</b> “Hấp dẫn, thân thiện” là tính từ, Claude phải đoán đổi cái gì (ý 1). Mục đích “đọc tới cuối” nghe đúng, nhưng vẫn không nói phải đưa gì lên đầu.</li>
+        <li><b>C sai.</b> Bản ngắn một nửa vẫn có thể giữ thứ tự cũ: đúng chữ, sai ý (ý 2). Hấp dẫn vì thư dài thật.</li>
+        <li><b>D sai.</b> Trang trọng hơn không đưa mức phí mới lên đầu (ý 2).</li>
+      </ul>
+      <button type="button" class="qreset">Làm lại câu này</button>
+    </div>
+  </div>
+
+  <div class="qcase" data-answer="D">
+    <h5 class="sub">Dạng 2: một nội dung, hai nhóm người đọc</h5>
+    <span class="lbl">Đề sẽ viết kiểu này</span>
+    <div class="qtext">
+      <span class="en">“An IT team must explain a new password-reset process to both help-desk staff and non-technical employees. Claude's single draft is accurate but full of help-desk terminology. What is the best approach?”</span>
+      <span class="vi">Dịch: Đội IT phải giải thích quy trình đặt lại mật khẩu mới cho cả nhân viên help desk (bộ phận hỗ trợ kỹ thuật) lẫn nhân viên không rành kỹ thuật. Bản nháp duy nhất của Claude viết đúng nhưng đầy thuật ngữ của help desk. Cách làm tốt nhất là gì?</span>
+    </div>
+    <span class="lbl">Bạn chọn đáp án nào?</span>
+    <div class="qopts">
+      <button type="button" class="qopt" data-k="A"><b class="k">A.</b><span class="body"><span class="en">“Keep the single draft and add a glossary at the end that explains each help-desk term in plain language.”</span><span class="vi">Giữ một bản duy nhất, thêm ở cuối một bảng giải thích từng thuật ngữ help desk bằng lời dễ hiểu.</span></span></button>
+      <button type="button" class="qopt" data-k="B"><b class="k">B.</b><span class="body"><span class="en">“Ask Claude to cut the draft to half its length so employees are not overwhelmed.”</span><span class="vi">Yêu cầu Claude cắt bản nháp còn một nửa để nhân viên không bị ngợp.</span></span></button>
+      <button type="button" class="qopt" data-k="C"><b class="k">C.</b><span class="body"><span class="en">“Send the draft as it is, since employees can always call the help desk about any step that is unclear to them.”</span><span class="vi">Gửi nguyên bản nháp, vì bước nào chưa rõ nhân viên vẫn có thể gọi help desk hỏi.</span></span></button>
+      <button type="button" class="qopt" data-k="D"><b class="k">D.</b><span class="body"><span class="en">“Ask for one version per audience at its readers' level, and check that both state the same steps correctly.”</span><span class="vi">Xin mỗi nhóm người đọc một bản, đúng mức của nhóm đó, và kiểm cả hai bản cùng ghi đúng các bước.</span></span></button>
+    </div>
+    <p class="qfb" hidden></p>
+    <div class="qexp" hidden>
+      <span class="lbl">Phân tích đề</span>
+      <ul>
+        <li><b>Đề kể:</b> một quy trình, hai nhóm người đọc rất khác nền. Một bản nháp, đúng, đầy thuật ngữ.</li>
+        <li><b>Chỗ khó:</b> bản nháp không sai, chỉ sai mức cho một nhóm người đọc.</li>
+        <li><b>Đề hỏi:</b> cách làm tốt nhất.</li>
+      </ul>
+      <span class="lbl">Cần biết để chọn</span>
+      <ol>
+        <li>Hai nhóm khác nền thì làm hai bản, mỗi bản đúng mức người đọc của nó.</li>
+        <li>Cắt ngắn hay thêm bảng thuật ngữ không sửa được chuyện sai mức từ ngữ.</li>
+        <li>Độ chính xác áp cho mọi bản: đổi cách giải thích, không đổi sự thật.</li>
+      </ol>
+      <span class="lbl">Từng đáp án</span>
+      <ul class="verdict">
+        <li><b>A sai.</b> Bảng thuật ngữ vẫn bắt nhân viên tự dịch từng câu (ý 2). Hấp dẫn vì giữ được một bản duy nhất.</li>
+        <li><b>B sai.</b> Ngắn mà vẫn đầy thuật ngữ thì vẫn khó hiểu (ý 2).</li>
+        <li><b>C sai.</b> Đẩy việc hiểu sang người đọc, và làm tăng số cuộc gọi tới help desk. Không sửa gì cả.</li>
+        <li class="ok"><b>D đúng.</b> Mỗi nhóm một bản đúng mức (ý 1), và kiểm cả hai bản cùng đúng các bước (ý 3).</li>
+      </ul>
+      <button type="button" class="qreset">Làm lại câu này</button>
+    </div>
+  </div>
+
+  <div class="qcase" data-answer="C">
+    <h5 class="sub">Dạng 3: chọn giữa hai bản nháp</h5>
+    <span class="lbl">Đề sẽ viết kiểu này</span>
+    <div class="qtext">
+      <span class="en">“A nonprofit coordinator has two accurate Claude drafts of a sponsorship letter to a bank's community-investment team. She plans to send whichever one ‘reads better’ to her. What should she do instead?”</span>
+      <span class="vi">Dịch: Một điều phối viên của tổ chức phi lợi nhuận có hai bản nháp thư xin tài trợ do Claude viết, gửi đội đầu tư cộng đồng của một ngân hàng. Cả hai đều đúng. Cô định gửi bản nào mình “đọc thấy hay hơn”. Cô nên làm gì thay vào đó?</span>
+    </div>
+    <span class="lbl">Bạn chọn đáp án nào?</span>
+    <div class="qopts">
+      <button type="button" class="qopt" data-k="A"><b class="k">A.</b><span class="body"><span class="en">“Ask Claude which draft is stronger and send that one, since it wrote both.”</span><span class="vi">Hỏi Claude bản nào tốt hơn rồi gửi bản đó, vì Claude viết cả hai.</span></span></button>
+      <button type="button" class="qopt" data-k="B"><b class="k">B.</b><span class="body"><span class="en">“Send the longer draft, because more detail shows more commitment.”</span><span class="vi">Gửi bản dài hơn, vì nhiều chi tiết hơn cho thấy tâm huyết hơn.</span></span></button>
+      <button type="button" class="qopt" data-k="C"><b class="k">C.</b><span class="body"><span class="en">“Write criteria from the bank team's stated priorities, score both drafts on the same list, and combine the strongest parts.”</span><span class="vi">Viết tiêu chí từ những ưu tiên đội ngân hàng đã nêu, chấm cả hai bản trên cùng danh sách đó, rồi ghép những phần tốt nhất.</span></span></button>
+      <button type="button" class="qopt" data-k="D"><b class="k">D.</b><span class="body"><span class="en">“Send either draft, because equally accurate drafts fit the reader equally well.”</span><span class="vi">Gửi bản nào cũng được, vì hai bản đúng như nhau thì hợp người đọc như nhau.</span></span></button>
+    </div>
+    <p class="qfb" hidden></p>
+    <div class="qexp" hidden>
+      <span class="lbl">Phân tích đề</span>
+      <ul>
+        <li><b>Đề kể:</b> hai bản nháp, đều đúng. Người gửi định chọn theo cảm giác.</li>
+        <li><b>Chỗ khó:</b> cả hai đều đúng, nên câu hỏi không còn là độ chính xác mà là độ hợp người đọc.</li>
+        <li><b>Đề hỏi:</b> thay vì chọn theo cảm giác, nên làm gì.</li>
+      </ul>
+      <span class="lbl">Cần biết để chọn</span>
+      <ol>
+        <li>Viết tiêu chí trước khi đọc, lấy từ ưu tiên của người đọc.</li>
+        <li>Chấm mọi bản trên cùng một danh sách. Được phép ghép phần tốt của các bản.</li>
+        <li>Đúng như nhau chưa chắc hợp như nhau. Quyết định là của người gửi.</li>
+      </ol>
+      <span class="lbl">Từng đáp án</span>
+      <ul class="verdict">
+        <li><b>A sai.</b> Giao quyết định cho Claude (ý 3). Người viết không phải người chịu trách nhiệm về lá thư.</li>
+        <li><b>B sai.</b> Dài hơn không có nghĩa hợp hơn. Đề không nói người đọc cần nhiều chi tiết (ý 1).</li>
+        <li class="ok"><b>C đúng.</b> Tiêu chí từ người đọc, cùng một thước đo, ghép phần mạnh (ý 1, 2).</li>
+        <li><b>D sai.</b> Nhầm đúng với hợp (ý 3). Hấp dẫn vì đề đã nói cả hai đều đúng.</li>
+      </ul>
+      <button type="button" class="qreset">Làm lại câu này</button>
+    </div>
+  </div>
+
+  <div class="more"><b>Biết thêm</b><ul>
+    <li><b>Không hạ chuẩn chính xác cho người đọc ít chuyên môn.</b> Mức độ và độ chính xác là hai bước kiểm riêng. Bản nào gửi đi cũng phải đúng.</li>
+    <li><b>Ngắn hơn không phải lúc nào cũng tốt hơn.</b> Người đọc mới vào nghề có khi cần bản dài hơn, có giải thích từng bước.</li>
+    <li><b>Hỏi Claude tự chấm bản của nó</b> có thể giúp áp tiêu chí nhanh hơn, nhưng tiêu chí phải là của bạn, và người chốt vẫn là bạn.</li>
+    <li><b>Ví dụ mẫu thường mạnh hơn mô tả.</b> Muốn đúng giọng công ty, đưa một thư cũ đã được khen hơn là viết “giọng ấm áp nhưng chuyên nghiệp”.</li>
+  </ul></div>
+  <div class="rule">Quy tắc: nói rõ người đọc là ai và phải làm gì, yêu cầu thay đổi cụ thể, và so mọi bản trên cùng một bộ tiêu chí viết trước.</div>
+  <div class="remember"><b>Nhớ nhanh</b><ul>
+    <li>Bản nháp đầu là điểm xuất phát. Mỗi vòng: tìm chỗ lệch, mô tả rõ hơn.</li>
+    <li>Tính từ không phải yêu cầu. Nói thêm gì, bỏ gì, đưa gì lên đầu.</li>
+    <li>Đúng chữ sai ý: nói mục đích bên cạnh lời dặn.</li>
+    <li>Nhiều người đọc thì nhiều bản, cùng sự thật. Tiêu chí viết trước, cùng thước đo, bạn quyết.</li>
+  </ul></div>
+  <div class="src">Đọc thêm: <a href="https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices">Prompting best practices</a> · <a href="https://anthropic.skilljar.com/ai-fluency-framework-foundations">AI Fluency: Framework &amp; Foundations</a> · <a href="https://anthropic-partners.skilljar.com/path/claude-associate/evaluating-validating-claudes-output">Evaluating &amp; Validating Claude's Output</a></div>
+  <label class="done"><input type="checkbox" data-lesson="l-2-5"> Đã học bài này</label>
+</article>
+
+<article class="lesson" id="l-2-6" data-domain="2" data-ts="2.6" data-min="12">
+  <header class="lh"><span class="ts">TS 2.6</span><h3>Định dạng theo nơi nhận: trả lời ngay, artifact, hay dữ liệu có cấu trúc</h3><span class="rt">~12 phút</span></header>
+  <p class="need">Cần biết trước: artifact là gì trong app (<a href="#l-3-1">bài 3.1</a>), “trình bày đẹp không phải đã kiểm” (<a href="#l-2-0">bài Nền tảng</a>).</p>
+  <div class="defs"><b>Khái niệm của bài</b><dl>
+    <dt>Inline (trả lời ngay trong chat)</dt><dd>Câu trả lời bình thường nằm trong luồng chat. Đọc một lần rồi thôi.</dd>
+    <dt>Artifact</dt><dd>Nội dung đứng riêng, mở cạnh cuộc chat, sửa được, quay lại được, chia sẻ được: tài liệu, sơ đồ, bảng điều khiển, công cụ nhỏ.</dd>
+    <dt>Dữ liệu có cấu trúc (structured data)</dt><dd>Output theo khuôn cố định để bảng tính hay phần mềm khác đọc được. Ví dụ: bảng, CSV (file chữ, mỗi dòng một bản ghi, các cột ngăn bằng dấu phẩy), JSON (định dạng dữ liệu gồm các cặp “tên trường: giá trị”).</dd>
+    <dt>Curate (chọn lọc và gom)</dt><dd>Gom thông tin rải rác về một chỗ, bỏ trùng, giữ phần cần, sắp lại cho người dùng sau tìm được.</dd>
+  </dl></div>
+
+  <h4>Định dạng đi theo nơi nhận</h4>
+  <p>Chọn định dạng bằng hai câu hỏi: <b>ai hay cái gì nhận output này</b>, và <b>họ sẽ làm gì với nó tiếp theo</b>.</p>
+  <div class="tw"><table>
+    <tr><th>Nơi nhận và việc tiếp theo</th><th>Định dạng</th><th>Ví dụ</th></tr>
+    <tr><td>Một người hỏi nhanh, đọc một lần</td><td>Trả lời ngay trong chat</td><td>“KPI là viết tắt của gì?”</td></tr>
+    <tr><td>Một người sẽ sửa, dùng lại, gửi cho người khác, quay lại xem</td><td>Artifact dạng tài liệu</td><td>Bản mô tả dự án cả nhóm sẽ sửa qua nhiều vòng</td></tr>
+    <tr><td>Người cần nhìn một quy trình có rẽ nhánh</td><td>Artifact dạng sơ đồ</td><td>Quy trình duyệt chi ba cấp, cần chiếu trong buổi họp</td></tr>
+    <tr><td>Bảng tính hay phần mềm sẽ đọc</td><td>Bảng, CSV hoặc JSON, đúng cột hay trường mà nơi nhận cần</td><td>Danh sách 60 học viên để nhập vào hệ thống đào tạo</td></tr>
+    <tr><td>Người so nhiều mục theo cùng các thuộc tính</td><td>Bảng</td><td>Ba báo giá so theo giá, thời gian giao, bảo hành</td></tr>
+  </table></div>
+
+  <h4>Trả lời ngay hay làm artifact</h4>
+  <p>Trang trợ giúp của Anthropic nói Claude tạo artifact khi nội dung:</p>
+  <ul>
+    <li>“significant and self-contained, typically over 15 lines” (đáng kể và tự đứng được, thường dài hơn 15 dòng),</li>
+    <li>có khả năng được sửa, làm lại nhiều vòng, hay dùng lại ngoài cuộc chat,</li>
+    <li>đọc hiểu được mà không cần cuộc chat xung quanh,</li>
+    <li>là “content you're likely to refer back to or use later” (nội dung bạn có thể quay lại xem hay dùng sau).</li>
+  </ul>
+  <p>Luật nhanh: <b>đọc một lần rồi thôi thì trả lời ngay. Còn làm tiếp hay đưa cho người khác thì làm artifact.</b> Claude tự chọn theo các tiêu chí này, không cần hỏi xin phép. Bạn vẫn có thể nói rõ “làm thành tài liệu” khi muốn. Không phải câu trả lời nào có dữ kiện cũng nên thành artifact: một định nghĩa hai câu, gắn với cuộc chat, không ai sửa, thì để ngay trong chat.</p>
+  <p>Artifact có thể là tài liệu, đoạn code, trang web một trang, hình, sơ đồ và lưu đồ, bảng điều khiển, công cụ nhỏ. Logo vector cho nhà thiết kế là artifact dạng hình (SVG, định dạng hình vẽ bằng đường nét), không phải đoạn văn tả màu sắc hay một khối JSON. Tính năng artifact của sản phẩm (mẫu Docs, Slides, chia sẻ, xuất file) học ở <a href="#l-3-1">bài 3.1</a>.</p>
+
+  <h4>Gom thông tin cần giữ lâu về một chỗ</h4>
+  <p>Quyết định nằm rải trong mười cuộc chat thì khó tìm, và dễ bị một câu trả lời sau nói ngược lại. Artifact nằm ngoài từng cuộc chat: mọi artifact được lưu ở tab Artifacts trong thanh bên.</p>
+  <ol>
+    <li><b>Gom:</b> đưa các quyết định rải rác vào một tài liệu artifact.</li>
+    <li><b>Chọn lọc:</b> bỏ trùng, giữ quyết định cuối, ghi người chốt và ngày, tách riêng các câu hỏi còn mở.</li>
+    <li><b>Sửa ngay trên đó:</b> yêu cầu trong chat, gõ thẳng vào tài liệu, hoặc bôi đen một đoạn rồi chọn “Edit with Claude” (sửa với Claude) để chỉ sửa đoạn đó.</li>
+    <li><b>Kiểm với bản gốc trước khi phát cho mọi người.</b> Lúc gộp là lúc dữ kiện hay bị rơi mất hoặc bị trộn lẫn.</li>
+    <li><b>Xuất nếu cần:</b> tài liệu Docs xuất được ra Word, PDF, Markdown, Google Docs.</li>
+  </ol>
+  <p>Lưu ý: sửa một tin nhắn cũ trong chat sẽ tạo ra một phiên bản chat riêng (trang trợ giúp về artifact). Muốn giữ một bản duy nhất thì sửa thẳng trên artifact.</p>
+
+  <h4>Khi nơi nhận là bảng tính hay phần mềm</h4>
+  <p>Lời dẫn, tiêu đề, gạch đầu dòng giúp người đọc, nhưng làm hỏng việc nhập dữ liệu. Khi output đi vào bảng tính hay một hệ thống, prompt cần nói rõ:</p>
+  <ul>
+    <li><b>Đúng tên và thứ tự cột</b> (hay tên trường) mà nơi nhận đòi.</li>
+    <li><b>Mỗi dòng một bản ghi</b>, không thêm lời dẫn, không thêm nhận xét.</li>
+    <li><b>Giá trị được phép</b> cho các cột phân loại, viết đúng y từng chữ: “Đã duyệt / Chờ duyệt / Từ chối”. Lệch một chữ hoa, chữ thường cũng có thể làm bộ lọc bỏ sót.</li>
+    <li><b>Thiếu thì để trống</b> hoặc ghi “không có”, không đoán cho đủ.</li>
+  </ul>
+  <p>Khi bật cài đặt “Create and edit files” (tạo và sửa file, tên cũ: Code execution and file creation), Claude tạo được file Excel thật để bạn tải về. Trong chat, prompt chỉ <i>xin</i> một định dạng, không <i>bảo đảm</i> được nó. Cần bảo đảm khuôn tuyệt đối cho một hệ thống tự động thì chuyển cho đội kỹ thuật.</p>
+
+  <h4>Đúng khuôn chưa phải đúng nội dung</h4>
+  <p>Một bảng gọn, đủ cột, ô nào cũng có số trông như đã được kiểm. Thật ra khuôn chỉ cho biết hình dạng của output, không cho biết giá trị bên trong có đúng không.</p>
+  <ul>
+    <li>Một con số nằm đúng cột, đúng kiểu vẫn có thể sai.</li>
+    <li>Ô bắt buộc có thể bị điền dù nguồn không có thông tin đó.</li>
+    <li>Số dòng có thể ít hơn số mục đầu vào. Đếm lại.</li>
+    <li>Kiểm ngẫu nhiên vài dòng với tài liệu gốc trước khi nhập, nhất là cột tiền và cột ngày.</li>
+  </ul>
+
+  <h4>Văn xuôi, danh sách hay bảng cho người đọc</h4>
+  <div class="tw"><table>
+    <tr><th>Nội dung</th><th>Định dạng</th><th>Vì sao</th></tr>
+    <tr><td>Lập luận, phân tích, giải thích nguyên nhân</td><td>Đoạn văn liền mạch</td><td>Mối nối “vì… nên…” mang ý nghĩa. Gạch đầu dòng ngắn cắt mất mối nối</td></tr>
+    <tr><td>Các mục rời nhau, hoặc một bảng xếp hạng được yêu cầu</td><td>Danh sách</td><td>Mỗi mục đứng riêng được</td></tr>
+    <tr><td>Quy trình mà thứ tự và đủ bước quan trọng</td><td>Danh sách đánh số</td><td>Không sót bước, không đảo bước</td></tr>
+    <tr><td>Nhiều mục so theo cùng thuộc tính</td><td>Bảng</td><td>Nhìn ngang là so được ngay</td></tr>
+  </table></div>
+  <p>Ví dụ báo cáo tiến độ: đoạn giải thích vì sao ngày ra mắt lùi (nhà cung cấp giao trễ, nên kiểm thử trễ, nên đào tạo phải lùi) viết thành một đoạn văn. Danh sách việc còn lại bên dưới viết thành danh sách đánh số.</p>
+  <p>Docs prompting của Anthropic khuyên nói điều muốn có thay vì điều cấm: thay “đừng dùng markdown” (ký hiệu định dạng như # cho tiêu đề, * cho in đậm) bằng “viết thành các đoạn văn liền mạch”. Nói lý do của yêu cầu định dạng cũng giúp Claude áp dụng đúng ở chỗ khác. Docs còn ghi Fable 5.1 (model mạnh nhất hiện nay, xem <a href="#l-3-2">bài 3.2</a>) vốn đã ít định dạng hơn model trước, nên một khối lệnh cấm định dạng dài có thể làm mất cả cấu trúc mà nội dung cần.</p>
+
+  <div class="story"><b>Tình huống.</b> Chị Mai, điều phối sự kiện, chuẩn bị hội nghị khách hàng trong ba tuần, mỗi lần hỏi Claude lại mở một chat mới. Giờ các quyết định về địa điểm, thực đơn, lịch phát biểu nằm rải trong chín cuộc chat, hai cuộc còn nói ngược nhau về giờ khai mạc. Chị cũng nhờ Claude tổng hợp 12 báo giá “để đưa vào file Excel so sánh”, và nhận về một bài viết rất đẹp, mỗi nhà cung cấp một tiêu đề và vài gạch đầu dòng. Dán vào Excel thì vỡ hết cột. Hai lỗi chọn định dạng: thông tin cần giữ lâu thì để trong chat, còn dữ liệu cho bảng tính lại viết như văn cho người đọc.</div>
+  <div class="vs">
+    <div class="bad"><b>Tệ</b><ul>
+      <li>Định nghĩa một từ viết tắt cũng đòi làm artifact.</li>
+      <li>Quyết định quan trọng để rải rác trong nhiều chat.</li>
+      <li>Xin dữ liệu cho bảng tính nhưng không nói cột, để Claude viết như văn.</li>
+      <li>Thấy bảng đủ ô là nhập luôn.</li>
+      <li>Phân tích nguyên nhân viết thành chuỗi gạch đầu dòng ba chữ.</li>
+    </ul></div>
+    <div class="good"><b>Tốt</b><ul>
+      <li>Hỏi nhanh thì trả lời ngay. Sẽ sửa, dùng lại thì làm artifact.</li>
+      <li>Gom quyết định về một tài liệu, kiểm với bản gốc.</li>
+      <li>Nói đúng cột, giá trị được phép, mỗi dòng một bản ghi, thiếu thì để trống.</li>
+      <li>Đếm dòng, kiểm ngẫu nhiên vài dòng với nguồn.</li>
+      <li>Lập luận viết thành đoạn, việc cần làm viết thành danh sách.</li>
+    </ul></div>
+  </div>
+
+  <h4>Khi đi thi</h4>
+  <p class="need">Bài này thường ra 2 dạng câu hỏi. Đọc đề, <b>chọn một đáp án trước</b>; phần giải thích chỉ hiện ra sau khi bạn chọn.</p>
+
+  <div class="qcase" data-answer="B">
+    <h5 class="sub">Dạng 1: output đi vào một hệ thống</h5>
+    <span class="lbl">Đề sẽ viết kiểu này</span>
+    <div class="qtext">
+      <span class="en">“An HR coordinator wants Claude to pull attendance details from 60 training-feedback emails so she can import them into the company's learning system. The import template has four columns: Employee ID, Course, Date, Rating (1–5). What should she ask for?”</span>
+      <span class="vi">Dịch: Một điều phối viên nhân sự muốn Claude lấy thông tin tham dự từ 60 email phản hồi sau đào tạo để nhập vào hệ thống đào tạo của công ty. Mẫu nhập có bốn cột: Mã nhân viên, Khóa học, Ngày, Điểm đánh giá (1–5). Cô nên yêu cầu output dạng gì?</span>
+    </div>
+    <span class="lbl">Bạn chọn đáp án nào?</span>
+    <div class="qopts">
+      <button type="button" class="qopt" data-k="A"><b class="k">A.</b><span class="body"><span class="en">“A well-organized summary with a heading for each course and bullet points listing every attendee and their comments.”</span><span class="vi">Một bản tóm tắt gọn gàng, mỗi khóa một tiêu đề, gạch đầu dòng liệt kê từng người tham dự và nhận xét của họ.</span></span></button>
+      <button type="button" class="qopt" data-k="B"><b class="k">B.</b><span class="body"><span class="en">“Rows with exactly those four columns in order, one per attendee, no extra text, and blanks where a value is missing.”</span><span class="vi">Các dòng có đúng bốn cột đó theo thứ tự, mỗi người tham dự một dòng, không thêm chữ nào khác, giá trị nào thiếu thì để trống.</span></span></button>
+      <button type="button" class="qopt" data-k="C"><b class="k">C.</b><span class="body"><span class="en">“A polished report artifact that she can share with department managers and also import.”</span><span class="vi">Một artifact báo cáo trau chuốt, vừa chia sẻ được cho các trưởng phòng vừa dùng để nhập.</span></span></button>
+      <button type="button" class="qopt" data-k="D"><b class="k">D.</b><span class="body"><span class="en">“A narrative paragraph for each course describing attendance trends and average ratings.”</span><span class="vi">Mỗi khóa một đoạn văn mô tả xu hướng tham dự và điểm đánh giá trung bình.</span></span></button>
+    </div>
+    <p class="qfb" hidden></p>
+    <div class="qexp" hidden>
+      <span class="lbl">Phân tích đề</span>
+      <ul>
+        <li><b>Đề kể:</b> dữ liệu từ 60 email. Nơi nhận là hệ thống đào tạo, có mẫu nhập bốn cột.</li>
+        <li><b>Chỗ khó:</b> đề nói rõ nơi nhận là phần mềm, không phải người đọc. Ba phương án còn lại đều là định dạng đẹp cho người.</li>
+        <li><b>Đề hỏi:</b> nên xin output dạng gì.</li>
+      </ul>
+      <span class="lbl">Cần biết để chọn</span>
+      <ol>
+        <li>Định dạng đi theo nơi nhận. Phần mềm cần dữ liệu có cấu trúc, đúng cột nó đòi.</li>
+        <li>Lời dẫn, tiêu đề, gạch đầu dòng làm hỏng việc nhập.</li>
+        <li>Thiếu thì để trống, không đoán cho đủ.</li>
+      </ol>
+      <span class="lbl">Từng đáp án</span>
+      <ul class="verdict">
+        <li><b>A sai.</b> Đẹp cho người đọc, nhưng hệ thống không đọc được tiêu đề và gạch đầu dòng (ý 2).</li>
+        <li class="ok"><b>B đúng.</b> Đúng cột, đúng thứ tự, mỗi dòng một bản ghi (ý 1), không chữ thừa (ý 2), ô thiếu để trống (ý 3).</li>
+        <li><b>C sai.</b> Báo cáo trau chuốt là văn cho người đọc, không phải các dòng đúng bốn cột mà hệ thống nhập cần (ý 1, 2). Hấp dẫn vì artifact nghe chuyên nghiệp và chia sẻ được.</li>
+        <li><b>D sai.</b> Đoạn văn về xu hướng là một nội dung khác, và không nhập được (ý 1, 2).</li>
+      </ul>
+      <button type="button" class="qreset">Làm lại câu này</button>
+    </div>
+  </div>
+
+  <div class="qcase" data-answer="A">
+    <h5 class="sub">Dạng 2: bảng đủ ô, đúng mẫu, đã nhập được chưa</h5>
+    <span class="lbl">Đề sẽ viết kiểu này</span>
+    <div class="qtext">
+      <span class="en">“Claude turns 40 scanned supplier invoices into a table with invoice number, date, amount and due date. Every cell is filled and the layout matches the payment system's template. What should the finance assistant do before importing it?”</span>
+      <span class="vi">Dịch: Claude chuyển 40 hóa đơn nhà cung cấp đã scan thành một bảng gồm số hóa đơn, ngày, số tiền và hạn thanh toán. Ô nào cũng có dữ liệu, bố cục khớp mẫu của hệ thống thanh toán. Trợ lý tài chính nên làm gì trước khi nhập?</span>
+    </div>
+    <span class="lbl">Bạn chọn đáp án nào?</span>
+    <div class="qopts">
+      <button type="button" class="qopt" data-k="A"><b class="k">A.</b><span class="body"><span class="en">“Confirm there are 40 rows and spot-check several rows against the invoices, especially amounts and due dates.”</span><span class="vi">Xác nhận bảng có đủ 40 dòng và kiểm ngẫu nhiên vài dòng với hóa đơn gốc, nhất là số tiền và hạn thanh toán.</span></span></button>
+      <button type="button" class="qopt" data-k="B"><b class="k">B.</b><span class="body"><span class="en">“Import it, because a complete table in the correct template shows the data was extracted correctly.”</span><span class="vi">Nhập luôn, vì bảng đủ ô và đúng mẫu cho thấy dữ liệu đã được lấy ra đúng.</span></span></button>
+      <button type="button" class="qopt" data-k="C"><b class="k">C.</b><span class="body"><span class="en">“Ask Claude to confirm that every value in the table is correct before importing.”</span><span class="vi">Yêu cầu Claude xác nhận mọi giá trị trong bảng đều đúng trước khi nhập.</span></span></button>
+      <button type="button" class="qopt" data-k="D"><b class="k">D.</b><span class="body"><span class="en">“Ask Claude to convert the table to JSON, since the payment system will then validate it.”</span><span class="vi">Yêu cầu Claude đổi bảng sang JSON, vì khi đó hệ thống thanh toán sẽ tự kiểm.</span></span></button>
+    </div>
+    <p class="qfb" hidden></p>
+    <div class="qexp" hidden>
+      <span class="lbl">Phân tích đề</span>
+      <ul>
+        <li><b>Đề kể:</b> 40 hóa đơn thành bảng, ô nào cũng có, đúng mẫu.</li>
+        <li><b>Chỗ khó:</b> mọi dấu hiệu bề ngoài đều tốt. Nhưng đây là tiền: sai số tiền hay hạn thanh toán là trả sai.</li>
+        <li><b>Đề hỏi:</b> làm gì <i>trước khi nhập</i>.</li>
+      </ul>
+      <span class="lbl">Cần biết để chọn</span>
+      <ol>
+        <li>Đúng khuôn chỉ là đúng hình dạng, không phải đúng giá trị. Ô bắt buộc có thể bị điền bằng đoán.</li>
+        <li>Kiểm đủ: đếm dòng, so với số đầu vào. Kiểm đúng: so vài dòng với chứng từ gốc, ưu tiên cột tiền và ngày.</li>
+        <li>Hỏi Claude xác nhận vẫn là Claude chấm Claude.</li>
+      </ol>
+      <span class="lbl">Từng đáp án</span>
+      <ul class="verdict">
+        <li class="ok"><b>A đúng.</b> Kiểm đủ (40 dòng) và kiểm đúng các cột hệ trọng với chứng từ gốc (ý 2).</li>
+        <li><b>B sai.</b> Nhầm đúng khuôn với đúng dữ liệu (ý 1). Hấp dẫn vì bảng trông rất sạch.</li>
+        <li><b>C sai.</b> Claude chấm Claude (ý 3).</li>
+        <li><b>D sai.</b> Đổi định dạng không đổi giá trị. Hệ thống kiểm được khuôn, không biết số tiền có khớp hóa đơn không (ý 1).</li>
+      </ul>
+      <button type="button" class="qreset">Làm lại câu này</button>
+    </div>
+  </div>
+
+  <div class="more"><b>Biết thêm</b><ul>
+    <li><b>JSON dành cho phần mềm.</b> Logo, lưu đồ, báo cáo mà người xem thì làm artifact, không làm JSON.</li>
+    <li><b>Lưu đồ rẽ nhánh không hợp với danh sách gạch đầu dòng.</b> Nhánh “nếu… thì…” nhiều cấp nên vẽ thành sơ đồ.</li>
+    <li><b>Cột phân loại nên có danh sách giá trị cố định.</b> Tránh hai nhãn chỉ khác nhau chữ hoa, chữ thường, vì lệch kiểu đó không báo lỗi gì mà bộ lọc vẫn bỏ sót.</li>
+    <li><b>Bảng gọn trông như đã kiểm.</b> Trước khi dựa vào con số trong bảng, so vài con số với tài liệu gốc.</li>
+  </ul></div>
+  <div class="rule">Quy tắc: hỏi ai hay cái gì nhận output và họ làm gì tiếp, rồi mới chọn định dạng. Khuôn đẹp vẫn phải kiểm nội dung.</div>
+  <div class="remember"><b>Nhớ nhanh</b><ul>
+    <li>Đọc một lần: trả lời ngay. Sửa, dùng lại, chia sẻ, quay lại xem: artifact.</li>
+    <li>Thông tin rải rác: gom về một tài liệu, kiểm với bản gốc.</li>
+    <li>Bảng tính, phần mềm: đúng cột, giá trị được phép, mỗi dòng một bản ghi, thiếu để trống.</li>
+    <li>Lập luận viết thành đoạn, bước làm viết thành danh sách đánh số, so sánh viết thành bảng.</li>
+  </ul></div>
+  <div class="src">Đọc thêm: <a href="https://support.claude.com/en/articles/9487310-what-are-artifacts-and-how-do-i-use-them">What are artifacts</a> · <a href="https://support.claude.com/en/articles/12111783-create-and-edit-files-with-claude">Create and edit files with Claude</a> · <a href="https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices">Prompting best practices</a></div>
+  <label class="done"><input type="checkbox" data-lesson="l-2-6"> Đã học bài này</label>
+</article>
+
+<section class="summary" id="sum-d2">
+  <h3>Tổng kết Domain 2</h3>
+  <ul>
+    <li><b>Claude đoán phần chữ hợp lý tiếp theo.</b> Câu đúng và câu sai đi ra từ cùng một cơ chế. Giọng tự tin, trình bày đẹp, tự chấm điểm cao đều không phải bằng chứng. Kiểm là so với nguồn nằm ngoài Claude.</li>
+    <li><b>Đúng chưa chắc đã đủ.</b> Đủ đo bằng danh sách yêu cầu viết trước. Ít thời gian thì kiểm trước câu dễ sai mà quyết định dựa vào.</li>
+    <li><b>Gọi tên lỗi theo cái thấy được.</b> Tra không ra nguồn là bịa. Hai giá trị cho một việc là mâu thuẫn. Lệch lặp lại là bias. Claude có thể bịa cả việc nó đã làm.</li>
+    <li><b>Xin output kiểm được:</b> cho phép nói “không biết”, chỉ dùng tài liệu được đưa, trích nguyên văn trước, rút lại câu không có căn cứ và để [].</li>
+    <li><b>Trích dẫn là con trỏ.</b> Chạy lại, soi lập luận, hỏi dồn chỉ cho thấy chỗ cần kiểm, không thay được bước mở nguồn.</li>
+    <li><b>Người duyệt theo rủi ro.</b> Hệ trọng, ra ngoài, không rút lại được, lĩnh vực được quản lý: người có chuyên môn, chịu trách nhiệm, duyệt trước khi gửi. Claude thứ hai và nhãn AI không thay được.</li>
+    <li><b>Sửa cho người đọc:</b> yêu cầu thay đổi cụ thể, nói mục đích bên cạnh lời dặn, mỗi nhóm người đọc một bản, cùng sự thật.</li>
+    <li><b>So bản nháp:</b> tiêu chí viết trước từ người đọc, cùng một thước đo, ghép phần tốt. Bạn quyết và chịu trách nhiệm.</li>
+    <li><b>Định dạng theo nơi nhận:</b> đọc một lần thì trả lời ngay, sửa hay dùng lại thì artifact, bảng tính hay phần mềm thì cột cố định. Đúng khuôn chưa phải đúng nội dung.</li>
+  </ul>
+</section>
+
+<section class="cheat" id="cheat-d2">
+  <h3>Cheatsheet Domain 2</h3>
+  <div class="tw"><table>
+    <tr><th>Đề kể…</th><th>Chọn…</th><th>Vì sao</th></tr>
+    <tr class="grp"><th colspan="3">2.0 · Nền tảng</th></tr>
+    <tr><td>Claude trả lời rất tự tin, có số cụ thể, có điểm tự chấm cao</td><td>Coi là chưa kiểm, so với nguồn gốc</td><td>Tự tin và tự chấm không phải bằng chứng</td></tr>
+    <tr><td>“Hỏi Claude có chắc không”, “chạy lại ra giống nhau”</td><td>Chưa phải kiểm. Kiểm là so với nguồn ngoài Claude</td><td>Vẫn là Claude chấm Claude</td></tr>
+    <tr class="grp"><th colspan="3">2.1 · Đúng và đủ</th></tr>
+    <tr><td>Ít thời gian, nhiều câu cần kiểm</td><td>Kiểm trước con số chính xác, chủ đề mới, ngách, địa phương mà kết luận dựa vào</td><td>Dễ sai và sai thì thiệt nhiều</td></tr>
+    <tr><td>Output đúng hết nhưng không trả lời câu được hỏi</td><td>Chưa đủ. Đối chiếu danh sách yêu cầu, yêu cầu lại từng mục</td><td>Đủ đo bằng yêu cầu, không bằng chủ đề</td></tr>
+    <tr><td>Chấm trợ lý chỉ bằng đúng hay sai</td><td>Nhiều tiêu chí có mô tả rõ (rubric)</td><td>Độ chính xác chỉ là mức sàn</td></tr>
+    <tr><td>Kiểm xong thấy thiếu một câu, một số không nguồn</td><td>Đổi thành yêu cầu cụ thể: mục đánh số, ghi nguồn từng số</td><td>“Làm tốt hơn” vứt bỏ phát hiện</td></tr>
+    <tr class="grp"><th colspan="3">2.2 · Bịa, mâu thuẫn, thiên lệch</th></tr>
+    <tr><td>Hai giá trị cho cùng một việc trong một chat</td><td>Mâu thuẫn. Kiểm nguồn trước khi dùng số nào</td><td>Chưa biết cái nào sai thì chưa gọi là bịa</td></tr>
+    <tr><td>Trích dẫn tra không ra</td><td>Hallucination</td><td>Thứ được thêm vào, không phải bị rơi mất</td></tr>
+    <tr><td>Câu nào cũng đúng nhưng một nhóm luôn là mặc định hoặc vắng mặt</td><td>Bias. Hỏi ai vắng mặt, viết lại cân bằng</td><td>Bias là độ lệch lặp lại</td></tr>
+    <tr><td>Claude nói đã gửi email, không có connector nào</td><td>Coi như chưa làm, tự làm rồi kiểm</td><td>Không có công cụ thì không có hành động</td></tr>
+    <tr><td>Hai chat ra hai đáp án khác nhau</td><td>Cả hai chưa kiểm, tra nguồn gốc</td><td>Không chọn cái “nghe hợp lý hơn”</td></tr>
+    <tr class="grp"><th colspan="3">2.3 · Kiểm từng khẳng định</th></tr>
+    <tr><td>Muốn bớt bịa ở chủ đề ngách</td><td>Cho phép nói “không biết”, chỉ dùng tài liệu được đưa</td><td>Giọng văn và độ dài không làm giảm bịa</td></tr>
+    <tr><td>Khẳng định có link nguồn</td><td>Mở nguồn, đọc đúng đoạn, xem phạm vi, ngày, điều kiện</td><td>Trích dẫn là con trỏ</td></tr>
+    <tr><td>Thông cáo có câu không có trong tài liệu</td><td>Rút lại: có đoạn trích thì giữ, không có thì xóa và để []</td><td>Chỗ trống hiện ra thay vì bị che</td></tr>
+    <tr><td>“Hỏi Claude câu nào của nó yếu nhất”</td><td>Không dùng. Ưu tiên theo hệ quả của quyết định</td><td>Nguồn đang bị kiểm tự chấm mình</td></tr>
+    <tr class="grp"><th colspan="3">2.4 · Người duyệt</th></tr>
+    <tr><td>Tư vấn hay quyết định về một người, gửi ra ngoài, không rút lại được</td><td>Người có chuyên môn, chịu trách nhiệm, duyệt trước khi gửi</td><td>Chỉ kiểm được cái mình phán được</td></tr>
+    <tr><td>Đề xuất thêm nhãn “do AI tạo” thay cho người duyệt</td><td>Không đủ. Nhãn chỉ lo minh bạch</td><td>Nhãn không bắt được lỗi</td></tr>
+    <tr><td>Một chat Claude thứ hai rà soát</td><td>Không thay được người duyệt</td><td>Claude kiểm Claude</td></tr>
+    <tr><td>Danh sách ý tưởng nội bộ, tự chọn và sửa</td><td>Tự đọc là đủ</td><td>Duyệt theo rủi ro, không làm quá tay</td></tr>
+    <tr class="grp"><th colspan="3">2.5 · Sửa và so cho người đọc</th></tr>
+    <tr><td>Bản nháp lệch người đọc</td><td>Nêu thay đổi cụ thể, thêm thông tin chỉ bạn có</td><td>Tính từ để Claude tự đoán</td></tr>
+    <tr><td>Dặn “ngắn hơn” vẫn không đạt</td><td>Nói mục đích bên cạnh lời dặn</td><td>Đúng chữ, sai ý</td></tr>
+    <tr><td>Hai nhóm người đọc khác nền</td><td>Hai bản, cùng sự thật đã kiểm</td><td>Bảng thuật ngữ, cắt ngắn không sửa được mức</td></tr>
+    <tr><td>Chọn giữa hai bản nháp đều đúng</td><td>Tiêu chí viết trước từ người đọc, cùng thước đo, ghép phần tốt</td><td>Đúng như nhau chưa chắc hợp như nhau</td></tr>
+    <tr class="grp"><th colspan="3">2.6 · Định dạng</th></tr>
+    <tr><td>Hỏi nhanh, đọc một lần</td><td>Trả lời ngay trong chat</td><td>Không cần artifact</td></tr>
+    <tr><td>Sẽ sửa, dùng lại, chia sẻ, dài hơn 15 dòng</td><td>Artifact</td><td>Tự đứng được, quay lại được</td></tr>
+    <tr><td>Quyết định rải trong nhiều chat</td><td>Gom vào một tài liệu artifact, kiểm với bản gốc</td><td>Một chỗ để xem</td></tr>
+    <tr><td>Dữ liệu cho bảng tính hay hệ thống</td><td>Đúng cột, giá trị được phép, mỗi dòng một bản ghi, thiếu thì để trống</td><td>Lời dẫn và gạch đầu dòng làm hỏng việc nhập</td></tr>
+    <tr><td>Bảng đủ ô, đúng mẫu</td><td>Đếm dòng, kiểm ngẫu nhiên vài dòng với nguồn</td><td>Đúng khuôn chưa phải đúng nội dung</td></tr>
+    <tr><td>Giải thích chuỗi nguyên nhân</td><td>Đoạn văn. Việc còn lại: danh sách đánh số</td><td>Mối nối “vì… nên…” mang ý</td></tr>
+  </table></div>
+  <h4>Tên và con số phải thuộc</h4>
+  <ul class="names">
+    <li><b>Ba kiểu lỗi chính:</b> hallucination (bịa), inconsistency (mâu thuẫn: với tài liệu, với chính nó, giữa các lần hỏi), bias (mặc định lệch, thiếu góc nhìn, đánh giá không đều). Thêm sycophancy (chiều lòng).</li>
+    <li><b>Docs “Reduce hallucinations”:</b> allow “I don't know” (cho phép nói không biết), direct quotes (trích nguyên văn, cho tài liệu trên khoảng 20.000 token), verify with citations (ghi nguồn, không có thì rút lại và để []), chain-of-thought verification, best-of-N verification, iterative refinement, external knowledge restriction. Các kỹ thuật này “don't eliminate them entirely” (không loại bỏ hoàn toàn).</li>
+    <li><b>Tiêu chí đánh giá (docs Define success criteria):</b> task fidelity, consistency, relevance and coherence, tone and style, privacy preservation, context utilization. Hệ thống còn xét latency (độ trễ) và price (chi phí).</li>
+    <li><b>4D:</b> Discernment gồm Product, Process, Performance. Deployment Diligence là kiểm và đứng ra bảo đảm output bạn dùng hoặc chia sẻ. Vòng Description–Discernment.</li>
+    <li><b>Năm tín hiệu nâng mức duyệt:</b> hệ trọng, người nhận, không rút lại được, loại nội dung, lĩnh vực được quản lý (pháp lý, y tế, tài chính, nhân sự). Usage Policy về ca rủi ro cao: <a href="#l-6-1">bài 6.1</a>.</li>
+    <li><b>Artifact:</b> “typically over 15 lines” (thường hơn 15 dòng), tự đứng được, sẽ sửa hay dùng lại, sẽ quay lại xem. Lưu ở tab Artifacts trên thanh bên. Bôi đen rồi “Edit with Claude”. Docs xuất ra Word, PDF, Markdown, Google Docs.</li>
+    <li><b>Câu phải nhớ:</b> trang trợ giúp “should carefully scrutinize any high-stakes advice given by Claude” (nên soi kỹ mọi lời khuyên hệ trọng của Claude). Lời giải câu mẫu 1: độ tin cậy tự báo “is not a reliable accuracy signal” (không phải tín hiệu đáng tin về độ chính xác).</li>
+    <li><b>Mốc dữ liệu</b> của các model Claude hiện tại: tháng 6/2026. Sau mốc đó, không bật công cụ thì Claude không biết.</li>
+  </ul>
+</section>
+  <div class="quiz" data-course="d2"></div>
+  </div>
+</section>

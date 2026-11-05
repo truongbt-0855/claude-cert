@@ -1,0 +1,826 @@
+<section class="domain" id="d7" data-domain="7">
+  <div class="dhead"><h2>Domain 7 · Troubleshooting and Optimization</h2><p class="dsub">10% · 1 bài nền tảng + 3 bài · ~54 phút</p><div class="dprog"><div class="wb"><i></i></div><span></span></div><button class="tog" type="button">Thu gọn</button></div>
+  <div class="dbody">
+<div class="dintro">
+  <p>Domain 7 chiếm 10% đề, khoảng 6 trên 60 câu. Nhẹ nhất trong 7 domain, nhưng nó gom kiến thức của D1, D3, D5 lại thành một câu hỏi thực tế.</p>
+  <p>Cả domain xoay quanh một câu: <b>output kém thì hỏng ở chỗ nào, và sửa ở đâu để rẻ nhất mà bền nhất?</b></p>
+  <p>Đọc bài Nền tảng trước. Cuối mỗi bài có “Khi đi thi”: chọn đáp án trước rồi mới xem giải thích.</p>
+</div>
+
+<article class="lesson" id="l-7-0" data-domain="7" data-ts="7.0" data-min="14">
+  <header class="lh"><span class="ts">Nền tảng</span><h3>Output kém: bản đồ sáu chỗ có thể hỏng, và cách tìm đúng chỗ</h3><span class="rt">~14 phút</span></header>
+  <p>Ba bài của Domain 7 dùng chung một bản đồ. Khi Claude trả về thứ không dùng được, nguyên nhân gần như luôn nằm ở một trong sáu chỗ bạn chỉnh được. Bài này dựng bản đồ đó theo thứ tự: output kém là gì → sáu chỗ có thể hỏng → kiểm theo thứ tự nào → vòng chẩn đoán → một ca thật. Cách sửa từng chỗ đã được dạy kỹ ở D1, D3, D5. Ở đây chỉ học cách <b>nhận ra</b> chỗ nào đang hỏng.</p>
+
+  <h4>1. Output kém là gì, và vì sao phải chẩn đoán trước</h4>
+  <div class="defs"><b>Định nghĩa</b><dl>
+    <dt>Output kém (poor output)</dt><dd>Câu trả lời không dùng được cho việc đang làm: sai, thiếu, chung chung, sai định dạng, hoặc mỗi lần chạy ra một kiểu.</dd>
+    <dt>Triệu chứng (symptom)</dt><dd>Cái bạn nhìn thấy ở output, ví dụ “bản tóm tắt sai giá sản phẩm”. Triệu chứng chưa nói gì về nguyên nhân.</dd>
+    <dt>Nguyên nhân gốc (root cause)</dt><dd>Chỗ thật sự gây ra triệu chứng, ví dụ “file bảng giá trong Project là bản quý trước”.</dd>
+    <dt>Cần gạt (lever)</dt><dd>Một chỗ bạn chỉnh được để đổi output: prompt, kiến thức đưa vào, cuộc hội thoại, model hay tính năng, cách chia việc. Sửa đúng cần gạt thì hết bệnh. Sửa sai cần gạt thì chỉ tốn công và tốn hạn mức (lượng dùng Claude mà gói của bạn cho phép, học ở <a href="#l-7-3">bài 7.3</a>).</dd>
+  </dl></div>
+  <p>Cùng một triệu chứng có thể đến từ nhiều cần gạt. “Bản tóm tắt sai số liệu” có thể do prompt không nói lấy số từ đâu, do file trong Project đã cũ, hoặc do chat quá dài nên Claude lẫn số của tháng trước. Mỗi nguyên nhân một cách sửa. Đổi sang model mạnh hơn không sửa được một file cũ.</p>
+
+  <h4>2. Sáu cần gạt: triệu chứng và cách sửa</h4>
+  <div class="defs"><b>Định nghĩa</b><dl>
+    <dt>Mốc dữ liệu (knowledge cutoff)</dt><dd>Thời điểm dữ liệu huấn luyện của model dừng lại. Các model Claude hiện tại có mốc tháng 6/2026. Chuyện xảy ra sau mốc đó Claude không biết, trừ khi bạn đưa nguồn vào.</dd>
+    <dt>Context rot (context “mục” dần)</dt><dd>Tên docs của Anthropic đặt cho hiện tượng: lịch sử chat càng dài, Claude nhớ và trích lại càng kém chính xác. Docs nói rõ context nhiều hơn không tự động tốt hơn.</dd>
+    <dt>Effort (mức nỗ lực)</dt><dd>Cài đặt cho Claude suy nghĩ sâu tới đâu: Low, Medium, High, Extra high, Max. Mức cao hơn thì kỹ hơn, chậm hơn và tốn hạn mức hơn.</dd>
+  </dl></div>
+  <div class="tw"><table>
+    <tr><th>Cần gạt</th><th>Triệu chứng hay gặp</th><th>Sửa đầu tiên</th><th>Học kỹ ở</th></tr>
+    <tr><td><b>1. Prompt</b> chưa rõ hoặc thiếu bối cảnh</td><td>Chung chung, mỏng, sai định dạng, mỗi lần chạy một kiểu</td><td>Thêm bối cảnh, người đọc, tiêu chí “tốt”, định dạng, ví dụ</td><td><a href="#l-1-1">Bài 1.1</a>, <a href="#l-1-3">1.3</a></td></tr>
+    <tr><td><b>2. Kiến thức</b> thiếu, cũ, hoặc không được lấy ra</td><td>Trôi chảy, tự tin nhưng sai chi tiết: con số, ngày, điều khoản, tên</td><td>Đưa đúng nguồn, thay file cũ, dặn chỉ dùng tài liệu được đưa, cho phép nói “không đủ thông tin”</td><td><a href="#l-5-2">Bài 5.2</a>, <a href="#l-2-2">2.2</a></td></tr>
+    <tr><td><b>3. Hội thoại</b> lệch hướng hoặc quá dài</td><td>Lẫn chi tiết của việc khác, quên yêu cầu đầu chat, tự mâu thuẫn</td><td>Mở chat mới, mang theo bản tóm tắt ngắn; việc lặp lại thì đưa vào Project</td><td><a href="#l-3-4">Bài 3.4</a></td></tr>
+    <tr><td><b>4. Model hoặc tính năng</b> sai việc</td><td>Chậm, tốn cho việc đơn giản; cần nguồn mới mà không bật web search (tìm web) hay Research (Claude tự tìm và đọc nhiều nguồn); cần tài liệu đứng riêng mà chỉ nhận đoạn chat</td><td>Chọn model theo việc; bật đúng tính năng</td><td><a href="#l-3-1">Bài 3.1</a>, <a href="#l-3-3">3.3</a></td></tr>
+    <tr><td><b>5. Lập luận, cách chia việc</b></td><td>Phân tích hay phép tính nhiều bước vẫn sai, dù prompt, dữ liệu, chat đều ổn</td><td>Chia thành các bước; tăng effort; đo lại trên vài ca</td><td><a href="#l-1-2">Bài 1.2</a></td></tr>
+    <tr><td><b>6. Ngoài khả năng của Claude</b></td><td>Claude nói không truy cập được; cần dữ liệu trực tiếp từ một hệ thống nội bộ chưa được nối vào; cần một quyết định thuộc thẩm quyền của người</td><td>Cấp dữ liệu (connector, file xuất ra), chia lại phần người làm, hoặc chuyển đúng người</td><td><a href="#l-4-4">Bài 4.4</a>, <a href="#l-6-1">6.1</a></td></tr>
+  </table></div>
+  <p>Vài điểm để đọc bảng cho đúng:</p>
+  <ul>
+    <li><b>Cần gạt 2 có ba bệnh.</b> Thiếu: không có tài liệu nào chứa câu trả lời. Cũ: có, nhưng là bản lỗi thời. Không được lấy ra: Project lớn đã bật RAG (Claude chỉ tìm và lấy phần liên quan trong tài liệu của Project), và phần cần lại không được lấy. Bệnh thứ ba chữa bằng cách gọi tên tài liệu trong câu hỏi và đặt tên file rõ ràng.</li>
+    <li><b>Cần gạt 2 và 4 hay đi chung.</b> Hỏi tin tức tuần này khi web search đang tắt: thiếu kiến thức, và cách sửa là bật đúng tính năng.</li>
+    <li><b>Cần gạt 6 không sửa được bằng chữ.</b> Viết prompt hay đến đâu cũng không tạo ra quyền truy cập vào hệ thống kho, hay quyền ký duyệt một hợp đồng.</li>
+  </ul>
+
+  <h4>3. Kiểm theo thứ tự nào: rẻ trước, đắt sau</h4>
+  <p>Đừng thử ngẫu nhiên. Đi từ chỗ rẻ và hay hỏng nhất:</p>
+  <ol>
+    <li><b>Prompt.</b> Rẻ nhất, hay hỏng nhất. Đọc lại prompt bằng mắt một người không biết gì về việc này.</li>
+    <li><b>Kiến thức.</b> Claude có đúng tài liệu, đúng bản mới nhất không?</li>
+    <li><b>Hội thoại.</b> Chat đã kéo bao lâu, có trộn nhiều việc không?</li>
+    <li><b>Lập luận và cách chia việc.</b> Việc có nhiều bước không, đã chia chưa?</li>
+    <li><b>Model và tính năng.</b> Chỉ tới đây khi bốn chỗ trên đã ổn. Tăng effort trước, đổi model sau.</li>
+  </ol>
+  <p>Vì sao model để cuối? Model mạnh hơn tốn hạn mức hơn ở <i>mọi</i> tin nhắn sau đó, và nó không thêm được thông tin bạn chưa đưa. Một file cũ vẫn cũ với bất kỳ model nào.</p>
+  <p>Cần gạt 6 không nằm trong hàng đợi này. Nó là câu bạn hỏi ngay từ đầu: với những gì đang có, Claude có làm được việc này không? Nếu không, mọi vòng sửa prompt đều phí.</p>
+
+  <h4>4. Vòng chẩn đoán: đổi một thứ, chạy lại cùng input</h4>
+  <div class="defs"><b>Định nghĩa</b><dl>
+    <dt>Input thử (test input)</dt><dd>Một bộ đầu vào cố định bạn giữ lại để chạy lại sau mỗi lần sửa: cùng email khách, cùng file số liệu tháng 9, cùng câu hỏi. Đổi input thì không biết output khác đi vì bạn sửa, hay vì input khác.</dd>
+    <dt>Sửa bền (durable fix)</dt><dd>Cách sửa được đặt ở chỗ tự áp cho mọi lần sau: project instructions (chỉ dẫn áp cho mọi chat trong Project), project knowledge (tài liệu dùng chung của Project), hoặc Skill (bộ chỉ dẫn Claude tự nạp khi việc cần tới). Ngược với gõ lại lời dặn trong từng chat.</dd>
+  </dl></div>
+  <svg class="flow" viewBox="0 0 380 516" role="img" aria-label="Sơ đồ vòng chẩn đoán: một, ghi lại triệu chứng. Hai, đoán cần gạt. Ba, đổi đúng một thứ. Bốn, chạy lại cùng input. Năm, tốt hơn không? Nếu không thì hoàn tác và quay lại bước hai để thử cần gạt khác. Nếu có thì sáu, thử thêm vài input thật, rồi bảy, lưu cách sửa cho bền.">
+    <defs><marker id="flow-ah-d7" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path class="ah" d="M0,0 L10,5 L0,10 z"/></marker></defs>
+    <rect class="bx" x="100" y="8" width="200" height="46" rx="10"/>
+    <text x="200" y="28">① Ghi lại triệu chứng</text>
+    <text class="lb" x="200" y="45">lưu prompt, input, output kém</text>
+    <path class="ln" d="M200,54 V80" marker-end="url(#flow-ah-d7)"/>
+    <rect class="bx" x="100" y="82" width="200" height="46" rx="10"/>
+    <text x="200" y="102">② Đoán cần gạt</text>
+    <text class="lb" x="200" y="119">theo bảng mục 2, rẻ trước</text>
+    <path class="ln" d="M200,128 V154" marker-end="url(#flow-ah-d7)"/>
+    <rect class="bx" x="100" y="156" width="200" height="46" rx="10"/>
+    <text x="200" y="176">③ Đổi đúng một thứ</text>
+    <text class="lb" x="200" y="193">mọi thứ khác giữ nguyên</text>
+    <path class="ln" d="M200,202 V228" marker-end="url(#flow-ah-d7)"/>
+    <rect class="bx" x="100" y="230" width="200" height="46" rx="10"/>
+    <text x="200" y="250">④ Chạy lại cùng input</text>
+    <text class="lb" x="200" y="267">so với output cũ</text>
+    <path class="ln" d="M200,276 V298" marker-end="url(#flow-ah-d7)"/>
+    <polygon class="bx" points="200,300 280,332 200,364 120,332"/>
+    <text x="200" y="336">⑤ Tốt hơn?</text>
+    <path class="ln" d="M120,332 H40 V105 H98" marker-end="url(#flow-ah-d7)"/>
+    <text class="lb e" x="114" y="324">không</text>
+    <text class="lb s" x="46" y="196">hoàn tác,</text>
+    <text class="lb s" x="46" y="211">thử cần</text>
+    <text class="lb s" x="46" y="226">gạt khác</text>
+    <path class="ln" d="M200,364 V388" marker-end="url(#flow-ah-d7)"/>
+    <text class="lb s" x="208" y="381">có</text>
+    <rect class="bx" x="100" y="390" width="200" height="46" rx="10"/>
+    <text x="200" y="410">⑥ Thử thêm vài input thật</text>
+    <text class="lb" x="200" y="427">có cả ca khó</text>
+    <path class="ln" d="M200,436 V460" marker-end="url(#flow-ah-d7)"/>
+    <rect class="bx cd" x="100" y="462" width="200" height="46" rx="10"/>
+    <text x="200" y="482">⑦ Lưu cho bền</text>
+    <text class="lb" x="200" y="499">instructions, knowledge, Skill</text>
+  </svg>
+  <p>Đọc sơ đồ:</p>
+  <ul>
+    <li><b>① → ④</b> là phần chẩn đoán của <a href="#l-7-1">bài 7.1</a>. Mỗi vòng chỉ đổi một thứ, nên khi output khác đi, bạn biết chính xác vì sao.</li>
+    <li><b>⑤ “không”</b>: hoàn tác thay đổi vừa rồi trước khi thử cần gạt kế tiếp. Giữ lại một thay đổi vô ích là cộng thêm một biến số.</li>
+    <li><b>⑥</b> là bước hay bị bỏ nhất. Một lần chạy đẹp trên một input chưa chứng minh gì (<a href="#l-7-2">bài 7.2</a>).</li>
+    <li><b>⑦</b> biến cách sửa thành mặc định, để bạn và đồng nghiệp không phải dặn lại ở mỗi chat.</li>
+  </ul>
+
+  <h4>5. Một ca thật, đi hết vòng</h4>
+  <p>Chị Lan làm điều phối marketing. Nhóm chị có Project “Bản tin tháng”, trong đó có instructions về giọng văn và file bảng giá. Bản tin tháng 10 ghi giá gói Premium là 1,2 triệu đồng. Giá thật đã lên 1,5 triệu từ tháng 9.</p>
+  <div class="tw"><table>
+    <tr><th>Bước</th><th>Lan làm gì</th><th>Thấy gì</th></tr>
+    <tr><td>① Ghi lại</td><td>Lưu prompt và bản tin sai</td><td>Bản tin đúng giọng, đúng bố cục, chỉ sai một con số</td></tr>
+    <tr><td>② Đoán</td><td>Trôi chảy mà sai chi tiết → nghi kiến thức, chưa nghi prompt hay model. Hỏi: “Con số 1,2 triệu lấy từ đoạn nào trong tài liệu? Trích nguyên văn.”</td><td>Claude trích đúng dòng trong “Bảng giá Q2”. Có đoạn, nhưng là bản cũ: kiến thức cũ</td></tr>
+    <tr><td>③ Đổi một thứ</td><td>Thay “Bảng giá Q2” bằng bảng giá mới, xóa bản cũ khỏi Project</td><td>Không đụng tới prompt, model, instructions</td></tr>
+    <tr><td>④ ⑤ Chạy lại, so</td><td>Cùng prompt, cùng yêu cầu</td><td>Giá ra 1,5 triệu: tốt hơn</td></tr>
+    <tr><td>⑥ Thử thêm</td><td>Chạy hai bản tin khác có nhắc tới giá</td><td>Đúng cả hai</td></tr>
+    <tr><td>⑦ Lưu bền</td><td>Thêm vào instructions: “Giá lấy từ file bảng giá mới nhất trong Project. Không thấy giá thì ghi [CẦN KIỂM], không đoán.” Đặt lịch thay bảng giá mỗi quý</td><td>Lần sau giá đổi, lỗi lộ ra ngay thay vì lọt vào bản tin</td></tr>
+  </table></div>
+  <p>Lan không đổi model, không viết lại cả prompt. Một chỗ hỏng, một chỗ được sửa. Việc cập nhật knowledge định kỳ là chủ đề của <a href="#l-5-4">bài 5.4</a>.</p>
+
+  <h4>6. Bản đồ Domain 7</h4>
+  <div class="tw"><table>
+    <tr><th>Bài</th><th>Câu hỏi của bài</th><th>Phần nào trên bản đồ</th></tr>
+    <tr><td><a href="#l-7-1">7.1</a></td><td>Output kém: nguyên nhân là gì, sửa thế nào?</td><td>Sáu cần gạt, thứ tự kiểm, bước ① → ④</td></tr>
+    <tr><td><a href="#l-7-2">7.2</a></td><td>Người dùng, người duyệt, kết quả nói gì? Chọn cần gạt nào? Giữ cách sửa ở đâu?</td><td>Bước ②, ⑥, ⑦: đọc phản hồi, xác nhận, lưu bền</td></tr>
+    <tr><td><a href="#l-7-3">7.3</a></td><td>Làm sao tốn ít hạn mức và thời gian hơn mà output vẫn tốt?</td><td>Cần gạt 3 và 4 nhìn từ phía chi phí, cộng thói quen bớt làm lại</td></tr>
+  </table></div>
+  <div class="note"><b>Ranh giới với D1:</b> <a href="#l-1-3">bài 1.3</a> dạy cách lặp để một prompt tốt dần. D7 hỏi câu đứng trước đó: lỗi có thật sự nằm ở prompt không, hay ở kiến thức, hội thoại, model, hay ở chỗ việc vượt khả năng?</div>
+
+  <h4>Tự kiểm tra</h4>
+  <p class="need">Câu hỏi viết bằng tiếng Anh như đề thật. Bấm vào câu hỏi để xem nghĩa và đáp án.</p>
+  <details class="chk"><summary>1. A Project answer is fluent and well formatted, but it quotes last year’s refund window. Which lever do you check first?</summary>
+    <span class="vi">Nghĩa: một câu trả lời trong Project trôi chảy, trình bày đẹp, nhưng ghi thời hạn hoàn tiền của năm ngoái. Bạn kiểm cần gạt nào trước?</span>
+    <span class="ans"><b>Đáp:</b> kiến thức. Trôi chảy mà sai chi tiết là dấu hiệu tài liệu thiếu hoặc cũ. Nhờ Claude trích đoạn đã dựa vào, rồi thay file cũ bằng chính sách hiện hành.</span></details>
+  <details class="chk"><summary>2. A teammate rewrote the prompt, switched the model, and added new files at the same time. The output improved. What can you conclude?</summary>
+    <span class="vi">Nghĩa: một đồng nghiệp viết lại prompt, đổi model và thêm file mới cùng một lúc. Output tốt hơn. Bạn kết luận được gì?</span>
+    <span class="ans"><b>Đáp:</b> gần như không kết luận được gì. Không biết thay đổi nào có tác dụng, cũng không biết thay đổi nào là thừa hay đang gây hại ở ca khác. Muốn biết thì đổi từng thứ và chạy lại trên cùng input.</span></details>
+  <details class="chk"><summary>3. Claude says it cannot see today’s orders in your internal order system, and no connector exists for it. Will a better prompt fix this?</summary>
+    <span class="vi">Nghĩa: Claude nói nó không xem được đơn hàng hôm nay trong hệ thống đơn hàng nội bộ, và không có connector (cầu nối cho Claude đọc dữ liệu ở công cụ khác) nào cho hệ thống đó. Prompt tốt hơn có sửa được không?</span>
+    <span class="ans"><b>Đáp:</b> không. Đây là cần gạt 6: việc nằm ngoài những gì Claude đang có. Xuất báo cáo đơn hàng ra file rồi đưa vào, hoặc hỏi đội quản lý hệ thống về cách tích hợp.</span></details>
+
+  <div class="remember"><b>Nhớ nhanh</b><ul>
+    <li>Sáu cần gạt: prompt, kiến thức, hội thoại, model hoặc tính năng, lập luận hoặc chia việc, ngoài khả năng.</li>
+    <li>Kiểm rẻ trước: prompt → kiến thức → hội thoại → lập luận → model. Effort trước, đổi model sau.</li>
+    <li>Mỗi vòng đổi một thứ, chạy lại cùng input, không tốt hơn thì hoàn tác.</li>
+    <li>Sửa xong thì thử thêm vài input, rồi lưu vào chỗ tự áp cho mọi lần sau.</li>
+  </ul></div>
+  <div class="src">Đọc thêm: <a href="https://support.claude.com/en/articles/7996857-my-prompt-isn-t-giving-me-a-helpful-answer">My prompt isn’t giving me a helpful answer</a> · <a href="https://platform.claude.com/docs/en/build-with-claude/context-windows">Context windows</a> · <a href="https://support.claude.com/en/articles/8114494-how-up-to-date-is-claude-s-training-data">How up-to-date is Claude’s training data?</a> · <a href="https://support.claude.com/en/articles/11473015-retrieval-augmented-generation-rag-for-projects">RAG for Projects</a></div>
+  <label class="done"><input type="checkbox" data-lesson="l-7-0"> Đã học bài này</label>
+</article>
+
+<article class="lesson" id="l-7-1" data-domain="7" data-ts="7.1" data-min="13">
+  <header class="lh"><span class="ts">TS 7.1</span><h3>Chẩn đoán output kém: đọc triệu chứng, tìm nguyên nhân, sửa một chỗ</h3><span class="rt">~13 phút</span></header>
+  <p class="need">Cần biết trước: sáu cần gạt và vòng chẩn đoán ở <a href="#l-7-0">bài Nền tảng</a>. Cách viết một prompt tốt nằm ở <a href="#l-1-1">bài 1.1</a>, cách lặp một prompt ở <a href="#l-1-3">bài 1.3</a>. Bài này không dạy lại hai phần đó.</p>
+  <div class="defs"><b>Khái niệm của bài</b><dl>
+    <dt>Phép thử đồng nghiệp (colleague test)</dt><dd>Đưa prompt cho một đồng nghiệp không biết gì về việc này. Nếu họ phải hỏi lại hay phải đoán, Claude cũng sẽ đoán. Docs về prompt của Anthropic dùng đúng phép thử này.</dd>
+    <dt>Kiến thức thiếu (missing knowledge)</dt><dd>Claude không có tài liệu nào chứa câu trả lời, nên nó lấp chỗ trống bằng thứ nghe hợp lý.</dd>
+    <dt>Kiến thức cũ (stale knowledge)</dt><dd>Claude có tài liệu, nhưng là bản đã lỗi thời. Nó đọc đúng, chỉ là đọc đúng một thứ sai.</dd>
+    <dt>Ca ranh giới (edge case)</dt><dd>Đầu vào nằm giữa hai lựa chọn. Ví dụ hóa đơn taxi đi ăn tối với khách: xếp vào “Đi lại” hay “Tiếp khách”?</dd>
+    <dt>Mẫu đại diện (representative sample)</dt><dd>Một nhóm ca thật, có ca dễ lẫn ca khó, dùng để đo một thay đổi trước khi áp nó cho mọi lần.</dd>
+  </dl></div>
+
+  <h4>Từ triệu chứng tới nguyên nhân</h4>
+  <div class="tw"><table>
+    <tr><th>Triệu chứng</th><th>Nguyên nhân hay gặp</th><th>Kiểm nhanh</th><th>Sửa</th></tr>
+    <tr><td>Chung chung, mỏng, công ty nào cũng dùng được</td><td>Prompt thiếu bối cảnh, người đọc, tiêu chí</td><td>Phép thử đồng nghiệp</td><td>Thêm bối cảnh, mục đích, tiêu chí “tốt”, một ví dụ</td></tr>
+    <tr><td>Cùng input mà mỗi lần ra một nhãn, một định dạng</td><td>Prompt để ngỏ quyết định: thiếu danh sách nhãn, định dạng, luật chọn khi hai nhãn cùng hợp</td><td>Chạy cùng input ba lần, so</td><td>Ghi đủ danh sách, định dạng mẫu, tiêu chí chọn</td></tr>
+    <tr><td>Ca thường đúng, ca ranh giới cứ lật qua lại</td><td>Mô tả đã đủ nhưng chưa có ví dụ cho ca khó</td><td>Gom các ca bị lật</td><td>Thêm 3–5 ví dụ đa dạng, có cả ca ranh giới</td></tr>
+    <tr><td>Tự tin, trôi chảy, sai số liệu, ngày, điều khoản</td><td>Kiến thức thiếu hoặc cũ; chuyện xảy ra sau mốc dữ liệu</td><td>Hỏi Claude trích đoạn đã dựa vào</td><td>Đưa nguồn đúng bản, dặn chỉ dùng tài liệu được đưa, cho phép nói “không đủ thông tin”</td></tr>
+    <tr><td>Lẫn chi tiết của việc khác, quên yêu cầu ban đầu</td><td>Chat quá dài, trộn nhiều việc</td><td>Xem chat đã kéo bao lâu, gồm mấy việc</td><td>Chat mới, mang theo bản tóm tắt những gì còn đúng</td></tr>
+    <tr><td>Phân tích nhiều bước sai ở giữa, dù prompt, dữ liệu, chat đều ổn</td><td>Việc cần lập luận sâu hơn hoặc cần chia bước</td><td>Mở phần tóm tắt suy nghĩ của Claude, tìm bước sai</td><td>Chia bước; tăng effort; đo trên mẫu đại diện</td></tr>
+    <tr><td>Đúng, nhưng chậm và tốn so với giá trị việc</td><td>Model nặng hơn việc cần</td><td>So thời gian chờ với giá trị việc</td><td>Model nhẹ hơn (<a href="#l-3-3">bài 3.3</a>)</td></tr>
+  </table></div>
+
+  <h4>Thiếu hay cũ: bảo Claude trích nguồn</h4>
+  <p>Hai bệnh cho cùng một triệu chứng: câu trả lời trôi chảy mà sai. Cách tách là hỏi: “Đoạn nào trong tài liệu cho con số này? Trích nguyên văn.”</p>
+  <ul>
+    <li><b>Không trích được đoạn nào → thiếu.</b> Đưa tài liệu đúng vào, dặn chỉ dùng tài liệu được đưa, và cho phép Claude nói không đủ thông tin. Docs của Anthropic nói cho phép “I don’t know” (tôi không biết) giảm mạnh thông tin bịa.</li>
+    <li><b>Trích được, nhưng là bản cũ → cũ.</b> Thay file. Dặn “đừng đoán” không chữa được bệnh này, vì Claude không hề đoán: nó đọc đúng một tài liệu đã lỗi thời.</li>
+    <li><b>Trích được, đúng bản mới, mà vẫn sai → không phải kiến thức.</b> Claude đọc sai hoặc lập luận sai. Chuyển sang cần gạt lập luận.</li>
+    <li><b>Quy định mới, sự kiện tháng trước</b> có thể nằm sau mốc dữ liệu. Model nào cũng không biết, nên đổi model không giúp. Đưa nguồn vào hoặc bật tìm web.</li>
+  </ul>
+
+  <h4>Vì sao chỉ đổi một thứ, và chạy lại cùng input</h4>
+  <ul>
+    <li>Đổi ba thứ cùng lúc mà output tốt hơn: không biết thứ nào có tác dụng. Lần sau hỏng lại, không biết gỡ chỗ nào.</li>
+    <li>Một thay đổi có thể sửa chỗ này và làm hỏng chỗ kia. Đổi từng thứ mới thấy.</li>
+    <li>Thử trên input mới thì output khác có thể chỉ vì input khác. Giữ một bộ input thử: cùng email, cùng file, cùng câu hỏi.</li>
+    <li>Ghi lại mỗi vòng: đổi gì, output ra sao. Ba dòng là đủ.</li>
+  </ul>
+
+  <h4>Suy nghĩ thêm cũng là một thay đổi phải đo</h4>
+  <p>Chỉ khi prompt qua được phép thử đồng nghiệp, dữ liệu đủ, chat còn mới mà phân tích nhiều bước vẫn sai, mới tới cần gạt lập luận: chia việc thành từng bước, hoặc tăng effort. Effort cao hơn thì chậm hơn và tốn hạn mức hơn ở mọi lần chạy, nên:</p>
+  <ul>
+    <li>Chạy một mẫu đại diện, có và không có thay đổi. So chất lượng, thời gian chờ, hạn mức.</li>
+    <li>Chỉ dùng cho loại việc thật sự cần. Tra cứu đơn giản không cần suy nghĩ sâu.</li>
+    <li>Câu trả lời có suy nghĩ mà vẫn sai thì mở phần tóm tắt suy nghĩ, xem Claude giả định sai ở đâu.</li>
+  </ul>
+
+  <div class="story"><b>Tình huống.</b> Anh Minh ở phòng kế toán dùng prompt một dòng “Phân loại khoản chi này” cho khoảng 150 hóa đơn mỗi tuần. Cùng một hóa đơn, lần này ra “Đi lại”, lần sau ra “Transport”, lần sau nữa ra cả một đoạn văn. Trưởng phòng bảo đổi sang model mạnh nhất. Minh làm phép thử đồng nghiệp trước: đưa prompt cho một bạn mới vào. Bạn ấy hỏi ngay ba câu: “Có những nhóm nào? Trả lời dạng gì? Taxi đi ăn với khách thì xếp nhóm nào?” Ba câu hỏi đó chính là ba chỗ prompt bỏ ngỏ. Minh thêm danh sách 7 nhóm, định dạng một dòng, luật chọn khi hai nhóm cùng hợp, rồi chạy lại đúng 20 hóa đơn cũ: nhãn ổn định. Còn 3 hóa đơn ranh giới vẫn lật, Minh thêm 4 ví dụ có cả ca taxi. Không đổi model.</div>
+  <div class="vs">
+    <div class="bad"><b>Tệ</b><ul>
+      <li>Output chung chung là đổi ngay sang model mạnh nhất.</li>
+      <li>Sửa prompt, đổi model, thêm file trong cùng một lần.</li>
+      <li>Thử bản đã sửa trên một input khác hẳn.</li>
+      <li>Dặn “đừng đoán” khi file trong Project đã cũ.</li>
+    </ul></div>
+    <div class="good"><b>Tốt</b><ul>
+      <li>Phép thử đồng nghiệp trước, model sau cùng.</li>
+      <li>Mỗi vòng một thay đổi, chạy lại cùng input, so với bản gốc.</li>
+      <li>Hỏi Claude trích đoạn đã dựa vào để tách thiếu với cũ.</li>
+      <li>Đo trên mẫu đại diện trước khi bật suy nghĩ sâu cho mọi việc.</li>
+    </ul></div>
+  </div>
+  <div class="trap"><b>Bẫy:</b> câu trả lời trôi chảy, đúng định dạng nên “chắc prompt ổn, model ổn”. Trôi chảy chỉ cho thấy Claude viết tốt. Nó không cho thấy Claude có đúng tài liệu.</div>
+
+  <h4>Khi đi thi</h4>
+  <p class="need">Bài này thường ra 3 dạng câu hỏi. Đọc đề, <b>chọn một đáp án trước</b>; phần giải thích chỉ hiện ra sau khi bạn chọn.</p>
+
+  <div class="qcase" data-answer="C">
+    <h5 class="sub">Dạng 1: trôi chảy mà sai một chi tiết</h5>
+    <span class="lbl">Đề sẽ viết kiểu này</span>
+    <div class="qtext">
+      <span class="en">“An HR specialist asks Claude, inside the company’s HR Project, how many weeks of paid parental leave employees get. The answer is well structured and confident and says 12 weeks. The policy was changed to 16 weeks last month. The Project knowledge holds the employee handbook uploaded in January. What is the most likely cause, and the best fix?”</span>
+      <span class="vi">Dịch: Một chuyên viên nhân sự hỏi Claude, trong Project nhân sự của công ty, nhân viên được nghỉ chăm con có lương bao nhiêu tuần. Câu trả lời mạch lạc, tự tin, ghi 12 tuần. Chính sách đã đổi thành 16 tuần từ tháng trước. Project knowledge đang chứa sổ tay nhân viên tải lên hồi tháng 1. Nguyên nhân nhiều khả năng nhất là gì, và cách sửa tốt nhất?</span>
+    </div>
+    <span class="lbl">Bạn chọn đáp án nào?</span>
+    <div class="qopts">
+      <button type="button" class="qopt" data-k="A"><b class="k">A.</b><span class="body"><span class="en">“The prompt was too short. Rewrite it with a role, the audience, and a required output format.”</span><span class="vi">Prompt quá ngắn. Viết lại, thêm vai trò, người đọc và định dạng bắt buộc.</span></span></button>
+      <button type="button" class="qopt" data-k="B"><b class="k">B.</b><span class="body"><span class="en">“The model lacks the reasoning needed for policy questions. Switch the Project to the most capable model and ask the same question again.”</span><span class="vi">Model thiếu khả năng lập luận cho câu hỏi chính sách. Chuyển Project sang model mạnh nhất rồi hỏi lại đúng câu đó.</span></span></button>
+      <button type="button" class="qopt" data-k="C"><b class="k">C.</b><span class="body"><span class="en">“The Project knowledge is out of date. Replace the January handbook with the current policy, then ask Claude to quote the passage it relied on.”</span><span class="vi">Kiến thức trong Project đã cũ. Thay sổ tay tháng 1 bằng chính sách hiện hành, rồi nhờ Claude trích đoạn mà câu trả lời dựa vào.</span></span></button>
+      <button type="button" class="qopt" data-k="D"><b class="k">D.</b><span class="body"><span class="en">“Claude was overconfident. Ask it to rate its confidence before every answer, and re-check only the answers it scores low.”</span><span class="vi">Claude tự tin quá mức. Bảo nó tự chấm độ tin cậy trước mỗi câu trả lời, và chỉ kiểm lại những câu nó chấm thấp.</span></span></button>
+    </div>
+    <p class="qfb" hidden></p>
+    <div class="qexp" hidden>
+      <span class="lbl">Phân tích đề</span>
+      <ul>
+        <li><b>Đề kể:</b> câu trả lời đúng hình thức, tự tin, chỉ sai một con số. Project có sổ tay từ tháng 1; chính sách đổi tháng trước.</li>
+        <li><b>Chỗ khó:</b> câu trả lời “trông tốt” nên dễ nghĩ không có gì hỏng, hoặc đổ cho model. Chi tiết “tải lên hồi tháng 1” là manh mối.</li>
+        <li><b>Đề hỏi:</b> nguyên nhân nhiều khả năng nhất và cách sửa, tức là chọn đúng cần gạt.</li>
+      </ul>
+      <span class="lbl">Cần biết để chọn</span>
+      <ol>
+        <li>Trôi chảy, tự tin mà sai chi tiết là triệu chứng của cần gạt kiến thức: thiếu hoặc cũ.</li>
+        <li>Claude đọc đúng tài liệu bạn đưa. Tài liệu cũ thì câu trả lời cũ, model nào cũng vậy.</li>
+        <li>Nhờ Claude trích đoạn đã dựa vào để xác nhận: nếu nó trích từ sổ tay tháng 1, đúng là bệnh “cũ”.</li>
+      </ol>
+      <span class="lbl">Từng đáp án</span>
+      <ul class="verdict">
+        <li><b>A sai.</b> Output đã mạch lạc và trả lời đúng câu hỏi, nên prompt không phải chỗ hỏng (ý 1). Hấp dẫn vì “viết lại prompt” là phản xạ đầu tiên, nhưng prompt hay đến đâu cũng không đổi được con số trong file cũ.</li>
+        <li><b>B sai.</b> Model mạnh hơn đọc cùng file tháng 1 vẫn ra 12 tuần (ý 2). Tốn hạn mức hơn mà không sửa được gì.</li>
+        <li class="ok"><b>C đúng.</b> Sửa đúng cần gạt (ý 1, 2), và bước trích đoạn cho bạn bằng chứng là đã sửa đúng chỗ (ý 3).</li>
+        <li><b>D sai.</b> Độ tin cậy Claude tự chấm không phải bằng chứng. Một con số đọc từ file cũ có thể đi kèm điểm tự tin rất cao. Lỗi nằm ở tài liệu, không ở độ tự tin.</li>
+      </ul>
+      <button type="button" class="qreset">Làm lại câu này</button>
+    </div>
+  </div>
+
+  <div class="qcase" data-answer="A">
+    <h5 class="sub">Dạng 2: chat dài, lẫn chi tiết của việc khác</h5>
+    <span class="lbl">Đề sẽ viết kiểu này</span>
+    <div class="qtext">
+      <span class="en">“A project manager has used a single conversation for three weeks to draft documents for two different clients. Recent drafts for Client B include Client A’s deadlines and contact names, even though each request names Client B clearly. What is the best next step?”</span>
+      <span class="vi">Dịch: Một quản lý dự án dùng đúng một cuộc hội thoại suốt ba tuần để soạn tài liệu cho hai khách hàng khác nhau. Các bản nháp gần đây cho khách B có lẫn hạn chót và tên người liên hệ của khách A, dù yêu cầu nào cũng ghi rõ là khách B. Bước tiếp theo tốt nhất là gì?</span>
+    </div>
+    <span class="lbl">Bạn chọn đáp án nào?</span>
+    <div class="qopts">
+      <button type="button" class="qopt" data-k="A"><b class="k">A.</b><span class="body"><span class="en">“Start a new conversation for Client B and bring over a short summary of only the details that still apply.”</span><span class="vi">Mở cuộc hội thoại mới cho khách B, mang theo một bản tóm tắt ngắn chỉ gồm những chi tiết còn đúng.</span></span></button>
+      <button type="button" class="qopt" data-k="B"><b class="k">B.</b><span class="body"><span class="en">“Repeat ‘Client B only’ several times in every request and add ‘do not mention Client A’.”</span><span class="vi">Nhắc “chỉ khách B” nhiều lần trong mỗi yêu cầu, thêm câu “đừng nhắc tới khách A”.</span></span></button>
+      <button type="button" class="qopt" data-k="C"><b class="k">C.</b><span class="body"><span class="en">“Paste both clients’ briefs into the same conversation again so Claude has the latest details for each one.”</span><span class="vi">Dán lại bản yêu cầu của cả hai khách vào cùng cuộc hội thoại để Claude có thông tin mới nhất của từng bên.</span></span></button>
+      <button type="button" class="qopt" data-k="D"><b class="k">D.</b><span class="body"><span class="en">“Switch to the model with the largest context window so the whole history fits comfortably.”</span><span class="vi">Đổi sang model có context window lớn nhất để cả lịch sử nằm vừa thoải mái.</span></span></button>
+    </div>
+    <p class="qfb" hidden></p>
+    <div class="qexp" hidden>
+      <span class="lbl">Phân tích đề</span>
+      <ul>
+        <li><b>Đề kể:</b> một chat kéo ba tuần, phục vụ hai khách. Bản nháp lẫn chi tiết của khách kia.</li>
+        <li><b>Chỗ khó:</b> yêu cầu đã ghi rõ khách B, vậy prompt không thiếu. Thứ gây lỗi là chính lịch sử chat.</li>
+        <li><b>Đề hỏi:</b> bước tiếp theo tốt nhất, tức là sửa đúng cần gạt.</li>
+      </ul>
+      <span class="lbl">Cần biết để chọn</span>
+      <ol>
+        <li>Lịch sử càng dài, Claude nhớ và trích lại càng kém chính xác. Docs gọi là context rot.</li>
+        <li>Trộn hai việc trong một chat làm Claude dễ lấy nhầm chi tiết từ việc kia.</li>
+        <li>Context window to hơn chỉ chứa được nhiều hơn. Nó không dọn giúp lịch sử đang lẫn lộn.</li>
+      </ol>
+      <span class="lbl">Từng đáp án</span>
+      <ul class="verdict">
+        <li class="ok"><b>A đúng.</b> Bỏ lịch sử lẫn lộn, chỉ mang theo cái còn cần (ý 1, 2). Nếu làm với khách B lâu dài, nên dựng hẳn một Project riêng cho khách B.</li>
+        <li><b>B sai.</b> Vá triệu chứng. Lịch sử lẫn lộn vẫn nằm nguyên đó (ý 2), và chính yêu cầu đã ghi rõ khách B mà vẫn lỗi.</li>
+        <li><b>C sai.</b> Thêm tài liệu vào một chat đã quá dài làm nó dài và lẫn thêm (ý 1). Hấp dẫn vì “đưa thêm thông tin” nghe đúng kiểu sửa kiến thức, nhưng ở đây kiến thức không thiếu.</li>
+        <li><b>D sai.</b> Lỗi không đến từ chuyện hết chỗ (ý 3). Docs nói rõ context nhiều hơn không tự động tốt hơn.</li>
+      </ul>
+      <button type="button" class="qreset">Làm lại câu này</button>
+    </div>
+  </div>
+
+  <div class="qcase" data-answer="D">
+    <h5 class="sub">Dạng 3: định sửa nhiều thứ cùng lúc</h5>
+    <span class="lbl">Đề sẽ viết kiểu này</span>
+    <div class="qtext">
+      <span class="en">“A finance analyst’s monthly budget variance summary has wrong totals and an inconsistent layout. She plans to rewrite the prompt, switch to a different model, and add two new reference files, all before next month’s run. Which approach will best show what actually fixed the problem?”</span>
+      <span class="vi">Dịch: Bản tóm tắt chênh lệch ngân sách hằng tháng của một chuyên viên tài chính bị sai số tổng và trình bày lộn xộn. Cô định viết lại prompt, đổi model, thêm hai file tham khảo mới, làm hết trước kỳ chạy tháng sau. Cách nào cho biết rõ nhất cái gì đã thật sự sửa được lỗi?</span>
+    </div>
+    <span class="lbl">Bạn chọn đáp án nào?</span>
+    <div class="qopts">
+      <button type="button" class="qopt" data-k="A"><b class="k">A.</b><span class="body"><span class="en">“Make all three changes together to save time, then check next month’s output carefully against the bank statements.”</span><span class="vi">Làm cả ba thay đổi một lúc cho đỡ mất thời gian, rồi đối chiếu kỹ output tháng sau với sao kê ngân hàng.</span></span></button>
+      <button type="button" class="qopt" data-k="B"><b class="k">B.</b><span class="body"><span class="en">“Ask Claude which of the three changes will help most, and apply only that one.”</span><span class="vi">Hỏi Claude thay đổi nào trong ba cái giúp nhiều nhất, rồi chỉ làm cái đó.</span></span></button>
+      <button type="button" class="qopt" data-k="C"><b class="k">C.</b><span class="body"><span class="en">“Test the new setup only on next month’s data, since fresh data gives a fairer test.”</span><span class="vi">Chỉ thử cách làm mới trên dữ liệu tháng sau, vì dữ liệu mới thì thử công bằng hơn.</span></span></button>
+      <button type="button" class="qopt" data-k="D"><b class="k">D.</b><span class="body"><span class="en">“Keep this month’s inputs, make one change at a time, rerun on those same inputs, and compare each result with the original output.”</span><span class="vi">Giữ lại input của tháng này, mỗi lần đổi một thứ, chạy lại trên đúng input đó và so từng kết quả với output gốc.</span></span></button>
+    </div>
+    <p class="qfb" hidden></p>
+    <div class="qexp" hidden>
+      <span class="lbl">Phân tích đề</span>
+      <ul>
+        <li><b>Đề kể:</b> hai triệu chứng (sai tổng, trình bày lộn xộn) và ba thay đổi định làm cùng lúc.</li>
+        <li><b>Chỗ khó:</b> đề hỏi cách nào cho biết cái gì sửa được lỗi, không hỏi cách nhanh nhất. Hai triệu chứng có thể đến từ hai cần gạt khác nhau.</li>
+        <li><b>Đề hỏi:</b> cách thử cho ra bằng chứng.</li>
+      </ul>
+      <span class="lbl">Cần biết để chọn</span>
+      <ol>
+        <li>Đổi nhiều thứ cùng lúc thì không biết thứ nào có tác dụng, thứ nào gây hại.</li>
+        <li>Muốn so thì phải giữ nguyên input. Input đổi thì output đổi vì input.</li>
+        <li>Lời đoán của Claude về thay đổi nào tốt chưa phải là kết quả thử.</li>
+      </ol>
+      <span class="lbl">Từng đáp án</span>
+      <ul class="verdict">
+        <li><b>A sai.</b> Gộp ba thay đổi (ý 1). Tháng sau tốt hơn thì không biết giữ cái nào; tệ hơn thì không biết gỡ cái nào. Hấp dẫn vì đỡ mất công, và “đối chiếu kỹ” nghe rất cẩn thận.</li>
+        <li><b>B sai.</b> Câu trả lời của Claude là một dự đoán, không phải phép thử (ý 3).</li>
+        <li><b>C sai.</b> Dữ liệu tháng sau khác dữ liệu tháng này, nên output khác có thể chỉ vì dữ liệu khác (ý 2).</li>
+        <li class="ok"><b>D đúng.</b> Mỗi lần một biến, cùng input, so với bản gốc (ý 1, 2). Có khi chỉ một thay đổi là đủ, và cô biết chính xác là thay đổi nào.</li>
+      </ul>
+      <button type="button" class="qreset">Làm lại câu này</button>
+    </div>
+  </div>
+
+  <div class="more"><b>Biết thêm</b><ul>
+    <li><b>Thêm chữ không thêm thông tin.</b> “Please”, dấu chấm than, hay câu “be consistent” (hãy nhất quán) không nói cho Claude biết nhất quán theo cái gì. Danh sách nhãn và định dạng mẫu mới nói.</li>
+    <li><b>“Set temperature to 0” (đặt temperature về 0).</b> Nghe như cách làm output ổn định, nhưng nó không thêm định nghĩa nào đang thiếu. Đây cũng là tham số khi gọi API, không phải việc của người dùng app.</li>
+    <li><b>Ca ranh giới chữa bằng ví dụ, không bằng luật tùy tiện.</b> Luật kiểu “phân vân thì chọn nhóm đứng trước theo bảng chữ cái”, hay chẻ thêm nhóm hẹp hơn, chỉ dời ranh giới đi chỗ khác.</li>
+    <li><b>Nói lý do của ràng buộc.</b> “Bản này sẽ được đọc to qua loa, nên đừng dùng dấu ba chấm” giúp Claude tự suy ra các trường hợp tương tự. Chi tiết ở <a href="#l-1-1">bài 1.1</a>.</li>
+    <li><b>Chat dài được tự tóm tắt vẫn có thể lẫn.</b> Gói trả phí có bật tạo file sẽ tự tóm tắt phần đầu khi chat gần chạm giới hạn, để chat đi tiếp. Nó không tách giúp bạn hai việc đã trộn vào nhau.</li>
+  </ul></div>
+  <div class="rule">Quy tắc: tìm nguyên nhân trước khi sửa; mỗi lần đổi một thứ, chạy lại cùng input, và để đổi model sau cùng.</div>
+  <div class="remember"><b>Nhớ nhanh</b><ul>
+    <li>Chung chung, mỗi lần một kiểu → prompt. Làm phép thử đồng nghiệp.</li>
+    <li>Trôi chảy mà sai chi tiết → kiến thức. Hỏi trích đoạn: không có đoạn là thiếu, đoạn cũ là cũ.</li>
+    <li>Lẫn chi tiết việc khác → chat mới kèm tóm tắt ngắn.</li>
+    <li>Một thay đổi, cùng input. Suy nghĩ sâu và model mạnh: đo trên mẫu rồi mới dùng.</li>
+  </ul></div>
+  <div class="src">Đọc thêm: <a href="https://support.claude.com/en/articles/7996857-my-prompt-isn-t-giving-me-a-helpful-answer">My prompt isn’t giving me a helpful answer</a> · <a href="https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices">Prompting best practices</a> · <a href="https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-hallucinations">Reduce hallucinations</a> · <a href="https://support.claude.com/en/articles/8114494-how-up-to-date-is-claude-s-training-data">How up-to-date is Claude’s training data?</a> · <a href="https://support.claude.com/en/articles/10574485-using-extended-thinking">Using extended thinking</a></div>
+  <label class="done"><input type="checkbox" data-lesson="l-7-1"> Đã học bài này</label>
+</article>
+
+<article class="lesson" id="l-7-2" data-domain="7" data-ts="7.2" data-min="14">
+  <header class="lh"><span class="ts">TS 7.2</span><h3>Chỉnh theo phản hồi: chọn đúng cần gạt, và giữ cách sửa ở lại</h3><span class="rt">~14 phút</span></header>
+  <p class="need">Cần biết trước: sáu cần gạt và vòng chẩn đoán ở <a href="#l-7-0">bài Nền tảng</a>, cách đọc triệu chứng ở <a href="#l-7-1">bài 7.1</a>. Cách cấu hình Project nằm ở <a href="#l-5-1">bài 5.1</a> và <a href="#l-5-3">bài 5.3</a>.</p>
+  <div class="defs"><b>Khái niệm của bài</b><dl>
+    <dt>Phản hồi (feedback)</dt><dd>Mọi tín hiệu cho biết output dùng được hay không: lời chê của người dùng, nhận xét của người duyệt, số liệu kết quả. Phản hồi là triệu chứng, không phải đơn thuốc.</dd>
+    <dt>Chuẩn đạt (success criteria)</dt><dd>Mô tả cụ thể, đo được, thế nào là một output “được”. Ví dụ “bản nháp gửi khách chỉ cần sửa dưới 5 phút, đúng số liệu” thay cho “bản nháp tốt”.</dd>
+    <dt>Tín hiệu ngầm (implicit signal)</dt><dd>Thứ người dùng làm, không phải thứ họ nói. Ví dụ tỉ lệ bản nháp được gửi đi mà không phải viết lại.</dd>
+    <dt>Hồi quy (regression)</dt><dd>Chất lượng tụt xuống ngay sau một thay đổi đã biết: ai đó sửa instructions, thay file, đổi model.</dd>
+    <dt>Instructions for Claude</dt><dd>Chỉ dẫn cấp tài khoản, áp cho mọi chat của bạn (trước gọi là profile preferences). Hẹp hơn là project instructions, chỉ áp trong một Project.</dd>
+  </dl></div>
+
+  <h4>Đọc phản hồi để tìm gốc, đừng làm theo nguyên văn</h4>
+  <p>“Dài quá”, “thiếu ý chính”, “nghe như máy”: mỗi câu là một triệu chứng. Làm theo nguyên văn, như thêm giới hạn 150 chữ hay đổi model, là chữa triệu chứng. Trước khi đổi gì, lấy vài output bị chê, đặt cạnh input của chúng, và hỏi:</p>
+  <ul>
+    <li><b>Thứ bị chê là thiếu có nằm trong input không?</b> Không có → cần gạt kiến thức: đưa nguồn vào.</li>
+    <li><b>Có trong input mà Claude bỏ qua?</b> Prompt chưa nói thứ đó quan trọng.</li>
+    <li><b>Có trong output nhưng bị chôn giữa đoạn dài?</b> Sửa định dạng, thứ tự trình bày.</li>
+    <li><b>“Dài” vì đâu?</b> Lặp ý, chi tiết người đọc không dùng, hay câu xã giao chèn vào? Mỗi kiểu một cách sửa. Giới hạn số chữ có thể cắt đúng phần cần.</li>
+  </ul>
+  <p>Ví dụ: bản trả lời khách bị chê “nghe như máy”. Đặt 6 bản cạnh email của khách thì thấy bản nào cũng mở bằng cùng một câu xin lỗi dài và kết bằng cùng một đoạn chính sách, kể cả khi khách chỉ hỏi giờ mở cửa. Gốc là instructions đang bắt “luôn xin lỗi và luôn nhắc chính sách”. Sửa: chỉ xin lỗi khi khách phàn nàn, chỉ nhắc chính sách khi liên quan.</p>
+
+  <h4>Ý kiến trái chiều: thống nhất chuẩn đạt trước</h4>
+  <p>Nhóm này khen, nhóm kia chê. Sửa theo nhóm chê to nhất là bẫy: có thể làm hỏng thứ nhóm kia đang dùng tốt. Làm theo thứ tự:</p>
+  <ol>
+    <li>Viết chuẩn đạt cụ thể, đo được. Docs của Anthropic lấy ví dụ: đừng ghi “good performance” (chạy tốt), hãy ghi chính xác cái cần đạt.</li>
+    <li>Gom output thật từ cả hai nhóm.</li>
+    <li>Chấm theo chuẩn. Lúc đó mới thấy bị chê vì output kém, hay vì hai nhóm đang mong hai thứ khác nhau.</li>
+  </ol>
+  <div class="tw"><table>
+    <tr><th>Cách đo</th><th>Ví dụ</th><th>Hợp khi</th></tr>
+    <tr><td>Tín hiệu ngầm</td><td>% bản nháp gửi đi không phải viết lại</td><td>Gần như luôn nên có: đo việc người ta làm, không chỉ lời họ nói</td></tr>
+    <tr><td>Bộ ca khó</td><td>10 email khó nhất tháng: bao nhiêu bản không lỗi</td><td>Trước khi áp một thay đổi cho cả nhóm</td></tr>
+    <tr><td>Thang điểm 1–5</td><td>Người duyệt chấm “phải sửa bao nhiêu”</td><td>Chất lượng khó đếm: giọng văn, độ rõ</td></tr>
+    <tr><td>Rubric của chuyên gia</td><td>Pháp chế chấm theo 5 tiêu chí đã định</td><td>Output có rủi ro cao</td></tr>
+  </table></div>
+
+  <h4>Khớp cần gạt với bằng chứng</h4>
+  <div class="tw"><table>
+    <tr><th>Bằng chứng</th><th>Cần gạt</th><th>Thay đổi đầu tiên</th></tr>
+    <tr><td>Chất lượng tụt ngay sau khi ai đó sửa instructions</td><td>Instructions</td><td>So bản cũ với bản mới, khôi phục bản cũ, chạy lại một việc gần đây</td></tr>
+    <tr><td>Thiếu nội dung mà input không hề có</td><td>Kiến thức</td><td>Chỉ cho Claude đúng nguồn có câu trả lời</td></tr>
+    <tr><td>Mỗi lần chạy một kiểu</td><td>Prompt hoặc cách chia việc</td><td>Ghi rõ các quyết định đang bỏ ngỏ; tách việc thành bước nhỏ</td></tr>
+    <tr><td>Chat dài, càng về sau càng lệch</td><td>Hội thoại</td><td>Bắt đầu lại, chỉ mang theo những gì còn cần</td></tr>
+    <tr><td>Input và chỉ dẫn đều ổn, việc vẫn quá sức</td><td>Effort, rồi model</td><td>Tăng effort trước; vẫn chưa được thì thử model mạnh hơn, so trên cùng input</td></tr>
+  </table></div>
+  <p>Vì sao effort trước model? Docs chọn model của Anthropic viết: “tuning effort is often a better lever than switching models” (chỉnh effort thường là cần gạt tốt hơn đổi model). Hướng dẫn cho người dùng app nói thêm: mặc định dùng Sonnet; Opus hay Fable (tầng mạnh và nặng nhất hiện nay, guide chưa nhắc tới) để dành cho lúc Sonnet không làm nổi. Hai lời khuyên không mâu thuẫn: thử effort trên model đang dùng trước, vẫn chưa đạt thì lên tầng. Dùng Opus hay Fable cho việc Sonnet làm được thì tốn hạn mức mà không được gì thêm.</p>
+
+  <h4>Sửa giữa chừng: nói chẩn đoán, đừng chỉ chê</h4>
+  <p>Phản hồi càng sớm càng rẻ. Thấy Claude đi sai hướng từ đoạn đầu thì nói ngay, đừng đợi bản đầy đủ rồi bắt làm lại từ đầu. Và nói cụ thể:</p>
+  <ul>
+    <li><b>Chê chung:</b> “Chưa đúng, làm lại đi.” Claude phải đoán sai ở đâu.</li>
+    <li><b>Chẩn đoán:</b> “Tổng chi phí sai vì đang cộng cả đơn đã hủy. Chỉ tính đơn có trạng thái Đã giao.” Claude biết sửa chỗ nào.</li>
+  </ul>
+
+  <h4>Xác nhận trước, rồi mới làm cho bền</h4>
+  <p>Một bản đẹp trên một input chưa chứng minh gì, nhất là input bạn đã ngồi chỉnh prompt cho tới khi nó đẹp. Trước khi lưu một prompt hay một chỉ dẫn mới vào chỗ cả nhóm dùng:</p>
+  <ul>
+    <li>Chạy bản cũ và bản mới trên vài input thật, có cả ca khó.</li>
+    <li>Chấm theo chuẩn đạt đã thống nhất, không theo cảm giác “bản mới nghe hay hơn”.</li>
+    <li>Chạy lại cùng một input năm lần chỉ cho biết output có ổn định không. Nó không cho biết bản mới có hợp với input khác không.</li>
+    <li>Đừng chỉ hỏi Claude bản nào tốt hơn. Claude chấm được khi có rubric rõ, nhưng không thay được việc so trên input thật với chuẩn đạt.</li>
+  </ul>
+
+  <h4>Đặt cách sửa ở đâu để không phải dặn lại</h4>
+  <p>Cùng một lời dặn mà gõ lại ở mọi chat là dấu hiệu nó cần được lưu. Chọn chỗ theo phạm vi:</p>
+  <div class="tw"><table>
+    <tr><th>Cách sửa</th><th>Đặt ở</th><th>Vì sao</th></tr>
+    <tr><td>Luật áp cho mọi chat của một việc: giọng, định dạng, khi nào chuyển duyệt</td><td>Project instructions</td><td>Áp cho mọi chat trong Project, của mọi người trong Project</td></tr>
+    <tr><td>Tài liệu tham khảo: bảng giá, chính sách, mẫu</td><td>Project knowledge</td><td>Mọi chat trong Project đọc được; thay một chỗ là xong</td></tr>
+    <tr><td>Thói quen riêng của bạn ở mọi chat</td><td>Instructions for Claude</td><td>Cấp tài khoản, đi theo bạn ở mọi nơi</td></tr>
+    <tr><td>Quy trình chuyên biệt, chỉ dùng khi cần</td><td>Skill</td><td>Claude tự nạp khi việc cần tới</td></tr>
+  </table></div>
+  <ul>
+    <li><b>Sau khi lưu:</b> giữ instructions ngắn, mở một chat mới để kiểm Claude có theo không.</li>
+    <li><b>Xem lại định kỳ</b>, nhất là khi đổi model hay đổi chính sách (<a href="#l-5-4">bài 5.4</a>). Một câu dặn từng cần cho model cũ có khi không còn cần với model mới, còn chính sách đổi thì câu dặn cũ thành sai.</li>
+    <li><b>Memory không phải chỗ đặt luật cho nhóm.</b> Memory là Claude tự ghi nhớ từ các chat. Luật cả nhóm phải theo thì viết thẳng vào project instructions, nơi ai trong Project cũng thấy được.</li>
+  </ul>
+
+  <div class="story"><b>Tình huống.</b> Phòng nhân sự dùng một Project để soạn mô tả công việc. Trưởng nhóm tuyển dụng chê “chung chung”, còn các bạn mới vào khen “nhanh, đỡ hẳn việc”. Trước khi sửa instructions theo ý trưởng nhóm, cả phòng thống nhất chuẩn đạt: đăng được sau tối đa 10 phút sửa, có đủ 3 kỹ năng bắt buộc do bộ phận tuyển dụng đưa, có đúng dải lương. Chấm 12 bản thật của cả hai bên theo chuẩn đó: bản nào cũng thiếu dải lương, vì Project không có file khung lương. Lời chê “chung chung” thật ra là lỗi kiến thức, không phải lỗi giọng văn. Thêm file khung lương vào knowledge, chạy lại 12 yêu cầu cũ: 11 bản đạt chuẩn. Cả hai bên đều hài lòng, và instructions không phải sửa chữ nào.</div>
+  <div class="vs">
+    <div class="bad"><b>Tệ</b><ul>
+      <li>Làm theo nguyên văn lời chê: thêm giới hạn chữ, đổi model.</li>
+      <li>Sửa theo nhóm chê to nhất.</li>
+      <li>Chất lượng tụt sau một chỉnh sửa, lại chồng thêm chỉ dẫn mới lên trên.</li>
+      <li>Một bản đẹp là lưu ngay vào Project chung.</li>
+    </ul></div>
+    <div class="good"><b>Tốt</b><ul>
+      <li>Đặt output bị chê cạnh input, tìm gốc trước.</li>
+      <li>Thống nhất chuẩn đạt, chấm output của cả hai bên.</li>
+      <li>Khôi phục bản cũ, chạy lại cùng việc để xác nhận thủ phạm.</li>
+      <li>Thử trên vài input thật, rồi mới lưu vào instructions hoặc knowledge.</li>
+    </ul></div>
+  </div>
+  <div class="trap"><b>Bẫy:</b> nâng model là phản xạ đầu tiên khi bị chê “thiếu ý”. Nếu ý đó không hề có trong input, model nào cũng thiếu như nhau.</div>
+
+  <h4>Khi đi thi</h4>
+  <p class="need">Bài này thường ra 3 dạng câu hỏi. Đọc đề, <b>chọn một đáp án trước</b>; phần giải thích chỉ hiện ra sau khi bạn chọn.</p>
+
+  <div class="qcase" data-answer="B">
+    <h5 class="sub">Dạng 1: phản hồi kèm sẵn “cách sửa”</h5>
+    <span class="lbl">Đề sẽ viết kiểu này</span>
+    <div class="qtext">
+      <span class="en">“Sales managers say the weekly pipeline summaries Claude drafts in a shared Project are ‘too long.’ The operations lead wants to add ‘Maximum 150 words’ to the project instructions today. What should she do first?”</span>
+      <span class="vi">Dịch: Các quản lý bán hàng nói bản tóm tắt pipeline (danh sách cơ hội bán hàng) hằng tuần mà Claude soạn trong một Project chung là “quá dài”. Trưởng bộ phận vận hành muốn thêm “Tối đa 150 chữ” vào project instructions ngay hôm nay. Việc cô ấy nên làm trước tiên là gì?</span>
+    </div>
+    <span class="lbl">Bạn chọn đáp án nào?</span>
+    <div class="qopts">
+      <button type="button" class="qopt" data-k="A"><b class="k">A.</b><span class="body"><span class="en">“Add the 150-word limit to the instructions now, since the managers have already stated the problem clearly.”</span><span class="vi">Thêm giới hạn 150 chữ vào instructions ngay, vì các quản lý đã nói rõ vấn đề rồi.</span></span></button>
+      <button type="button" class="qopt" data-k="B"><b class="k">B.</b><span class="body"><span class="en">“Read several criticized summaries next to their source data to see what makes them long.”</span><span class="vi">Đọc vài bản tóm tắt bị chê cạnh dữ liệu gốc của chúng để xem cái gì làm chúng dài.</span></span></button>
+      <button type="button" class="qopt" data-k="C"><b class="k">C.</b><span class="body"><span class="en">“Switch the Project to a faster model, which tends to write shorter responses.”</span><span class="vi">Chuyển Project sang model nhanh hơn, vì model đó thường viết ngắn hơn.</span></span></button>
+      <button type="button" class="qopt" data-k="D"><b class="k">D.</b><span class="body"><span class="en">“Collect written feedback from every sales manager for a full month, then decide which instruction changes to make.”</span><span class="vi">Thu phản hồi bằng văn bản của mọi quản lý bán hàng trong cả tháng, rồi mới quyết định sửa instructions chỗ nào.</span></span></button>
+    </div>
+    <p class="qfb" hidden></p>
+    <div class="qexp" hidden>
+      <span class="lbl">Phân tích đề</span>
+      <ul>
+        <li><b>Đề kể:</b> phản hồi “quá dài”, kèm đề xuất giới hạn 150 chữ.</li>
+        <li><b>Chỗ khó:</b> phản hồi nghe như đã có sẵn cách sửa. Nhưng “dài” là triệu chứng, và cắt số chữ có thể cắt mất thứ quản lý cần.</li>
+        <li><b>Đề hỏi:</b> làm gì <i>trước tiên</i>.</li>
+      </ul>
+      <span class="lbl">Cần biết để chọn</span>
+      <ol>
+        <li>Phản hồi là triệu chứng, không phải đơn thuốc. Tìm gốc trước khi sửa.</li>
+        <li>Cách tìm gốc nhanh nhất: đặt output bị chê cạnh input của nó.</li>
+        <li>Các bản bị chê đã có sẵn. Không cần đợi thêm dữ liệu mới chẩn đoán được.</li>
+      </ol>
+      <span class="lbl">Từng đáp án</span>
+      <ul class="verdict">
+        <li><b>A sai.</b> Làm theo nguyên văn lời chê (ý 1). Nếu bản tóm tắt dài vì liệt kê lại cả các cơ hội không có gì thay đổi trong tuần, giới hạn chữ sẽ cắt ngẫu nhiên, có khi cắt đúng phần quan trọng.</li>
+        <li class="ok"><b>B đúng.</b> Tìm gốc trên output thật (ý 1, 2). Thấy nguyên nhân rồi sửa đúng chỗ, ví dụ “chỉ liệt kê cơ hội có thay đổi trong tuần”.</li>
+        <li><b>C sai.</b> Đổi model để mong viết ngắn hơn là đoán, và có thể làm chất lượng tụt. Chưa cần gạt nào được chẩn đoán.</li>
+        <li><b>D sai.</b> Quá chậm. Các bản bị chê đã đủ để chẩn đoán ngay hôm nay (ý 3).</li>
+      </ul>
+      <button type="button" class="qreset">Làm lại câu này</button>
+    </div>
+  </div>
+
+  <div class="qcase" data-answer="D">
+    <h5 class="sub">Dạng 2: chất lượng tụt sau một chỉnh sửa</h5>
+    <span class="lbl">Đề sẽ viết kiểu này</span>
+    <div class="qtext">
+      <span class="en">“Drafts from a shared customer-support Project became noticeably worse this week. Nothing else changed except that a teammate edited the project instructions on Monday. What is the best first step?”</span>
+      <span class="vi">Dịch: Bản nháp từ một Project hỗ trợ khách hàng dùng chung tệ hẳn đi trong tuần này. Không có gì khác thay đổi, ngoài việc một đồng nghiệp đã sửa project instructions hôm thứ Hai. Bước đầu tiên tốt nhất là gì?</span>
+    </div>
+    <span class="lbl">Bạn chọn đáp án nào?</span>
+    <div class="qopts">
+      <button type="button" class="qopt" data-k="A"><b class="k">A.</b><span class="body"><span class="en">“Keep the teammate’s edit and add your own instructions below it, overriding the parts that seem to cause the weaker drafts.”</span><span class="vi">Giữ phần đồng nghiệp sửa, thêm chỉ dẫn của bạn bên dưới để đè lên những chỗ có vẻ làm bản nháp kém đi.</span></span></button>
+      <button type="button" class="qopt" data-k="B"><b class="k">B.</b><span class="body"><span class="en">“Switch the Project to a more capable model so it can handle the new instructions.”</span><span class="vi">Đổi Project sang model mạnh hơn để nó xử lý được chỉ dẫn mới.</span></span></button>
+      <button type="button" class="qopt" data-k="C"><b class="k">C.</b><span class="body"><span class="en">“Ask Claude to rewrite the project instructions so that they produce better drafts.”</span><span class="vi">Nhờ Claude viết lại project instructions sao cho ra bản nháp tốt hơn.</span></span></button>
+      <button type="button" class="qopt" data-k="D"><b class="k">D.</b><span class="body"><span class="en">“Compare the old and new wording, restore the previous version, and rerun a recent task to see whether quality returns.”</span><span class="vi">So bản cũ và bản mới, khôi phục bản cũ, rồi chạy lại một việc gần đây xem chất lượng có trở lại không.</span></span></button>
+    </div>
+    <p class="qfb" hidden></p>
+    <div class="qexp" hidden>
+      <span class="lbl">Phân tích đề</span>
+      <ul>
+        <li><b>Đề kể:</b> chất lượng tụt; thay đổi duy nhất là instructions bị sửa hôm thứ Hai.</li>
+        <li><b>Chỗ khó:</b> đề nói rõ “nothing else changed” (không có gì khác thay đổi). Đây là hồi quy có thủ phạm rõ ràng.</li>
+        <li><b>Đề hỏi:</b> bước đầu tiên.</li>
+      </ul>
+      <span class="lbl">Cần biết để chọn</span>
+      <ol>
+        <li>Chất lượng tụt ngay sau một thay đổi đã biết → nghi thay đổi đó trước.</li>
+        <li>Khôi phục rồi chạy lại cùng việc là cách xác nhận rẻ nhất: chất lượng trở lại là đúng thủ phạm.</li>
+        <li>Chồng thêm chỉ dẫn lên một chỉnh sửa đáng ngờ dễ tạo ra hai luật cãi nhau.</li>
+      </ol>
+      <span class="lbl">Từng đáp án</span>
+      <ul class="verdict">
+        <li><b>A sai.</b> Giữ nguyên chỗ đáng ngờ rồi đè thêm (ý 3). Hấp dẫn vì khỏi phải gỡ công của đồng nghiệp, nhưng Project sẽ chứa hai luật ngược nhau.</li>
+        <li><b>B sai.</b> Model không phải thứ đã đổi (ý 1). Đổi model là thêm một biến số mới đúng lúc đang tìm thủ phạm.</li>
+        <li><b>C sai.</b> Claude không biết bản nháp tuần trước tốt hơn ở đâu. Viết lại là đoán, và lại thêm một thay đổi chưa thử.</li>
+        <li class="ok"><b>D đúng.</b> Nghi đúng thay đổi vừa có (ý 1), xác nhận bằng cách khôi phục và chạy lại (ý 2). Sau đó mới cùng đồng nghiệp xem phần sửa của họ nhắm tới điều gì, và đưa lại cho đúng cách.</li>
+      </ul>
+      <button type="button" class="qreset">Làm lại câu này</button>
+    </div>
+  </div>
+
+  <div class="qcase" data-answer="A">
+    <h5 class="sub">Dạng 3: lời dặn lặp lại ở mọi chat</h5>
+    <span class="lbl">Đề sẽ viết kiểu này</span>
+    <div class="qtext">
+      <span class="en">“Every time an event coordinator starts a chat in her team’s event-planning Project, she pastes the same three lines: list costs in VND, flag vendor contracts over 50 million VND for legal review, and use the client’s full company name. Her colleagues in the Project often forget these lines. What is the most effective fix?”</span>
+      <span class="vi">Dịch: Mỗi lần mở chat trong Project lên kế hoạch sự kiện của nhóm, một điều phối viên đều dán ba dòng giống nhau: ghi chi phí bằng VND, đánh dấu hợp đồng nhà cung cấp trên 50 triệu đồng để pháp chế duyệt, dùng tên công ty đầy đủ của khách. Đồng nghiệp trong Project hay quên ba dòng này. Cách sửa hiệu quả nhất là gì?</span>
+    </div>
+    <span class="lbl">Bạn chọn đáp án nào?</span>
+    <div class="qopts">
+      <button type="button" class="qopt" data-k="A"><b class="k">A.</b><span class="body"><span class="en">“Add the three lines to the Project’s instructions, then open a new chat to confirm Claude follows them.”</span><span class="vi">Thêm ba dòng vào project instructions, rồi mở một chat mới để kiểm Claude có theo không.</span></span></button>
+      <button type="button" class="qopt" data-k="B"><b class="k">B.</b><span class="body"><span class="en">“Save the three lines in a shared team note so everyone can paste them at the start of each chat.”</span><span class="vi">Lưu ba dòng vào một ghi chú chung của nhóm để ai cũng dán được ở đầu mỗi chat.</span></span></button>
+      <button type="button" class="qopt" data-k="C"><b class="k">C.</b><span class="body"><span class="en">“Ask Claude at the start of each chat to apply the rules it was given in earlier conversations.”</span><span class="vi">Đầu mỗi chat, bảo Claude áp dụng các luật đã được dặn ở những cuộc hội thoại trước.</span></span></button>
+      <button type="button" class="qopt" data-k="D"><b class="k">D.</b><span class="body"><span class="en">“Upload a document containing the three lines to the Project’s knowledge.”</span><span class="vi">Tải lên project knowledge một tài liệu có ghi ba dòng này.</span></span></button>
+    </div>
+    <p class="qfb" hidden></p>
+    <div class="qexp" hidden>
+      <span class="lbl">Phân tích đề</span>
+      <ul>
+        <li><b>Đề kể:</b> một lời dặn lặp lại ở mọi chat; đồng nghiệp hay quên.</li>
+        <li><b>Chỗ khó:</b> nội dung lời dặn đã đúng. Vấn đề là nó phụ thuộc trí nhớ của từng người.</li>
+        <li><b>Đề hỏi:</b> cách sửa hiệu quả nhất, tức là đặt cách sửa ở đâu để nó tự áp.</li>
+      </ul>
+      <span class="lbl">Cần biết để chọn</span>
+      <ol>
+        <li>Project instructions áp cho mọi chat trong Project, của mọi người trong Project.</li>
+        <li>Project knowledge là tài liệu tham khảo. Luật làm việc phải áp ở mọi chat thì đặt trong instructions.</li>
+        <li>Lưu xong thì thử một chat mới để chắc Claude theo.</li>
+      </ol>
+      <span class="lbl">Từng đáp án</span>
+      <ul class="verdict">
+        <li class="ok"><b>A đúng.</b> Đặt luật ở chỗ tự áp cho cả nhóm (ý 1), rồi kiểm lại (ý 3).</li>
+        <li><b>B sai.</b> Vẫn dựa vào trí nhớ của từng người, đúng cái đang hỏng. Hấp dẫn vì có vẻ “chuẩn hóa”, nhưng chỉ chuẩn hóa việc dán tay.</li>
+        <li><b>C sai.</b> Đây là nhờ Claude lục lại chat cũ, không phải luật đặt sẵn. Có lúc tìm đúng, có lúc không, và mỗi người vẫn phải nhớ để yêu cầu.</li>
+        <li><b>D sai.</b> Knowledge là tài liệu tham khảo, không phải nơi đặt luật (ý 2). Ba luật nằm trong một file có thể không được dùng ở mọi chat, nhất là khi Project lớn chỉ lấy ra phần liên quan.</li>
+      </ul>
+      <button type="button" class="qreset">Làm lại câu này</button>
+    </div>
+  </div>
+
+  <div class="more"><b>Biết thêm</b><ul>
+    <li><b>Các mức effort:</b> Low, Medium, High, Extra high, Max. Model mới nhất không tắt được thinking (suy nghĩ trước khi trả lời), nên chỉnh effort là cách điều khiển độ sâu.</li>
+    <li><b>Phản hồi từ kết quả thật đáng tin hơn lời khen chê.</b> Nếu output được gửi đi, theo dõi tỉ lệ khách trả lời, số lỗi bị trả về, thời gian sửa.</li>
+    <li><b>Nhận xét của người duyệt là dữ liệu quý.</b> Gom các lỗi họ hay sửa: lỗi nào lặp lại ở nhiều bản là ứng viên để đưa vào instructions.</li>
+    <li><b>Khôi phục được thì dễ thử.</b> Trước khi sửa instructions của Project chung, chép lại bản đang dùng. Sửa hỏng thì quay về trong một phút.</li>
+  </ul></div>
+  <div class="rule">Quy tắc: coi phản hồi là triệu chứng; tìm gốc trên output thật, sửa đúng cần gạt, thử trên vài input rồi mới lưu vào chỗ cả nhóm dùng.</div>
+  <div class="remember"><b>Nhớ nhanh</b><ul>
+    <li>Phản hồi là triệu chứng. Đặt output bị chê cạnh input rồi mới sửa.</li>
+    <li>Ý kiến trái chiều → chuẩn đạt cụ thể, chấm output của cả hai bên.</li>
+    <li>Tụt sau một thay đổi → khôi phục, chạy lại cùng việc. Effort trước model.</li>
+    <li>Lời dặn lặp lại → project instructions, knowledge hoặc Skill; thử vài input trước khi lưu.</li>
+  </ul></div>
+  <div class="src">Đọc thêm: <a href="https://platform.claude.com/docs/en/test-and-evaluate/develop-tests">Define success criteria and build evaluations</a> · <a href="https://platform.claude.com/docs/en/about-claude/models/choosing-a-model">Choosing a model</a> · <a href="https://support.claude.com/en/articles/10185728-understanding-claude-s-personalization-features">Understanding personalization features</a> · <a href="https://support.claude.com/en/articles/9519177-how-can-i-create-and-manage-projects">Create and manage projects</a> · <a href="https://support.claude.com/en/articles/10574485-using-extended-thinking">Using extended thinking</a></div>
+  <label class="done"><input type="checkbox" data-lesson="l-7-2"> Đã học bài này</label>
+</article>
+
+<article class="lesson" id="l-7-3" data-domain="7" data-ts="7.3" data-min="13">
+  <header class="lh"><span class="ts">TS 7.3</span><h3>Tối ưu quy trình: bớt tốn hạn mức và thời gian, mà output vẫn tốt</h3><span class="rt">~13 phút</span></header>
+  <p class="need">Cần biết trước: chọn model theo việc ở <a href="#l-3-3">bài 3.3</a>, giới hạn context ở <a href="#l-3-4">bài 3.4</a>, cấu hình Project ở <a href="#l-5-1">bài 5.1</a>.</p>
+  <div class="defs"><b>Khái niệm của bài</b><dl>
+    <dt>Usage limit (hạn mức sử dụng)</dt><dd>Lượng bạn dùng được Claude trong một khoảng thời gian, tính trên mọi chat. Help center gọi nó là “conversation budget” (ngân sách hội thoại).</dd>
+    <dt>Length limit (giới hạn độ dài)</dt><dd>Lượng thông tin một chat chứa được, tức context window. Hết độ dài thì mở chat mới; hết hạn mức thì phải chờ hoặc mua thêm.</dd>
+    <dt>Session limit (hạn mức phiên)</dt><dd>Hạn mức theo khung 5 giờ. Khung bắt đầu từ tin nhắn đầu tiên và hồi lại đầy đủ sau 5 giờ.</dd>
+    <dt>Weekly limit (hạn mức tuần)</dt><dd>Hạn mức theo tuần, reset vào một giờ cố định mỗi tuần gắn với tài khoản.</dd>
+    <dt>Caching (lưu đệm)</dt><dd>Nội dung trong Project được lưu đệm, nên dùng lại thì tính ít hơn vào hạn mức.</dd>
+    <dt>Batching (gom việc)</dt><dd>Gom các yêu cầu liên quan vào một tin nhắn thay vì gửi lẻ từng cái.</dd>
+  </dl></div>
+
+  <h4>Hạn mức chạy thế nào</h4>
+  <ul>
+    <li><b>Gói trả phí có hai lớp:</b> hạn mức phiên 5 giờ (tính từ tin đầu tiên) và hạn mức tuần. Giờ reset tuần không đổi theo lúc bạn bắt đầu dùng hay lúc mua gói.</li>
+    <li><b>Gói Free</b> cũng có hạn mức theo khung 5 giờ và theo tuần, chỉ là thấp hơn.</li>
+    <li><b>Tính chung:</b> hạn mức tuần áp cho mọi model; một số gói có thêm hạn mức tuần riêng cho Fable. claude.ai, Claude Code và Claude Desktop dùng chung một hạn mức.</li>
+    <li><b>Xem ở Settings &gt; Usage:</b> phiên còn bao nhiêu, khi nào reset tuần.</li>
+    <li><b>Chạm hạn mức:</b> chờ reset, nâng gói (áp dụng ngay), hoặc dùng usage credits (khoản dùng thêm trả tiền riêng, gói trả phí). Enterprise tính theo lượng dùng thì không có hạn mức cố định.</li>
+    <li><b>Gói Team:</b> hạn mức tính theo từng thành viên, không gộp chung được.</li>
+  </ul>
+
+  <h4>Cái gì làm hao hạn mức, và cách giảm mà không hại chất lượng</h4>
+  <p>Help center liệt kê: độ dài tin nhắn, kích thước file đính kèm, độ dài cuộc hội thoại, công cụ như Research và web search, model, mức effort, tạo artifact (sản phẩm đứng riêng bên cạnh chat), và việc nhiều bước như chạy code, tạo file, duyệt web.</p>
+  <div class="tw"><table>
+    <tr><th>Thứ làm hao</th><th>Cách giảm</th></tr>
+    <tr><td>Tin nhắn lẻ, hỏi đi hỏi lại</td><td>Lên kế hoạch trước; đưa đủ bối cảnh ngay tin đầu; gom câu hỏi liên quan; đọc lại trước khi gửi</td></tr>
+    <tr><td>Tải cùng file vào mỗi chat mới</td><td>Đưa vào project knowledge một lần; nội dung Project được lưu đệm</td></tr>
+    <tr><td>Một chat kéo qua nhiều việc</td><td>Việc mới, không liên quan → chat mới; chỉ mang theo tóm tắt khi việc sau cần</td></tr>
+    <tr><td>Connector, web search bật sẵn mà không dùng</td><td>Tắt khi việc không cần dữ liệu mới hay dữ liệu ngoài; công cụ rất tốn token (đơn vị đo lượng chữ Claude xử lý)</td></tr>
+    <tr><td>Model nặng cho việc nhẹ</td><td>Sonnet mặc định; Haiku cho việc đơn giản, số lượng lớn; Opus, Fable khi Sonnet không làm nổi</td></tr>
+    <tr><td>Effort cao cho việc thường</td><td>Effort thấp cho việc thường; tắt thinking ở model có nút tắt</td></tr>
+    <tr><td>Project phình to</td><td>Instructions ngắn; xóa file không còn dùng</td></tr>
+  </table></div>
+
+  <h4>Lưu đệm có hạn, và chat dài không miễn phí</h4>
+  <ul>
+    <li><b>Bộ đệm hết hạn khi bỏ lâu.</b> Quay lại Project sau một quãng nghỉ dài, tin đầu tiên tính lại toàn bộ nội dung. Các tin sau lại rẻ hơn.</li>
+    <li><b>Knowledge gần đầy:</b> gói trả phí tự bật RAG (chỉ lấy phần liên quan), sức chứa tăng tới 10 lần. Không cần tách Project.</li>
+    <li><b>Chat gần chạm giới hạn độ dài:</b> gói trả phí có bật tạo file sẽ tự tóm tắt phần đầu để chat chạy tiếp. Help center ghi rõ chat dài kích hoạt việc này “consume more of your usage limit” (tốn nhiều hạn mức hơn). Chạy tiếp được chưa chắc đã rẻ.</li>
+    <li><b>Gửi tài liệu dài từng đoạn cho “nhẹ” là ngược.</b> Thêm nhiều lượt, Claude lại không thấy toàn cảnh. Gửi cả tài liệu một lần, kèm yêu cầu rõ.</li>
+  </ul>
+
+  <h4>Hiệu quả: bớt làm lại mới là khoản tiết kiệm lớn</h4>
+  <p>Hạn mức chỉ là một nửa. Nửa kia là thời gian của bạn. Một bản nháp phải viết lại ba lần tốn cả hai. Những thói quen giảm làm lại:</p>
+  <ul>
+    <li><b>Lên kế hoạch trước với việc lớn.</b> Nhờ Claude đề xuất dàn ý hay các bước, bạn duyệt rồi mới viết. Sai hướng ở dàn ý rẻ hơn sai ở bản 20 trang.</li>
+    <li><b>Cho Claude thước đo để tự kiểm:</b> output mẫu, tiêu chí, ví dụ đúng.</li>
+    <li><b>Làm từng phần nhỏ, kiểm từng phần.</b></li>
+    <li><b>Dùng lại thứ đã chạy tốt:</b> Project cho tài liệu và luật dùng chung, mẫu prompt cho việc lặp lại, Skill cho quy trình chuyên biệt.</li>
+    <li><b>Gom việc cùng loại:</b> năm email trả lời khách cùng một loại thì gửi chung một tin, cùng một hướng dẫn, thay vì năm chat.</li>
+  </ul>
+
+  <h4>Đo trước khi đổi, đo sau khi đổi</h4>
+  <p>Hạn mức cạn sớm thì đừng đoán. Xem việc nào đang ngốn: chat dài, Research, file lớn tải đi tải lại, model nặng. Rồi mới đổi thói quen hay nâng gói. Sau khi đổi, đo hai thứ:</p>
+  <ul>
+    <li><b>Thời gian tiết kiệm:</b> trước đây một báo cáo tuần mất 90 phút, giờ mất 30 phút, tính cả thời gian sửa.</li>
+    <li><b>Chất lượng giữ được:</b> tỉ lệ output dùng được không phải viết lại, số lỗi người duyệt bắt được.</li>
+  </ul>
+  <p>Nhân rộng cho cả nhóm cũng theo cách đó: ghi lại các bước đã chạy tốt (thành project instructions, mẫu prompt hay Skill), thử trên vài ca thật gần đây, rồi mới phổ biến, và tiếp tục theo dõi thời gian, chất lượng.</p>
+
+  <div class="story"><b>Tình huống.</b> Chị Hà ở phòng vận hành viết báo cáo tuần bằng Claude. Để “cho chắc”, chị dùng Opus với effort Max và bật Research ở mọi chat, kể cả khi chỉ tóm tắt file số liệu nội bộ. Mới thứ Tư chị đã chạm hạn mức phiên liên tục. Chị xem lại: báo cáo tuần chỉ cần đọc một file số liệu và viết theo mẫu có sẵn, không cần nguồn ngoài. Chị chuyển sang Sonnet với effort mặc định, tắt Research, đưa mẫu báo cáo và luật trình bày vào một Project. Rồi chị so 3 báo cáo trước và 3 báo cáo sau với người duyệt: lượng phải sửa như nhau, thời gian chờ ngắn hơn, và chị không chạm hạn mức nữa. Tiết kiệm mà chất lượng giữ nguyên, có số liệu chứng minh.</div>
+  <div class="vs">
+    <div class="bad"><b>Tệ</b><ul>
+      <li>Gửi tài liệu dài từng đoạn cho “nhẹ”.</li>
+      <li>Tải cùng file vào mỗi chat mới.</li>
+      <li>Một chat kéo cả tháng cho mọi việc.</li>
+      <li>Opus, effort Max, Research cho mọi việc “cho chắc”.</li>
+      <li>Nâng gói trước khi biết hạn mức đi đâu.</li>
+    </ul></div>
+    <div class="good"><b>Tốt</b><ul>
+      <li>Tin đầu đủ bối cảnh, gom câu hỏi liên quan.</li>
+      <li>File dùng lại → Project.</li>
+      <li>Việc mới → chat mới.</li>
+      <li>Model, effort, công cụ chọn theo việc.</li>
+      <li>Xem Settings &gt; Usage, tìm việc ngốn hạn mức, rồi mới đổi.</li>
+    </ul></div>
+  </div>
+  <div class="trap"><b>Bẫy:</b> “tiết kiệm” bằng cách hạ chất lượng. Chuyển hết sang model nhẹ nhất hay cắt bớt tài liệu đưa vào thì đỡ tốn hạn mức, nhưng output phải làm lại thì tốn hơn. Tối ưu là giữ chất lượng với ít hạn mức và thời gian hơn.</div>
+
+  <h4>Khi đi thi</h4>
+  <p class="need">Bài này thường ra 2 dạng câu hỏi. Đọc đề, <b>chọn một đáp án trước</b>; phần giải thích chỉ hiện ra sau khi bạn chọn.</p>
+
+  <div class="qcase" data-answer="C">
+    <h5 class="sub">Dạng 1: hết hạn mức sớm, định nâng gói</h5>
+    <span class="lbl">Đề sẽ viết kiểu này</span>
+    <div class="qtext">
+      <span class="en">“A six-person marketing team on the Team plan runs out of its weekly usage by Thursday every week. The manager proposes upgrading every seat to Premium right away. What is the best first step?”</span>
+      <span class="vi">Dịch: Một nhóm marketing 6 người dùng gói Team, tuần nào cũng hết hạn mức tuần vào thứ Năm. Trưởng nhóm đề xuất nâng mọi ghế lên Premium ngay. Bước đầu tiên tốt nhất là gì?</span>
+    </div>
+    <span class="lbl">Bạn chọn đáp án nào?</span>
+    <div class="qopts">
+      <button type="button" class="qopt" data-k="A"><b class="k">A.</b><span class="body"><span class="en">“Upgrade every seat now, since buying more usage is the only reliable way to get the team through the week.”</span><span class="vi">Nâng mọi ghế ngay, vì mua thêm hạn mức là cách chắc chắn duy nhất để nhóm làm hết tuần.</span></span></button>
+      <button type="button" class="qopt" data-k="B"><b class="k">B.</b><span class="body"><span class="en">“Ask everyone to write shorter messages and to stop asking follow-up questions, starting today.”</span><span class="vi">Yêu cầu mọi người từ hôm nay viết tin nhắn ngắn hơn và thôi hỏi lại.</span></span></button>
+      <button type="button" class="qopt" data-k="C"><b class="k">C.</b><span class="body"><span class="en">“Review which tasks, features, and chats use the most before changing plans or habits.”</span><span class="vi">Xem việc nào, tính năng nào, chat nào dùng nhiều nhất, trước khi đổi gói hay đổi thói quen.</span></span></button>
+      <button type="button" class="qopt" data-k="D"><b class="k">D.</b><span class="body"><span class="en">“Move the unused usage of lighter users to the heaviest users each week.”</span><span class="vi">Mỗi tuần chuyển phần hạn mức chưa dùng của người dùng ít sang người dùng nhiều.</span></span></button>
+    </div>
+    <p class="qfb" hidden></p>
+    <div class="qexp" hidden>
+      <span class="lbl">Phân tích đề</span>
+      <ul>
+        <li><b>Đề kể:</b> hết hạn mức đều đặn vào thứ Năm. Đề xuất: nâng toàn bộ ghế.</li>
+        <li><b>Chỗ khó:</b> nâng gói có thể giải quyết được, nhưng chưa ai biết hạn mức đang đi đâu. Có thể là file tải đi tải lại, Research bật cho mọi việc, hay chat kéo cả tháng.</li>
+        <li><b>Đề hỏi:</b> bước <i>đầu tiên</i>.</li>
+      </ul>
+      <span class="lbl">Cần biết để chọn</span>
+      <ol>
+        <li>Nhiều thứ làm hao hạn mức: chat dài, file lớn, Research và web search, model nặng, effort cao, việc nhiều bước.</li>
+        <li>Settings &gt; Usage cho thấy hạn mức phiên và tuần còn bao nhiêu, khi nào reset.</li>
+        <li>Hạn mức gói Team tính theo từng thành viên, không gộp chung được.</li>
+      </ol>
+      <span class="lbl">Từng đáp án</span>
+      <ul class="verdict">
+        <li><b>A sai.</b> Chữa trước khi chẩn đoán. Nếu hạn mức đang đổ vào việc lặp lại vô ích, ghế đắt hơn chỉ làm sự vô ích đắt hơn. Nâng gói vẫn có thể là lựa chọn đúng, nhưng sau khi biết hạn mức đi đâu.</li>
+        <li><b>B sai.</b> Đoán nguyên nhân (ý 1). Tin quá ngắn có khi thiếu bối cảnh, làm tăng số lần phải hỏi lại.</li>
+        <li class="ok"><b>C đúng.</b> Tìm chỗ hao trước (ý 1, 2), rồi mới chọn: đổi thói quen, đổi cách dùng tính năng, hay nâng gói.</li>
+        <li><b>D sai.</b> Không làm được: hạn mức tính theo từng người, không gộp hay chuyển cho nhau (ý 3).</li>
+      </ul>
+      <button type="button" class="qreset">Làm lại câu này</button>
+    </div>
+  </div>
+
+  <div class="qcase" data-answer="B">
+    <h5 class="sub">Dạng 2: bớt hạn mức mà giữ chất lượng</h5>
+    <span class="lbl">Đề sẽ viết kiểu này</span>
+    <div class="qtext">
+      <span class="en">“Each morning an analyst opens a new chat and uploads the same three long reference PDFs before asking questions about that day’s sales data. She often reaches her session limit before lunch. Which change best reduces usage without lowering answer quality?”</span>
+      <span class="vi">Dịch: Sáng nào một chuyên viên phân tích cũng mở chat mới và tải lên cùng ba file PDF tham khảo dài, rồi mới hỏi về số liệu bán hàng của ngày hôm đó. Cô thường chạm hạn mức phiên trước giờ trưa. Thay đổi nào giảm hạn mức tốt nhất mà không làm câu trả lời kém đi?</span>
+    </div>
+    <span class="lbl">Bạn chọn đáp án nào?</span>
+    <div class="qopts">
+      <button type="button" class="qopt" data-k="A"><b class="k">A.</b><span class="body"><span class="en">“Keep uploading the PDFs to each new chat so that Claude always works from a fresh copy of each file.”</span><span class="vi">Cứ tải các file vào mỗi chat mới để Claude luôn làm việc trên bản mới của từng file.</span></span></button>
+      <button type="button" class="qopt" data-k="B"><b class="k">B.</b><span class="body"><span class="en">“Add the three PDFs to a Project’s knowledge once and run the daily chats inside that Project.”</span><span class="vi">Đưa ba file vào project knowledge một lần, rồi chạy các chat hằng ngày trong Project đó.</span></span></button>
+      <button type="button" class="qopt" data-k="C"><b class="k">C.</b><span class="body"><span class="en">“Paste only the first page of each PDF to keep every message small.”</span><span class="vi">Chỉ dán trang đầu của mỗi file cho tin nhắn nào cũng nhẹ.</span></span></button>
+      <button type="button" class="qopt" data-k="D"><b class="k">D.</b><span class="body"><span class="en">“Switch all of her analysis to the smallest, fastest model.”</span><span class="vi">Chuyển toàn bộ việc phân tích sang model nhỏ nhất, nhanh nhất.</span></span></button>
+    </div>
+    <p class="qfb" hidden></p>
+    <div class="qexp" hidden>
+      <span class="lbl">Phân tích đề</span>
+      <ul>
+        <li><b>Đề kể:</b> cùng ba file dài, ngày nào cũng tải lại vào một chat mới.</li>
+        <li><b>Chỗ khó:</b> đề đòi hai thứ cùng lúc: bớt hạn mức <i>và</i> giữ chất lượng.</li>
+        <li><b>Đề hỏi:</b> thay đổi tốt nhất.</li>
+      </ul>
+      <span class="lbl">Cần biết để chọn</span>
+      <ol>
+        <li>File đính kèm lớn làm hao hạn mức. Tải lại mỗi ngày là trả lại mỗi ngày.</li>
+        <li>Nội dung trong Project được lưu đệm, dùng lại thì tính ít hơn. Bộ đệm hết hạn khi bỏ lâu, nên tin đầu sau quãng nghỉ dài vẫn tính đủ.</li>
+        <li>Cắt bớt nội dung hay hạ model có thể làm câu trả lời kém đi.</li>
+      </ol>
+      <span class="lbl">Từng đáp án</span>
+      <ul class="verdict">
+        <li><b>A sai.</b> Giữ nguyên đúng cái đang gây hao (ý 1). “Bản mới” chẳng được gì khi file không hề đổi.</li>
+        <li class="ok"><b>B đúng.</b> Đưa tài liệu dùng lại vào Project (ý 2). Claude vẫn có đủ ba file, nên chất lượng giữ nguyên.</li>
+        <li><b>C sai.</b> Bớt hạn mức bằng cách bớt thông tin (ý 3). Câu hỏi cần phần nào ở trang sau thì Claude không có phần đó.</li>
+        <li><b>D sai.</b> Phân tích dựa trên tài liệu dài có thể cần model mạnh hơn (ý 3). Chuyển hết sang model nhẹ nhất là đánh đổi chất lượng, trong khi gốc của vấn đề là tải file lặp lại.</li>
+      </ul>
+      <button type="button" class="qreset">Làm lại câu này</button>
+    </div>
+  </div>
+
+  <div class="more"><b>Biết thêm</b><ul>
+    <li><b>Research tốn nhanh hơn chat thường.</b> Nó dùng chung hạn mức, và luôn chạy trên Opus 5.5 bất kể chat đang chọn model nào. Bật khi thật sự cần nhiều nguồn ngoài.</li>
+    <li><b>Chạy code, tạo file cũng tốn hơn chat thường.</b> Việc chỉ cần một câu trả lời trong chat thì không cần xuất file.</li>
+    <li><b>Chat search và memory</b> (gói trả phí) giúp Claude lấy lại thông tin đã nói ở chat trước, đỡ phải gõ lại.</li>
+    <li><b>Gói Ultra</b> ($200/tháng): tài khoản đã xác minh không có hạn mức 5 giờ. Guide không nhắc gói này.</li>
+    <li><b>Help center có ghi</b> Anthropic có thể điều chỉnh hạn mức để cân bằng tải. Đừng học thuộc con số hạn mức của từng gói; học cách nó reset và cái gì làm nó hao.</li>
+  </ul></div>
+  <div class="rule">Quy tắc: đo xem hạn mức và thời gian đi đâu trước, rồi cắt chỗ phí (lặp lại, làm lại, công cụ thừa, model nặng cho việc nhẹ), đừng cắt vào chất lượng.</div>
+  <div class="remember"><b>Nhớ nhanh</b><ul>
+    <li>Phiên: 5 giờ tính từ tin đầu tiên. Tuần: giờ cố định gắn với tài khoản. Xem ở Settings &gt; Usage.</li>
+    <li>Hao vì: chat dài, file lớn, Research và web search, model nặng, effort cao, artifact, việc nhiều bước.</li>
+    <li>Tin đầu đủ bối cảnh, gom việc. File dùng lại vào Project. Việc mới mở chat mới. Tắt công cụ thừa.</li>
+    <li>Đo thời gian tiết kiệm và chất lượng giữ được, trước và sau khi đổi.</li>
+  </ul></div>
+  <div class="src">Đọc thêm: <a href="https://support.claude.com/en/articles/11647753-how-do-usage-and-length-limits-work">How do usage and length limits work?</a> · <a href="https://support.claude.com/en/articles/9797557-usage-limit-best-practices">Usage limit best practices</a> · <a href="https://support.claude.com/en/articles/11473015-retrieval-augmented-generation-rag-for-projects">RAG for Projects</a> · <a href="https://support.claude.com/en/articles/8606394-how-large-is-the-context-window-on-paid-claude-plans">Context window on paid plans</a> · <a href="https://support.claude.com/en/articles/11088861-using-research-on-claude-ai">Using Research</a></div>
+  <label class="done"><input type="checkbox" data-lesson="l-7-3"> Đã học bài này</label>
+</article>
+
+<section class="summary" id="sum-d7">
+  <h3>Tổng kết Domain 7</h3>
+  <ul>
+    <li><b>Output kém → tìm cần gạt trước khi sửa.</b> Sáu cần gạt: prompt, kiến thức, hội thoại, model hoặc tính năng, lập luận hoặc chia việc, ngoài khả năng.</li>
+    <li><b>Kiểm rẻ trước:</b> prompt → kiến thức → hội thoại → lập luận → model. Ngay từ đầu hỏi: với những gì đang có, Claude có làm được việc này không?</li>
+    <li><b>Một thay đổi mỗi vòng, chạy lại cùng input,</b> không tốt hơn thì hoàn tác.</li>
+    <li><b>Trôi chảy mà sai chi tiết → kiến thức.</b> Hỏi trích đoạn: không có là thiếu, đoạn cũ là cũ. Model nào cũng sai như nhau với file cũ.</li>
+    <li><b>Chat dài lẫn việc → chat mới kèm tóm tắt.</b> Context to hơn không chữa được context rot.</li>
+    <li><b>Phản hồi là triệu chứng.</b> Đặt output bị chê cạnh input. Ý kiến trái chiều thì thống nhất chuẩn đạt rồi chấm output của cả hai bên.</li>
+    <li><b>Tụt sau một chỉnh sửa → khôi phục, chạy lại.</b> Effort trước, đổi model sau.</li>
+    <li><b>Làm cho cách sửa ở lại:</b> luật vào project instructions, tài liệu vào knowledge, quy trình vào Skill. Thử vài input trước khi lưu.</li>
+    <li><b>Hạn mức:</b> phiên 5 giờ tính từ tin đầu, tuần reset vào giờ cố định. Xem ở Settings &gt; Usage. Gói Team tính theo từng người.</li>
+    <li><b>Tối ưu = bớt lặp, bớt làm lại, bớt công cụ thừa,</b> không bớt chất lượng. Đo thời gian và chất lượng trước và sau.</li>
+  </ul>
+</section>
+
+<section class="cheat" id="cheat-d7">
+  <h3>Cheatsheet Domain 7</h3>
+  <div class="tw"><table>
+    <tr><th>Đề kể…</th><th>Chọn…</th><th>Vì sao</th></tr>
+    <tr class="grp"><th colspan="3">7.0 · Bản đồ cần gạt</th></tr>
+    <tr><td>Output kém, chưa rõ vì sao</td><td>Đọc triệu chứng, đoán cần gạt, kiểm rẻ trước</td><td>Sửa đúng chỗ, không tốn hạn mức vô ích</td></tr>
+    <tr><td>Claude nói không truy cập được hệ thống, không có connector</td><td>Đưa dữ liệu vào (file xuất ra) hoặc chuyển đúng người</td><td>Ngoài khả năng; prompt không tạo ra quyền truy cập</td></tr>
+    <tr class="grp"><th colspan="3">7.1 · Chẩn đoán</th></tr>
+    <tr><td>Chung chung, mỏng; có người đòi đổi model mạnh nhất</td><td>Phép thử đồng nghiệp, sửa prompt</td><td>Prompt hay hỏng nhất, sửa rẻ nhất</td></tr>
+    <tr><td>Cùng input, mỗi lần một nhãn, một định dạng</td><td>Ghi đủ danh sách nhãn, định dạng mẫu, tiêu chí chọn</td><td>Prompt đang để ngỏ quyết định</td></tr>
+    <tr><td>Ca ranh giới cứ lật</td><td>3–5 ví dụ đa dạng, có ca ranh giới</td><td>Ca khó phải cho xem, không mô tả lại</td></tr>
+    <tr><td>Trôi chảy, tự tin, sai chi tiết</td><td>Hỏi trích đoạn; đưa nguồn đúng bản; cho phép nói “không đủ thông tin”</td><td>Kiến thức thiếu hoặc cũ</td></tr>
+    <tr><td>Chat dài lẫn chi tiết của việc khác</td><td>Chat mới, mang theo tóm tắt ngắn</td><td>Context rot; context to hơn không chữa</td></tr>
+    <tr><td>Nhiều bước vẫn sai dù prompt, dữ liệu, chat đều ổn</td><td>Chia bước hoặc tăng effort, đo trên mẫu</td><td>Suy nghĩ thêm tốn thời gian và hạn mức</td></tr>
+    <tr><td>Định đổi prompt, model, file cùng lúc</td><td>Một thay đổi mỗi lần, cùng input, so với bản gốc</td><td>Biết chính xác cái gì có tác dụng</td></tr>
+    <tr class="grp"><th colspan="3">7.2 · Phản hồi</th></tr>
+    <tr><td>“Dài quá”, “thiếu ý”, kèm đề xuất giới hạn chữ hay đổi model</td><td>Đặt output bị chê cạnh input trước</td><td>Phản hồi là triệu chứng</td></tr>
+    <tr><td>Hai nhóm khen chê ngược nhau</td><td>Chuẩn đạt cụ thể, chấm output của cả hai bên</td><td>Không sửa theo người chê to nhất</td></tr>
+    <tr><td>Tụt ngay sau khi ai đó sửa instructions</td><td>Khôi phục bản cũ, chạy lại một việc gần đây</td><td>Nghi thay đổi vừa có; đừng chồng thêm luật</td></tr>
+    <tr><td>Input, chỉ dẫn ổn, việc vẫn quá sức</td><td>Tăng effort trước, rồi model mạnh hơn, so trên cùng input</td><td>Effort là thí nghiệm rẻ hơn</td></tr>
+    <tr><td>Bản mới đẹp trên một input</td><td>Thử bản cũ và mới trên vài input thật, có ca khó</td><td>Một lần chạy không phải bằng chứng</td></tr>
+    <tr><td>Lời dặn dán lại ở mọi chat</td><td>Project instructions (luật), knowledge (tài liệu), Skill (quy trình)</td><td>Tự áp cho mọi chat, mọi người</td></tr>
+    <tr class="grp"><th colspan="3">7.3 · Tối ưu</th></tr>
+    <tr><td>Hết hạn mức sớm, định nâng gói</td><td>Xem Settings &gt; Usage, tìm việc ngốn hạn mức trước</td><td>Chẩn đoán trước khi chi tiền</td></tr>
+    <tr><td>Tải cùng file vào mỗi chat mới</td><td>Project knowledge</td><td>Nội dung Project được lưu đệm</td></tr>
+    <tr><td>Gửi tài liệu từng đoạn cho “nhẹ”</td><td>Gửi cả tài liệu một lần, kèm yêu cầu</td><td>Ít lượt hơn, Claude thấy toàn cảnh</td></tr>
+    <tr><td>Một chat kéo sang việc mới</td><td>Chat mới</td><td>Chat dài tự tóm tắt vẫn tốn thêm hạn mức</td></tr>
+    <tr><td>Research, connector, effort cao bật cho mọi việc</td><td>Bật theo việc</td><td>Công cụ tốn token; Research tốn nhanh hơn</td></tr>
+    <tr><td>Nhân rộng cách làm cho cả nhóm</td><td>Ghi các bước, thử trên ca thật, rồi phổ biến và đo</td><td>Giữ đúng thứ đã làm nó hiệu quả</td></tr>
+  </table></div>
+  <h4>Tên và con số phải thuộc</h4>
+  <ul class="names">
+    <li><b>Sáu cần gạt:</b> prompt · kiến thức · hội thoại · model hoặc tính năng · lập luận hoặc chia việc · ngoài khả năng.</li>
+    <li><b>Thứ tự kiểm:</b> prompt → kiến thức → hội thoại → lập luận → model. Effort trước model.</li>
+    <li><b>Ví dụ cho ca ranh giới:</b> 3–5 ví dụ đa dạng.</li>
+    <li><b>Mốc dữ liệu model hiện tại:</b> tháng 6/2026. <b>Context rot:</b> lịch sử dài thì nhớ và trích kém đi.</li>
+    <li><b>Effort:</b> Low, Medium, High, Extra high, Max.</li>
+    <li><b>Hạn mức phiên:</b> 5 giờ tính từ tin đầu tiên, hồi đầy đủ. <b>Hạn mức tuần:</b> reset vào giờ cố định gắn với tài khoản.</li>
+    <li><b>Hạn mức dùng chung</b> cho claude.ai, Claude Code, Desktop. Xem ở Settings &gt; Usage. Gói Team tính theo từng người, không gộp.</li>
+    <li><b>Chạm hạn mức:</b> chờ reset, nâng gói (áp ngay), usage credits.</li>
+    <li><b>RAG cho Project:</b> tự bật khi knowledge gần chạm giới hạn context, gói trả phí, sức chứa tới 10 lần.</li>
+    <li><b>Nơi đặt cách sửa:</b> project instructions · project knowledge · Instructions for Claude · Skill.</li>
+  </ul>
+</section>
+
+  <div class="quiz" data-course="d7"></div>
+  </div>
+</section>

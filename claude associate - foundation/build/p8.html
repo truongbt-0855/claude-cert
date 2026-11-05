@@ -1,0 +1,255 @@
+<section class="part" id="p8">
+  <div class="dhead"><h2>Ôn tập trước khi thi thử</h2><p class="dsub">3 bài · 35 phút · làm sau khi xong 7 domain</p><div class="dprog"><div class="wb"><i></i></div><span></span></div><button class="tog" type="button">Thu gọn</button></div>
+  <div class="dbody">
+
+<article class="lesson" id="l-8-1" data-domain="8" data-ts="8.1" data-min="15">
+  <header class="lh"><span class="ts">Ôn tập</span><h3>Phản xạ theo domain: đề kể thế này thì chọn thế kia</h3><span class="rt">~15 phút</span></header>
+  <div class="defs"><b>Khái niệm của bài</b><dl>
+    <dt>Phản xạ</dt><dd>Một cặp “đề kể → chọn” đủ ngắn để nhớ ngay trong phòng thi. Mỗi dòng dưới đây rút từ cheatsheet của domain; bấm tên domain để mở cheatsheet đầy đủ.</dd>
+  </dl></div>
+  <div class="story"><b>Tình huống.</b> Bạn đã học xong 30 bài. Giờ cần một trang đọc trong 15 phút trước khi thi thử: mỗi domain vài phản xạ hay ra nhất, cộng bốn kiểu đáp án sai lặp lại ở mọi domain.</div>
+  <h4>Bốn kiểu đáp án sai gặp ở mọi domain</h4>
+  <ol>
+    <li><b>Tin vì nó tự tin.</b> “Claude stated it confidently”, “ask Claude to rate its confidence”, “run it again and it matched” (tự tin, tự chấm, chạy lại ra giống). Chưa có gì được kiểm với nguồn bên ngoài.</li>
+    <li><b>Dùng thứ to nhất.</b> Model mạnh nhất cho mọi việc, bật Research và connector cho mọi việc, nâng gói khi chưa xem cái gì tốn hạn mức.</li>
+    <li><b>Né vấn đề.</b> Bỏ việc, đổi nền tảng, tắt tính năng, cấm luôn AI.</li>
+    <li><b>Vá ngoài da.</b> Viết lại cho trang trọng, gắn nhãn “do AI tạo” thay cho người duyệt, dặn Claude “đừng lưu” sau khi đã tải dữ liệu lên.</li>
+  </ol>
+  <h4><a href="#cheat-d1">D1 · Prompting</a> (14%)</h4>
+  <ul>
+    <li>Đáp án giả định Claude đã biết người đọc, mẫu cũ, chính sách → đưa thứ đó vào prompt hoặc vào Project.</li>
+    <li>Có luật mà Claude vẫn lách → nói thêm <b>lý do</b> của luật.</li>
+    <li>Trả lời từ tài liệu mà lẫn kiến thức chung → chỉ dùng tài liệu, trích trước rồi trả lời, được nói “tài liệu không có”.</li>
+    <li>Việc nhiều mục tiêu, kết quả chập chờn → chia bước, kiểm output trung gian. Việc ngắn đã chạy tốt → giữ một prompt.</li>
+    <li>Lặp prompt → chẩn đoán trước, mỗi vòng một thay đổi, so trên cùng đầu vào.</li>
+    <li>Brainstorm → đòi nhiều ý khác nhau, chấm ở bước sau. Phân tích → mỗi kết luận trỏ về số liệu.</li>
+  </ul>
+  <h4><a href="#cheat-d2">D2 · Output Evaluation</a> (21%)</h4>
+  <ul>
+    <li>Số cụ thể, trích dẫn, điều khoản → so với nguồn gốc trước khi gửi (câu mẫu 1).</li>
+    <li>Ít thời gian → kiểm trước con số chính xác, chủ đề mới, ngách mà kết luận dựa vào.</li>
+    <li>Đúng hết nhưng không trả lời câu được hỏi → chưa đủ; đối chiếu danh sách yêu cầu.</li>
+    <li>Một nhóm người luôn vắng hoặc luôn là mặc định → bias; hỏi ai vắng, viết lại cân bằng.</li>
+    <li>Câu không có căn cứ trong tài liệu → rút lại, không “sửa cho hay hơn”.</li>
+    <li>Quyết định về một người, gửi ra ngoài, không rút lại được → người có chuyên môn duyệt trước khi gửi. Chat Claude thứ hai không thay được người.</li>
+    <li>Định dạng theo nơi nhận: hỏi nhanh → trả lời trong chat; sẽ sửa, dùng lại, chia sẻ → artifact; nhập vào bảng tính → dữ liệu có cấu trúc.</li>
+  </ul>
+  <h4><a href="#cheat-d3">D3 · Product &amp; Model</a> (12%)</h4>
+  <ul>
+    <li>Tuần nào cũng dán lại cùng tài liệu, cùng lời dặn → Project.</li>
+    <li>Nhiều nguồn, cần dẫn nguồn → Research. Tra nhanh một sự thật mới → chat + web search.</li>
+    <li>Việc nhiều, ngắn, đơn giản → model nhanh, rẻ (câu mẫu 2). Không có tầng model “chuyên ngành”; chọn theo độ khó.</li>
+    <li>Chất lượng ổn mà tốn hạn mức → hạ effort. Đủ thông tin, đủ effort mà vẫn sai → lên tầng.</li>
+    <li>Chat dài quên điều đã chốt → liệt kê, lưu vào Project, mở chat mới.</li>
+  </ul>
+  <h4><a href="#cheat-d4">D4 · Workflow</a> (16%)</h4>
+  <ul>
+    <li>Một lần thử tốt → chưa giao cả use case; chia từng việc, quyết từng việc.</li>
+    <li>Tiêu chí thành công → cụ thể, đo được, viết trước, thử trên dữ liệu thật.</li>
+    <li>Claude nói một bước là thừa → mới là giả thuyết; hỏi người đang làm bước đó.</li>
+    <li>Bước duyệt do luật bắt → augment (làm nhanh phần chuẩn bị), không bỏ bước. Chép tay một kết quả sang nhiều nơi → redesign.</li>
+    <li>“Cả phòng dùng trước tháng sau” → chạy thử một quy trình, giữ bước duyệt, đạt tiêu chí rồi mới mở rộng.</li>
+    <li>Nối hệ thống, chạy tự động mỗi đêm → chuyển developer / IT.</li>
+    <li>Với stakeholder → báo cả lỗi, hứa biện pháp chứ không hứa “không lỗi”.</li>
+  </ul>
+  <h4><a href="#cheat-d5">D5 · Configuration</a> (12%)</h4>
+  <ul>
+    <li>Giọng, vai viết trong tên hay mô tả Project → chuyển vào project instructions.</li>
+    <li>Instructions là luật, knowledge là tài liệu tham khảo.</li>
+    <li>Nhiều người dùng, ít người sửa → Can view cho người dùng, Can edit cho người bảo trì.</li>
+    <li>Instructions mơ hồ (“chuyên nghiệp, hữu ích”) → viết rõ vai, phạm vi, người đọc, định dạng, khi không chắc thì làm gì.</li>
+    <li>Cùng con số sai dù hỏi kiểu nào → kiểm knowledge, thay file cũ, gỡ bản trùng.</li>
+    <li>Connector đọc theo quyền tài khoản của người hỏi; Owner bật rồi thì từng người vẫn phải tự kết nối.</li>
+  </ul>
+  <h4><a href="#cheat-d6">D6 · Governance</a> (15%)</h4>
+  <ul>
+    <li>Dữ liệu định danh → bỏ hoặc ẩn danh trước khi tải lên (câu mẫu 3). Dặn “đừng lưu” sau đó không tính.</li>
+    <li>Việc công ty → tài khoản công ty, không dùng tài khoản cá nhân dù “đã tắt training”.</li>
+    <li>Quyết định về vay, nhà, việc làm, bồi thường → Claude soạn, người có chuyên môn duyệt từng ca, người nhận được biết có dùng AI.</li>
+    <li>Việc Usage Policy cấm (đánh giá giả, giả danh, theo dõi lén) → từ chối, kể cả khi có nhãn AI hay người duyệt.</li>
+    <li>Chính sách không nhắc tới → hỏi người phụ trách AI. Tính năng bị admin khóa → không lách.</li>
+    <li>Bạn đứng tên thì bạn chịu trách nhiệm: kiểm điểm then chốt, nói rõ AI được dùng thế nào khi người nhận cần biết.</li>
+  </ul>
+  <h4><a href="#cheat-d7">D7 · Troubleshooting</a> (10%)</h4>
+  <ul>
+    <li>Output kém → đọc triệu chứng, đoán cần gạt (prompt, knowledge, hội thoại, model, độ khó), kiểm cái rẻ trước.</li>
+    <li>Chung chung, mỏng → sửa prompt trước, chưa đổi model.</li>
+    <li>Tụt ngay sau khi ai đó sửa instructions → khôi phục bản cũ, chạy lại một việc gần đây.</li>
+    <li>Lời sửa phải dán lại ở mọi chat → đưa vào project instructions (luật), knowledge (tài liệu) hoặc Skill (quy trình).</li>
+    <li>Hết hạn mức sớm → xem cái gì ngốn hạn mức trước khi nâng gói; bật Research, connector, effort cao theo việc.</li>
+  </ul>
+  <div class="rule">Quy tắc: đọc ràng buộc của đề trước, loại bốn kiểu đáp án sai, rồi chọn bước làm tiếp được việc mà vẫn kiểm được rủi ro.</div>
+  <div class="remember"><b>Nhớ nhanh</b><ul>
+    <li>Tự tin ≠ đúng. To nhất ≠ tốt nhất. Né ≠ giải quyết. Nhãn ≠ người duyệt.</li>
+    <li>Lặp lại nhiều lần → đưa vào Project. Rủi ro cao → người có chuyên môn duyệt.</li>
+  </ul></div>
+  <div class="src">Đọc thêm: cheatsheet từng domain: <a href="#cheat-d1">D1</a> · <a href="#cheat-d2">D2</a> · <a href="#cheat-d3">D3</a> · <a href="#cheat-d4">D4</a> · <a href="#cheat-d5">D5</a> · <a href="#cheat-d6">D6</a> · <a href="#cheat-d7">D7</a></div>
+  <label class="done"><input type="checkbox" data-lesson="l-8-1"> Đã học bài này</label>
+</article>
+
+<article class="lesson" id="l-8-2" data-domain="8" data-ts="8.2" data-min="12">
+  <header class="lh"><span class="ts">Ôn tập</span><h3>3 câu mẫu chính thức của Anthropic, phân tích từng câu</h3><span class="rt">~12 phút</span></header>
+  <div class="defs"><b>Khái niệm của bài</b><dl>
+    <dt>Câu mẫu</dt><dd>Ba câu in trong mục 8 của Exam Guide. Guide nói chúng cho thấy “style and cognitive level” (giọng và mức độ tư duy) của đề, nhưng không lấy từ ngân hàng câu thật.</dd>
+  </dl></div>
+  <p>Câu hỏi và phương án dưới đây chép nguyên văn từ guide. Cả ba câu đáp án đúng đều là B, đề thật thì không như vậy. Làm từng câu, chọn trước rồi mới đọc phân tích.</p>
+
+  <div class="qcase" data-answer="B">
+    <h5 class="sub">Câu mẫu 1 · Domain 2: tóm tắt có trích số điều khoản</h5>
+    <span class="lbl">Đề chính thức</span>
+    <div class="qtext">
+      <span class="en">“An associate asks Claude to summarize a new regulation, and Claude produces a confident summary citing a specific subsection number. Before sending the summary to the compliance team, what is the most appropriate action?”</span>
+      <span class="vi">Dịch: Một nhân viên nhờ Claude tóm tắt một quy định mới. Claude đưa ra bản tóm tắt rất tự tin, có trích một số tiểu mục cụ thể. Trước khi gửi bản tóm tắt cho bộ phận compliance (tuân thủ), việc phù hợp nhất là gì?</span>
+    </div>
+    <span class="lbl">Bạn chọn đáp án nào?</span>
+    <div class="qopts">
+      <button type="button" class="qopt" data-k="A"><b class="k">A.</b><span class="body"><span class="en">“Send it as-is, since Claude expressed high confidence.”</span><span class="vi">Gửi nguyên như vậy, vì Claude tỏ ra rất tự tin.</span></span></button>
+      <button type="button" class="qopt" data-k="B"><b class="k">B.</b><span class="body"><span class="en">“Verify the cited subsection against the official regulation text before sharing.”</span><span class="vi">Kiểm số tiểu mục được trích với văn bản quy định chính thức trước khi chia sẻ.</span></span></button>
+      <button type="button" class="qopt" data-k="C"><b class="k">C.</b><span class="body"><span class="en">“Ask Claude to rate its own confidence and send it if the rating is high.”</span><span class="vi">Nhờ Claude tự chấm độ tin cậy, nếu điểm cao thì gửi.</span></span></button>
+      <button type="button" class="qopt" data-k="D"><b class="k">D.</b><span class="body"><span class="en">“Reword the summary to sound more formal, then send it.”</span><span class="vi">Viết lại bản tóm tắt cho trang trọng hơn rồi gửi.</span></span></button>
+    </div>
+    <p class="qfb" hidden></p>
+    <div class="qexp" hidden>
+      <span class="lbl">Phân tích đề</span>
+      <ul>
+        <li><b>Đề kể:</b> Claude tóm tắt một quy định mới, giọng chắc chắn, có một con số tiểu mục cụ thể.</li>
+        <li><b>Chỗ khó:</b> người nhận là compliance. Họ sẽ dựa vào đúng con số đó để làm việc. Sai một số tiểu mục là sai cả quyết định phía sau.</li>
+        <li><b>Đề hỏi:</b> làm gì <i>trước khi gửi</i>, tức là bước kiểm, không phải bước trình bày.</li>
+      </ul>
+      <span class="lbl">Cần biết để chọn</span>
+      <ol>
+        <li>Model có thể bịa chi tiết trông rất thật: số điều, số trang, tên văn bản. Đó là hallucination. Quy định lại “mới”, có thể ra sau dữ liệu Claude được học.</li>
+        <li>Độ tự tin trong giọng văn, hay điểm tin cậy Claude tự chấm, không cho biết câu trả lời đúng hay sai.</li>
+        <li>Kiểm thật là so với nguồn có thẩm quyền nằm ngoài Claude: ở đây là văn bản quy định chính thức.</li>
+      </ol>
+      <span class="lbl">Từng đáp án</span>
+      <ul class="verdict">
+        <li><b>A sai.</b> Coi giọng chắc chắn là bằng chứng (ý 2). Hấp dẫn vì nhanh, nhưng rủi ro rơi đúng vào người cần chính xác nhất.</li>
+        <li class="ok"><b>B đúng.</b> So con số với văn bản gốc là bước cẩn trọng cần có (ý 1, 3). Rẻ, nhanh, và chặn đúng chỗ dễ sai nhất.</li>
+        <li><b>C sai.</b> Nghe như đang kiểm, nhưng vẫn là Claude chấm Claude (ý 2). Một con số bịa có thể đi kèm điểm tự tin cao.</li>
+        <li><b>D sai.</b> Đổi giọng văn không đụng tới chuyện đúng hay sai. Một con số sai viết trang trọng vẫn là con số sai.</li>
+      </ul>
+      <button type="button" class="qreset">Làm lại câu này</button>
+    </div>
+  </div>
+
+  <div class="qcase" data-answer="B">
+    <h5 class="sub">Câu mẫu 2 · Domain 3: nhiều bản nháp ngắn, cần nhanh và rẻ</h5>
+    <span class="lbl">Đề chính thức</span>
+    <div class="qtext">
+      <span class="en">“An associate needs to generate a high volume of short customer-reply drafts where speed and cost matter more than deep reasoning. Which choice best fits the task?”</span>
+      <span class="vi">Dịch: Một nhân viên cần tạo rất nhiều bản nháp trả lời khách hàng, mỗi bản ngắn, trong đó tốc độ và chi phí quan trọng hơn khả năng lập luận sâu. Lựa chọn nào hợp nhất?</span>
+    </div>
+    <span class="lbl">Bạn chọn đáp án nào?</span>
+    <div class="qopts">
+      <button type="button" class="qopt" data-k="A"><b class="k">A.</b><span class="body"><span class="en">“Use the most capable, highest-cost model for every reply to maximize quality.”</span><span class="vi">Dùng model mạnh nhất, đắt nhất cho mọi bản trả lời để chất lượng cao nhất.</span></span></button>
+      <button type="button" class="qopt" data-k="B"><b class="k">B.</b><span class="body"><span class="en">“Use a faster, lower-cost model suited to straightforward, high-volume tasks.”</span><span class="vi">Dùng model nhanh hơn, rẻ hơn, hợp với việc đơn giản, số lượng lớn.</span></span></button>
+      <button type="button" class="qopt" data-k="C"><b class="k">C.</b><span class="body"><span class="en">“Disable all product features to reduce cost.”</span><span class="vi">Tắt hết các tính năng của sản phẩm để giảm chi phí.</span></span></button>
+      <button type="button" class="qopt" data-k="D"><b class="k">D.</b><span class="body"><span class="en">“Switch to a different AI platform.”</span><span class="vi">Chuyển sang một nền tảng AI khác.</span></span></button>
+    </div>
+    <p class="qfb" hidden></p>
+    <div class="qexp" hidden>
+      <span class="lbl">Phân tích đề</span>
+      <ul>
+        <li><b>Đề kể:</b> việc số lượng lớn, mỗi bản ngắn, nội dung đơn giản.</li>
+        <li><b>Chỗ khó:</b> đề nói thẳng thứ tự ưu tiên: tốc độ và chi phí <i>hơn</i> lập luận sâu.</li>
+        <li><b>Đề hỏi:</b> lựa chọn nào khớp với yêu cầu đó.</li>
+      </ul>
+      <span class="lbl">Cần biết để chọn</span>
+      <ol>
+        <li>Các model Claude khác nhau về năng lực, tốc độ và chi phí. Model nhỏ nhanh và rẻ; model lớn mạnh hơn ở lập luận phức tạp nhưng chậm và đắt hơn (<a href="#l-3-3">bài 3.3</a>).</li>
+        <li>Chọn model là khớp model với việc, không phải luôn chọn cái mạnh nhất.</li>
+      </ol>
+      <span class="lbl">Từng đáp án</span>
+      <ul class="verdict">
+        <li><b>A sai.</b> Lời giải guide: dùng model mạnh nhất cho mọi việc là phí ngân sách chi phí và thời gian (ý 2). Hấp dẫn vì nghe “an toàn về chất lượng”, nhưng đề đã nói chất lượng sâu không phải ưu tiên.</li>
+        <li class="ok"><b>B đúng.</b> Việc đơn giản, nhiều, cần nhanh rẻ thì model nhanh rẻ là đúng việc (ý 1, 2). Model mạnh để dành cho việc cần lập luận.</li>
+        <li><b>C sai.</b> Tắt tính năng không phải cách chọn đánh đổi tốc độ và chất lượng, và có thể bỏ mất thứ đang cần.</li>
+        <li><b>D sai.</b> Đổi nền tảng né câu hỏi. Ngay trong Claude đã có model hợp việc này.</li>
+      </ul>
+      <button type="button" class="qreset">Làm lại câu này</button>
+    </div>
+  </div>
+
+  <div class="qcase" data-answer="B">
+    <h5 class="sub">Câu mẫu 3 · Domain 6: file có dữ liệu cá nhân của khách</h5>
+    <span class="lbl">Đề chính thức</span>
+    <div class="qtext">
+      <span class="en">“A project manager wants to upload a spreadsheet containing customer names and account numbers so Claude can analyze trends. Organizational policy restricts sharing regulated personal data. What is the most appropriate action?”</span>
+      <span class="vi">Dịch: Một quản lý dự án muốn tải lên một bảng tính có tên khách hàng và số tài khoản để Claude phân tích xu hướng. Chính sách của tổ chức hạn chế chia sẻ dữ liệu cá nhân thuộc diện được quản lý. Việc phù hợp nhất là gì?</span>
+    </div>
+    <span class="lbl">Bạn chọn đáp án nào?</span>
+    <div class="qopts">
+      <button type="button" class="qopt" data-k="A"><b class="k">A.</b><span class="body"><span class="en">“Upload the file as-is, since the analysis is internal.”</span><span class="vi">Tải nguyên file lên, vì phân tích chỉ dùng nội bộ.</span></span></button>
+      <button type="button" class="qopt" data-k="B"><b class="k">B.</b><span class="body"><span class="en">“Remove or anonymize the personal identifiers before uploading, consistent with policy.”</span><span class="vi">Xóa hoặc ẩn danh các thông tin định danh cá nhân trước khi tải lên, đúng với chính sách.</span></span></button>
+      <button type="button" class="qopt" data-k="C"><b class="k">C.</b><span class="body"><span class="en">“Upload the file but instruct Claude not to retain it.”</span><span class="vi">Tải file lên nhưng dặn Claude đừng lưu lại.</span></span></button>
+      <button type="button" class="qopt" data-k="D"><b class="k">D.</b><span class="body"><span class="en">“Skip the analysis entirely.”</span><span class="vi">Bỏ hẳn việc phân tích.</span></span></button>
+    </div>
+    <p class="qfb" hidden></p>
+    <div class="qexp" hidden>
+      <span class="lbl">Phân tích đề</span>
+      <ul>
+        <li><b>Đề kể:</b> file có tên khách và số tài khoản. Mục đích là xem xu hướng.</li>
+        <li><b>Chỗ khó:</b> chính sách hạn chế chia sẻ dữ liệu cá nhân được quản lý. Nhưng phân tích xu hướng không cần biết khách đó <i>là ai</i>.</li>
+        <li><b>Đề hỏi:</b> cách làm phù hợp nhất, tức là vừa đúng chính sách vừa xong việc.</li>
+      </ul>
+      <span class="lbl">Cần biết để chọn</span>
+      <ol>
+        <li>Chính sách dữ liệu là ràng buộc cứng. “Dùng nội bộ” không phải ngoại lệ.</li>
+        <li>Kiểm soát dữ liệu phải làm <i>trước</i> khi dữ liệu rời tay bạn. Lời dặn trong prompt không phải là biện pháp kiểm soát.</li>
+        <li>Bỏ hoặc ẩn danh định danh (tên, số tài khoản) vẫn giữ được số liệu cần cho phân tích xu hướng.</li>
+      </ol>
+      <span class="lbl">Từng đáp án</span>
+      <ul class="verdict">
+        <li><b>A sai.</b> Phá chính sách (ý 1). Hấp dẫn vì “nội bộ” nghe an toàn, nhưng dữ liệu vẫn được chia sẻ ra khỏi phạm vi chính sách cho phép.</li>
+        <li class="ok"><b>B đúng.</b> Xử lý dữ liệu trước khi tải lên (ý 2), mà phân tích vẫn chạy được (ý 3). Đúng kiểu đáp án “làm tiếp được mà vẫn an toàn”.</li>
+        <li><b>C sai.</b> Dữ liệu đã được tải lên rồi mới dặn. Lời giải guide: dặn model đừng lưu không đáp ứng biện pháp kiểm soát mà chính sách đòi (ý 2).</li>
+        <li><b>D sai.</b> Quá tay. Lời giải guide: bỏ việc là không cần thiết khi ẩn danh đã cho phép làm an toàn (ý 3).</li>
+      </ul>
+      <button type="button" class="qreset">Làm lại câu này</button>
+    </div>
+  </div>
+
+  <div class="remember"><b>Nhớ nhanh</b><ul>
+    <li>Câu 1: kiểm chi tiết cụ thể với nguồn gốc; tự tin ≠ đúng.</li>
+    <li>Câu 2: model theo việc; nhanh rẻ cho việc đơn giản nhiều.</li>
+    <li>Câu 3: ẩn danh trước khi tải lên; dặn sau không tính; không bỏ việc.</li>
+  </ul></div>
+  <div class="src">Đọc thêm: Exam Guide mục 8 (file <code>nguon/ccao-f-exam-guide.pdf</code>) · <a href="https://support.claude.com/">Claude Help Center</a></div>
+  <label class="done"><input type="checkbox" data-lesson="l-8-2"> Đã làm đủ 3 câu</label>
+</article>
+
+<article class="lesson" id="l-8-3" data-domain="8" data-ts="8.3" data-min="8">
+  <header class="lh"><span class="ts">Ôn tập</span><h3>Guide nói A, app hiện tại nói B: khi thi trả lời theo guide</h3><span class="rt">~8 phút</span></header>
+  <div class="defs"><b>Khái niệm của bài</b><dl>
+    <dt>Guide v1.0</dt><dd>Bản Exam Guide 7/2026, là thứ đề thật được viết theo.</dd>
+    <dt>Docs hiện tại</dt><dd>Claude Help Center và trang giá, đọc ngày 05/11/2026. Sản phẩm đổi tên, đổi menu rất nhanh.</dd>
+  </dl></div>
+  <div class="story"><b>Tình huống.</b> Bạn mở app Claude để thực hành và không thấy nút nào tên “research mode”, model picker lại có thêm Fable. Lúc thi gặp đáp án ghi đúng chữ của guide thì sao? Chọn theo guide. Bảng dưới gom những chỗ đã đổi để bạn không bị rối.</div>
+  <div class="tw"><table>
+    <tr><th>Chủ đề</th><th>Guide v1.0</th><th>App / docs hiện tại</th><th>Khi thi</th></tr>
+    <tr><td>Research</td><td>“research mode”</td><td>Tên là <b>Research</b>: nút “+” → Research. Chỉ gói trả phí, cần bật web search.</td><td>“research mode” = Research</td></tr>
+    <tr><td>Model</td><td>Haiku, Sonnet, Opus</td><td>Bốn tầng: Haiku 5.5, Sonnet 5.5, Opus 5.5 và <b>Fable 5.1</b> (mạnh nhất, chậm nhất, tốn hạn mức nhất)</td><td>Nghĩ theo ba tầng của guide: nhỏ nhanh rẻ / cân bằng / mạnh nhất</td></tr>
+    <tr><td>Artifact</td><td>“artifacts”</td><td>Có thêm mẫu Docs, Slides, Design; artifact kiểu cũ thành “legacy”; “AI-powered artifacts” đổi tên thành “Artifacts that use Claude”</td><td>Artifact = sản phẩm đứng riêng, sửa và dùng lại được</td></tr>
+    <tr><td>Code Execution</td><td>“Code Execution” (mục How to Prepare)</td><td>Cài đặt đổi tên thành <b>“Create and edit files”</b></td><td>Cùng một tính năng: Claude chạy code, tạo và sửa file</td></tr>
+    <tr><td>Memory</td><td>“memory considerations”</td><td>Memory bật sẵn trên Free/Pro/Max/Ultra; tìm lại chat cũ chỉ gói trả phí; chat ẩn danh (incognito) có ở mọi gói; mỗi Project có memory riêng</td><td>Biết khi nào nên lưu, khi nào nên bắt đầu lại</td></tr>
+    <tr><td>Suy nghĩ sâu</td><td>Không nêu tên</td><td>Thinking + mức effort (Low → Max); model mới nhất không tắt được thinking</td><td>Việc khó thì cho suy nghĩ nhiều hơn, việc dễ thì không cần</td></tr>
+    <tr><td>Instructions cấp hệ thống</td><td>“system-level instructions”</td><td>“Instructions for Claude” cho cả tài khoản (trước gọi là profile preferences) và project instructions</td><td>Chỉ dẫn đặt một lần, áp cho mọi chat trong phạm vi đó</td></tr>
+    <tr><td>Context</td><td>“context limitations”</td><td>Model mới nhất có 1M token trong chat; chat dài được tự tóm tắt (gói trả phí, khi bật tạo file)</td><td>Context vẫn có giới hạn; chat quá dài thì tóm tắt hoặc mở chat mới</td></tr>
+    <tr><td>Connector</td><td>“e.g., Google Drive, Gmail”</td><td>Thêm Calendar, Docs/Sheets/Slides, Slack, GitHub, Microsoft 365, connector tự thêm (remote MCP); nằm ở Customize → Connectors</td><td>Connector cho Claude đọc dữ liệu ở công cụ khác, theo quyền của bạn</td></tr>
+    <tr><td>Gói</td><td>Không liệt kê</td><td>Free, Pro, Max, <b>Ultra</b> ($200), Team (ghế Standard/Premium), Enterprise</td><td>Đề hỏi tính năng, ít hỏi giá</td></tr>
+    <tr><td>Usage Policy</td><td>Chính sách sử dụng</td><td>Bản mới có hiệu lực 12/11/2026; phần ca rủi ro cao (cần người duyệt, cần công khai) giữ nguyên</td><td>Không đổi</td></tr>
+    <tr><td>Đổi lịch thi</td><td>Trước 24 giờ</td><td>FAQ và trang chính sách Partner Academy: trước 48 giờ</td><td>Thực tế: theo 48 giờ</td></tr>
+  </table></div>
+  <div class="rule">Quy tắc: đề chấm theo chữ của guide. Thấy tên mới trong app thì quy về tên trong guide rồi mới chọn.</div>
+  <div class="remember"><b>Nhớ nhanh</b><ul>
+    <li>research mode = Research. Code Execution = Create and edit files.</li>
+    <li>Guide có 3 tầng model; app có thêm Fable ở trên cùng.</li>
+    <li>System-level instructions = Instructions for Claude + project instructions.</li>
+  </ul></div>
+  <div class="src">Đọc thêm: <a href="https://support.claude.com/en/articles/11088861-using-research-on-claude-ai">Using Research</a> · <a href="https://platform.claude.com/docs/en/models/overview">Models overview</a> · <a href="https://support.claude.com/en/articles/9487310-what-are-artifacts-and-how-do-i-use-them">Artifacts</a> · <a href="https://support.claude.com/en/articles/12111783-create-and-edit-files-with-claude">Create and edit files</a> · <a href="https://support.claude.com/en/articles/10185728-understanding-claude-s-personalization-features">Personalization</a></div>
+  <label class="done"><input type="checkbox" data-lesson="l-8-3"> Đã học bài này</label>
+</article>
+
+  </div>
+</section>

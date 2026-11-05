@@ -1,0 +1,1200 @@
+<section class="domain" id="d4" data-domain="4">
+  <div class="dhead"><h2>Domain 4 · Workflow Integration and Solution Design</h2><p class="dsub">16% · 1 bài nền tảng + 5 bài · ~79 phút</p><div class="dprog"><div class="wb"><i></i></div><span></span></div><button class="tog" type="button">Thu gọn</button></div>
+  <div class="dbody">
+<div class="dintro">
+  <p>Domain 4 chiếm 16% đề, khoảng 10 trên 60 câu, nặng thứ hai sau D2.</p>
+  <p>Cả domain xoay quanh một câu hỏi: <b>trong một việc thật, bước nào giao cho Claude, bước nào người giữ, và ai đứng tên kết quả cuối cùng?</b></p>
+  <p>Đọc bài Nền tảng trước: nó định nghĩa khung 4D và ba kiểu làm việc với AI mà cả notes dùng. Cuối mỗi bài có “Khi đi thi”: chọn đáp án trước rồi mới xem giải thích.</p>
+</div>
+
+<article class="lesson" id="l-4-0" data-domain="4" data-ts="4.0" data-min="15">
+  <header class="lh"><span class="ts">Nền tảng</span><h3>Use case, workflow, stakeholder và khung 4D: bộ từ vựng của Domain 4</h3><span class="rt">~15 phút</span></header>
+  <p>Năm bài của Domain 4 cùng hỏi một chuyện: <b>đưa Claude vào công việc thật thì phần nào giao cho Claude, phần nào người giữ, và ai chịu trách nhiệm kết quả</b>. Bài này dựng bộ từ vựng cho chuyện đó, theo thứ tự: một việc gồm những gì → khung 4D của Anthropic → ba kiểu làm việc với AI → giao phần làm, giữ phần quyết → bổ trợ hay thiết kế lại → bản đồ domain.</p>
+
+  <h4>1. Một việc gồm những gì: use case, workflow, bước, stakeholder</h4>
+  <div class="defs"><b>Định nghĩa</b><dl>
+    <dt>Use case (ca sử dụng)</dt><dd>Một nhu cầu công việc cụ thể bạn định dùng Claude để giải quyết. Ví dụ: “trả lời nhân viên hỏi về chế độ nghỉ phép”. Một use case thường chứa nhiều việc nhỏ.</dd>
+    <dt>Workflow (quy trình làm việc)</dt><dd>Chuỗi bước người ta đang làm để ra một kết quả: ai làm bước nào, theo thứ tự nào, bước nào phải có người duyệt.</dd>
+    <dt>Bước, đầu việc (step, task)</dt><dd>Một mắt xích trong workflow, có đầu vào và đầu ra riêng. Domain 4 quyết giao việc <b>theo từng bước</b>, không theo cả quy trình.</dd>
+    <dt>Stakeholder (bên liên quan)</dt><dd>Người có quyền lợi hoặc trách nhiệm với kết quả: sếp duyệt ngân sách, đội dùng quy trình hằng ngày, khách nhận output, bộ phận compliance (tuân thủ), IT.</dd>
+    <dt>Điểm duyệt của người (human checkpoint)</dt><dd>Chỗ trong workflow mà một người có thẩm quyền xem và quyết trước khi kết quả đi tiếp. Ví dụ: kế toán trưởng ký báo cáo trước khi gửi ban giám đốc.</dd>
+  </dl></div>
+  <p>Ví dụ: phòng marketing làm báo cáo tháng theo năm bước.</p>
+  <ol>
+    <li>Lấy số liệu từ ba hệ thống.</li>
+    <li>Đối chiếu, tìm chỗ lệch.</li>
+    <li>Viết nhận xét cho từng chỉ số.</li>
+    <li>Trưởng phòng đọc và ký (điểm duyệt).</li>
+    <li>Gửi ban giám đốc.</li>
+  </ol>
+  <p>Stakeholder ở đây là trưởng phòng (người ký), ban giám đốc (người đọc) và đội phân tích (người làm). Use case “dùng Claude cho báo cáo tháng” chứa năm bước, và mỗi bước cần một quyết định riêng.</p>
+
+  <h4>2. AI Fluency và khung 4D</h4>
+  <p><b>AI Fluency</b> (năng lực dùng AI) là khung do Anthropic soạn cùng hai tác giả Dakan và Feller. Họ định nghĩa nó là làm việc với AI “effective, efficient, ethical and safe” (đạt việc, đỡ tốn công, có đạo đức và an toàn). Khung có bốn năng lực, gọi tắt là <b>4D</b>. Các khóa chuẩn bị cho đề Associate dùng đúng bộ từ này.</p>
+  <div class="defs"><b>Định nghĩa</b><dl>
+    <dt>Delegation (giao việc)</dt><dd>“Setting goals and deciding whether, when and how to engage with AI” (đặt mục tiêu và quyết có dùng AI không, lúc nào, dùng thế nào). Nói gọn: việc nào người làm, việc nào AI làm, chia ra sao.</dd>
+    <dt>Description (mô tả)</dt><dd>“Effectively describing goals to prompt useful AI behaviors and outputs” (mô tả mục tiêu đủ rõ để AI cư xử đúng và cho ra kết quả dùng được). Nói gọn: nói cho AI biết cần gì, làm thế nào, cư xử ra sao.</dd>
+    <dt>Discernment (phân định)</dt><dd>“Accurately assessing the usefulness of AI outputs and behaviors” (đánh giá đúng output và cách cư xử của AI có dùng được không). Nói gọn: đọc kết quả bằng con mắt phê phán.</dd>
+    <dt>Diligence (trách nhiệm)</dt><dd>“Taking responsibility for what we do with AI and how we do it” (chịu trách nhiệm về việc mình làm với AI và cách mình làm). Nói gọn: kết quả cuối là của bạn, dù AI góp bao nhiêu.</dd>
+  </dl></div>
+  <p>Mỗi D có ba kỹ năng con. Hai cột đầu (tên D và ba kỹ năng con) lấy từ bảng thuật ngữ chính thức của Anthropic. Cột 3 và cột 4 là cách diễn đạt của notes này, không phải bảng chính thức: cột 3 là câu hỏi notes tự đặt cho dễ nhớ, cột 4 suy ra từ mục tiêu các khóa chuẩn bị (khóa Prompting dựng trên Description, khóa Workflow của domain này lấy Delegation làm năng lực chính).</p>
+  <div class="tw"><table>
+    <tr><th>D</th><th>Ba kỹ năng con</th><th>Câu tự hỏi trong công việc</th><th>Hay gặp ở</th></tr>
+    <tr><td><b>Delegation</b></td><td>Problem Awareness (hiểu vấn đề): rõ mục tiêu và bản chất công việc trước khi đưa AI vào.<br>Platform Awareness (hiểu công cụ): biết AI làm được gì, hụt ở đâu.<br>Task Delegation (chia việc): phân việc giữa người và AI để mỗi bên làm phần mình mạnh.</td><td>Việc này để làm gì? Claude làm tốt không? Ai làm bước nào?</td><td>D4</td></tr>
+    <tr><td><b>Description</b></td><td>Product Description: mô tả đầu ra (định dạng, người đọc, giọng văn).<br>Process Description: mô tả cách làm (các bước).<br>Performance Description: mô tả cách cư xử khi cùng làm (ngắn hay chi tiết, phản biện hay ủng hộ).</td><td>Tôi cần gì, làm thế nào, Claude nên cư xử ra sao?</td><td>D1, D5</td></tr>
+    <tr><td><b>Discernment</b></td><td>Product Discernment: chất lượng đầu ra (đúng, phù hợp, mạch lạc, đúng trọng tâm).<br>Process Discernment: cách AI đi tới kết quả (lỗi logic, sót ý, bước suy luận sai).<br>Performance Discernment: cách AI cư xử có hợp với nhu cầu không.</td><td>Kết quả này đúng chưa, dùng được chưa?</td><td>D2, D7</td></tr>
+    <tr><td><b>Diligence</b></td><td>Creation Diligence: cân nhắc dùng hệ AI nào và dùng thế nào.<br>Transparency Diligence: trung thực về vai trò của AI với người cần biết.<br>Deployment Diligence: kiểm và đứng ra bảo đảm cho output mình dùng hoặc chia sẻ.</td><td>Tôi có dám đứng tên kết quả này không? Ai cần biết AI đã tham gia?</td><td>D6, mọi bước ký duyệt</td></tr>
+  </table></div>
+  <p>Bốn D chạy cùng nhau thế này:</p>
+  <ul>
+    <li><b>Delegation đi trước:</b> quyết giao gì, cho ai, trước khi viết prompt nào.</li>
+    <li><b>Description và Discernment xoay vòng trong lúc làm:</b> mô tả → đọc kết quả → mô tả lại. Anthropic gọi đây là vòng Description–Discernment (Description-Discernment loop).</li>
+    <li><b>Diligence bao quanh:</b> chọn công cụ cẩn thận, nói rõ AI đã tham gia, kiểm trước khi dùng hoặc gửi đi.</li>
+  </ul>
+
+  <h4>3. Ba kiểu làm việc với AI</h4>
+  <div class="defs"><b>Định nghĩa</b><dl>
+    <dt>Automation (tự động hóa)</dt><dd>AI làm một việc cụ thể theo chỉ dẫn cụ thể của người. Người định nghĩa làm gì, AI thực hiện.</dd>
+    <dt>Augmentation (bổ trợ, cùng làm)</dt><dd>Người và AI làm cùng nhau như hai người cùng suy nghĩ: qua lại nhiều lượt, cả hai cùng góp vào kết quả.</dd>
+    <dt>Agency (để AI tự làm)</dt><dd>Người cấu hình để AI làm việc độc lập thay mình, kể cả tương tác với người hay AI khác. Người đặt kiến thức và khuôn hành vi, không đặt từng hành động.</dd>
+  </dl></div>
+  <div class="tw"><table>
+    <tr><th>Kiểu</th><th>Ai làm gì</th><th>Ví dụ văn phòng</th><th>Hợp khi</th></tr>
+    <tr><td>Automation</td><td>Claude làm theo chỉ dẫn, người kiểm kết quả</td><td>Trích hạn nộp từ 20 thông báo tài trợ vào một bảng, người dò lại</td><td>Việc cơ học, đầu ra kiểm được</td></tr>
+    <tr><td>Augmentation</td><td>Hai bên qua lại nhiều lượt</td><td>Soạn kế hoạch dự án, bạn phản biện từng giai đoạn khi nó hiện ra</td><td>Việc cần hiểu biết riêng của tổ chức</td></tr>
+    <tr><td>Agency</td><td>Claude tự chọn bước trong phạm vi bạn đặt</td><td>Claude nhận một việc nhiều bước, bạn xem cách nó định làm trước khi cho chạy</td><td>Việc mở, nhiều bước, sau khi đã đặt ranh giới</td></tr>
+    <tr><td><i>Người giữ</i> (không phải một kiểu của khung)</td><td>Claude có thể chuẩn bị tài liệu, người quyết</td><td>Duyệt ngoại lệ chính sách, ký báo cáo, loại ứng viên</td><td>Quyết định có người phải chịu trách nhiệm</td></tr>
+  </table></div>
+  <p>Định nghĩa chính thức của Automation không nói “người kiểm”. Trong công việc, bạn vẫn kiểm: đó là Diligence.</p>
+
+  <h4>4. Giao phần làm, giữ phần quyết</h4>
+  <p>Một luật dùng xuyên cả domain:</p>
+  <ul>
+    <li><b>Phần làm (thực thi):</b> việc mô tả rõ được, đầu ra kiểm được. Đổi file CSV thành báo cáo, trích bảng từ PDF, soạn nháp trả lời. Giao cho Claude được, có người kiểm.</li>
+    <li><b>Phần quyết (phán quyết):</b> việc có hậu quả cho người khác, cần cân nhắc giá trị, và phải có người chịu trách nhiệm. Duyệt ngoại lệ, loại ứng viên, cắt một yêu cầu, ký gửi ra ngoài. Claude chuẩn bị, người quyết.</li>
+    <li><b>Phép thử:</b> bạn có dám ký tên dưới kết quả này không? Đó là Deployment Diligence. Trách nhiệm không chuyển sang công cụ khi Claude viết xong.</li>
+    <li><b>Lĩnh vực rủi ro cao</b> (pháp lý, y tế, tài chính, tín dụng, bảo hiểm, nhà ở, việc làm, giáo dục…): Usage Policy (chính sách sử dụng) của Anthropic còn bắt một người có chuyên môn xem lại khuyến nghị của AI trước khi nó tới một cá nhân, và người bị ảnh hưởng phải được báo rõ là có dùng AI (<a href="#l-6-1">bài 6.1</a>).</li>
+  </ul>
+
+  <h4>5. Bổ trợ quy trình (augment) hay thiết kế lại (redesign)</h4>
+  <div class="defs"><b>Định nghĩa</b><dl>
+    <dt>Augment a workflow (bổ trợ quy trình)</dt><dd>Giữ nguyên hình dạng quy trình (các bước, người duyệt), đưa Claude vào vài bước để làm nhanh hơn.</dd>
+    <dt>Redesign a workflow (thiết kế lại quy trình)</dt><dd>Đổi chính các bước: bỏ bước thừa, gộp bước, đổi vai người từ làm từng đơn vị việc sang đặt luật và kiểm.</dd>
+  </dl></div>
+  <div class="tw"><table>
+    <tr><th></th><th>Augment</th><th>Redesign</th></tr>
+    <tr><td>Dấu hiệu</td><td>Cấu trúc có lý do tồn tại: chuỗi duyệt do luật bắt, checklist đội đang dựa vào</td><td>Chính các bước là chỗ lãng phí: chép đi chép lại, làm từng file một theo cùng luật</td></tr>
+    <tr><td>Claude làm</td><td>Phần nuôi bước duyệt: gom, soạn, kiểm đủ hồ sơ</td><td>Khối việc lớn, theo luật và phép kiểm người đặt</td></tr>
+    <tr><td>Người làm</td><td>Vẫn duyệt như cũ</td><td>Viết luật, viết tiêu chí, kiểm mẫu</td></tr>
+    <tr><td>Chọn sai thì</td><td>Giữ lại bước thừa, bỏ lỡ cơ hội</td><td>Phá một kiểm soát bắt buộc</td></tr>
+  </table></div>
+  <div class="note"><b>Đừng lẫn hai chữ:</b> “augment” một quy trình (giữ hình dạng) khác “Augmentation” (kiểu làm việc qua lại trong một bước). Một quy trình được augment vẫn có thể chứa bước Automation. Với cả hai, luật chọn là cách đơn giản nhất chạy được; chỉ thêm phức tạp khi cần.</div>
+
+  <h4>6. Bản đồ Domain 4</h4>
+  <div class="tw"><table>
+    <tr><th>Bài</th><th>Hỏi gì</th><th>Dùng phần nào của bài này</th></tr>
+    <tr><td><a href="#l-4-1">4.1</a></td><td>Phân tích use case: chia việc, quyết Claude làm phần nào, viết tiêu chí thành công</td><td>Use case, Delegation, ba kiểu làm việc (mục 1–3)</td></tr>
+    <tr><td><a href="#l-4-2">4.2</a></td><td>Research, lập kế hoạch, tối ưu quy trình</td><td>Platform Awareness, kế hoạch là đầu vào cho người quyết (mục 2, 4)</td></tr>
+    <tr><td><a href="#l-4-3">4.3</a></td><td>Làm giải pháp: plan → verify → judge → refine; lúc nào chuyển cho đội kỹ thuật</td><td>Vòng Description–Discernment, Diligence (mục 2)</td></tr>
+    <tr><td><a href="#l-4-4">4.4</a></td><td>Đưa Claude vào quy trình đang chạy, chạy thử</td><td>Giao từng bước, augment hay redesign, điểm duyệt (mục 1, 4, 5)</td></tr>
+    <tr><td><a href="#l-4-5">4.5</a></td><td>Nói giá trị và giới hạn với stakeholder</td><td>Stakeholder, Transparency Diligence (mục 1, 2)</td></tr>
+  </table></div>
+
+  <h4>Tự kiểm tra</h4>
+  <p class="need">Câu hỏi viết bằng tiếng Anh như đề thật. Bấm vào câu hỏi để xem nghĩa và đáp án.</p>
+  <details class="chk"><summary>1. A team lead lists what Claude can and cannot reliably do before deciding which steps to hand over. Which Delegation skill is this?</summary>
+    <span class="vi">Nghĩa: trưởng nhóm liệt kê những gì Claude làm được và không làm chắc được, trước khi quyết bước nào giao đi. Đây là kỹ năng nào của Delegation?</span>
+    <span class="ans"><b>Đáp:</b> Platform Awareness (hiểu công cụ). Problem Awareness là hiểu mục tiêu; Task Delegation là bước chia việc sau đó.</span></details>
+  <details class="chk"><summary>2. A colleague goes back and forth with Claude to shape a project plan, pushing back on each phase as it appears. Which mode of AI interaction is this?</summary>
+    <span class="vi">Nghĩa: một đồng nghiệp qua lại với Claude để dựng kế hoạch dự án, phản biện từng giai đoạn khi nó hiện ra. Đây là kiểu làm việc nào?</span>
+    <span class="ans"><b>Đáp:</b> Augmentation. Hai bên cùng góp, qua lại nhiều lượt. Automation là Claude làm theo chỉ dẫn cụ thể; Agency là Claude tự làm trong ranh giới.</span></details>
+  <details class="chk"><summary>3. A workflow keeps its legally required approval chain, and Claude only drafts the documents that feed each approval. Is the workflow being augmented or redesigned?</summary>
+    <span class="vi">Nghĩa: một quy trình giữ nguyên chuỗi duyệt mà luật bắt buộc, Claude chỉ soạn tài liệu đưa vào mỗi bước duyệt. Quy trình đang được bổ trợ hay thiết kế lại?</span>
+    <span class="ans"><b>Đáp:</b> Augmented (bổ trợ). Hình dạng quy trình và người duyệt giữ nguyên; Claude chỉ làm nhanh phần chuẩn bị.</span></details>
+
+  <div class="remember"><b>Nhớ nhanh</b><ul>
+    <li>4D: Delegation (giao gì) → Description ⇄ Discernment (mô tả, đánh giá, lặp) → Diligence (đứng tên, công khai).</li>
+    <li>Ba kiểu: Automation (AI làm theo chỉ dẫn), Augmentation (cùng làm), Agency (AI tự làm trong ranh giới).</li>
+    <li>Giao phần làm, giữ phần quyết. Trách nhiệm không chuyển sang công cụ.</li>
+    <li>Augment = giữ hình dạng quy trình. Redesign = đổi chính các bước.</li>
+  </ul></div>
+  <div class="src">Đọc thêm: <a href="https://anthropic.skilljar.com/ai-fluency-framework-foundations">AI Fluency: Framework &amp; Foundations</a> · <a href="https://anthropic-partners.skilljar.com/path/claude-associate/workflow-integration-solution-design">Workflow Integration &amp; Solution Design</a> · <a href="https://www.anthropic.com/legal/aup">Usage Policy</a></div>
+  <label class="done"><input type="checkbox" data-lesson="l-4-0"> Đã học bài này</label>
+</article>
+
+<article class="lesson" id="l-4-1" data-domain="4" data-ts="4.1" data-min="13">
+  <header class="lh"><span class="ts">TS 4.1</span><h3>Phân tích use case: chia thành từng việc, rồi mới quyết Claude làm phần nào</h3><span class="rt">~13 phút</span></header>
+  <p class="need">Cần biết trước: use case, workflow, Delegation và ba kiểu làm việc ở <a href="#l-4-0">bài Nền tảng</a>.</p>
+  <div class="defs"><b>Khái niệm của bài</b><dl>
+    <dt>Bắt đầu từ vấn đề (problem-first)</dt><dd>Hiểu ai đang gặp khó gì, cần kết quả gì, bị ràng buộc gì, rồi mới nghĩ tới công cụ. Ngược lại là “có Claude rồi, tìm chỗ nhét vào”.</dd>
+    <dt>Yêu cầu (requirement)</dt><dd>Một câu nói giải pháp phải làm được gì. Yêu cầu tốt thì một người lạ đọc vào chấm được đạt hay không đạt.</dd>
+    <dt>Tiêu chí thành công (success criteria)</dt><dd>Điều kiện đo được, viết <b>trước</b> khi giao việc, dùng để quyết Claude làm có đạt không.</dd>
+    <dt>Mẫu việc thật (real work sample)</dt><dd>Dữ liệu cũ lấy từ công việc thật (email quý trước, phiếu yêu cầu tháng trước), đủ cả ca lộn xộn. Dùng để thử use case trước khi mở rộng.</dd>
+  </dl></div>
+
+  <h4>Bắt đầu từ vấn đề, không từ công cụ</h4>
+  <p>Lời giao việc hay gặp: “Công ty mua Claude rồi, tìm chỗ dùng đi.” Đi theo câu đó, bạn sẽ đi tìm chỗ để đặt AI, chứ không đi tìm vấn đề cần giải. Trước khi thiết kế gì, trả lời bốn câu:</p>
+  <ul>
+    <li><b>Ai dùng?</b> Ở một phòng khám: bệnh nhân, lễ tân, bác sĩ. Mỗi nhóm khó một kiểu.</li>
+    <li><b>Họ cần kết quả gì?</b> Khác với tính năng họ xin. Bệnh nhân xin “xem được giờ chờ”, cái họ cần là khỏi ngồi chờ lâu.</li>
+    <li><b>Ràng buộc là gì?</b> Ngân sách, trình độ kỹ thuật của nhân viên, thiết bị người dùng có, dữ liệu riêng tư.</li>
+    <li><b>Cách đơn giản nhất chạy được là gì?</b> Nhiều khi một prompt viết tốt trong một Project là đủ, không cần dựng cả hệ thống.</li>
+  </ul>
+  <p>Anthropic gọi kỹ năng này là Problem Awareness (hiểu vấn đề), phần đầu tiên của Delegation.</p>
+
+  <h4>Xem việc đang được làm thật thế nào, rồi chia việc</h4>
+  <p>Quy trình trên giấy và cách người ta làm thật thường khác nhau: có quyết định ngầm, có đường tắt không ai ghi lại. Trước khi đưa Claude vào, hỏi người đang làm:</p>
+  <ul>
+    <li>Ca bình thường hiện được xử lý ra sao?</li>
+    <li>Luật đang có hỏng ở đâu, ca nào phải hỏi sếp? Câu này quan trọng nhất, vì đó là chỗ Claude sẽ bị thử nặng nhất.</li>
+    <li>Ca mơ hồ thì ai quyết, dựa vào gì?</li>
+  </ul>
+  <p>Rồi chia use case thành từng việc. Mỗi việc một mức rủi ro, nên mỗi việc một quyết định. Ví dụ phòng nhân sự với use case “trả lời nhân viên hỏi về chế độ nghỉ phép”:</p>
+  <div class="tw"><table>
+    <tr><th>Việc</th><th>Đặc điểm</th><th>Quyết định</th></tr>
+    <tr><td>Phân loại câu hỏi (nghỉ ốm, phép năm, thai sản…)</td><td>Nhiều, lặp lại, kiểm được</td><td>Claude làm, người dò mẫu (Automation)</td></tr>
+    <tr><td>Tìm đúng điều khoản trong chính sách</td><td>Cần tài liệu nội bộ</td><td>Claude làm nếu chính sách nằm trong Project knowledge; trích nguyên văn để kiểm</td></tr>
+    <tr><td>Soạn câu trả lời</td><td>Viết lách, giọng văn</td><td>Claude soạn nháp, chuyên viên sửa và gửi (Augmentation)</td></tr>
+    <tr><td>Duyệt ngoại lệ (xin nghỉ quá hạn mức)</td><td>Có hậu quả cho một người, cần người chịu trách nhiệm</td><td>Người quyết; Claude chỉ tóm tắt hồ sơ</td></tr>
+  </table></div>
+
+  <h4>Việc nào hợp Claude, việc nào chưa, việc nào cần người</h4>
+  <div class="tw"><table>
+    <tr><th>Nhóm</th><th>Dấu hiệu</th><th>Ví dụ</th></tr>
+    <tr><td>Hợp Claude</td><td>Nhiều chữ, mô tả rõ được, đầu ra kiểm được, sai thì dễ phát hiện</td><td>Tóm tắt biên bản họp, phân loại phản hồi, soạn nháp email, đổi định dạng tài liệu</td></tr>
+    <tr><td>Chưa hợp, trừ khi bổ sung</td><td>Cần dữ liệu nội bộ Claude chưa thấy, tin mới sau mốc kiến thức, phép tính chính xác</td><td>Bảng giá nội bộ (đưa file vào), tin tuần này (bật web search), cộng 5.000 dòng số (để Claude chạy code)</td></tr>
+    <tr><td>Cần người</td><td>Cân nhắc giá trị, có hậu quả cho người khác, phải có người đứng tên</td><td>Loại ứng viên, cắt một yêu cầu khỏi dự án, chấp nhận một đánh đổi, ký gửi khách</td></tr>
+  </table></div>
+  <p>Claude có những giới hạn đã biết: mốc kiến thức (knowledge cutoff, ngày cuối của dữ liệu Claude được học), hallucination (bịa thông tin trông như thật), và lập luận phức tạp không phải lúc nào cũng vững. Việc rơi đúng vào các giới hạn đó thì hoặc bổ sung (tài liệu, tìm kiếm, chạy code), hoặc để người làm.</p>
+
+  <h4>Dùng Claude soát yêu cầu khi còn là bản nháp</h4>
+  <p>Claude giúp nhiều nhất lúc yêu cầu còn là nháp, khi sửa còn rẻ. Ba cách dùng tốt:</p>
+  <ul>
+    <li><b>Đóng vai người phải làm theo.</b> “Đọc bản yêu cầu này như một lập trình viên sắp phải xây nó. Chỗ nào mơ hồ, không kiểm được, hoặc mâu thuẫn, hãy đặt một câu hỏi làm rõ.” Câu “hệ thống phải nhanh” sẽ bị hỏi lại: nhanh là mấy giây?</li>
+    <li><b>Phân loại theo khung của bạn.</b> Đưa khung (chức năng, phi chức năng, ràng buộc) kèm một dòng luật cho mỗi loại. Bảo Claude gắn nhãn từng yêu cầu và giải thích vì sao, để người duyệt bắt lỗi nhanh.</li>
+    <li><b>Xếp ưu tiên theo tiêu chí bạn nêu.</b> Ví dụ chọn tính năng cho bản đầu tiên (MVP, sản phẩm khả dụng tối thiểu) theo giá trị kinh doanh, độ khả thi, mức khớp chiến lược, kèm lý do.</li>
+  </ul>
+  <p>Chia vai: Claude đặt câu hỏi, gắn nhãn, chấm điểm. Người trả lời câu hỏi cùng stakeholder và ra quyết định cuối. Ba cách dùng sai:</p>
+  <ul>
+    <li>Để Claude tự giải các chỗ mơ hồ rồi chốt luôn bản yêu cầu.</li>
+    <li>Bỏ bản nháp, để Claude nghĩ use case mới từ đầu: mất hết hiểu biết của đội.</li>
+    <li>Đợi làm xong sản phẩm rồi mới suy ngược ra yêu cầu: quá muộn.</li>
+  </ul>
+
+  <h4>Viết tiêu chí thành công trước khi giao</h4>
+  <p>Tiêu chí viết sau khi thấy output thường chỉ mô tả lại cái vừa nhận. Viết trước. Tài liệu của Anthropic nêu bốn tính chất của tiêu chí tốt:</p>
+  <div class="tw"><table>
+    <tr><th>Tính chất</th><th>Nghĩa</th><th>Tệ → tốt</th></tr>
+    <tr><td>Specific (cụ thể)</td><td>Nói rõ muốn đạt cái gì</td><td>“làm tốt” → “phân loại đúng loại câu hỏi nghỉ phép”</td></tr>
+    <tr><td>Measurable (đo được)</td><td>Có con số hoặc thang chấm rõ ràng</td><td>“dễ dùng” → “bệnh nhân dùng điện thoại thường xem được giờ chờ trong dưới 30 giây, không cần tạo tài khoản”</td></tr>
+    <tr><td>Achievable (làm được)</td><td>Dựa trên số liệu tham chiếu, thử nghiệm trước, hoặc ý kiến chuyên gia, không dựa vào hy vọng</td><td>“đúng 99,99%” không căn cứ → mức lấy từ kết quả chạy thử tuần trước</td></tr>
+    <tr><td>Relevant (đúng trọng tâm)</td><td>Khớp mục đích và nhu cầu người dùng</td><td>Đếm số chữ mỗi câu trả lời, trong khi nhân viên cần câu trả lời đúng chính sách</td></tr>
+  </table></div>
+  <p>Đa số use case cần vài tiêu chí cùng lúc: độ đúng, giọng văn, cách xử lý thông tin cá nhân, thời gian phản hồi, chi phí. Viết cùng người làm việc đó hằng ngày, vì họ biết lỗi nào là lỗi nặng.</p>
+
+  <h4>Thử trên mẫu việc thật</h4>
+  <p>Prompt chạy đúng trên ba ví dụ bạn dùng để viết nó thì chưa chứng minh được gì. Thử trên việc thật của quý trước, đúng tỉ lệ như ngoài đời, có cả:</p>
+  <ul>
+    <li>Đầu vào thiếu thông tin hoặc không liên quan.</li>
+    <li>Đầu vào rất dài.</li>
+    <li>Ca mơ hồ mà chính đồng nghiệp còn bất đồng.</li>
+  </ul>
+  <p>Claude vấp ở ca mơ hồ thì chia tiếp: Claude lo phần thường gặp, người lo phần còn lại.</p>
+
+  <div class="story"><b>Tình huống.</b> Đội chăm sóc khách của một shop online cho Claude soạn trả lời email khiếu nại. Trưởng nhóm thử ba email tự viết, cả ba đều đẹp, nên giao luôn cả quy trình: phân loại, soạn, gửi. Tuần đầu, email thiếu mã đơn được trả lời chung chung. Một email vừa đòi hoàn tiền vừa đổi địa chỉ chỉ được trả lời một nửa. Một khách được hứa hoàn 100% dù chính sách chỉ cho 50%. Sai ở ba chỗ: không thử trên ca thật, gộp nhiều việc rủi ro khác nhau vào một quyết định, và không có tiêu chí lẫn điểm duyệt cho phần tiền.</div>
+  <div class="vs">
+    <div class="bad"><b>Tệ</b><ul>
+      <li>Bắt đầu bằng “dùng Claude ở đâu được?”.</li>
+      <li>Thiết kế theo quy trình trên giấy.</li>
+      <li>Một quyết định giao việc cho cả use case.</li>
+      <li>Để Claude chốt bản yêu cầu.</li>
+      <li>Tiêu chí “trả lời chuyên nghiệp”.</li>
+      <li>Thử trên ba ví dụ tự viết.</li>
+    </ul></div>
+    <div class="good"><b>Tốt</b><ul>
+      <li>Bắt đầu từ người dùng, kết quả cần, ràng buộc.</li>
+      <li>Hỏi người làm việc thật làm ra sao, luật hỏng ở đâu.</li>
+      <li>Chia thành từng việc, quyết từng việc.</li>
+      <li>Claude đặt câu hỏi, người trả lời và chốt.</li>
+      <li>Tiêu chí cụ thể, đo được, viết trước.</li>
+      <li>Thử trên mẫu thật, đủ ca khó.</li>
+    </ul></div>
+  </div>
+
+  <h4>Khi đi thi</h4>
+  <p class="need">Bài này thường ra 2 dạng câu hỏi. Đọc đề, <b>chọn một đáp án trước</b>; phần giải thích chỉ hiện ra sau khi bạn chọn.</p>
+
+  <div class="qcase" data-answer="C">
+    <h5 class="sub">Dạng 1: được giao “tìm chỗ dùng Claude”</h5>
+    <span class="lbl">Đề sẽ viết kiểu này</span>
+    <div class="qtext">
+      <span class="en">“The operations lead of a property-management company is told to ‘find a way to use Claude’ in how her team handles tenant maintenance requests. Requests arrive by email and phone, then are logged, prioritized, assigned to contractors and followed up. What should she do first?”</span>
+      <span class="vi">Dịch: Trưởng bộ phận vận hành của một công ty quản lý tòa nhà được giao “tìm cách dùng Claude” trong việc đội chị xử lý yêu cầu sửa chữa của cư dân. Yêu cầu đến qua email và điện thoại, rồi được ghi lại, xếp ưu tiên, giao cho nhà thầu và theo dõi. Chị nên làm gì trước tiên?</span>
+    </div>
+    <span class="lbl">Bạn chọn đáp án nào?</span>
+    <div class="qopts">
+      <button type="button" class="qopt" data-k="A"><b class="k">A.</b><span class="body"><span class="en">“Choose the most capable model and turn on every available connector, so capability never limits what Claude can take on.”</span><span class="vi">Chọn model mạnh nhất và bật mọi connector có sẵn, để năng lực không bao giờ giới hạn việc Claude nhận.</span></span></button>
+      <button type="button" class="qopt" data-k="B"><b class="k">B.</b><span class="body"><span class="en">“Write one prompt that handles a request from intake to contractor assignment, and test it on yesterday’s requests.”</span><span class="vi">Viết một prompt xử lý một yêu cầu từ lúc nhận tới lúc giao nhà thầu, thử trên các yêu cầu hôm qua.</span></span></button>
+      <button type="button" class="qopt" data-k="C"><b class="k">C.</b><span class="body"><span class="en">“Map how requests are actually handled today, break the work into tasks, and decide for each task whether Claude handles it, a person keeps it, or they share it.”</span><span class="vi">Vẽ lại cách yêu cầu đang được xử lý thật, chia thành từng việc, và quyết với mỗi việc: Claude làm, người giữ, hay hai bên cùng làm.</span></span></button>
+      <button type="button" class="qopt" data-k="D"><b class="k">D.</b><span class="body"><span class="en">“Set up an agent that runs the whole process end to end, then remove the parts that fail once it is live.”</span><span class="vi">Dựng một agent (AI tự chạy nhiều bước, tự chọn bước tiếp theo) lo cả quy trình từ đầu tới cuối, chạy thật rồi bỏ những phần hỏng.</span></span></button>
+    </div>
+    <p class="qfb" hidden></p>
+    <div class="qexp" hidden>
+      <span class="lbl">Phân tích đề</span>
+      <ul>
+        <li><b>Đề kể:</b> quy trình có nhiều bước (ghi lại, xếp ưu tiên, giao nhà thầu, theo dõi). Lời giao việc là “tìm cách dùng Claude”.</li>
+        <li><b>Chỗ khó:</b> lời giao việc bắt đầu từ công cụ. Các bước rủi ro rất khác nhau: ghi lại một email khác hẳn việc quyết ca nào khẩn (nước rò vào tủ điện) hay chọn nhà thầu.</li>
+        <li><b>Đề hỏi:</b> làm gì <i>trước tiên</i>, tức là bước phân tích, chưa phải bước làm.</li>
+      </ul>
+      <span class="lbl">Cần biết để chọn</span>
+      <ol>
+        <li>Bắt đầu từ vấn đề và cách việc đang được làm thật, rồi mới tới công cụ (Problem Awareness).</li>
+        <li>Delegation quyết theo từng việc. Một quyết định chung cho cả quy trình là sai từ gốc.</li>
+        <li>Cách đơn giản nhất chạy được đi trước; kiến trúc lớn chỉ khi cần.</li>
+      </ol>
+      <span class="lbl">Từng đáp án</span>
+      <ul class="verdict">
+        <li><b>A sai.</b> Chọn công cụ trước khi hiểu vấn đề (ý 1). Hấp dẫn vì nghe chắc ăn, nhưng model mạnh không cho biết bước nào nên giao, còn bật hết connector thì tốn hạn mức và mở quyền truy cập không cần.</li>
+        <li><b>B sai.</b> Gộp nhiều việc rủi ro khác nhau vào một prompt, một quyết định (ý 2). Một ngày dữ liệu cũng chưa đủ ca khó.</li>
+        <li class="ok"><b>C đúng.</b> Đúng thứ tự: hiểu việc thật → chia việc → quyết từng việc (ý 1, 2).</li>
+        <li><b>D sai.</b> Bắt đầu từ kiến trúc lớn nhất và để lỗi lộ ra trên cư dân thật (ý 3). Bỏ luôn bước phân tích mà đề hỏi.</li>
+      </ul>
+      <button type="button" class="qreset">Làm lại câu này</button>
+    </div>
+  </div>
+
+  <div class="qcase" data-answer="A">
+    <h5 class="sub">Dạng 2: chọn tiêu chí thành công</h5>
+    <span class="lbl">Đề sẽ viết kiểu này</span>
+    <div class="qtext">
+      <span class="en">“A customer service manager plans to let Claude draft first replies to refund-request emails, which agents will edit and send. Before the pilot starts, she must write the success criterion the team will use to decide whether it worked. Which criterion is most appropriate?”</span>
+      <span class="vi">Dịch: Một quản lý chăm sóc khách hàng định để Claude soạn bản trả lời đầu tiên cho email xin hoàn tiền, nhân viên sẽ sửa rồi gửi. Trước khi chạy thử, chị phải viết tiêu chí thành công mà cả đội dùng để quyết đợt thử có đạt không. Tiêu chí nào phù hợp nhất?</span>
+    </div>
+    <span class="lbl">Bạn chọn đáp án nào?</span>
+    <div class="qopts">
+      <button type="button" class="qopt" data-k="A"><b class="k">A.</b><span class="body"><span class="en">“On 200 real emails from last quarter, at least 85% of drafts need only minor edits, and every refund amount in a draft matches the order record.”</span><span class="vi">Trên 200 email thật của quý trước, ít nhất 85% bản nháp chỉ cần sửa nhẹ, và mọi số tiền hoàn trong bản nháp khớp với dữ liệu đơn hàng.</span></span></button>
+      <button type="button" class="qopt" data-k="B"><b class="k">B.</b><span class="body"><span class="en">“After a week of use, the agents and their team lead all agree that the drafts feel more professional, more helpful and more on-brand than the replies they write today.”</span><span class="vi">Sau một tuần dùng, nhân viên và trưởng nhóm đều đồng ý bản nháp chuyên nghiệp hơn, hữu ích hơn và đúng chất thương hiệu hơn bản họ đang tự viết.</span></span></button>
+      <button type="button" class="qopt" data-k="C"><b class="k">C.</b><span class="body"><span class="en">“Claude produces the best replies it can, in an empathetic tone.”</span><span class="vi">Claude viết câu trả lời tốt nhất có thể, giọng đồng cảm.</span></span></button>
+      <button type="button" class="qopt" data-k="D"><b class="k">D.</b><span class="body"><span class="en">“The team will review the first week of drafts and then agree on what good enough looks like.”</span><span class="vi">Cả đội xem bản nháp tuần đầu rồi mới thống nhất thế nào là đủ tốt.</span></span></button>
+    </div>
+    <p class="qfb" hidden></p>
+    <div class="qexp" hidden>
+      <span class="lbl">Phân tích đề</span>
+      <ul>
+        <li><b>Đề kể:</b> Claude soạn nháp, người sửa và gửi. Cần tiêu chí trước khi chạy thử.</li>
+        <li><b>Chỗ khó:</b> tiêu chí phải giúp <i>quyết</i> được đạt hay không. Trong email hoàn tiền, lỗi nặng nhất là sai số tiền.</li>
+        <li><b>Đề hỏi:</b> tiêu chí nào dùng được để chấm.</li>
+      </ul>
+      <span class="lbl">Cần biết để chọn</span>
+      <ol>
+        <li>Tiêu chí tốt: cụ thể, đo được, làm được, đúng trọng tâm. Người lạ đọc vào chấm được đạt hay trượt.</li>
+        <li>Tiêu chí viết trước khi thấy output. Viết sau thì nó chỉ mô tả lại cái vừa nhận.</li>
+        <li>Thử trên mẫu việc thật, và đặt điều kiện riêng cho loại lỗi nặng.</li>
+      </ol>
+      <span class="lbl">Từng đáp án</span>
+      <ul class="verdict">
+        <li class="ok"><b>A đúng.</b> Có số, có dữ liệu thật, có điều kiện riêng cho số tiền (ý 1, 3).</li>
+        <li><b>B sai.</b> Cả đội đồng ý không làm tiêu chí thành đo được (ý 1). Hấp dẫn vì nghe dân chủ và đầy đủ, nhưng “chuyên nghiệp hơn” mỗi người hiểu một kiểu, và không ai kiểm số tiền.</li>
+        <li><b>C sai.</b> Toàn tính từ, không có cách nào trượt (ý 1).</li>
+        <li><b>D sai.</b> Tiêu chí đặt sau khi xem output (ý 2). Lúc đó đội sẽ coi cái đang có là “đủ tốt”.</li>
+      </ul>
+      <button type="button" class="qreset">Làm lại câu này</button>
+    </div>
+  </div>
+
+  <div class="more"><b>Biết thêm</b><ul>
+    <li><b>Cả đội đồng ý không làm tiêu chí thành đo được.</b> Mọi người gật đầu với “trả lời thân thiện” vẫn không ai chấm được đạt hay không.</li>
+    <li><b>Achievable phải có căn cứ.</b> Con số mục tiêu dựa vào thử nghiệm, số liệu tham chiếu hoặc chuyên gia. Con số chỉ “nghe ấn tượng” là bẫy.</li>
+    <li><b>Claude không biết quy trình nội bộ của bạn.</b> Hỏi “yêu cầu chuẩn của quy trình khiếu nại là gì” mà không đưa tài liệu nào thì nhận về văn bản chung chung, có thể sai với công ty. Muốn Claude bám tài liệu nội bộ thì đưa vào Project (<a href="#l-5-1">bài 5.1</a>).</li>
+    <li><b>Một lần chạy tốt không bảo đảm mọi phần.</b> Một đoạn chat tư vấn bảo hiểm chạy ổn không có nghĩa là bước chào hỏi và bước báo giá cùng mức rủi ro.</li>
+    <li><b>Thiết kế sẵn đường chuyển cho người.</b> Trong hỗ trợ khách hàng, người ta đo cả việc hệ thống nhận ra đúng lúc cần chuyển ca cho người.</li>
+    <li><b>Chia nhỏ prompt là chuyện của D1.</b> Ở đây chia use case để quyết giao việc. Cách chia một yêu cầu phức tạp thành các bước prompt nằm ở <a href="#l-1-2">bài 1.2</a>.</li>
+  </ul></div>
+  <div class="rule">Quy tắc: chia use case thành từng việc, quyết từng việc, và viết tiêu chí đo được trước khi giao bất cứ việc nào.</div>
+  <div class="remember"><b>Nhớ nhanh</b><ul>
+    <li>Vấn đề trước, công cụ sau. Cách đơn giản nhất chạy được đi trước.</li>
+    <li>Hỏi cách làm thật và chỗ luật hỏng, rồi chia việc.</li>
+    <li>Claude đặt câu hỏi, gắn nhãn, chấm điểm. Người trả lời và quyết.</li>
+    <li>Tiêu chí: Specific, Measurable, Achievable, Relevant. Thử trên mẫu thật.</li>
+  </ul></div>
+  <div class="src">Đọc thêm: <a href="https://platform.claude.com/docs/en/test-and-evaluate/define-success">Define your success criteria</a> · <a href="https://anthropic.skilljar.com/ai-fluency-framework-foundations">AI Fluency: Framework &amp; Foundations</a> · <a href="https://support.claude.com/en/articles/9517075-what-are-projects-and-how-do-i-use-them">What are Projects</a></div>
+  <label class="done"><input type="checkbox" data-lesson="l-4-1"> Đã học bài này</label>
+</article>
+
+<article class="lesson" id="l-4-2" data-domain="4" data-ts="4.2" data-min="12">
+  <header class="lh"><span class="ts">TS 4.2</span><h3>Research, lập kế hoạch, tối ưu quy trình: Claude soạn phương án, người chủ việc quyết</h3><span class="rt">~12 phút</span></header>
+  <p class="need">Cần biết trước: ba kiểu làm việc và luật “giao phần làm, giữ phần quyết” ở <a href="#l-4-0">bài Nền tảng</a>. Cách bật Research và web search ở <a href="#l-3-1">bài 3.1</a>.</p>
+  <div class="defs"><b>Khái niệm của bài</b><dl>
+    <dt>Web search (tìm web)</dt><dd>Claude tìm trên web để lấy vài sự kiện mới. Câu trả lời có dùng web search luôn kèm trích nguồn.</dd>
+    <dt>Research</dt><dd>Tính năng chạy nhiều lượt tìm kiếm nối nhau, tự chọn hướng tìm tiếp dựa trên kết quả trước, dùng được cả web lẫn công cụ đã kết nối. Guide gọi là “research mode”.</dd>
+    <dt>Tiêu chí chấm (rubric)</dt><dd>Bộ tiêu chí bạn đặt để Claude chấm điểm, xếp hạng theo đó, thay vì tự nghĩ ra thước đo.</dd>
+    <dt>Sơ đồ quy trình (process map)</dt><dd>Danh sách các bước của một quy trình: ai làm, mất bao lâu, chờ ở đâu, chuyển cho ai.</dd>
+    <dt>Giả thuyết (hypothesis)</dt><dd>Một nhận định chưa được kiểm. Đề xuất “bỏ bước này” của Claude là giả thuyết cho tới khi người chủ quy trình kiểm xong.</dd>
+  </dl></div>
+
+  <h4>Câu trả lời nằm ở đâu thì tìm ở đó</h4>
+  <div class="tw"><table>
+    <tr><th>Câu trả lời nằm ở</th><th>Dùng</th><th>Ví dụ</th></tr>
+    <tr><td>Kiến thức ổn định, hoặc tài liệu đã có trong chat</td><td>Chat thường</td><td>Giải thích một khái niệm, phân tích file vừa tải lên</td></tr>
+    <tr><td>Vài sự kiện mới, có thể đã đổi</td><td>Web search</td><td>Thông báo của đối thủ tuần này</td></tr>
+    <tr><td>Câu hỏi rộng, nhiều nhánh độc lập, cần cả web lẫn tài liệu nội bộ</td><td>Research, cộng connector</td><td>So quy định ở tám nước, kết hợp báo cáo cũ trong Google Drive</td></tr>
+    <tr><td>Tài liệu nội bộ</td><td>File đính kèm, Project knowledge, connector</td><td>Chính sách công ty, bảng giá</td></tr>
+  </table></div>
+  <ul>
+    <li><b>Tin sau mốc kiến thức không gọi ra bằng prompt được.</b> Viết “hãy nhớ lại tin mới nhất” không làm Claude biết tin tuần này. Chỉ tìm kiếm mới mang tin mới vào.</li>
+    <li><b>Research cần bật web search,</b> chỉ có ở gói trả phí, và chỉ dùng được connector đã kết nối.</li>
+    <li><b>Research tiêu hạn mức nhanh hơn chat thường.</b> Để dành cho câu hỏi đáng công. Một hai sự kiện thì web search là đủ.</li>
+  </ul>
+
+  <h4>Đặt tiêu chí trước khi bảo Claude xếp hạng</h4>
+  <p>“Xếp mấy cái này theo độ khẩn” buộc Claude tự nghĩ ra thước đo, và mỗi lần chạy có thể nghĩ ra một thước khác. Chia vai thế này:</p>
+  <ul>
+    <li><b>Bạn đặt tiêu chí:</b> ví dụ mức ảnh hưởng, công sức, nhóm khách bị ảnh hưởng.</li>
+    <li><b>Claude chấm từng mục</b> theo đúng tiêu chí đó, nói rõ tiêu chí nào quyết điểm.</li>
+    <li><b>Bạn xem kỹ</b> nhóm đầu bảng và các ca sát ngưỡng.</li>
+  </ul>
+  <p>Kiểm nguồn trước khi tin kết luận:</p>
+  <ul>
+    <li><b>Ai viết nguồn này?</b> Brochure của nhà cung cấp viết để thắng hợp đồng, không kể thất bại. Lập luận hay đến đâu cũng không sửa được đầu vào một chiều.</li>
+    <li><b>Đối chiếu nhiều nguồn độc lập.</b></li>
+    <li><b>Câu hỏi phức tạp:</b> xin vài giả thuyết cạnh tranh, mỗi cái kèm mức độ chắc chắn.</li>
+    <li><b>Đọc kết quả như biên tập viên:</b> số nào cũ, góc nhìn nào thiếu, câu nào cần kiểm. Câu hỏi tiếp theo nhắm đúng vào các lỗ đó.</li>
+  </ul>
+
+  <h4>Lập kế hoạch: Claude soạn, người duyệt</h4>
+  <p>Claude giúp bạn nắm việc nhanh: liệt kê phương án, soạn kế hoạch nháp, chỉ chỗ có vẻ lãng phí. Nhưng Claude chỉ thấy những gì bạn đưa, và nhiều lý do của tổ chức không bao giờ được viết ra.</p>
+  <ul>
+    <li><b>Chọn kiểu làm việc cho từng bước.</b> Bước cơ học, kiểm được → Automation. Bước cần hiểu tổ chức → Augmentation. Bước khám phá mở → Agency, sau khi đã đặt ranh giới (phạm vi, nguồn được dùng).</li>
+    <li><b>Nói rõ “xong” trước khi giao.</b> “Mọi quỹ tài trợ xây dựng trên 500 triệu đồng, mỗi quỹ kèm link nguồn” thay cho “tìm quỹ tốt cho mình”.</li>
+    <li><b>Hai kế hoạch thì đừng bảo Claude chọn.</b> Chấm cả hai theo tiêu chí đã thống nhất với người tài trợ dự án, nhờ Claude chỉ ra hai kế hoạch giả định khác nhau ở đâu, rồi bạn quyết và ghi lại lý do.</li>
+  </ul>
+
+  <h4>Tối ưu quy trình: lời chê của Claude là giả thuyết</h4>
+  <p>Muốn quy trình nhanh hơn, đưa Claude sơ đồ quy trình và nhờ chỉ chỗ thắt cổ chai, bước trùng, bước chép tay. Sau đó:</p>
+  <ol>
+    <li><b>Coi mỗi đề xuất là giả thuyết.</b> Bước “trùng” có thể là chữ ký kiểm toán bắt buộc, hoặc là lần kiểm duy nhất bắt được một lỗi hiếm mà đắt.</li>
+    <li><b>Người chủ quy trình hỏi lại người đang làm bước đó.</b></li>
+    <li><b>Chọn thay đổi đơn giản nhất.</b> Mỗi bước tự động mới là thêm một thứ phải theo dõi, nên phải đáng hơn một cách sửa đơn giản.</li>
+  </ol>
+  <p>Tối ưu cách <i>bạn dùng Claude</i> (ít tốn hạn mức, ít lượt hỏi lại) là chuyện khác, nằm ở <a href="#l-7-3">bài 7.3</a>.</p>
+
+  <h4>Biến một quy trình thành tài liệu, từng chặng một</h4>
+  <p>Ví dụ: một kỹ sư có bản ghi lời (transcript) của một ca sản xuất và cần viết quy trình thao tác chuẩn (SOP, standard operating procedure). Một yêu cầu “viết SOP hoàn chỉnh” không để lại chỗ nào cho bạn kiểm. Làm theo chặng, kiểu chuỗi prompt (prompt chaining: đầu ra bước trước là đầu vào bước sau) đã học ở <a href="#l-1-2">bài 1.2</a>:</p>
+  <div class="tw"><table>
+    <tr><th>Chặng</th><th>Claude làm</th><th>Người kiểm</th></tr>
+    <tr><td>1. Trích</td><td>Trích nguyên văn các đoạn liên quan, liệt kê các bước đúng thứ tự</td><td>Không thiếu, không bịa, đúng thứ tự</td></tr>
+    <tr><td>2. Bổ sung</td><td>Thêm lưu ý an toàn, dụng cụ cho từng bước, điểm kiểm chất lượng</td><td>Khớp với cách xưởng chạy thật</td></tr>
+    <tr><td>3. Định dạng</td><td>Đưa vào mẫu SOP của công ty</td><td>Đủ mục, sẵn sàng ký</td></tr>
+  </table></div>
+  <p>Muốn Claude tự soát thêm một vòng: soạn → soát bản nháp theo tiêu chí (“bước nào cũng ghi dụng cụ”) → sửa. Kiểm từng chặng trước khi chặng sau xây lên.</p>
+
+  <div class="story"><b>Tình huống.</b> Anh Minh, phụ trách hành chính, nhờ Claude so ba nhà cung cấp phần mềm chấm công. Anh chỉ dán brochure và trang web của ba bên. Claude khuyên chọn bên A, lập luận rất chặt. Triển khai xong mới biết bên A không đọc được dữ liệu từ máy chấm công công ty đang dùng, điều mà brochure không nhắc. Lập luận không sai. Đầu vào sai: toàn bộ nguồn do chính người bán viết, và không ai đặt tiêu chí “tương thích với máy hiện có” từ đầu.</div>
+  <div class="vs">
+    <div class="bad"><b>Tệ</b><ul>
+      <li>Hỏi tin tuần này trong chat thường, không bật tìm kiếm.</li>
+      <li>“Xếp theo độ khẩn” mà không nêu tiêu chí.</li>
+      <li>Khuyến nghị dựa trên tài liệu của người bán.</li>
+      <li>Để Claude chọn giữa hai kế hoạch.</li>
+      <li>Claude bảo thừa là bỏ bước đó ngay.</li>
+      <li>Một yêu cầu “viết SOP hoàn chỉnh”.</li>
+    </ul></div>
+    <div class="good"><b>Tốt</b><ul>
+      <li>Web search cho tin mới; Research cho câu hỏi rộng nhiều nhánh.</li>
+      <li>Bạn đặt tiêu chí, Claude chấm, bạn duyệt đầu bảng và ca sát ngưỡng.</li>
+      <li>Đối chiếu nguồn độc lập.</li>
+      <li>Chấm theo tiêu chí đã thống nhất, người quyết và ghi lý do.</li>
+      <li>Coi là giả thuyết, hỏi người đang làm bước đó.</li>
+      <li>Trích → bổ sung → định dạng, kiểm từng chặng.</li>
+    </ul></div>
+  </div>
+
+  <h4>Khi đi thi</h4>
+  <p class="need">Bài này thường ra 2 dạng câu hỏi. Đọc đề, <b>chọn một đáp án trước</b>; phần giải thích chỉ hiện ra sau khi bạn chọn.</p>
+
+  <div class="qcase" data-answer="D">
+    <h5 class="sub">Dạng 1: chọn đúng nguồn cho câu hỏi</h5>
+    <span class="lbl">Đề sẽ viết kiểu này</span>
+    <div class="qtext">
+      <span class="en">“A procurement lead must compare the current import-duty rules for one product line across eight countries and combine them with the company’s own past shipment reports, which are stored in Google Drive. She has a Pro plan with the Google Drive connector already set up. Which approach fits best?”</span>
+      <span class="vi">Dịch: Một trưởng nhóm mua hàng phải so quy định thuế nhập khẩu hiện hành cho một dòng sản phẩm ở tám nước, rồi kết hợp với các báo cáo lô hàng cũ của công ty lưu trên Google Drive. Chị dùng gói Pro, connector Google Drive đã kết nối sẵn. Cách nào hợp nhất?</span>
+    </div>
+    <span class="lbl">Bạn chọn đáp án nào?</span>
+    <div class="qopts">
+      <button type="button" class="qopt" data-k="A"><b class="k">A.</b><span class="body"><span class="en">“Plain chat with a detailed prompt asking Claude to recall the latest duty rules for each country.”</span><span class="vi">Chat thường, prompt thật chi tiết, bảo Claude nhớ lại quy định thuế mới nhất của từng nước.</span></span></button>
+      <button type="button" class="qopt" data-k="B"><b class="k">B.</b><span class="body"><span class="en">“One web search for ‘import duty rules’, then paste the shipment reports into the chat by hand.”</span><span class="vi">Một lượt web search “quy định thuế nhập khẩu”, rồi dán tay các báo cáo lô hàng vào chat.</span></span></button>
+      <button type="button" class="qopt" data-k="C"><b class="k">C.</b><span class="body"><span class="en">“Research with web search turned off to save usage, relying on the Drive reports alone.”</span><span class="vi">Dùng Research nhưng tắt web search cho đỡ tốn hạn mức, chỉ dựa vào báo cáo trên Drive.</span></span></button>
+      <button type="button" class="qopt" data-k="D"><b class="k">D.</b><span class="body"><span class="en">“Research with web search on and the Google Drive connector enabled, then check the key rates against official sources.”</span><span class="vi">Dùng Research, bật web search và connector Google Drive, rồi kiểm các thuế suất chính với nguồn chính thức.</span></span></button>
+    </div>
+    <p class="qfb" hidden></p>
+    <div class="qexp" hidden>
+      <span class="lbl">Phân tích đề</span>
+      <ul>
+        <li><b>Đề kể:</b> tám nước, quy định đang hiện hành, cộng báo cáo cũ trên Google Drive. Có gói Pro và connector Drive.</li>
+        <li><b>Chỗ khó:</b> hai loại nguồn khác nhau. Quy định thuế có thể đã đổi sau mốc kiến thức của Claude. Báo cáo nội bộ thì Claude chưa từng thấy.</li>
+        <li><b>Đề hỏi:</b> cách nào hợp nhất với loại câu hỏi này.</li>
+      </ul>
+      <span class="lbl">Cần biết để chọn</span>
+      <ol>
+        <li>Tin mới chỉ vào được qua tìm kiếm. Prompt viết hay đến đâu cũng không gọi ra được.</li>
+        <li>Research chạy nhiều lượt tìm nối nhau cho câu hỏi rộng, nhiều nhánh. Nó dùng được connector đã kết nối và bắt buộc bật web search.</li>
+        <li>Con số quan trọng (thuế suất) vẫn phải kiểm với nguồn chính thức.</li>
+      </ol>
+      <span class="lbl">Từng đáp án</span>
+      <ul class="verdict">
+        <li><b>A sai.</b> Thuế suất đổi sau mốc kiến thức thì Claude không có (ý 1). Prompt chi tiết chỉ cho ra câu trả lời nghe như thật.</li>
+        <li><b>B sai.</b> Một lượt tìm cho tám nhánh độc lập là quá hẹp. Dán tay báo cáo thì bỏ phí connector đã có.</li>
+        <li><b>C sai.</b> Research cần web search (ý 2), và báo cáo cũ không chứa quy định hiện hành. Hấp dẫn vì “tiết kiệm hạn mức”, nhưng bỏ đúng phần cần nhất.</li>
+        <li class="ok"><b>D đúng.</b> Câu hỏi rộng, nhiều nhánh, cần cả web lẫn Drive: đúng việc của Research (ý 2), cộng bước kiểm con số (ý 3).</li>
+      </ul>
+      <button type="button" class="qreset">Làm lại câu này</button>
+    </div>
+  </div>
+
+  <div class="qcase" data-answer="B">
+    <h5 class="sub">Dạng 2: Claude bảo một bước trong quy trình là thừa</h5>
+    <span class="lbl">Đề sẽ viết kiểu này</span>
+    <div class="qtext">
+      <span class="en">“An office manager shares the written steps of the purchase-approval process with Claude and asks how to make it faster. Claude points out that the second sign-off by the finance team looks redundant, because it repeats the department head’s check. The manager plans to remove it next week. What should happen first?”</span>
+      <span class="vi">Dịch: Một quản lý văn phòng đưa Claude bản mô tả các bước của quy trình duyệt mua hàng và hỏi cách làm nhanh hơn. Claude chỉ ra chữ ký thứ hai của phòng tài chính có vẻ thừa, vì nó lặp lại phần kiểm của trưởng bộ phận. Quản lý định bỏ bước đó vào tuần sau. Việc gì phải làm trước?</span>
+    </div>
+    <span class="lbl">Bạn chọn đáp án nào?</span>
+    <div class="qopts">
+      <button type="button" class="qopt" data-k="A"><b class="k">A.</b><span class="body"><span class="en">“Remove the step as planned, since Claude reviewed the whole written process.”</span><span class="vi">Bỏ bước đó như dự định, vì Claude đã xem hết bản mô tả quy trình.</span></span></button>
+      <button type="button" class="qopt" data-k="B"><b class="k">B.</b><span class="body"><span class="en">“Treat the finding as a hypothesis and check with the finance team why the second sign-off exists before changing anything.”</span><span class="vi">Coi nhận định đó là giả thuyết, hỏi phòng tài chính vì sao có chữ ký thứ hai trước khi đổi bất cứ gì.</span></span></button>
+      <button type="button" class="qopt" data-k="C"><b class="k">C.</b><span class="body"><span class="en">“Ask Claude the same question in a new chat, and remove the step if it is flagged again.”</span><span class="vi">Hỏi Claude lại đúng câu đó trong một chat mới, nếu nó lại bảo thừa thì bỏ.</span></span></button>
+      <button type="button" class="qopt" data-k="D"><b class="k">D.</b><span class="body"><span class="en">“Ask Claude to design an automated check that replaces the finance team’s sign-off entirely.”</span><span class="vi">Nhờ Claude thiết kế một bước kiểm tự động thay hẳn chữ ký của phòng tài chính.</span></span></button>
+    </div>
+    <p class="qfb" hidden></p>
+    <div class="qexp" hidden>
+      <span class="lbl">Phân tích đề</span>
+      <ul>
+        <li><b>Đề kể:</b> Claude đọc bản mô tả quy trình và chỉ ra chữ ký thứ hai “có vẻ thừa”. Quản lý định bỏ tuần sau.</li>
+        <li><b>Chỗ khó:</b> Claude chỉ thấy bản viết. Lý do của một bước kiểm (luật kiểm toán, tách quyền đề nghị và quyền duyệt chi, bắt lỗi hiếm) thường không được ghi lại.</li>
+        <li><b>Đề hỏi:</b> việc phải làm <i>trước</i> khi đổi.</li>
+      </ul>
+      <span class="lbl">Cần biết để chọn</span>
+      <ol>
+        <li>Đề xuất đổi quy trình của Claude là giả thuyết. Người chủ quy trình kiểm với người đang làm bước đó.</li>
+        <li>Hỏi lại Claude không phải kiểm chứng: cùng tài liệu thì ra cùng kết luận.</li>
+        <li>Thay đổi đơn giản nhất đi trước. Thêm bước tự động là thêm thứ phải theo dõi.</li>
+      </ol>
+      <span class="lbl">Từng đáp án</span>
+      <ul class="verdict">
+        <li><b>A sai.</b> Coi phân tích của Claude là quyết định (ý 1). Hấp dẫn vì phân tích nghe chặt, nhưng nó chỉ chặt trên phần đã được viết ra.</li>
+        <li class="ok"><b>B đúng.</b> Kiểm giả thuyết với người hiểu lý do của bước đó, rồi mới quyết (ý 1).</li>
+        <li><b>C sai.</b> Lặp lại không phải kiểm chứng (ý 2). Chat mới vẫn đọc cùng bản mô tả thiếu lý do.</li>
+        <li><b>D sai.</b> Thêm máy móc khi chưa biết bước đó giữ cái gì (ý 3). Thay một kiểm soát tài chính bằng bước tự động còn là giao phần quyết.</li>
+      </ul>
+      <button type="button" class="qreset">Làm lại câu này</button>
+    </div>
+  </div>
+
+  <div class="more"><b>Biết thêm</b><ul>
+    <li><b>Web search luôn kèm trích nguồn.</b> Bấm vào nguồn mà kiểm, nhất là con số (<a href="#l-2-3">bài 2.3</a>).</li>
+    <li><b>Research dùng connector</b> (Google Workspace chẳng hạn) chỉ khi bạn đã kết nối nó, và chỉ khi bắt đầu Research trên web hoặc app desktop.</li>
+    <li><b>Kế hoạch là đầu vào.</b> Đáp án có cụm “let Claude decide” (để Claude quyết) cho kế hoạch, ngân sách, lộ trình thường là đáp án sai.</li>
+    <li><b>Đừng để Claude tự đặt thước đo.</b> Thước đo tự nghĩ không kiểm được, và mỗi lần chạy có thể khác nhau.</li>
+    <li><b>Chuỗi prompt cho bạn chỗ dừng.</b> Giữa hai chặng, bạn đọc kết quả và chặn lỗi trước khi nó lan sang chặng sau.</li>
+  </ul></div>
+  <div class="rule">Quy tắc: bạn đặt tiêu chí và nguồn, Claude tìm, chấm, soạn phương án; người chủ việc kiểm với thực tế rồi mới quyết.</div>
+  <div class="remember"><b>Nhớ nhanh</b><ul>
+    <li>Kiến thức ổn định → chat. Tin mới → web search. Rộng, nhiều nhánh → Research (cần web search).</li>
+    <li>Tiêu chí của bạn, điểm của Claude, quyết định của người.</li>
+    <li>Claude chê một bước = giả thuyết. Hỏi người đang làm bước đó.</li>
+    <li>SOP: trích → bổ sung → định dạng, kiểm từng chặng.</li>
+  </ul></div>
+  <div class="src">Đọc thêm: <a href="https://support.claude.com/en/articles/11088861-using-research-on-claude-ai">Using Research</a> · <a href="https://support.claude.com/en/articles/10684626-enabling-and-using-web-search">Enabling and using web search</a> · <a href="https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices">Prompting best practices</a></div>
+  <label class="done"><input type="checkbox" data-lesson="l-4-2"> Đã học bài này</label>
+</article>
+
+<article class="lesson" id="l-4-3" data-domain="4" data-ts="4.3" data-min="12">
+  <header class="lh"><span class="ts">TS 4.3</span><h3>Làm giải pháp cùng Claude: lên kế hoạch, kiểm, đánh giá, sửa</h3><span class="rt">~12 phút</span></header>
+  <p class="need">Cần biết trước: vòng Description–Discernment và Diligence ở <a href="#l-4-0">bài Nền tảng</a>; vai Associate và việc chuyển lên ở <a href="#l-0-2">bài 0.2</a>.</p>
+  <div class="defs"><b>Khái niệm của bài</b><dl>
+    <dt>Bản mô tả giải pháp (spec)</dt><dd>Văn bản nói giải pháp phải làm gì, cho ai, trong hoàn cảnh nào, và lúc nào tính là xong. Claude chỉ làm được cái được mô tả.</dd>
+    <dt>Điều kiện xong (definition of done)</dt><dd>Danh sách điều kiện mà kết quả hoặc đạt hoặc trượt, gồm cả ca biên: không có dữ liệu, ngày nghỉ, số bằng 0.</dd>
+    <dt>Phép kiểm chạy được (runnable check)</dt><dd>Cách kiểm mà ai làm cũng ra cùng kết quả: bộ đầu vào kèm kết quả đúng, ảnh mẫu để so, phép tính làm tay.</dd>
+    <dt>Vòng plan → verify → judge → refine</dt><dd>Lên kế hoạch → kiểm theo phép kiểm → đánh giá với người dùng thật → sửa từng chỗ, rồi lặp. Đây là vòng Description–Discernment áp vào việc làm ra một sản phẩm.</dd>
+  </dl></div>
+  <p>Associate không viết phần mềm, nhưng vẫn làm giải pháp với Claude: một mẫu tài liệu, một checklist, một công cụ tính nhỏ trong artifact, một Project cho cả đội. Cách làm chắc tay là vòng bốn bước dưới đây.</p>
+  <svg class="flow" viewBox="0 0 340 392" role="img" aria-label="Sơ đồ vòng lặp làm giải pháp: một, Plan, Claude đề xuất và bạn sửa kế hoạch. Hai, Verify, chạy phép kiểm so với điều kiện xong. Ba, Judge, xem người dùng thật thấy sao. Hỏi đạt chưa. Chưa đạt thì bốn, Refine, sửa một chỗ rồi quay lại bước kiểm. Đạt thì dùng, chạy thử rồi mới mở rộng.">
+    <defs><marker id="flow-ah-d4" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path class="ah" d="M0,0 L10,5 L0,10 z"/></marker></defs>
+    <rect class="bx cl" x="70" y="8" width="220" height="46" rx="10"/>
+    <text x="180" y="28">① Plan: lên kế hoạch</text>
+    <text class="lb" x="180" y="45">Claude đề xuất, bạn sửa</text>
+    <path class="ln" d="M180,54 V80" marker-end="url(#flow-ah-d4)"/>
+    <rect class="bx cl" x="70" y="82" width="220" height="46" rx="10"/>
+    <text x="180" y="102">② Verify: chạy phép kiểm</text>
+    <text class="lb" x="180" y="119">so với điều kiện xong</text>
+    <path class="ln" d="M180,128 V154" marker-end="url(#flow-ah-d4)"/>
+    <rect class="bx cl" x="70" y="156" width="220" height="46" rx="10"/>
+    <text x="180" y="176">③ Judge: đánh giá</text>
+    <text class="lb" x="180" y="193">người dùng thật thấy sao?</text>
+    <path class="ln" d="M180,202 V226" marker-end="url(#flow-ah-d4)"/>
+    <polygon class="bx" points="180,228 260,262 180,296 100,262"/>
+    <text x="180" y="266">Đạt chưa?</text>
+    <path class="ln" d="M100,262 V320" marker-end="url(#flow-ah-d4)"/>
+    <text class="lb e" x="94" y="300">chưa</text>
+    <path class="ln" d="M260,262 V320" marker-end="url(#flow-ah-d4)"/>
+    <text class="lb s" x="266" y="300">đạt</text>
+    <rect class="bx cl" x="20" y="322" width="160" height="46" rx="10"/>
+    <text x="100" y="342">④ Refine: sửa</text>
+    <text class="lb" x="100" y="359">một chỗ mỗi lần</text>
+    <path class="ln" d="M20,345 H8 V105 H68" marker-end="url(#flow-ah-d4)"/>
+    <text class="lb" x="38" y="97">kiểm lại</text>
+    <rect class="bx cd" x="190" y="322" width="140" height="46" rx="10"/>
+    <text x="260" y="342">Dùng, chạy thử</text>
+    <text class="lb" x="260" y="359">rồi mới mở rộng</text>
+  </svg>
+  <p>Sửa xong thì quay lại bước kiểm. Nếu bước đánh giá cho thấy bạn mô tả sai nhu cầu ngay từ đầu, quay về tận bước ①.</p>
+
+  <h4>Trước khi làm: biến lời người dùng thành mô tả kiểm được</h4>
+  <p>Claude không nghe được điều người dùng không nói. Tính từ phải thành quyết định:</p>
+  <ul>
+    <li>“Nhanh” → mấy giây.</li>
+    <li>“Đơn giản” → ai dùng, trên thiết bị gì, trong hoàn cảnh nào.</li>
+    <li>Ca biên vào điều kiện xong: phòng khám đóng cửa, không có dữ liệu, thời gian chờ bằng 0.</li>
+  </ul>
+  <p>Một cách hay: nhờ Claude phỏng vấn bạn trước khi làm. “Tôi muốn làm [mô tả ngắn]. Hãy hỏi tôi từng câu một về ca khó, đánh đổi, những điều tôi có thể chưa nghĩ tới, rồi viết bản mô tả để tôi duyệt.” Yêu cầu càng cụ thể (tên file, tình huống, ràng buộc) thì Claude càng ít phải đoán.</p>
+
+  <h4>Bốn bước của vòng lặp, qua một ví dụ</h4>
+  <p>Ví dụ: làm một artifact tính chi phí khóa đào tạo cho các trưởng phòng.</p>
+  <div class="tw"><table>
+    <tr><th>Bước</th><th>Bạn làm</th><th>Claude làm</th><th>Trong ví dụ</th></tr>
+    <tr><td>Plan (lên kế hoạch)</td><td>Đọc kế hoạch, phản biện, chỉ vào mẫu có sẵn để Claude bám theo</td><td>Đề xuất cấu trúc, ô nhập, công thức, trước khi làm</td><td>Claude liệt kê ô nhập và công thức; bạn sửa: nhân viên bán thời gian tính khác</td></tr>
+    <tr><td>Verify (kiểm)</td><td>Đưa phép kiểm: vài bộ đầu vào kèm kết quả đúng đã tính tay</td><td>Chạy phép kiểm, đọc chỗ sai, sửa, chạy lại</td><td>5 bộ số đã tính tay; công cụ phải ra đúng cả 5</td></tr>
+    <tr><td>Judge (đánh giá)</td><td>Cho người dùng thật dùng thử, không giải thích, không giúp; xem họ vấp ở đâu</td><td>Soạn kịch bản thử được, nhưng không thay người dùng</td><td>Hai trưởng phòng nhập thử; một người không hiểu ô “hệ số”</td></tr>
+    <tr><td>Refine (sửa)</td><td>Phản hồi có triệu chứng, vị trí, và “sửa xong” trông thế nào</td><td>Sửa đúng chỗ đó, mỗi lần một thay đổi</td><td>Đổi nhãn “hệ số” thành “số giờ mỗi buổi”, chạy lại 5 bộ số</td></tr>
+  </table></div>
+  <ul>
+    <li><b>Vì sao lên kế hoạch trước:</b> sửa một kế hoạch thì rẻ, gỡ một sản phẩm sai đã lan khắp nơi thì đắt. Bỏ bước kế hoạch “cho nhanh” là bẫy.</li>
+    <li><b>Vì sao cần phép kiểm:</b> có phép kiểm thì Claude biết lúc nào xong, và bạn biết sửa xong có làm hỏng chỗ khác không.</li>
+    <li><b>Tự chấm có điểm mù:</b> người làm ra kết quả không phải người kiểm tốt nhất. Với kết quả quan trọng, nhờ một người khác, hoặc ít nhất một chat mới chỉ có nhiệm vụ tìm lỗi. Chat mới thêm một lớp kiểm, không thay người có chuyên môn (<a href="#l-4-5">bài 4.5</a>).</li>
+  </ul>
+
+  <h4>Đánh giá kết quả, không chỉ xem nó chạy</h4>
+  <p>Qua hết phép kiểm mà người dùng vẫn không hài lòng nghĩa là bạn đã mô tả sai ý. Phép kiểm chỉ xác nhận cái bạn mô tả, không xác nhận bạn mô tả đúng cái cần. Lúc đó quay lại bản mô tả, đừng vá output. Năm câu hỏi khi đánh giá:</p>
+  <p class="need">Năm câu dưới đây là cách notes này chia việc đánh giá cho dễ nhớ, không phải thuật ngữ của đề. Đề chỉ hỏi bạn có kiểm cả “đúng” lẫn “hợp với người dùng” hay không.</p>
+  <ul>
+    <li><b>Đúng không</b> (correctness): làm đúng cái nó nói là làm?</li>
+    <li><b>Tốt không</b> (quality): gọn, rõ, trình bày cẩn thận?</li>
+    <li><b>Hợp không</b> (fit): khớp nhu cầu thật của người dùng?</li>
+    <li><b>Dùng có dễ không</b> (experience): người dùng thấy thế nào khi dùng?</li>
+    <li><b>Có trách nhiệm không</b> (responsibility): dữ liệu, công bằng, chỗ nào vẫn cần người kiểm?</li>
+  </ul>
+
+  <h4>Sửa: mỗi lần một chỗ, phản hồi phải cụ thể</h4>
+  <ul>
+    <li><b>Đổi một thứ rồi kiểm,</b> để biết thay đổi nào gây ra lỗi mới.</li>
+    <li><b>Phản hồi tốt có ba phần:</b> triệu chứng, vị trí, và “sửa xong” trông thế nào. Ví dụ: “Biên bản họp có nhiều người phụ trách một việc thì việc đó bị đưa xuống phần tóm tắt. Xem bước tách người phụ trách. Sửa xong: mọi việc cần làm nằm trong bảng Việc cần làm, mỗi người một dòng.” So với: “sửa lỗi biên bản đi”.</li>
+    <li><b>Người dùng chỉ nói “chưa ổn lắm”:</b> xin ví dụ cụ thể, output đã ghi gì và lẽ ra phải ghi gì. Các ví dụ đó thành điều kiện “sửa xong” và thành phép kiểm.</li>
+  </ul>
+  <p>Chẩn đoán vì sao một prompt hay output kém, và chỉnh theo phản hồi, là chuyện của D7 (<a href="#l-7-1">bài 7.1</a>, <a href="#l-7-2">bài 7.2</a>).</p>
+
+  <h4>Lúc nào phải chuyển cho developer hay architect</h4>
+  <p>Associate dựng được nguyên mẫu: artifact, mẫu tài liệu, Project. Những dấu hiệu sau là lúc chuyển cho đội kỹ thuật:</p>
+  <ul>
+    <li>Cần nối vào hệ thống nội bộ (CRM tức phần mềm quản lý khách hàng, phần mềm kế toán, cơ sở dữ liệu) và chạy định kỳ mà không ai mở ra xem.</li>
+    <li>Cần đưa lên chạy thật cho nhiều người, có tài khoản, có phân quyền.</li>
+    <li>Đụng dữ liệu được quản lý ở quy mô lớn, hoặc cần đánh giá bảo mật.</li>
+    <li>Lỗi chỉ hiện khi nhiều người dùng cùng lúc hoặc dữ liệu lớn. Output của AI hay có điểm mù ở chuyện chạy đồng thời, bảo mật và quy mô.</li>
+  </ul>
+  <p>Khi chuyển, đưa đủ: bản mô tả, phép kiểm, các ca đã thử, phản hồi của người dùng. Một nguyên mẫu đã chạy là bản yêu cầu rất tốt cho đội kỹ thuật.</p>
+
+  <div class="story"><b>Tình huống.</b> Chị Hà, điều phối đào tạo, nhờ Claude làm một artifact tính chi phí khóa học cho các trưởng phòng. Claude làm ngay, chị thử ba bộ số tự nghĩ, đều đúng, rồi gửi link cho 15 trưởng phòng. Tuần sau, phòng kế toán thấy dự toán của ba phòng cao hơn thực tế gần một phần ba: công cụ tính nhân viên bán thời gian như toàn thời gian. Chị chưa từng nói với Claude công ty có hai loại nhân viên, chưa có bộ số kiểm nào chứa ca đó, và chưa cho ai dùng thử trước khi gửi. Thiếu cả ba bước plan, verify, judge.</div>
+  <div class="vs">
+    <div class="bad"><b>Tệ</b><ul>
+      <li>Bảo Claude làm ngay, không xem kế hoạch.</li>
+      <li>“Làm cho đẹp hơn”, “nhanh hơn”.</li>
+      <li>Để Claude tự chấm kết quả quan trọng.</li>
+      <li>Qua phép kiểm là coi như xong.</li>
+      <li>Sửa nhiều thứ một lúc theo cảm giác.</li>
+      <li>Tự viết code tích hợp hệ thống công ty.</li>
+    </ul></div>
+    <div class="good"><b>Tốt</b><ul>
+      <li>Duyệt kế hoạch trước, chỉ vào mẫu có sẵn.</li>
+      <li>Phép kiểm cụ thể: bộ số có kết quả đúng, ảnh mẫu, số giây.</li>
+      <li>Người khác, hoặc chat mới, đi tìm lỗi.</li>
+      <li>Cho người dùng thật dùng thử, không giúp.</li>
+      <li>Mỗi lần một chỗ, phản hồi có triệu chứng, vị trí, đích.</li>
+      <li>Chuyển đội kỹ thuật, kèm mô tả và phép kiểm.</li>
+    </ul></div>
+  </div>
+
+  <h4>Khi đi thi</h4>
+  <p class="need">Bài này thường ra 2 dạng câu hỏi. Đọc đề, <b>chọn một đáp án trước</b>; phần giải thích chỉ hiện ra sau khi bạn chọn.</p>
+
+  <div class="qcase" data-answer="A">
+    <h5 class="sub">Dạng 1: phản hồi mơ hồ khi chạy thử</h5>
+    <span class="lbl">Đề sẽ viết kiểu này</span>
+    <div class="qtext">
+      <span class="en">“A training coordinator uses a Claude Project to draft onboarding briefings for new hires and pilots it with ten managers. Four of them say the briefings are ‘not quite right’ but give no details. What should she do first?”</span>
+      <span class="vi">Dịch: Một điều phối viên đào tạo dùng một Project của Claude để soạn bản hướng dẫn hội nhập cho nhân viên mới, chạy thử với mười quản lý. Bốn người nói bản hướng dẫn “chưa ổn lắm” nhưng không nói chi tiết. Chị nên làm gì trước?</span>
+    </div>
+    <span class="lbl">Bạn chọn đáp án nào?</span>
+    <div class="qopts">
+      <button type="button" class="qopt" data-k="A"><b class="k">A.</b><span class="body"><span class="en">“Ask the four managers for concrete examples: what a briefing said and what it should have said instead.”</span><span class="vi">Xin bốn quản lý ví dụ cụ thể: bản hướng dẫn đã ghi gì, và lẽ ra phải ghi gì.</span></span></button>
+      <button type="button" class="qopt" data-k="B"><b class="k">B.</b><span class="body"><span class="en">“Rewrite the project instructions from scratch based on her best guess about what is wrong.”</span><span class="vi">Viết lại project instructions từ đầu theo phỏng đoán tốt nhất của chị về chỗ sai.</span></span></button>
+      <button type="button" class="qopt" data-k="C"><b class="k">C.</b><span class="body"><span class="en">“Ask the six satisfied managers what they liked, and keep the setup unchanged for everyone since most are happy.”</span><span class="vi">Hỏi sáu quản lý hài lòng xem họ thích gì, và giữ nguyên cách làm cho mọi người vì đa số đã vui.</span></span></button>
+      <button type="button" class="qopt" data-k="D"><b class="k">D.</b><span class="body"><span class="en">“Switch the Project to the most capable model so the briefings improve across the board.”</span><span class="vi">Đổi Project sang model mạnh nhất để mọi bản hướng dẫn đều tốt lên.</span></span></button>
+    </div>
+    <p class="qfb" hidden></p>
+    <div class="qexp" hidden>
+      <span class="lbl">Phân tích đề</span>
+      <ul>
+        <li><b>Đề kể:</b> chạy thử với mười người, bốn người chê nhưng không nói chê gì.</li>
+        <li><b>Chỗ khó:</b> chưa ai biết “chưa ổn” là thiếu thông tin, sai giọng, hay sai thứ tự. Không biết triệu chứng thì không biết sửa chỗ nào.</li>
+        <li><b>Đề hỏi:</b> việc làm <i>trước tiên</i>.</li>
+      </ul>
+      <span class="lbl">Cần biết để chọn</span>
+      <ol>
+        <li>Phản hồi dùng được phải có triệu chứng, vị trí, và “sửa xong” trông thế nào.</li>
+        <li>Ví dụ cụ thể (đã ghi gì, lẽ ra ghi gì) biến lời chê thành điều kiện “sửa xong” và thành phép kiểm.</li>
+        <li>Sửa theo cảm giác có thể phá luôn phần đang tốt.</li>
+      </ol>
+      <span class="lbl">Từng đáp án</span>
+      <ul class="verdict">
+        <li class="ok"><b>A đúng.</b> Lấy được triệu chứng thật trước khi đổi gì (ý 1, 2).</li>
+        <li><b>B sai.</b> Đổi lớn theo phỏng đoán (ý 3). Có thể sửa trúng, có thể làm hỏng phần sáu người kia đang hài lòng.</li>
+        <li><b>C sai.</b> Bỏ qua đúng nhóm có vấn đề. Đa số hài lòng không làm phàn nàn của bốn người biến mất.</li>
+        <li><b>D sai.</b> Vá triệu chứng chưa biết là gì. Model mạnh hơn cũng không biết “đúng” nghĩa là gì khi chưa ai nói ra.</li>
+      </ul>
+      <button type="button" class="qreset">Làm lại câu này</button>
+    </div>
+  </div>
+
+  <div class="qcase" data-answer="C">
+    <h5 class="sub">Dạng 2: lúc nào chuyển cho đội kỹ thuật</h5>
+    <span class="lbl">Đề sẽ viết kiểu này</span>
+    <div class="qtext">
+      <span class="en">“A marketing coordinator built an artifact that turns a pasted campaign CSV into a one-page performance summary, and her team uses it every week. Her manager now wants it to pull data from the company CRM automatically every night and post the summary to a team channel without anyone opening it. What is the most appropriate next step?”</span>
+      <span class="vi">Dịch: Một điều phối viên marketing đã làm một artifact biến file CSV chiến dịch (dán vào) thành bản tóm tắt hiệu quả một trang, đội chị dùng hằng tuần. Giờ quản lý muốn nó tự lấy dữ liệu từ hệ thống CRM của công ty mỗi đêm và đăng bản tóm tắt lên kênh của đội mà không ai cần mở ra. Bước tiếp theo phù hợp nhất là gì?</span>
+    </div>
+    <span class="lbl">Bạn chọn đáp án nào?</span>
+    <div class="qopts">
+      <button type="button" class="qopt" data-k="A"><b class="k">A.</b><span class="body"><span class="en">“Ask Claude to write the integration code inside the artifact and share it with the team so it runs nightly.”</span><span class="vi">Nhờ Claude viết code tích hợp ngay trong artifact rồi chia sẻ cho đội để nó chạy mỗi đêm.</span></span></button>
+      <button type="button" class="qopt" data-k="B"><b class="k">B.</b><span class="body"><span class="en">“Keep pasting the CSV by hand, since an associate should never change an artifact that already works.”</span><span class="vi">Tiếp tục dán CSV bằng tay, vì một associate không bao giờ nên sửa artifact đang chạy tốt.</span></span></button>
+      <button type="button" class="qopt" data-k="C"><b class="k">C.</b><span class="body"><span class="en">“Document the artifact’s logic, its checks and the new requirements, and hand the automated integration to the developers or IT team who own the CRM.”</span><span class="vi">Ghi lại logic của artifact, các phép kiểm và yêu cầu mới, rồi chuyển phần tích hợp tự động cho đội developer hoặc IT phụ trách CRM.</span></span></button>
+      <button type="button" class="qopt" data-k="D"><b class="k">D.</b><span class="body"><span class="en">“Add a custom connector from an unofficial server so Claude can read the CRM, and let the summary post with no one reviewing it.”</span><span class="vi">Thêm một connector tự cài từ một server không chính thức để Claude đọc được CRM, và cho bản tóm tắt tự đăng không ai duyệt.</span></span></button>
+    </div>
+    <p class="qfb" hidden></p>
+    <div class="qexp" hidden>
+      <span class="lbl">Phân tích đề</span>
+      <ul>
+        <li><b>Đề kể:</b> nguyên mẫu đã chạy tốt với dữ liệu dán tay. Yêu cầu mới: nối CRM, chạy mỗi đêm, tự đăng.</li>
+        <li><b>Chỗ khó:</b> yêu cầu mới không còn là “làm tài liệu”. Nó là tích hợp hệ thống, chạy định kỳ không người xem, đụng dữ liệu khách hàng.</li>
+        <li><b>Đề hỏi:</b> bước tiếp theo phù hợp với vai của người làm.</li>
+      </ul>
+      <span class="lbl">Cần biết để chọn</span>
+      <ol>
+        <li>Tích hợp hệ thống, tự động hóa bằng code, chạy không người xem là việc của Developer hoặc Architect (<a href="#l-0-2">bài 0.2</a>).</li>
+        <li>Nguyên mẫu đã chạy, cộng mô tả và phép kiểm, là bản yêu cầu tốt để bàn giao.</li>
+        <li>Connector tự thêm chưa được Anthropic kiểm; chỉ dùng server tin cậy, và dữ liệu công ty phải theo chính sách của IT.</li>
+      </ol>
+      <span class="lbl">Từng đáp án</span>
+      <ul class="verdict">
+        <li><b>A sai.</b> Tự làm phần tích hợp nằm ngoài vai (ý 1). Hấp dẫn vì Claude viết code được, nhưng không ai kiểm quyền truy cập, bảo mật, chuyện gì xảy ra khi nó hỏng lúc nửa đêm.</li>
+        <li><b>B sai.</b> Né một nhu cầu chính đáng. Associate sửa artifact được; cái cần chuyển là phần tích hợp, không phải bỏ việc.</li>
+        <li class="ok"><b>C đúng.</b> Giữ phần mình làm tốt, chuyển phần kỹ thuật cho đúng người, kèm đủ thông tin (ý 1, 2).</li>
+        <li><b>D sai.</b> Nối dữ liệu khách hàng qua server không rõ nguồn (ý 3), lại bỏ luôn người duyệt. Hai rủi ro chồng nhau.</li>
+      </ul>
+      <button type="button" class="qreset">Làm lại câu này</button>
+    </div>
+  </div>
+
+  <div class="more"><b>Biết thêm</b><ul>
+    <li><b>Claude Code có Plan mode</b> (chế độ lên kế hoạch: Claude đọc và đề xuất, chưa sửa file). Đó là công cụ của developer. Trong app, bạn làm tương tự bằng cách bảo Claude đưa kế hoạch trước và chờ bạn duyệt.</li>
+    <li><b>Artifact bắt đầu ở chế độ riêng tư.</b> Muốn cả đội dùng thì chỉnh quyền chia sẻ. Kiểm trước khi chia sẻ, vì từ lúc đó người khác dựa vào nó.</li>
+    <li><b>Nút “Try fixing with Claude” (thử sửa cùng Claude) không bảo đảm sửa được.</b> Sửa xong vẫn phải chạy lại phép kiểm.</li>
+    <li><b>Chỉnh theo khẩu vị một người là rủi ro.</b> Ba tuần sửa prompt bản tin cho tới khi một biên tập viên hài lòng, mà không hỏi người đọc, thì bản tin chỉ hợp với một người.</li>
+    <li><b>Trình bày cho lãnh đạo:</b> kèm lợi ích phải có chỗ người vẫn phải kiểm và loại lỗi hay gặp (<a href="#l-4-5">bài 4.5</a>).</li>
+  </ul></div>
+  <div class="rule">Quy tắc: duyệt kế hoạch trước khi Claude làm, cho Claude một phép kiểm chạy được, đánh giá bằng người dùng thật, sửa mỗi lần một chỗ.</div>
+  <div class="remember"><b>Nhớ nhanh</b><ul>
+    <li>Plan → Verify → Judge → Refine, rồi lặp.</li>
+    <li>Tính từ thành con số; điều kiện xong có cả ca biên.</li>
+    <li>Qua phép kiểm chưa phải là xong: hỏi người dùng thật.</li>
+    <li>Tích hợp hệ thống, chạy không người xem → chuyển đội kỹ thuật.</li>
+  </ul></div>
+  <div class="src">Đọc thêm: <a href="https://support.claude.com/en/articles/9487310-what-are-artifacts-and-how-do-i-use-them">What are artifacts</a> · <a href="https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices">Prompting best practices</a> · <a href="https://support.claude.com/en/articles/11176164-use-connectors-to-extend-claude-s-capabilities">Use connectors</a></div>
+  <label class="done"><input type="checkbox" data-lesson="l-4-3"> Đã học bài này</label>
+</article>
+
+<article class="lesson" id="l-4-4" data-domain="4" data-ts="4.4" data-min="14">
+  <header class="lh"><span class="ts">TS 4.4</span><h3>Đưa Claude vào quy trình đang chạy: giao từng bước, bổ trợ hay thiết kế lại, chạy thử có điểm duyệt</h3><span class="rt">~14 phút</span></header>
+  <p class="need">Cần biết trước: ba kỹ năng con của Delegation, luật “giao phần làm, giữ phần quyết”, augment và redesign ở <a href="#l-4-0">bài Nền tảng</a>.</p>
+  <div class="defs"><b>Khái niệm của bài</b><dl>
+    <dt>Giao việc theo bước (per-step delegation)</dt><dd>Với mỗi bước của quy trình, quyết riêng: Claude làm, người giữ, hay chia ra. Một quy trình thường có cả ba.</dd>
+    <dt>Human-in-the-loop (có người trong vòng)</dt><dd>Claude đưa đề xuất, một người có thẩm quyền duyệt hoặc bác trước khi đề xuất thành hành động.</dd>
+    <dt>Pilot (chạy thử)</dt><dd>Đưa Claude vào một quy trình, vài bước, một nhóm nhỏ, có tiêu chí đạt hay trượt viết trước, rồi mới mở rộng.</dd>
+    <dt>Cowork</dt><dd>Tính năng trong app Claude cho Claude nhận cả một việc nhiều bước và giao lại sản phẩm hoàn chỉnh. Đây là chỗ kiểu Agency hiện rõ nhất trong app.</dd>
+  </dl></div>
+
+  <h4>Quyết theo từng bước, không theo cả quy trình</h4>
+  <p>“Đưa Claude vào báo cáo tháng” không phải câu hỏi có hay không. Chia ra: gom số liệu, đối chiếu, viết nhận xét, ký duyệt. Các bước khác nhau ở số lượng, ở chỗ có mô tả rõ được không, và ở việc ai phải chịu trách nhiệm, nên không thể chung một quyết định. Ba kỹ năng con của Delegation hỏi ba câu cho từng bước:</p>
+  <div class="tw"><table>
+    <tr><th>Kỹ năng</th><th>Hỏi bước này</th></tr>
+    <tr><td>Problem Awareness</td><td>Bước này để làm gì, nó bảo vệ kết quả nào?</td></tr>
+    <tr><td>Platform Awareness</td><td>Claude làm tốt không, hụt ở đâu?</td></tr>
+    <tr><td>Task Delegation</td><td>Vậy giao Claude, giữ cho người, hay chia ra?</td></tr>
+  </table></div>
+  <p>Giao nhầm bước thì phản tác dụng. Khóa Workflow Integration của Anthropic nói thẳng: “when the wrong steps are automated, it can backfire” (tự động hóa nhầm bước thì có thể gây hại ngược).</p>
+
+  <h4>Bước nào giao, bước nào giữ</h4>
+  <div class="tw"><table>
+    <tr><th>Loại bước</th><th>Quyết định</th><th>Vì sao</th></tr>
+    <tr><td>Đổi định dạng, trích dữ liệu, việc mô tả rõ</td><td>Giao Claude, rồi kiểm</td><td>Phần làm, đầu ra kiểm được</td></tr>
+    <tr><td>Soạn từ ngữ cảnh có sẵn (trả lời một chuỗi email, tóm tắt trước buổi họp)</td><td>Giao làm bản nháp, người xem trước khi gửi</td><td>Người vẫn quyết nói gì ra ngoài</td></tr>
+    <tr><td>Đặt vấn đề, quyết người dùng cần gì</td><td>Người giữ</td><td>Phần quyết không giao</td></tr>
+    <tr><td>Ký duyệt cuối mà một người phải đứng tên</td><td>Người giữ; Claude chuẩn bị tài liệu</td><td>Deployment Diligence: kiểm và bảo đảm</td></tr>
+  </table></div>
+  <p>Bảng này là cách áp luật “giao phần làm, giữ phần quyết”, không phải danh sách cấm chính thức. Hai ý đi kèm:</p>
+  <ul>
+    <li><b>Trách nhiệm không chuyển sang công cụ</b> khi Claude viết xong. Người ký vẫn là người chịu.</li>
+    <li><b>Khuyến nghị rủi ro cao</b> (tín dụng, việc làm, y tế…): Usage Policy bắt người có chuyên môn duyệt trước khi tới một cá nhân, và báo rõ cho người bị ảnh hưởng là có dùng AI (<a href="#l-6-1">bài 6.1</a>).</li>
+  </ul>
+
+  <h4>Bổ trợ hay thiết kế lại quy trình</h4>
+  <ul>
+    <li><b>Augment khi cấu trúc có lý do:</b> chuỗi duyệt do luật bắt, checklist đội đang dựa vào. Bước duyệt là bắt buộc thì làm nhanh phần nuôi bước duyệt (gom, soạn, kiểm đủ hồ sơ), giữ nguyên bước duyệt.</li>
+    <li><b>Redesign khi chính các bước là lãng phí:</b> chép cùng một kết quả sang bốn tài liệu, dịch hàng nghìn file từng cái một. Sửa quy trình sinh ra output, không sửa từng output. Vai người đổi từ làm từng đơn vị việc sang đặt luật và phép kiểm. Người từng làm bước đó thường là người viết tiêu chí cho nó.</li>
+    <li><b>Chọn cách đơn giản nhất chạy được.</b> Cấu trúc là vấn đề và không có gì bắt phải giữ → redesign. Cấu trúc bắt buộc hoặc đang chạy tốt → augment.</li>
+  </ul>
+  <div class="tw"><table>
+    <tr><th>Ví dụ</th><th>Gọi là</th><th>Vì sao</th></tr>
+    <tr><td>Ngân hàng: Claude soạn đề xuất cho mỗi hồ sơ vay, cán bộ tín dụng duyệt hoặc bác từng hồ sơ trước khi có hiệu lực</td><td>Augment, human-in-the-loop</td><td>Người giữ quyền cuối</td></tr>
+    <tr><td>Bảo hiểm: năm đội chuyền hồ sơ bồi thường cho nhau qua email; thay bằng một agent Claude phân loại, xin giấy tờ, chuyển hồ sơ</td><td>Redesign</td><td>Thay cả cấu trúc chuyền tay</td></tr>
+    <tr><td>Phòng nghiên cứu chép tay cùng kết quả khảo sát vào bốn báo cáo cho bốn phòng ban</td><td>Redesign</td><td>Bước chép tay chính là lãng phí</td></tr>
+  </table></div>
+  <div class="trap"><b>Bẫy:</b> hai đáp án hay gặp nghe rất hiện đại. “Để Claude duyệt luôn cho nhanh” khi chuỗi duyệt do luật bắt: sai, vì cấu trúc bắt buộc thì augment. “Tích hợp càng tự động càng tốt, dựng agent cho mọi quy trình”: sai, vì luật là cách đơn giản nhất chạy được.</div>
+
+  <h4>Agency trong sản phẩm: Cowork</h4>
+  <p>Cowork không có tên trong guide, nhưng cách nó chạy cho thấy rõ điểm duyệt nằm ở đâu khi Claude tự làm:</p>
+  <ol>
+    <li>Mở Claude trên web, app desktop hoặc điện thoại.</li>
+    <li>Chọn Cowork trong ô nhập.</li>
+    <li>Mô tả việc.</li>
+    <li>Duyệt cách Claude định làm, rồi mới cho chạy.</li>
+  </ol>
+  <p>Bước 4 là chỗ bạn xem cách Claude định làm trước khi cho chạy: bạn xem <i>cách làm</i>, không chỉ lời yêu cầu. Mức Claude hỏi xin duyệt từng hành động trong lúc chạy còn tùy chế độ Manual, Auto hay Skip. Trong lúc chạy, Claude hiện lập luận, và help center viết bạn có thể “jump in to course-correct or provide additional direction mid-task” (chen vào sửa hướng hoặc chỉ dẫn thêm giữa chừng). Cowork chỉ có ở gói trả phí.</p>
+
+  <h4>Chạy thử một việc thật trước khi mở rộng</h4>
+  <ol>
+    <li><b>Chọn một quy trình,</b> và trong đó chỉ những bước đã quyết là giao được.</li>
+    <li><b>Viết tiêu chí đạt hay trượt</b> trước khi Claude đụng vào (<a href="#l-4-1">bài 4.1</a>).</li>
+    <li><b>Chạy thử theo tiêu chí,</b> giữ nguyên các bước duyệt hiện có.</li>
+    <li><b>Chỉ mở rộng khi đạt chuẩn</b> và mọi người đã biết cách làm việc cùng Claude. Mở theo pha: dựng trước, mở quyền dần, kiểm output đạt rồi mới mở tiếp.</li>
+  </ol>
+  <p>Công khai vai trò của Claude (Transparency Diligence): người dựa vào quy trình phải biết bước nào giờ do Claude làm và chỗ nào người vẫn duyệt. Cách nói với stakeholder ở <a href="#l-4-5">bài 4.5</a>.</p>
+
+  <div class="story"><b>Tình huống.</b> Phòng nhân sự cho Claude soạn thư mời nhận việc từ hồ sơ tuyển dụng. Chạy thử năm thư, cả năm đều đúng, nên trưởng phòng cho bỏ bước chuyên viên đọc lại và gửi thẳng. Tháng sau, một ứng viên nhận thư ghi mức lương cũ, vì hồ sơ có hai mức lương trước và sau vòng đàm phán. Công ty phải xin lỗi và đàm phán lại. Bước soạn thư giao được. Bước xác nhận con số trước khi gửi cho một người cụ thể là phần quyết, và năm thư chạy thử không đủ để bỏ nó.</div>
+  <div class="vs">
+    <div class="bad"><b>Tệ</b><ul>
+      <li>Một quyết định có hay không cho cả quy trình.</li>
+      <li>Chuyển bước ký cho Claude vì Claude soạn tài liệu.</li>
+      <li>Để Claude bỏ qua bước duyệt do luật bắt.</li>
+      <li>Dựng agent tự động hoàn toàn cho quy trình đang chạy tốt.</li>
+      <li>Bật cho cả phòng cùng lúc rồi gom phản hồi.</li>
+      <li>Thử vài ca ổn là bỏ bước duyệt.</li>
+    </ul></div>
+    <div class="good"><b>Tốt</b><ul>
+      <li>Quyết từng bước với ba câu hỏi của Delegation.</li>
+      <li>Claude chuẩn bị, người ký vẫn ký.</li>
+      <li>Augment: làm nhanh phần nuôi bước duyệt.</li>
+      <li>Redesign chỉ khi chính các bước là lãng phí.</li>
+      <li>Một quy trình, tiêu chí viết trước, giữ bước duyệt, đạt rồi mở rộng.</li>
+      <li>Nói rõ bước nào Claude làm, bước nào người duyệt.</li>
+    </ul></div>
+  </div>
+
+  <h4>Khi đi thi</h4>
+  <p class="need">Bài này thường ra 3 dạng câu hỏi. Đọc đề, <b>chọn một đáp án trước</b>; phần giải thích chỉ hiện ra sau khi bạn chọn.</p>
+
+  <div class="qcase" data-answer="B">
+    <h5 class="sub">Dạng 1: bước nào giao, bước nào giữ</h5>
+    <span class="lbl">Đề sẽ viết kiểu này</span>
+    <div class="qtext">
+      <span class="en">“Each month, a finance team gathers figures, reconciles them, writes variance commentary, and the finance controller signs off the pack before it goes to the board. The team wants Claude to save them time. Which change is most appropriate?”</span>
+      <span class="vi">Dịch: Mỗi tháng, đội tài chính gom số liệu, đối chiếu, viết nhận xét về chênh lệch, rồi kiểm soát viên tài chính ký bộ báo cáo trước khi gửi hội đồng quản trị. Đội muốn Claude giúp tiết kiệm thời gian. Thay đổi nào phù hợp nhất?</span>
+    </div>
+    <span class="lbl">Bạn chọn đáp án nào?</span>
+    <div class="qopts">
+      <button type="button" class="qopt" data-k="A"><b class="k">A.</b><span class="body"><span class="en">“Let Claude publish the pack directly when every variance is under 5%, and have the controller review a sample each quarter.”</span><span class="vi">Cho Claude gửi thẳng bộ báo cáo khi mọi chênh lệch dưới 5%, kiểm soát viên xem lại một mẫu mỗi quý.</span></span></button>
+      <button type="button" class="qopt" data-k="B"><b class="k">B.</b><span class="body"><span class="en">“Use Claude to gather and reconcile figures, flag lines that do not match, and draft the commentary, while the controller still reviews and signs off.”</span><span class="vi">Dùng Claude gom và đối chiếu số liệu, đánh dấu dòng không khớp, soạn nhận xét; kiểm soát viên vẫn xem và ký.</span></span></button>
+      <button type="button" class="qopt" data-k="C"><b class="k">C.</b><span class="body"><span class="en">“Replace the controller’s sign-off with a second Claude chat that reviews the whole pack line by line using a stricter checking prompt.”</span><span class="vi">Thay chữ ký của kiểm soát viên bằng một chat Claude thứ hai, soát từng dòng của bộ báo cáo với prompt kiểm tra khắt khe hơn.</span></span></button>
+      <button type="button" class="qopt" data-k="D"><b class="k">D.</b><span class="body"><span class="en">“Keep Claude out of the pack entirely, because board figures must be accurate.”</span><span class="vi">Không dùng Claude cho bộ báo cáo, vì số liệu trình hội đồng quản trị phải chính xác.</span></span></button>
+    </div>
+    <p class="qfb" hidden></p>
+    <div class="qexp" hidden>
+      <span class="lbl">Phân tích đề</span>
+      <ul>
+        <li><b>Đề kể:</b> bốn bước. Ba bước đầu là gom, đối chiếu, soạn. Bước cuối là một người ký trước khi số liệu tới hội đồng quản trị.</li>
+        <li><b>Chỗ khó:</b> muốn tiết kiệm thời gian, nhưng số liệu trình hội đồng có người phải đứng tên.</li>
+        <li><b>Đề hỏi:</b> chia việc thế nào cho hợp.</li>
+      </ul>
+      <span class="lbl">Cần biết để chọn</span>
+      <ol>
+        <li>Giao phần làm (gom, đối chiếu, soạn: mô tả rõ, kiểm được). Giữ phần quyết (ký duyệt). Riêng bước đối chiếu: phép tính chính xác là chỗ Claude hụt nếu chỉ “đọc” số, nên bảo Claude chạy code để so và đánh dấu dòng lệch, rồi người kiểm các dòng bị đánh dấu.</li>
+        <li>Trách nhiệm không chuyển sang công cụ. Kiểm mẫu sau khi đã gửi không phải điểm duyệt.</li>
+        <li>Chat Claude thứ hai cùng kiểu lỗi với chat thứ nhất, không phải người có thẩm quyền.</li>
+      </ol>
+      <span class="lbl">Từng đáp án</span>
+      <ul class="verdict">
+        <li><b>A sai.</b> Giao phần quyết cho Claude, kiểm mẫu khi chuyện đã rồi (ý 2). Ngưỡng 5% nghe có kiểm soát, nhưng không thay được người đứng tên.</li>
+        <li class="ok"><b>B đúng.</b> Claude làm ba bước tốn công, kiểm soát viên vẫn ký (ý 1). Thời gian tiết kiệm nằm đúng chỗ, trách nhiệm ở nguyên chỗ.</li>
+        <li><b>C sai.</b> Vẫn là Claude chấm Claude (ý 3). Hấp dẫn vì nghe như thêm một lớp kiểm, nhưng thực ra bỏ đi lớp kiểm duy nhất có thẩm quyền.</li>
+        <li><b>D sai.</b> Bỏ việc trong khi có đường an toàn. Đòi chính xác là lý do giữ bước ký, không phải lý do bỏ Claude ở các bước khác.</li>
+      </ul>
+      <button type="button" class="qreset">Làm lại câu này</button>
+    </div>
+  </div>
+
+  <div class="qcase" data-answer="D">
+    <h5 class="sub">Dạng 2: quy trình chậm nhưng do luật bắt</h5>
+    <span class="lbl">Đề sẽ viết kiểu này</span>
+    <div class="qtext">
+      <span class="en">“A city permit office has an approval chain with three sign-offs that local regulation requires. Applications take three weeks, mostly because staff spend days checking whether forms are complete and writing request-for-information letters. The director wants Claude to speed things up. Which approach fits best?”</span>
+      <span class="vi">Dịch: Một văn phòng cấp phép của thành phố có chuỗi duyệt ba chữ ký do quy định địa phương bắt buộc. Mỗi hồ sơ mất ba tuần, chủ yếu vì nhân viên mất nhiều ngày kiểm hồ sơ đủ chưa và viết thư yêu cầu bổ sung thông tin. Giám đốc muốn Claude giúp nhanh hơn. Cách nào hợp nhất?</span>
+    </div>
+    <span class="lbl">Bạn chọn đáp án nào?</span>
+    <div class="qopts">
+      <button type="button" class="qopt" data-k="A"><b class="k">A.</b><span class="body"><span class="en">“Redesign the process around a single Claude agent that reviews, approves and issues permits end to end.”</span><span class="vi">Thiết kế lại quy trình quanh một agent Claude xem xét, duyệt và cấp phép từ đầu tới cuối.</span></span></button>
+      <button type="button" class="qopt" data-k="B"><b class="k">B.</b><span class="body"><span class="en">“Let Claude approve low-risk applications automatically, so only complex ones go through the three sign-offs.”</span><span class="vi">Cho Claude tự duyệt hồ sơ rủi ro thấp, chỉ hồ sơ phức tạp mới đi qua ba chữ ký.</span></span></button>
+      <button type="button" class="qopt" data-k="C"><b class="k">C.</b><span class="body"><span class="en">“Wait until the regulation changes, since a legally required chain cannot be improved.”</span><span class="vi">Chờ quy định thay đổi, vì chuỗi duyệt luật bắt thì không cải thiện được.</span></span></button>
+      <button type="button" class="qopt" data-k="D"><b class="k">D.</b><span class="body"><span class="en">“Keep the three sign-offs, and use Claude to check forms for completeness, summarize each application and draft the letters that staff review.”</span><span class="vi">Giữ ba chữ ký, dùng Claude kiểm hồ sơ đủ chưa, tóm tắt từng hồ sơ và soạn thư để nhân viên duyệt.</span></span></button>
+    </div>
+    <p class="qfb" hidden></p>
+    <div class="qexp" hidden>
+      <span class="lbl">Phân tích đề</span>
+      <ul>
+        <li><b>Đề kể:</b> ba chữ ký do luật bắt. Thời gian mất chủ yếu ở việc kiểm hồ sơ và viết thư.</li>
+        <li><b>Chỗ khó:</b> chỗ chậm không nằm ở bước duyệt, mà ở phần chuẩn bị cho bước duyệt. Đề cho sẵn dữ kiện này.</li>
+        <li><b>Đề hỏi:</b> cách đưa Claude vào hợp nhất.</li>
+      </ul>
+      <span class="lbl">Cần biết để chọn</span>
+      <ol>
+        <li>Cấu trúc do luật bắt thì augment: làm nhanh phần nuôi bước duyệt, giữ nguyên bước duyệt.</li>
+        <li>Redesign chỉ khi chính các bước là lãng phí và không có gì bắt phải giữ.</li>
+        <li>Bỏ việc là sai khi có đường an toàn.</li>
+      </ol>
+      <span class="lbl">Từng đáp án</span>
+      <ul class="verdict">
+        <li><b>A sai.</b> Thay cấu trúc mà luật bắt giữ (ý 2), lại để agent tự duyệt. Hấp dẫn vì “agent đầu cuối” nghe hiện đại nhất.</li>
+        <li><b>B sai.</b> Cho một nhóm hồ sơ đi tắt qua chữ ký là phá quy định (ý 1), dù gắn nhãn “rủi ro thấp”.</li>
+        <li><b>C sai.</b> Bỏ việc (ý 3). Phần chậm là chuẩn bị, làm nhanh được mà không đụng luật.</li>
+        <li class="ok"><b>D đúng.</b> Augment đúng nghĩa: Claude làm phần tốn ngày, ba chữ ký giữ nguyên (ý 1).</li>
+      </ul>
+      <button type="button" class="qreset">Làm lại câu này</button>
+    </div>
+  </div>
+
+  <div class="qcase" data-answer="A">
+    <h5 class="sub">Dạng 3: muốn mở cho cả phòng ngay</h5>
+    <span class="lbl">Đề sẽ viết kiểu này</span>
+    <div class="qtext">
+      <span class="en">“A regional sales director wants all twelve sales teams to use Claude for writing client proposals by next month. What is the most defensible first step?”</span>
+      <span class="vi">Dịch: Giám đốc kinh doanh vùng muốn cả mười hai đội bán hàng dùng Claude viết đề xuất cho khách trước tháng sau. Bước đầu tiên dễ bảo vệ nhất là gì?</span>
+    </div>
+    <span class="lbl">Bạn chọn đáp án nào?</span>
+    <div class="qopts">
+      <button type="button" class="qopt" data-k="A"><b class="k">A.</b><span class="body"><span class="en">“Pilot with one team on one proposal type, write pass/fail criteria first, keep the current manager review, and expand only when the pilot meets the bar.”</span><span class="vi">Chạy thử với một đội, một loại đề xuất, viết tiêu chí đạt hay trượt trước, giữ bước quản lý duyệt hiện có, chỉ mở rộng khi đợt thử đạt chuẩn.</span></span></button>
+      <button type="button" class="qopt" data-k="B"><b class="k">B.</b><span class="body"><span class="en">“Turn Claude on for all twelve teams at once, share a library of prompts, and collect feedback from everyone after the first month.”</span><span class="vi">Bật Claude cho cả mười hai đội cùng lúc, chia sẻ một bộ prompt mẫu, gom phản hồi của mọi người sau tháng đầu.</span></span></button>
+      <button type="button" class="qopt" data-k="C"><b class="k">C.</b><span class="body"><span class="en">“Start with the largest, most complex deals and let a Claude agent assemble and send those proposals.”</span><span class="vi">Bắt đầu với các hợp đồng lớn, phức tạp nhất, để một agent Claude tự soạn và gửi đề xuất.</span></span></button>
+      <button type="button" class="qopt" data-k="D"><b class="k">D.</b><span class="body"><span class="en">“Hold off until every sales process has been redesigned on paper.”</span><span class="vi">Hoãn lại cho tới khi mọi quy trình bán hàng đã được thiết kế lại trên giấy.</span></span></button>
+    </div>
+    <p class="qfb" hidden></p>
+    <div class="qexp" hidden>
+      <span class="lbl">Phân tích đề</span>
+      <ul>
+        <li><b>Đề kể:</b> mười hai đội, hạn một tháng, mục tiêu đặt từ trên xuống.</li>
+        <li><b>Chỗ khó:</b> áp lực thời gian kéo về phía “bật hết cho nhanh”. Đề xuất gửi khách là thứ ra ngoài công ty.</li>
+        <li><b>Đề hỏi:</b> bước <i>đầu tiên</i> dễ bảo vệ nhất.</li>
+      </ul>
+      <span class="lbl">Cần biết để chọn</span>
+      <ol>
+        <li>Chạy thử nhỏ, việc thật, tiêu chí viết trước, giữ bước duyệt, đạt rồi mới mở rộng.</li>
+        <li>Mở cho tất cả mà chưa kiểm là nhân rủi ro lên mười hai lần.</li>
+        <li>Cách đơn giản nhất chạy được đi trước; việc khó nhất không phải chỗ bắt đầu.</li>
+      </ol>
+      <span class="lbl">Từng đáp án</span>
+      <ul class="verdict">
+        <li class="ok"><b>A đúng.</b> Đủ bốn bước của một đợt chạy thử (ý 1). Đạt thì mở rộng nhanh, có số liệu để thuyết phục mười một đội còn lại.</li>
+        <li><b>B sai.</b> Bỏ qua bước kiểm (ý 2). Bộ prompt mẫu và phản hồi sau một tháng nghe có tổ chức, nhưng lỗi đã đến tay khách trước khi ai kịp đọc phản hồi.</li>
+        <li><b>C sai.</b> Bắt đầu ở chỗ rủi ro cao nhất, lại để agent tự gửi (ý 3).</li>
+        <li><b>D sai.</b> Hoãn vô thời hạn và không thử trên việc thật. Thiết kế trên giấy không cho biết Claude làm tốt tới đâu.</li>
+      </ul>
+      <button type="button" class="qreset">Làm lại câu này</button>
+    </div>
+  </div>
+
+  <div class="more"><b>Biết thêm</b><ul>
+    <li><b>Kiểm mẫu sau khi gửi không phải điểm duyệt.</b> “Claude duyệt, sếp xem lại một mẫu mỗi tháng” vẫn là giao phần quyết cho Claude.</li>
+    <li><b>Chat Claude thứ hai không thay người có thẩm quyền.</b> Nó cùng kiểu lỗi với chat thứ nhất.</li>
+    <li><b>Redesign đổi vai người, không bỏ người.</b> Người chuyển từ làm từng đơn vị sang viết luật, viết tiêu chí và kiểm mẫu.</li>
+    <li><b>Cowork:</b> có ở các gói trả phí (Pro, Max, Ultra, Team, Enterprise), mức hỗ trợ khác nhau theo web, desktop, điện thoại. Trên giao diện Claude mới, mọi cuộc chat đều nhận được việc Cowork, không cần chọn riêng.</li>
+    <li><b>Ai cũng phải biết Claude đang làm bước nào.</b> Đó là Transparency Diligence, và là điều kiện để người duyệt duyệt cho đúng.</li>
+  </ul></div>
+  <div class="rule">Quy tắc: quyết từng bước, giữ nguyên các bước duyệt bắt buộc, chạy thử một việc thật có tiêu chí viết trước rồi mới mở rộng.</div>
+  <div class="remember"><b>Nhớ nhanh</b><ul>
+    <li>Ba câu cho mỗi bước: để làm gì, Claude làm tốt không, giao hay giữ.</li>
+    <li>Claude chuẩn bị, người ký vẫn ký. Trách nhiệm không chuyển đi.</li>
+    <li>Luật bắt hoặc đang chạy tốt → augment. Chính các bước là lãng phí → redesign.</li>
+    <li>Pilot: chọn bước → tiêu chí → chạy giữ bước duyệt → đạt rồi mở.</li>
+  </ul></div>
+  <div class="src">Đọc thêm: <a href="https://support.claude.com/en/articles/13345190-get-started-with-cowork">Get started with Claude Cowork</a> · <a href="https://anthropic-partners.skilljar.com/path/claude-associate/workflow-integration-solution-design">Workflow Integration &amp; Solution Design</a> · <a href="https://www.anthropic.com/legal/aup">Usage Policy</a></div>
+  <label class="done"><input type="checkbox" data-lesson="l-4-4"> Đã học bài này</label>
+</article>
+
+<article class="lesson" id="l-4-5" data-domain="4" data-ts="4.5" data-min="13">
+  <header class="lh"><span class="ts">TS 4.5</span><h3>Nói với stakeholder: giá trị thật, giới hạn thật, không hứa quá</h3><span class="rt">~13 phút</span></header>
+  <p class="need">Cần biết trước: stakeholder và Transparency Diligence ở <a href="#l-4-0">bài Nền tảng</a>. Hallucination ở <a href="#l-2-2">bài 2.2</a>.</p>
+  <div class="defs"><b>Khái niệm của bài</b><dl>
+    <dt>Mốc kiến thức (knowledge cutoff)</dt><dd>Ngày cuối của dữ liệu Claude được học. Không có công cụ tìm kiếm, Claude không biết chuyện sau ngày đó. Các model hiện tại (Haiku 5.5, Sonnet 5.5, Opus 5.5, Fable 5.1): tháng 6/2026.</dd>
+    <dt>Context window (cửa sổ ngữ cảnh)</dt><dd>“Bộ nhớ làm việc” của Claude: lượng chữ tối đa nó xem được trong một lần trả lời, gồm tin nhắn, file, lịch sử chat. Mỗi model có giới hạn riêng.</dd>
+    <dt>Biến thiên giữa các lần chạy (run-to-run variation)</dt><dd>Hỏi cùng một câu hai lần có thể ra hai câu trả lời khác chữ. Đó là thiết kế, không phải hỏng.</dd>
+    <dt>Biện pháp giảm rủi ro (safeguard)</dt><dd>Một cách làm giảm một loại lỗi cụ thể, ví dụ bắt mỗi ý kèm trích dẫn. Giảm, không xóa hết.</dd>
+  </dl></div>
+
+  <h4>Cho stakeholder một cách hiểu Claude vừa đủ dùng</h4>
+  <p>Không có cách hiểu nào thì stakeholder hay rơi vào một trong hai cực: thấy một bản đẹp là tin hết, gặp một trích dẫn bịa là không tin gì nữa. Bốn đặc tính sau cho họ một chỗ đứng ở giữa:</p>
+  <div class="tw"><table>
+    <tr><th>Đặc tính</th><th>Mạnh ở</th><th>Hụt ở</th><th>Cách bù</th></tr>
+    <tr><td>Sinh chữ bằng cách đoán chữ tiếp theo (như bộ gõ đoán chữ cực giỏi, không phải công cụ tìm kiếm)</td><td>Tóm tắt, viết lại, đổi định dạng</td><td>Phân biệt đúng với nghe-có-vẻ-đúng</td><td>Kiểm chi tiết với nguồn</td></tr>
+    <tr><td>Kiến thức dừng ở mốc cutoff</td><td>Chủ đề phổ biến, ổn định</td><td>Chủ đề hiếm, địa phương, mới, dữ liệu nội bộ</td><td>Đưa tài liệu vào, bật tìm kiếm</td></tr>
+    <tr><td>Bộ nhớ làm việc có giới hạn (context window)</td><td>Tài liệu vừa sức</td><td>Tài liệu quá dài, chat quá dài</td><td>Chia nhỏ, tóm tắt, dùng Project, mở chat mới</td></tr>
+    <tr><td>Làm theo chỉ dẫn</td><td>Yêu cầu ngắn, cụ thể, kiểm được</td><td>Chuỗi suy luận dài, chỉ dẫn mơ hồ, phép tính chính xác</td><td>Nói rõ mục tiêu, để Claude chạy code khi cần tính</td></tr>
+  </table></div>
+  <p>Giải thích một lỗi theo kiểu “đây là chỗ hụt của [đặc tính], nên ta [cách bù]”, thay cho “AI không đáng tin”:</p>
+  <ul>
+    <li><b>Bịa tên, số, trích dẫn</b> → đoán chữ gặp kiến thức mỏng → kiểm chi tiết, đòi nguồn.</li>
+    <li><b>Cuối chat dài thì lạc đề</b> → bộ nhớ làm việc → nhắc lại ngữ cảnh hoặc mở chat mới (<a href="#l-3-4">bài 3.4</a>).</li>
+    <li><b>Làm đúng chữ mà sai ý</b> → làm theo chỉ dẫn → nói lại mục tiêu kèm chỉ dẫn.</li>
+    <li><b>Tính sai mà giọng rất chắc</b> → con số được “đoán” chứ không được tính → cho Claude chạy code để tính.</li>
+    <li><b>Đồng ý với tiền đề sai của người hỏi</b> → làm theo chỉ dẫn → mời Claude phản biện.</li>
+  </ul>
+
+  <h4>Claude biết gì, và không biết gì</h4>
+  <ul>
+    <li>Không có công cụ, mọi thứ Claude biết đến từ dữ liệu huấn luyện, đóng băng ở mốc cutoff.</li>
+    <li><b>Dữ liệu nội bộ</b> (bảng giá, danh mục sản phẩm, chính sách của đội) chưa bao giờ nằm trong dữ liệu đó, dù có từ lâu. Muốn Claude dùng thì đưa vào: file đính kèm, Project knowledge, connector, hoặc tìm kiếm.</li>
+    <li><b>Claude có thể đưa thông tin cũ như thông tin hiện tại mà không cảnh báo.</b> Không thể dựa vào việc nó tự nhắc.</li>
+    <li><b>Bản thân model không thay đổi khi bạn sửa nó.</b> Điều đúng chỉ được nhớ nếu được lưu ở chỗ Claude đọc lại: project instructions, knowledge, memory (<a href="#l-5-4">bài 5.4</a>).</li>
+  </ul>
+
+  <h4>Sai mà nghe rất trôi, và hai lần hỏi ra hai bản</h4>
+  <ul>
+    <li><b>Hallucination là đặc tính đã biết,</b> không phải trục trặc ngẫu nhiên. Nó dồn vào chi tiết: tên, ngày, số liệu, trích dẫn, đường link. Ý chính của bản tóm tắt thường an toàn hơn con số trong đó.</li>
+    <li><b>Hai lần chạy khác nhau là bình thường.</b> Tách chữ với nội dung: khác cách viết, cùng sự kiện thì không sao. Khác một con số thì kiểm con số đó với nguồn.</li>
+    <li><b>Chạy lần thứ ba rồi lấy số đông không phải kiểm chứng.</b> Cách kiểm ở <a href="#l-2-3">bài 2.3</a>.</li>
+  </ul>
+
+  <h4>Bán cho đúng: người làm cùng Claude, không phải Claude thay người</h4>
+  <p>Claude mang tới tốc độ và quy mô: soạn nhanh, xử lý nhiều, dùng được cho nhiều loại việc. Người mang tới phán đoán, sáng tạo và giám sát. Chỉ kể điểm mạnh là dọn sẵn chỗ cho thất vọng.</p>
+  <ul>
+    <li><b>Ca hợp đồng.</b> Một quản lý sản phẩm (PM) nói “có Claude soạn hợp đồng thì khỏi cần pháp chế duyệt”. Câu đúng: Claude soạn nhanh hơn nhiều, nhưng người có chuyên môn pháp lý vẫn đọc từng điều khoản trước khi dùng. Người ký duyệt chịu trách nhiệm.</li>
+    <li><b>Chat Claude thứ hai</b> với prompt khắt khe hơn vẫn là chữ do Claude sinh ra, cùng kiểu lỗi. Nó thêm một lớp kiểm, không thêm phán đoán có chuyên môn.</li>
+    <li><b>Ca chọn model.</b> Giải thích bằng việc: phân loại hóa đơn số lượng lớn là việc đơn giản, lặp lại, nên model nhỏ, nhanh đạt được độ chính xác cần với chi phí và độ trễ thấp hơn (<a href="#l-3-3">bài 3.3</a>). Đừng nói “model nhỏ luôn chính xác hơn”.</li>
+    <li><b>Dữ liệu đi đâu.</b> Nói đúng theo gói. Team và Enterprise: Anthropic mặc định không dùng chat để huấn luyện model. Gói cá nhân: tùy cài đặt Model Improvement. Chính sách dữ liệu của công ty vẫn đứng trên hết (<a href="#l-6-2">bài 6.2</a>).</li>
+  </ul>
+
+  <h4>Hứa biện pháp, không hứa hoàn hảo</h4>
+  <div class="tw"><table>
+    <tr><th>Biện pháp</th><th>Tác dụng</th></tr>
+    <tr><td>Cho phép Claude nói “tôi không biết”</td><td>Giảm thông tin bịa, vì Claude được phép nhận là không chắc thay vì đoán</td></tr>
+    <tr><td>Trích nguyên văn đoạn liên quan trước khi phân tích tài liệu dài</td><td>Neo câu trả lời vào văn bản thật</td></tr>
+    <tr><td>Bắt mỗi ý kèm một trích dẫn, ý nào không có trích dẫn thì bỏ</td><td>Mỗi ý đều kiểm được</td></tr>
+  </table></div>
+  <p>Không biện pháp nào bảo đảm 0 lỗi. Docs của Anthropic nói rõ: các kỹ thuật này giảm hallucination chứ không xóa hẳn. Nói trước điều đó thì khi có lỗi lọt qua, stakeholder vẫn tin bạn.</p>
+
+  <h4>Báo cáo chạy thử cho trung thực</h4>
+  <p>Chỉ đưa ba bản đẹp nhất của hai tuần chạy thử thì lãnh đạo sẽ coi trường hợp tốt nhất là bình thường. Báo cáo tốt có:</p>
+  <ul>
+    <li>Chấm trên nhiều output, kể cả bản hỏng.</li>
+    <li>Với sự kiện kiểm được: kiểm từng chi tiết và cho điểm, ví dụ 46/50 con số đúng.</li>
+    <li>Câu sai nghe chắc chắn cỡ nào. Lỗi tự tin là lỗi người duyệt dễ bỏ sót.</li>
+    <li>Cùng một yêu cầu chạy hơn một lần, cái gì đổi.</li>
+    <li>Biện pháp nào bắt được lỗi nào, chỗ nào người vẫn phải duyệt.</li>
+    <li>Cả giá trị đo được (giờ tiết kiệm) lẫn chi phí giám sát thật (giờ người duyệt).</li>
+  </ul>
+
+  <div class="story"><b>Tình huống.</b> Sau hai tuần cho Claude soạn câu hỏi thường gặp (FAQ) về sản phẩm, giám đốc vận hành trình ban giám đốc ba bản đẹp nhất và nói “quy trình đã ổn định, không còn lỗi”. Ban giám đốc duyệt mở rộng và cắt luôn giờ người duyệt. Tuần đầu, một FAQ ghi sai thời hạn bảo hành đến tay khách. Không ai từng đếm tỉ lệ sai trong đợt thử, nên cũng không ai biết cần giữ bao nhiêu giờ duyệt.</div>
+  <div class="vs">
+    <div class="bad"><b>Tệ</b><ul>
+      <li>“Claude không sai.”</li>
+      <li>Đổ lỗi tài liệu quá dài cho tài khoản bị khóa.</li>
+      <li>Tin câu trả lời về dữ liệu nội bộ khi chưa đưa tài liệu.</li>
+      <li>Hai bản khác nhau nên “AI hỏng”.</li>
+      <li>Chat Claude thứ hai thay người duyệt chuyên môn.</li>
+      <li>Trình ba bản đẹp nhất.</li>
+    </ul></div>
+    <div class="good"><b>Tốt</b><ul>
+      <li>“Claude soạn nhanh; đây là chỗ người vẫn kiểm.”</li>
+      <li>Giải thích bằng context window, đưa cách chia nhỏ.</li>
+      <li>Đưa tài liệu vào, rồi kiểm con số.</li>
+      <li>Khác chữ thì được, khác số thì kiểm.</li>
+      <li>Claude soạn, người có chuyên môn duyệt và ký.</li>
+      <li>Chấm trên toàn bộ, kể cả lỗi, kèm chi phí giám sát.</li>
+    </ul></div>
+  </div>
+
+  <h4>Khi đi thi</h4>
+  <p class="need">Bài này thường ra 2 dạng câu hỏi. Đọc đề, <b>chọn một đáp án trước</b>; phần giải thích chỉ hiện ra sau khi bạn chọn.</p>
+
+  <div class="qcase" data-answer="C">
+    <h5 class="sub">Dạng 1: báo cáo chạy thử cho lãnh đạo</h5>
+    <span class="lbl">Đề sẽ viết kiểu này</span>
+    <div class="qtext">
+      <span class="en">“A company ran a six-week pilot in which Claude drafted answers to employee questions about benefits, with an HR specialist reviewing each answer. The HR director must now write the report leadership will use to decide whether to expand. What should the report include?”</span>
+      <span class="vi">Dịch: Một công ty chạy thử sáu tuần, Claude soạn câu trả lời cho nhân viên hỏi về phúc lợi, một chuyên viên nhân sự duyệt từng câu. Giờ giám đốc nhân sự phải viết báo cáo để lãnh đạo quyết có mở rộng không. Báo cáo nên có gì?</span>
+    </div>
+    <span class="lbl">Bạn chọn đáp án nào?</span>
+    <div class="qopts">
+      <button type="button" class="qopt" data-k="A"><b class="k">A.</b><span class="body"><span class="en">“The five strongest answers, with a statement that the workflow now produces error-free content.”</span><span class="vi">Năm câu trả lời tốt nhất, kèm khẳng định quy trình giờ cho ra nội dung không lỗi.</span></span></button>
+      <button type="button" class="qopt" data-k="B"><b class="k">B.</b><span class="body"><span class="en">“Only the hours saved, plus a note that error rates cannot be measured for generated text.”</span><span class="vi">Chỉ số giờ tiết kiệm, kèm ghi chú rằng không đo được tỉ lệ lỗi của văn bản do AI sinh ra.</span></span></button>
+      <button type="button" class="qopt" data-k="C"><b class="k">C.</b><span class="body"><span class="en">“Results scored across all answers, including failures, how confident the wrong answers sounded, which checks caught which errors, and where HR review is still needed.”</span><span class="vi">Kết quả chấm trên mọi câu trả lời, kể cả câu hỏng, câu sai nghe chắc chắn cỡ nào, bước kiểm nào bắt được lỗi nào, và chỗ nào vẫn cần nhân sự duyệt.</span></span></button>
+      <button type="button" class="qopt" data-k="D"><b class="k">D.</b><span class="body"><span class="en">“Only the answers that came out word-for-word identical across two separate runs, since answers that match each other can be treated as verified.”</span><span class="vi">Chỉ những câu trả lời giống hệt nhau qua hai lần chạy riêng, vì câu trả lời khớp nhau có thể coi là đã kiểm.</span></span></button>
+    </div>
+    <p class="qfb" hidden></p>
+    <div class="qexp" hidden>
+      <span class="lbl">Phân tích đề</span>
+      <ul>
+        <li><b>Đề kể:</b> sáu tuần chạy thử, có người duyệt từng câu. Báo cáo sẽ quyết chuyện mở rộng.</li>
+        <li><b>Chỗ khó:</b> lãnh đạo cần biết cả lợi ích lẫn cái giá. Nếu báo cáo giấu tỉ lệ lỗi, họ có thể cắt luôn bước duyệt khi mở rộng.</li>
+        <li><b>Đề hỏi:</b> báo cáo phải có gì.</li>
+      </ul>
+      <span class="lbl">Cần biết để chọn</span>
+      <ol>
+        <li>Không hứa không lỗi. Hứa biện pháp, nói tác dụng của nó.</li>
+        <li>Tỉ lệ lỗi đo được: kiểm từng chi tiết trên toàn bộ output và cho điểm.</li>
+        <li>Hai lần chạy khớp nhau không chứng minh là đúng.</li>
+      </ol>
+      <span class="lbl">Từng đáp án</span>
+      <ul class="verdict">
+        <li><b>A sai.</b> Chọn bản đẹp nhất và hứa hoàn hảo (ý 1). Lãnh đạo sẽ coi trường hợp tốt nhất là bình thường.</li>
+        <li><b>B sai.</b> Tỉ lệ lỗi đo được (ý 2). Chỉ báo giờ tiết kiệm là giấu đi chi phí giám sát.</li>
+        <li class="ok"><b>C đúng.</b> Cho lãnh đạo cả giá trị đo được lẫn chi phí giám sát thật (ý 1, 2).</li>
+        <li><b>D sai.</b> Khớp nhau không phải kiểm chứng (ý 3). Hai lần chạy có thể cùng sai một con số. Hấp dẫn vì nghe như có phương pháp.</li>
+      </ul>
+      <button type="button" class="qreset">Làm lại câu này</button>
+    </div>
+  </div>
+
+  <div class="qcase" data-answer="B">
+    <h5 class="sub">Dạng 2: hỏi Claude về dữ liệu nội bộ</h5>
+    <span class="lbl">Đề sẽ viết kiểu này</span>
+    <div class="qtext">
+      <span class="en">“A company revised the travel-expense limits in its internal policy last month. A manager asks Claude, in a plain chat with no files, connectors or search, what the new hotel limit is. Claude gives a precise figure with no warning. The manager asks you whether the figure can be trusted. What is the best explanation?”</span>
+      <span class="vi">Dịch: Tháng trước công ty sửa hạn mức công tác phí trong chính sách nội bộ. Một quản lý hỏi Claude, trong chat thường, không file, không connector, không tìm kiếm, hạn mức khách sạn mới là bao nhiêu. Claude đưa một con số cụ thể, không cảnh báo gì. Quản lý hỏi bạn con số đó có tin được không. Cách giải thích tốt nhất là gì?</span>
+    </div>
+    <span class="lbl">Bạn chọn đáp án nào?</span>
+    <div class="qopts">
+      <button type="button" class="qopt" data-k="A"><b class="k">A.</b><span class="body"><span class="en">“It can be trusted, because Claude would have flagged the answer if its information were outdated.”</span><span class="vi">Tin được, vì nếu thông tin đã cũ thì Claude sẽ tự cảnh báo.</span></span></button>
+      <button type="button" class="qopt" data-k="B"><b class="k">B.</b><span class="body"><span class="en">“Claude has never seen the internal policy, so the figure may be invented; attach the policy or add it to the team’s Project knowledge, then check the figure against it.”</span><span class="vi">Claude chưa từng thấy chính sách nội bộ, nên con số có thể là bịa; đính kèm chính sách hoặc đưa vào Project knowledge của đội, rồi kiểm con số với nó.</span></span></button>
+      <button type="button" class="qopt" data-k="C"><b class="k">C.</b><span class="body"><span class="en">“Ask the same question in a new chat; if the figure matches, it is confirmed.”</span><span class="vi">Hỏi lại đúng câu đó trong chat mới; nếu ra cùng con số thì coi như đã xác nhận.</span></span></button>
+      <button type="button" class="qopt" data-k="D"><b class="k">D.</b><span class="body"><span class="en">“The original policy existed before the model’s knowledge cutoff, so Claude knows the base figures and only the recent change needs checking.”</span><span class="vi">Bản chính sách gốc có trước mốc kiến thức của model, nên Claude biết các con số gốc, chỉ phần mới sửa là cần kiểm.</span></span></button>
+    </div>
+    <p class="qfb" hidden></p>
+    <div class="qexp" hidden>
+      <span class="lbl">Phân tích đề</span>
+      <ul>
+        <li><b>Đề kể:</b> chính sách nội bộ vừa sửa. Chat không có file, connector hay tìm kiếm. Claude vẫn trả lời rất cụ thể.</li>
+        <li><b>Chỗ khó:</b> câu trả lời trôi chảy, không kèm cảnh báo, nên trông đáng tin.</li>
+        <li><b>Đề hỏi:</b> giải thích thế nào cho đúng, và làm gì tiếp.</li>
+      </ul>
+      <span class="lbl">Cần biết để chọn</span>
+      <ol>
+        <li>Dữ liệu nội bộ không nằm trong dữ liệu huấn luyện, dù nó có từ bao lâu.</li>
+        <li>Claude có thể đưa thông tin sai hoặc cũ mà không cảnh báo. Con số cụ thể là chỗ hay bịa.</li>
+        <li>Hỏi lại không phải kiểm chứng. Cách đúng là đưa nguồn vào rồi kiểm với nguồn.</li>
+      </ol>
+      <span class="lbl">Từng đáp án</span>
+      <ul class="verdict">
+        <li><b>A sai.</b> Claude không phải lúc nào cũng tự cảnh báo khi thông tin cũ hay sai (ý 2). Không có cảnh báo không phải bằng chứng.</li>
+        <li class="ok"><b>B đúng.</b> Nói đúng giới hạn (ý 1), đưa cách bù (đưa tài liệu vào) và bước kiểm (ý 3).</li>
+        <li><b>C sai.</b> Hai lần hỏi cùng không có nguồn, khớp nhau cũng chẳng chứng minh gì (ý 3).</li>
+        <li><b>D sai.</b> Hấp dẫn vì nghe hiểu chuyện mốc kiến thức, nhưng chính sách nội bộ chưa bao giờ được công khai cho model học, bản cũ hay bản mới cũng vậy (ý 1).</li>
+      </ul>
+      <button type="button" class="qreset">Làm lại câu này</button>
+    </div>
+  </div>
+
+  <div class="more"><b>Biết thêm</b><ul>
+    <li><b>Nói mốc kiến thức của model đang dùng.</b> Model hiện tại dừng ở tháng 6/2026. Tin gần hoặc sau mốc đó phải kiểm.</li>
+    <li><b>Tài liệu quá dài là chuyện context window,</b> không phải tài khoản bị khóa hay bị giới hạn lượt dùng. Cách sửa: chia nhỏ, tóm tắt dần, hoặc đưa vào Project để Claude tìm phần liên quan (gói trả phí).</li>
+    <li><b>Chatbot cho khách phải nói là AI.</b> Usage Policy bắt chatbot hướng tới người tiêu dùng cho người dùng biết họ đang nói chuyện với AI, ít nhất ở đầu mỗi phiên hoặc trên giao diện (<a href="#l-6-4">bài 6.4</a>).</li>
+    <li><b>Nói cả điểm mạnh lẫn giới hạn ngay từ đầu.</b> Ba giới hạn nên nhắc: mốc kiến thức, hallucination, lập luận phức tạp không phải lúc nào cũng vững.</li>
+  </ul></div>
+  <div class="rule">Quy tắc: nói cả giá trị lẫn giới hạn, hứa biện pháp chứ không hứa không lỗi, và báo cáo chạy thử bằng số đo trên toàn bộ output.</div>
+  <div class="remember"><b>Nhớ nhanh</b><ul>
+    <li>Bốn đặc tính: đoán chữ, kiến thức có mốc, bộ nhớ làm việc có giới hạn, làm theo chỉ dẫn.</li>
+    <li>Dữ liệu nội bộ phải đưa vào; Claude không tự cảnh báo khi sai.</li>
+    <li>Khác chữ thì được, khác số thì kiểm. Số đông không phải kiểm chứng.</li>
+    <li>Claude soạn, người có chuyên môn duyệt. Không hứa “không lỗi”.</li>
+  </ul></div>
+  <div class="src">Đọc thêm: <a href="https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-hallucinations">Reduce hallucinations</a> · <a href="https://platform.claude.com/docs/en/models/overview">Models overview</a> · <a href="https://support.claude.com/en/articles/8606394-how-large-is-the-context-window-on-paid-claude-plans">Context window on paid plans</a> · <a href="https://www.anthropic.com/legal/aup">Usage Policy</a></div>
+  <label class="done"><input type="checkbox" data-lesson="l-4-5"> Đã học bài này</label>
+</article>
+
+<section class="summary" id="sum-d4"><h3>Tổng kết Domain 4</h3><ul>
+  <li><b>4D:</b> Delegation (giao gì cho ai) đi trước. Description và Discernment xoay vòng khi làm. Diligence là đứng tên, công khai, kiểm trước khi dùng.</li>
+  <li><b>Ba kiểu làm việc:</b> Automation (AI làm theo chỉ dẫn cụ thể), Augmentation (cùng làm, qua lại), Agency (AI tự làm trong ranh giới bạn đặt).</li>
+  <li><b>Giao phần làm, giữ phần quyết.</b> Việc mô tả rõ, kiểm được thì giao. Việc có hậu quả cho người khác, cần người đứng tên thì giữ. Trách nhiệm không chuyển sang công cụ.</li>
+  <li><b>Phân tích use case:</b> vấn đề trước công cụ, xem việc làm thật, chia việc, quyết từng việc, tiêu chí đo được viết trước, thử trên mẫu thật.</li>
+  <li><b>Research và kế hoạch:</b> chọn chat, web search hay Research theo chỗ câu trả lời nằm. Bạn đặt tiêu chí và nguồn. Claude chê một bước thì đó là giả thuyết, chưa phải quyết định.</li>
+  <li><b>Làm giải pháp:</b> plan → verify → judge → refine. Qua phép kiểm chưa phải xong, phải hỏi người dùng thật. Tích hợp hệ thống thì chuyển đội kỹ thuật.</li>
+  <li><b>Đưa vào quy trình:</b> luật bắt hoặc đang chạy tốt thì augment; chính các bước là lãng phí thì redesign. Chạy thử một việc, giữ bước duyệt, đạt rồi mở rộng.</li>
+  <li><b>Nói với stakeholder:</b> cả giá trị lẫn giới hạn, hứa biện pháp không hứa hoàn hảo, báo cáo chạy thử bằng số đo trên toàn bộ output.</li>
+</ul></section>
+
+<section class="cheat" id="cheat-d4"><h3>Cheatsheet Domain 4</h3>
+  <div class="tw"><table>
+    <tr><th>Đề kể…</th><th>Chọn…</th><th>Vì sao</th></tr>
+    <tr class="grp"><th colspan="3">4.1 · Phân tích use case</th></tr>
+    <tr><td>“Tìm chỗ dùng Claude trong X”</td><td>Xem việc làm thật, chia việc, quyết từng việc</td><td>Vấn đề trước, công cụ sau</td></tr>
+    <tr><td>Một lần thử tốt nên giao cả use case</td><td>Chia thành từng việc, mỗi việc một quyết định</td><td>Mỗi việc một mức rủi ro</td></tr>
+    <tr><td>Dùng Claude với bản yêu cầu nháp</td><td>Claude đặt câu hỏi, gắn nhãn, xếp hạng theo tiêu chí; người trả lời và chốt</td><td>Giải chỗ mơ hồ là phần quyết</td></tr>
+    <tr><td>Chọn tiêu chí thành công</td><td>Cụ thể, có số, trên dữ liệu thật, viết trước</td><td>Người lạ chấm được đạt hay trượt</td></tr>
+    <tr><td>Prompt đúng trên ví dụ dùng để viết nó</td><td>Thử trên việc thật quý trước, đủ ca khó</td><td>Ví dụ tự viết quá sạch</td></tr>
+    <tr class="grp"><th colspan="3">4.2 · Research, kế hoạch, tối ưu quy trình</th></tr>
+    <tr><td>Cần tin tuần này, quy định hiện hành</td><td>Web search; câu hỏi rộng nhiều nhánh thì Research</td><td>Tin sau mốc kiến thức không gọi ra bằng prompt</td></tr>
+    <tr><td>Research mà tắt web search cho đỡ tốn</td><td>Sai: Research cần web search</td><td>Điều kiện của tính năng</td></tr>
+    <tr><td>“Xếp theo độ khẩn”, không tiêu chí</td><td>Đặt tiêu chí, Claude chấm từng mục, người duyệt đầu bảng và ca sát ngưỡng</td><td>Tránh thước đo tự nghĩ</td></tr>
+    <tr><td>Khuyến nghị chỉ dựa trên tài liệu người bán</td><td>Đối chiếu nguồn độc lập</td><td>Đầu vào một chiều</td></tr>
+    <tr><td>Claude bảo một bước là thừa</td><td>Giả thuyết; hỏi người đang làm bước đó</td><td>Lý do thường không được viết ra</td></tr>
+    <tr><td>Viết SOP từ transcript</td><td>Trích → bổ sung → định dạng, kiểm từng chặng</td><td>Có chỗ để kiểm</td></tr>
+    <tr class="grp"><th colspan="3">4.3 · Làm giải pháp</th></tr>
+    <tr><td>Bỏ bước kế hoạch cho nhanh</td><td>Duyệt kế hoạch trước khi làm</td><td>Sửa kế hoạch rẻ hơn gỡ sản phẩm</td></tr>
+    <tr><td>“Làm đẹp hơn”, “nhanh hơn”</td><td>Phép kiểm: bộ số có kết quả đúng, ảnh mẫu, số giây</td><td>Claude biết lúc nào xong</td></tr>
+    <tr><td>Qua hết phép kiểm mà người dùng không vui</td><td>Quay lại bản mô tả; cho người dùng thật dùng thử, không giúp</td><td>Phép kiểm chỉ xác nhận cái đã mô tả</td></tr>
+    <tr><td>Phản hồi “chưa ổn lắm”</td><td>Xin ví dụ: đã ghi gì, lẽ ra ghi gì</td><td>Thành điều kiện sửa xong</td></tr>
+    <tr><td>Nối CRM, chạy mỗi đêm, không ai xem</td><td>Chuyển developer hoặc IT, kèm mô tả và phép kiểm</td><td>Ngoài vai Associate</td></tr>
+    <tr class="grp"><th colspan="3">4.4 · Đưa vào quy trình</th></tr>
+    <tr><td>Claude soạn, một người ký</td><td>Giữ bước ký; Claude làm phần nuôi bước ký</td><td>Giao phần làm, giữ phần quyết</td></tr>
+    <tr><td>Chuỗi duyệt do luật bắt, chậm</td><td>Augment: làm nhanh phần chuẩn bị</td><td>Không bỏ bước bắt buộc</td></tr>
+    <tr><td>Chép tay một kết quả vào nhiều tài liệu</td><td>Redesign</td><td>Chính bước đó là lãng phí</td></tr>
+    <tr><td>“Cả phòng dùng Claude trước tháng sau”</td><td>Chạy thử một quy trình, tiêu chí viết trước, giữ bước duyệt, đạt rồi mở</td><td>Mở rộng theo pha</td></tr>
+    <tr><td>Claude tự làm cả việc (Cowork)</td><td>Xem cách Claude định làm trước khi cho chạy</td><td>Duyệt từng hành động còn tùy chế độ Manual, Auto, Skip</td></tr>
+    <tr class="grp"><th colspan="3">4.5 · Nói với stakeholder</th></tr>
+    <tr><td>Báo cáo chạy thử cho lãnh đạo</td><td>Chấm trên toàn bộ, kể cả lỗi, ghi lỗi tự tin, biện pháp nào bắt lỗi nào, chỗ còn cần người</td><td>Thấy cả giá trị lẫn chi phí giám sát</td></tr>
+    <tr><td>Hỏi về dữ liệu nội bộ mà không đưa tài liệu</td><td>Có thể bịa; đưa tài liệu vào rồi kiểm</td><td>Dữ liệu nội bộ không nằm trong huấn luyện</td></tr>
+    <tr><td>Hai lần chạy khác con số</td><td>Kiểm con số với nguồn</td><td>Khác chữ thì không sao</td></tr>
+    <tr><td>“Có Claude thì bỏ bước pháp chế, compliance duyệt”</td><td>Claude soạn, người có chuyên môn duyệt và ký</td><td>Chat thứ hai cùng kiểu lỗi</td></tr>
+    <tr><td>Muốn hứa “không lỗi”</td><td>Hứa biện pháp và tác dụng của nó</td><td>Không biện pháp nào bảo đảm 0 lỗi</td></tr>
+  </table></div>
+  <h4>Tên và con số phải thuộc</h4>
+  <ul class="names">
+    <li><b>4D và kỹ năng con:</b> Delegation (Problem Awareness, Platform Awareness, Task Delegation) · Description (Product, Process, Performance) · Discernment (Product, Process, Performance) · Diligence (Creation, Transparency, Deployment).</li>
+    <li><b>Ba kiểu làm việc:</b> Automation, Augmentation, Agency. Vòng chính thức: Description–Discernment loop.</li>
+    <li><b>Tiêu chí thành công:</b> Specific, Measurable, Achievable, Relevant.</li>
+    <li><b>Làm giải pháp</b> (tên vòng do notes đặt, không phải thuật ngữ chính thức): Plan → Verify → Judge → Refine. Phản hồi tốt: triệu chứng, vị trí, “sửa xong” trông thế nào.</li>
+    <li><b>SOP theo chặng:</b> Trích → Bổ sung → Định dạng. Tự soát: soạn → soát theo tiêu chí → sửa.</li>
+    <li><b>Chạy thử 4 bước:</b> chọn bước giao được → tiêu chí đạt hay trượt → chạy, giữ bước duyệt → đạt rồi mở rộng.</li>
+    <li><b>Cowork:</b> mở Claude → chọn Cowork → mô tả việc → xem cách Claude định làm rồi cho chạy. Chế độ duyệt hành động: Manual, Auto, Skip. Gói trả phí.</li>
+    <li><b>Research:</b> gói trả phí, cần bật web search, dùng connector đã kết nối, tiêu hạn mức nhanh hơn chat.</li>
+    <li><b>Biện pháp giảm bịa:</b> cho nói “không biết”, trích nguyên văn trước, mỗi ý một trích dẫn. Giảm, không xóa hết.</li>
+    <li><b>Mốc kiến thức</b> các model hiện tại: tháng 6/2026.</li>
+  </ul>
+</section>
+  <div class="quiz" data-course="d4"></div>
+  </div>
+</section>

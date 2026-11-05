@@ -1,0 +1,944 @@
+<section class="domain" id="d3" data-domain="3">
+  <div class="dhead"><h2>Domain 3 · Product and Model Selection</h2><p class="dsub">12% · 1 bài nền tảng + 4 bài · ~65 phút</p><div class="dprog"><div class="wb"><i></i></div><span></span></div><button class="tog" type="button">Thu gọn</button></div>
+  <div class="dbody">
+<div class="dintro">
+  <p>Domain 3 chiếm 12% đề, khoảng 7 trên 60 câu.</p>
+  <p>Cả domain xoay quanh một câu: <b>việc này cần tính năng nào, model nào, và thứ gì phải được giữ lại sau khi chat kết thúc?</b></p>
+  <p>Đọc bài Nền tảng trước. Cuối mỗi bài có “Khi đi thi”: chọn đáp án trước rồi mới xem giải thích.</p>
+</div>
+
+<article class="lesson" id="l-3-0" data-domain="3" data-ts="3.0" data-min="14">
+  <header class="lh"><span class="ts">Nền tảng</span><h3>Bản đồ app Claude: nơi dùng, gói, tính năng, model và context window</h3><span class="rt">~14 phút</span></header>
+  <p>Người dùng Claude giỏi đã quyết xong vài chuyện trước khi gõ prompt. Khóa “Claude Platform &amp; Model Foundations” trong lộ trình ôn Associate gọi đó là bốn quyết định: <b>entry point</b> (dùng Claude ở đâu), <b>capability features</b> (bật tính năng nào), <b>model</b> (chọn model nào) và <b>context</b> (Claude được thấy những gì). Bài này dựng từng thứ từ con số 0, theo thứ tự: nơi dùng → gói → tính năng → model → context window → một tuần làm việc thật chạy qua cả bốn quyết định.</p>
+
+  <h4>1. Claude dùng ở đâu</h4>
+  <div class="defs"><b>Định nghĩa</b><dl>
+    <dt>App Claude</dt><dd>Ứng dụng chat của Anthropic, có ba bản: web (claude.ai), desktop và mobile. Đề Associate hỏi về app này, không hỏi API hay code.</dd>
+    <dt>Tài khoản</dt><dd>Một tài khoản dùng được trên cả ba bản. Help center ghi claude.ai, Claude Desktop và Claude Code cùng trừ vào một hạn mức dùng.</dd>
+  </dl></div>
+  <ul>
+    <li><b>Phần lớn tính năng có ở cả ba bản</b>, nhưng có vài chỗ khác. Bắt đầu Research trên mobile thì Claude chỉ tìm web, không dùng connector (phần nối Claude với app khác như Google Drive). Đổi quyền chia sẻ artifact (sản phẩm Claude làm ra, mở cạnh khung chat) phải làm trên web hoặc desktop, không làm trên mobile.</li>
+    <li><b>Ngoài app chat</b> còn Claude in Chrome, Claude trong Excel và PowerPoint (gói trả phí), và Cowork (Claude làm việc nhiều bước trên file thật). Guide không nêu tên mấy thứ này, chỉ cần biết là có.</li>
+  </ul>
+
+  <h4>2. Gói: tính năng nào mở, dùng được bao nhiêu</h4>
+  <div class="defs"><b>Định nghĩa</b><dl>
+    <dt>Gói (plan)</dt><dd>Mức tài khoản: Free, Pro, Max, Team, Enterprise (còn có Ultra, guide không nhắc). Gói quyết định tính năng nào mở, model nào có, và hạn mức lớn cỡ nào.</dd>
+    <dt>Hạn mức dùng (usage limit)</dt><dd>Lượng việc bạn được nhờ Claude trong một khoảng thời gian, tính chung trên mọi chat. Gói trả phí có hạn mức theo phiên 5 giờ và theo tuần (<a href="#l-3-4">bài 3.4</a>).</dd>
+    <dt>Owner (chủ tổ chức)</dt><dd>Người quản trị trên gói Team và Enterprise. Owner bật hoặc tắt một số tính năng cho cả tổ chức trước khi thành viên dùng được.</dd>
+  </dl></div>
+  <div class="tw"><table>
+    <tr><th>Gói</th><th>Dành cho</th><th>Điều đáng nhớ cho đề</th></tr>
+    <tr><td>Free</td><td>Cá nhân, $0</td><td>Có chat, web search, Projects (tối đa 5), artifact, memory, connector, Skills, tạo file. Model: Haiku và Sonnet. <b>Không có Research</b>, không tìm lại được chat cũ.</td></tr>
+    <tr><td>Pro, Max</td><td>Cá nhân trả phí</td><td>Thêm Research, Opus, tìm lại chat cũ (chat search). Project chứa được nhiều tài liệu hơn nhờ RAG (Claude chỉ lấy phần tài liệu liên quan thay vì nạp hết). Max có hạn mức gấp 5 lần Pro.</td></tr>
+    <tr><td>Team</td><td>Nhóm từ 2 đến 150 người</td><td>Thêm chia sẻ Project với đồng nghiệp, quản trị tập trung. Owner phải bật web search, connector, memory cho tổ chức trước.</td></tr>
+    <tr><td>Enterprise</td><td>Tổ chức lớn</td><td>Như Team, cộng kiểm soát sâu hơn: audit log (nhật ký hoạt động), thời hạn lưu dữ liệu tùy chỉnh, tắt model hoặc mức effort (độ suy nghĩ kỹ) theo vai trò.</td></tr>
+  </table></div>
+  <p>Đề hiếm khi hỏi giá. Câu về gói thường có dạng “người dùng Free không thấy Research” hay “thành viên Team không bật được web search vì Owner chưa mở”.</p>
+
+  <h4>3. Bộ tính năng một associate dùng hằng ngày</h4>
+  <div class="tw"><table>
+    <tr><th>Tính năng</th><th>Là gì</th><th>Gói</th><th>Học ở</th></tr>
+    <tr><td>Chat</td><td>Một cuộc hội thoại: hỏi, viết, phân tích. Chat sau không tự thấy chat trước.</td><td>Mọi gói</td><td><a href="#l-3-1">3.1</a></td></tr>
+    <tr><td>Web search</td><td>Claude tìm trên web. Câu trả lời có dùng web search kèm trích dẫn (link, đoạn trích).</td><td>Mọi gói. Team/Enterprise: Owner bật trước</td><td><a href="#l-3-1">3.1</a></td></tr>
+    <tr><td>Projects</td><td>Không gian làm việc riêng: lịch sử chat, tài liệu (project knowledge) và lời dặn (project instructions) dùng chung cho mọi chat trong đó.</td><td>Mọi gói (Free tối đa 5)</td><td><a href="#l-3-1">3.1</a>, <a href="#l-5-1">5.1</a></td></tr>
+    <tr><td>Artifact</td><td>Sản phẩm Claude làm ra (tài liệu, slide, bảng điều khiển, công cụ nhỏ), mở ở khung bên cạnh chat để sửa, xuất, chia sẻ.</td><td>Mọi gói</td><td><a href="#l-3-1">3.1</a></td></tr>
+    <tr><td>Research</td><td>Claude tự chạy nhiều lượt tìm nối tiếp nhau trên web và công cụ đã kết nối, rồi viết bản tổng hợp.</td><td>Chỉ gói trả phí</td><td><a href="#l-3-1">3.1</a></td></tr>
+    <tr><td>Memory</td><td>Claude ghi dần những điều về bạn qua các chat, dùng lại ở chat sau.</td><td>Free, Pro, Max, Ultra bật sẵn. Team/Enterprise: Owner quyết</td><td><a href="#l-3-4">3.4</a></td></tr>
+    <tr><td>Connector</td><td>Cho Claude đọc dữ liệu và làm việc trong app khác (Google Drive, Gmail…), theo đúng quyền của bạn ở app đó.</td><td>Mọi gói. Team/Enterprise: Owner bật trước</td><td><a href="#l-5-2">5.2</a></td></tr>
+    <tr><td>Skills</td><td>Gói hướng dẫn cho một loại việc, Claude chỉ nạp khi cần.</td><td>Mọi gói, cần bật tạo file</td><td>ngay dưới</td></tr>
+    <tr><td>Code execution</td><td>Claude chạy code trong môi trường cách ly để tạo và sửa file.</td><td>Mọi gói, bật sẵn</td><td>ngay dưới</td></tr>
+    <tr><td>Thinking và effort</td><td>Claude suy nghĩ trước khi trả lời. Effort chỉnh độ kỹ, từ Low tới Max.</td><td>Trong model picker</td><td><a href="#l-3-3">3.3</a></td></tr>
+  </table></div>
+  <p>Phần “How to Prepare” của guide bảo đọc help center về <b>Memory, Skills và Code Execution</b>, dù không mục tiêu nào gọi tên chúng. Memory có một phần riêng ở <a href="#l-3-4">bài 3.4</a>. Hai cái còn lại định nghĩa ở đây.</p>
+  <div class="defs"><b>Định nghĩa</b><dl>
+    <dt>Skills</dt><dd>Help center tả là “folders of instructions, scripts, and resources” (các thư mục chứa hướng dẫn, script và tài nguyên) mà Claude nạp khi cần cho một việc chuyên biệt. Claude chỉ nạp skill liên quan, để không chiếm chỗ trong context. Anthropic có sẵn skill tạo file Excel, Word, PowerPoint, PDF, Claude tự gọi khi thấy hợp. Bạn tự viết skill bằng Markdown, đóng thành file ZIP, tải lên ở Customize → Skills.</dd>
+    <dt>Code execution (tạo và sửa file)</dt><dd>Claude chạy code trong một môi trường cách ly để tạo file Excel, PowerPoint, Word, PDF, biểu đồ PNG, hoặc phân tích file CSV bạn tải lên. Cài đặt tên cũ là “Code execution and file creation” (chạy code và tạo file), giao diện mới gọi là “Create and edit files” (tạo và sửa file), nằm ở Settings → Capabilities. Bật sẵn ở mọi gói. Tốn hạn mức nhanh hơn chat thường.</dd>
+  </dl></div>
+  <div class="tw"><table>
+    <tr><th></th><th>Project instructions</th><th>Skills</th></tr>
+    <tr><td>Áp vào đâu</td><td>Mọi chat trong một Project</td><td>Chỉ khi việc đang làm cần tới</td></tr>
+    <tr><td>Hợp với</td><td>Bối cảnh chung của một mảng việc: vai trò, giọng văn, tài liệu nền</td><td>Một quy trình cụ thể dùng ở nhiều nơi: định dạng đề xuất, cách dựng file báo cáo</td></tr>
+  </table></div>
+  <div class="note"><b>Code execution là nền của nhiều thứ.</b> Artifact cần nó. Skills cần nó. Đọc file XLSX cần nó. Claude tự tóm tắt chat dài trên gói trả phí (<a href="#l-3-4">bài 3.4</a>) cũng cần nó. Tắt nó đi là mất mấy tính năng này cùng lúc.</div>
+
+  <h4>4. Model là gì</h4>
+  <div class="defs"><b>Định nghĩa</b><dl>
+    <dt>Model</dt><dd>Bộ máy sinh ra câu trả lời. Cùng một câu hỏi, model khác nhau trả lời sâu khác nhau, nhanh chậm khác nhau, và trừ hạn mức nhiều ít khác nhau.</dd>
+    <dt>Model picker</dt><dd>Menu chọn model trong khung chat. Đổi model giữa chừng được; model mới áp từ câu trả lời kế tiếp.</dd>
+  </dl></div>
+  <p>Guide gọi tên ba tầng: <b>Haiku</b> (nhỏ, nhanh, nhẹ hạn mức), <b>Sonnet</b> (cân bằng, dùng hằng ngày), <b>Opus</b> (mạnh nhất trong ba, chậm và tốn hơn). Gói Free có Haiku và Sonnet; Opus từ Pro trở lên. App hiện có thêm Fable ở trên Opus. <a href="#l-3-2">Bài 3.2</a> so ba tầng, <a href="#l-3-3">bài 3.3</a> dạy cách chọn.</p>
+
+  <h4>5. Context window là gì</h4>
+  <div class="defs"><b>Định nghĩa</b><dl>
+    <dt>Token</dt><dd>Mẩu chữ nhỏ mà model đọc và viết. Một từ có thể là một hay vài token. Độ dài chat, file, hạn mức đều đo bằng token.</dd>
+    <dt>Context window</dt><dd>Toàn bộ những gì Claude thấy được trong một chat tại một lúc, đo bằng token. Hình dung nó là mặt bàn làm việc: thứ gì nằm trên bàn thì Claude dùng được, thứ gì ở ngoài thì Claude không biết.</dd>
+  </dl></div>
+  <p>Trên mặt bàn có:</p>
+  <ul>
+    <li>Tin nhắn của bạn và câu trả lời của Claude từ đầu chat.</li>
+    <li>File đính kèm, project instructions, project knowledge (hoặc phần knowledge được tìm ra khi Project dùng RAG).</li>
+    <li>Kết quả web search, connector, tool (công cụ Claude tự gọi, như tìm web hay chạy code). Help center gọi tool và connector là “token-intensive” (tốn nhiều token).</li>
+    <li>Instructions for Claude (lời dặn cấp tài khoản, áp cho mọi chat của bạn) và những gì memory nạp vào.</li>
+  </ul>
+  <p>Ba điều cần nắm ngay:</p>
+  <ul>
+    <li><b>Claude chỉ biết những gì nằm trên bàn.</b> Chat khác, file chưa đưa vào, lời sửa ở chat tuần trước: Claude không tự thấy. Thứ chắc chắn đi theo sang chat mới chỉ là thứ đã được lưu (Project, instructions, memory). Gói trả phí còn có chat search: Claude tìm lại chat cũ khi bạn nhờ.</li>
+    <li><b>Kích thước cố định theo model.</b> Model mới nhất (Haiku 5.5, Sonnet 5.5, Opus 5.5, Fable 5.1) có 1M token trong chat ở gói trả phí. Docs API quy đổi 1M token khoảng 555 nghìn từ tiếng Anh. Model không có tên trong danh sách thì mặc định 200K. Help center không ghi số cho gói Free.</li>
+    <li><b>Nâng gói không làm bàn to ra.</b> Gói cho thêm hạn mức dùng. Context window vẫn là của model.</li>
+  </ul>
+  <div class="tw"><table>
+    <tr><th></th><th>Context của một chat</th><th>Project knowledge + instructions</th><th>Memory</th></tr>
+    <tr><td>Sống bao lâu</td><td>Chỉ trong chat đó</td><td>Mọi chat trong Project</td><td>Qua các chat của bạn</td></tr>
+    <tr><td>Chứa gì</td><td>Mọi thứ của cuộc hội thoại</td><td>Tài liệu và lời dặn bạn đặt vào</td><td>Các ý ngắn về bạn, ghi theo chủ đề</td></tr>
+    <tr><td>Ai đặt vào</td><td>Bạn và Claude, trong lúc chat</td><td>Bạn, một lần</td><td>Claude tự ghi, hoặc khi bạn bảo</td></tr>
+  </table></div>
+
+  <h4>6. Một tuần làm việc, chạy qua cả bốn quyết định</h4>
+  <p>Chị Thảo làm marketing ở một công ty phần mềm, dùng gói Team.</p>
+  <div class="tw"><table>
+    <tr><th>Việc</th><th>Chọn</th><th>Vì sao</th></tr>
+    <tr><td>Hỏi nhanh: câu slogan tiếng Anh này có sai ngữ pháp không</td><td>Chat thường</td><td>Hỏi một lần, trả lời ngắn</td></tr>
+    <tr><td>Viết bài mạng xã hội theo bộ nhận diện thương hiệu, tuần nào cũng làm</td><td>Project có brand guidelines trong knowledge</td><td>Lặp lại trên cùng tài liệu</td></tr>
+    <tr><td>So giá và tính năng năm đối thủ, có nguồn, để họp lãnh đạo</td><td>Research</td><td>Nhiều nguồn, cần dẫn nguồn</td></tr>
+    <tr><td>Bản brief chiến dịch hai trang, sẽ sửa nhiều lần rồi gửi sếp</td><td>Artifact mẫu Docs, xuất ra Word</td><td>Sản phẩm đứng riêng, dùng tiếp</td></tr>
+    <tr><td>Gắn nhãn 2.000 bình luận của khách theo năm chủ đề</td><td>Haiku</td><td>Việc đơn giản, số lượng lớn</td></tr>
+    <tr><td>Chat lên kế hoạch ra mắt đã dài ba tuần, Claude bắt đầu quên ngân sách đã chốt</td><td>Ghi lại các quyết định, lưu vào Project, mở chat mới</td><td>Chat quá dài; thứ phải giữ thì lưu ra ngoài chat</td></tr>
+  </table></div>
+
+  <h4>7. Bản đồ Domain 3: mỗi bài đụng vào quyết định nào</h4>
+  <div class="tw"><table>
+    <tr><th>Bài</th><th>Quyết định</th><th>Đề hay hỏi</th></tr>
+    <tr><td><a href="#l-3-1">3.1</a></td><td>Tính năng</td><td>Việc này hợp chat, Project, Research hay artifact?</td></tr>
+    <tr><td><a href="#l-3-2">3.2</a></td><td>Model</td><td>Haiku, Sonnet, Opus khác nhau ở đâu, và giống nhau ở đâu?</td></tr>
+    <tr><td><a href="#l-3-3">3.3</a></td><td>Model theo việc</td><td>Cân chi phí, tốc độ, chất lượng thế nào? Thử trước khi đổi ra sao?</td></tr>
+    <tr><td><a href="#l-3-4">3.4</a></td><td>Context và memory</td><td>Khi nào mở chat mới, khi nào tóm tắt, khi nào lưu lại?</td></tr>
+  </table></div>
+
+  <h4>Tự kiểm tra</h4>
+  <p class="need">Câu hỏi viết bằng tiếng Anh như đề thật. Bấm vào câu hỏi để xem nghĩa và đáp án.</p>
+  <details class="chk"><summary>1. A Free-plan user asks why “Research” is missing from the “+” menu. What is the most likely reason?</summary>
+    <span class="vi">Nghĩa: một người dùng gói Free hỏi vì sao trong menu “+” không có “Research”. Lý do nhiều khả năng nhất là gì?</span>
+    <span class="ans"><b>Đáp:</b> Research chỉ có ở gói trả phí (Pro, Max, Ultra, Team, Enterprise). Không phải lỗi cài đặt.</span></details>
+  <details class="chk"><summary>2. You turn off “Code execution and file creation” to keep things simple. Which features stop working?</summary>
+    <span class="vi">Nghĩa: bạn tắt “Code execution and file creation” cho gọn. Những tính năng nào ngừng chạy?</span>
+    <span class="ans"><b>Đáp:</b> artifact, Skills, đọc file XLSX, và việc Claude tự tóm tắt chat dài trên gói trả phí. Tất cả đều cần cài đặt này.</span></details>
+  <details class="chk"><summary>3. Yesterday you corrected Claude’s tone in a chat. Today you open a new chat outside any project. Will Claude apply yesterday’s correction?</summary>
+    <span class="vi">Nghĩa: hôm qua bạn sửa giọng văn của Claude trong một chat. Hôm nay bạn mở chat mới, không thuộc Project nào. Claude có áp lời sửa hôm qua không?</span>
+    <span class="ans"><b>Đáp:</b> chỉ khi lời sửa đó đã được lưu: vào memory, Instructions for Claude, hoặc một Project. Context của chat hôm qua không tự sang chat mới (trên gói trả phí, bạn có thể nhờ Claude tìm lại chat cũ, nhưng phải nhờ). Muốn chắc chắn thì tự lưu nó.</span></details>
+
+  <div class="remember"><b>Nhớ nhanh</b><ul>
+    <li>Bốn quyết định trước prompt: dùng ở đâu, tính năng nào, model nào, context gồm gì.</li>
+    <li>Free: Haiku, Sonnet, tối đa 5 Project, không có Research. Opus và Research từ gói trả phí.</li>
+    <li>Code execution (“Create and edit files”) là nền của artifact, Skills và tự tóm tắt chat dài.</li>
+    <li>Context window = mặt bàn của một chat. Cố định theo model; nâng gói không làm nó to ra.</li>
+  </ul></div>
+  <div class="src">Đọc thêm: <a href="https://support.claude.com/en/articles/9517075-what-are-projects-and-how-do-i-use-them">What are projects</a> · <a href="https://support.claude.com/en/articles/12512176-what-are-skills">What are Skills</a> · <a href="https://support.claude.com/en/articles/12111783-create-and-edit-files-with-claude">Create and edit files</a> · <a href="https://support.claude.com/en/articles/8606394-how-large-is-the-context-window-on-paid-claude-plans">Context window on paid plans</a> · <a href="https://claude.com/pricing">Claude pricing</a></div>
+  <label class="done"><input type="checkbox" data-lesson="l-3-0"> Đã học bài này</label>
+</article>
+
+<article class="lesson" id="l-3-1" data-domain="3" data-ts="3.1" data-min="13">
+  <header class="lh"><span class="ts">TS 3.1</span><h3>Chọn đúng tính năng: chat, Project, Research hay artifact</h3><span class="rt">~13 phút</span></header>
+  <p class="need">Cần biết trước: bảng tính năng và gói ở <a href="#l-3-0">bài Nền tảng</a>.</p>
+  <div class="defs"><b>Khái niệm của bài</b><dl>
+    <dt>Chat thường</dt><dd>Một cuộc hội thoại đứng riêng. Hỏi xong là xong. Chat sau không tự thấy chat trước.</dd>
+    <dt>Web search</dt><dd>Claude tự tìm trên web ngay trong chat và dẫn nguồn. Hợp với tra nhanh một sự thật mới.</dd>
+    <dt>Research (guide gọi là “research mode”)</dt><dd>Claude chạy nhiều lượt tìm nối tiếp nhau, tự chọn hướng tìm tiếp dựa trên kết quả lượt trước, trên web và cả công cụ đã kết nối, rồi viết bản tổng hợp.</dd>
+    <dt>Project</dt><dd>Không gian làm việc có lịch sử chat, project knowledge (tài liệu) và project instructions (lời dặn) riêng. Mọi chat trong Project dùng chung tài liệu và lời dặn đó.</dd>
+    <dt>Artifact</dt><dd>Nội dung đáng kể, đứng riêng được (thường trên 15 dòng), Claude mở ở khung bên cạnh chat để bạn sửa, xem lại, xuất file hoặc chia sẻ.</dd>
+  </dl></div>
+
+  <h4>Bắt đầu từ chat, chỉ đổi khi chat thiếu một thứ</h4>
+  <p>Chat làm được rất nhiều việc. Chỉ đổi sang tính năng khác khi việc cần một thứ chat không có. Ba thứ hay thiếu:</p>
+  <ul>
+    <li><b>Lặp lại.</b> Tuần nào cũng dán lại cùng tài liệu, cùng lời dặn → <b>Project</b>.</li>
+    <li><b>Nhiều nguồn.</b> Phải tìm, so sánh, dẫn nguồn từ nhiều nơi → <b>Research</b>.</li>
+    <li><b>Giữ lâu.</b> Kết quả là một sản phẩm sẽ sửa tiếp, dùng lại, gửi người khác → <b>artifact</b>.</li>
+  </ul>
+  <div class="tw"><table>
+    <tr><th>Đề kể</th><th>Chọn</th><th>Vì sao</th></tr>
+    <tr><td>Một câu hỏi lẻ, trả lời xong là xong (“viết lại câu này cho lịch sự hơn”)</td><td>Chat thường</td><td>Không cần gì thêm</td></tr>
+    <tr><td>Cần một sự thật mới, tra một hai lần là ra (“tỉ giá hôm nay”, “CEO mới của công ty X”)</td><td>Chat + web search</td><td>Nhanh, có nguồn, mọi gói</td></tr>
+    <tr><td>Cùng bộ tài liệu, cùng lời dặn, dùng đi dùng lại</td><td>Project</td><td>Đặt một lần, mọi chat đều thấy</td></tr>
+    <tr><td>Cả nhóm cần cùng tài liệu, cùng lời dặn</td><td>Project chia sẻ (Team, Enterprise)</td><td>Một bản đang dùng, không có bản sao cũ</td></tr>
+    <tr><td>Tìm, so sánh, tổng hợp từ nhiều nguồn, có dẫn nguồn</td><td>Research</td><td>Nhiều lượt tìm nối tiếp</td></tr>
+    <tr><td>Kết quả dài, đứng riêng, sẽ sửa, xuất file, gửi người khác</td><td>Artifact</td><td>Sửa ở khung bên, lưu lại, xuất được</td></tr>
+  </table></div>
+
+  <h4>Research khác web search trong chat ở đâu</h4>
+  <div class="tw"><table>
+    <tr><th></th><th>Chat + web search</th><th>Research</th></tr>
+    <tr><td>Cách tìm</td><td>Một vài lượt cho một câu hỏi gọn</td><td>Nhiều lượt nối tiếp; lượt sau dựa vào kết quả lượt trước</td></tr>
+    <tr><td>Nguồn</td><td>Web</td><td>Web và công cụ đã kết nối (ví dụ Google Workspace)</td></tr>
+    <tr><td>Gói</td><td>Mọi gói</td><td>Chỉ gói trả phí</td></tr>
+    <tr><td>Model</td><td>Model bạn chọn</td><td>Luôn là Opus 5.5 (dự phòng Opus 4.8), bất kể model bạn chọn trong chat</td></tr>
+    <tr><td>Hạn mức</td><td>Như chat thường</td><td>Cùng hạn mức, nhưng hết nhanh hơn vì đọc nhiều nguồn</td></tr>
+  </table></div>
+  <ul>
+    <li><b>Bật:</b> nút “+” ở góc dưới bên trái → Research. Có chỉ báo màu xanh; bấm lần nữa để tắt. Phải bật web search thì Research mới chạy.</li>
+    <li><b>Đổi model trước khi chạy Research không tiết kiệm gì</b>, vì Research không dùng model bạn chọn.</li>
+    <li><b>Research không lưu tài liệu cho lần sau.</b> Tài liệu cần dùng lại thì để trong Project.</li>
+    <li><b>Trích dẫn:</b> trang help về Research không nói riêng chuyện này. Research dựa trên web search, mà trang web search ghi mọi câu trả lời có dùng web search đều kèm trích dẫn. Dù có link, vẫn phải mở ra kiểm (<a href="#l-2-3">bài 2.3</a>).</li>
+  </ul>
+
+  <h4>Project: khi việc lặp lại trên cùng tài liệu</h4>
+  <ul>
+    <li>Tài liệu trong project knowledge và lời dặn trong project instructions áp cho <b>mọi chat</b> trong Project.</li>
+    <li>Các chat trong cùng Project <b>không thấy nội dung của nhau</b>. Thứ mọi chat cần phải nằm trong knowledge.</li>
+    <li>Free tạo được tối đa 5 Project. Gói trả phí có RAG: khi tài liệu gần chạm giới hạn context, Claude tự chuyển sang tìm phần liên quan, chứa được tới gấp 10 lần.</li>
+    <li>Team và Enterprise chia sẻ được Project với hai mức quyền. <b>Can view</b> (được xem): xem nội dung, knowledge, instructions và chat với Project, không sửa. <b>Can edit</b> (được sửa): sửa instructions, knowledge, quản lý thành viên. Chia sẻ Project không chia sẻ các chat bên trong.</li>
+    <li>Cả nhóm cần cùng tài liệu thì dùng một Project chia sẻ. Gửi file qua email hay chuyển tiếp đoạn chat tạo ra nhiều bản sao, và bản nào cũng sẽ cũ.</li>
+    <li>Viết instructions, chọn tài liệu cho Project là chuyện của <a href="#l-5-1">bài 5.1</a>. Bài này chỉ hỏi: lúc nào thì dùng Project.</li>
+  </ul>
+
+  <h4>Artifact: khi kết quả là sản phẩm để dùng tiếp</h4>
+  <ul>
+    <li>Claude tạo artifact khi nội dung đáng kể, đứng riêng được, thường trên 15 dòng, và nhiều khả năng bạn sẽ sửa hoặc dùng lại. Ngắn hay mang tính trò chuyện thì Claude trả lời ngay trong chat.</li>
+    <li>Sửa bằng cách nhờ Claude, sửa trực tiếp với các mẫu Docs, Slides, Design, hoặc bôi đen một đoạn rồi chọn “Edit with Claude” (sửa cùng Claude).</li>
+    <li>Mọi artifact lưu ở tab Artifacts trong thanh bên, mở lại được từ bất kỳ chat nào.</li>
+    <li>Sửa một tin nhắn cũ tạo ra một nhánh chat riêng, có artifact riêng. Bản cũ không mất.</li>
+    <li>Xuất file: Docs ra Word, PDF, Markdown, Google Docs. Slides ra PowerPoint, PDF, Google Slides.</li>
+    <li>Artifact mới tạo là riêng tư. Muốn người khác mở được thì chỉnh quyền chia sẻ.</li>
+    <li>Cần bật code execution (“Create and edit files”). Chọn artifact, trả lời ngay trong chat hay dữ liệu có cấu trúc cho từng người đọc là chuyện của <a href="#l-2-6">bài 2.6</a>.</li>
+  </ul>
+
+  <div class="story"><b>Tình huống.</b> Chị Hạnh, trưởng nhóm pháp chế, sáng thứ Hai nào cũng mở chat mới, dán ba mẫu hợp đồng, bộ quy tắc văn phong tám trang, rồi dặn lại “giọng trang trọng, theo luật Việt Nam”. Có tuần chị quên dán bộ quy tắc, bản nháp ra sai thuật ngữ. Đồng nghiệp xin “cái prompt của chị” qua email, mỗi người giữ một bản khác nhau. Vấn đề không nằm ở prompt. Đây là việc lặp lại trên cùng bộ tài liệu, nên chỗ của nó là một Project chia sẻ: tài liệu vào knowledge, lời dặn vào instructions, chị giữ quyền sửa, cả nhóm được xem.</div>
+  <div class="vs">
+    <div class="bad"><b>Tệ</b><ul>
+      <li>Dán lại cùng tài liệu, cùng lời dặn mỗi tuần.</li>
+      <li>Gửi đoạn chat hay file qua email cho cả nhóm.</li>
+      <li>Bật Research để “đọc lại” tài liệu nội bộ đã có sẵn.</li>
+      <li>Chép bản brief từ chat sang Word rồi sửa tay mỗi lần.</li>
+    </ul></div>
+    <div class="good"><b>Tốt</b><ul>
+      <li>Project: tài liệu trong knowledge, lời dặn trong instructions.</li>
+      <li>Project chia sẻ: người sửa có Can edit, cả nhóm có Can view.</li>
+      <li>Research cho câu hỏi cần tìm và so nhiều nguồn.</li>
+      <li>Brief làm thành artifact, sửa ở khung bên, xuất Word khi xong.</li>
+    </ul></div>
+  </div>
+  <div class="trap"><b>Bẫy:</b> đáp án có một người lặp đi lặp lại một bước làm tay (dán lại tài liệu, chuyển tiếp đoạn chat, chép từ chat sang file) thường là đáp án sai. Đáp án đúng bỏ bước lặp đó bằng đúng tính năng.</div>
+
+  <h4>Khi đi thi</h4>
+  <p class="need">Bài này thường ra 2 dạng câu hỏi. Đọc đề, <b>chọn một đáp án trước</b>; phần giải thích chỉ hiện ra sau khi bạn chọn.</p>
+
+  <div class="qcase" data-answer="C">
+    <h5 class="sub">Dạng 1: việc lặp lại trên cùng bộ tài liệu</h5>
+    <span class="lbl">Đề sẽ viết kiểu này</span>
+    <div class="qtext">
+      <span class="en">“Every Monday, an HR coordinator opens a new chat, pastes the same 12-page onboarding policy and a paragraph of tone guidance, then asks Claude to draft welcome emails for that week’s new hires. Some weeks she forgets the tone paragraph and the drafts come out too casual. What is the most appropriate change?”</span>
+      <span class="vi">Dịch: Mỗi thứ Hai, một nhân viên điều phối nhân sự mở chat mới, dán cùng bản chính sách hội nhập 12 trang và một đoạn dặn về giọng văn, rồi nhờ Claude soạn email chào mừng nhân viên mới của tuần. Có tuần chị quên dán đoạn dặn giọng văn và bản nháp ra quá suồng sã. Thay đổi phù hợp nhất là gì?</span>
+    </div>
+    <span class="lbl">Bạn chọn đáp án nào?</span>
+    <div class="qopts">
+      <button type="button" class="qopt" data-k="A"><b class="k">A.</b><span class="body"><span class="en">“Keep a single chat open for the whole year so the policy and the tone guidance always stay in the conversation.”</span><span class="vi">Giữ một chat duy nhất cả năm để chính sách và lời dặn giọng văn luôn nằm trong hội thoại.</span></span></button>
+      <button type="button" class="qopt" data-k="B"><b class="k">B.</b><span class="body"><span class="en">“Turn on Research each Monday so Claude reads the onboarding policy again and cites it.”</span><span class="vi">Mỗi thứ Hai bật Research để Claude đọc lại chính sách hội nhập và trích dẫn nó.</span></span></button>
+      <button type="button" class="qopt" data-k="C"><b class="k">C.</b><span class="body"><span class="en">“Create a Project with the policy in project knowledge and the tone guidance in project instructions, and draft each week’s emails in a new chat inside it.”</span><span class="vi">Tạo một Project, đưa chính sách vào project knowledge, lời dặn giọng văn vào project instructions, rồi mỗi tuần soạn email trong một chat mới thuộc Project đó.</span></span></button>
+      <button type="button" class="qopt" data-k="D"><b class="k">D.</b><span class="body"><span class="en">“Ask Claude to save the policy and the tone in memory, then keep opening new chats outside any project.”</span><span class="vi">Bảo Claude lưu chính sách và giọng văn vào memory, rồi cứ tiếp tục mở chat mới ngoài Project.</span></span></button>
+    </div>
+    <p class="qfb" hidden></p>
+    <div class="qexp" hidden>
+      <span class="lbl">Phân tích đề</span>
+      <ul>
+        <li><b>Đề kể:</b> cùng một tài liệu, cùng một lời dặn, dán lại mỗi tuần.</li>
+        <li><b>Chỗ khó:</b> lỗi xảy ra những tuần người làm quên dán. Gốc của lỗi là một bước làm tay lặp lại, không phải prompt kém.</li>
+        <li><b>Đề hỏi:</b> thay đổi nào làm việc lặp lại này chạy ổn định.</li>
+      </ul>
+      <span class="lbl">Cần biết để chọn</span>
+      <ol>
+        <li>Project knowledge và project instructions áp cho mọi chat trong Project. Không phải dán lại.</li>
+        <li>Một chat kéo dài cả năm sẽ chạm giới hạn độ dài hoặc bị tự tóm tắt, chi tiết cũ bị nén (<a href="#l-3-4">bài 3.4</a>).</li>
+        <li>Research đi tìm và tổng hợp nhiều nguồn. Nó không giữ tài liệu cho lần sau.</li>
+        <li>Memory ghi các ý ngắn về bạn theo chủ đề, không phải chỗ giữ nguyên văn một văn bản 12 trang.</li>
+      </ol>
+      <span class="lbl">Từng đáp án</span>
+      <ul class="verdict">
+        <li><b>A sai.</b> Hấp dẫn vì “không phải dán lại”, nhưng chat cứ dài thêm mỗi tuần, tới lúc chạm giới hạn hoặc bị tóm tắt, và lời dặn từ tháng đầu có thể bị nén mất (ý 2). Đổi một rủi ro lấy rủi ro khác.</li>
+        <li><b>B sai.</b> Ở đây không có gì phải đi tìm: tài liệu đã nằm sẵn trong tay (ý 3). Bật Research mỗi tuần vừa tốn hạn mức vừa vẫn phải đưa lại tài liệu.</li>
+        <li class="ok"><b>C đúng.</b> Tài liệu và lời dặn được đặt một lần, mọi chat trong Project đều thấy (ý 1). Không còn bước dán tay để mà quên.</li>
+        <li><b>D sai.</b> Memory có thể nhớ “email nên ấm áp”, nhưng không giữ nguyên văn bản chính sách mà email phải bám vào (ý 4).</li>
+      </ul>
+      <button type="button" class="qreset">Làm lại câu này</button>
+    </div>
+  </div>
+
+  <div class="qcase" data-answer="A">
+    <h5 class="sub">Dạng 2: câu hỏi cần nhiều nguồn, có dẫn nguồn</h5>
+    <span class="lbl">Đề sẽ viết kiểu này</span>
+    <div class="qtext">
+      <span class="en">“A product marketer on a Pro plan must brief leadership tomorrow on how five competitors priced their latest releases. She wants a cited comparison that draws on public web sources and on the team’s notes in a connected Google Drive. Which approach is most appropriate?”</span>
+      <span class="vi">Dịch: Một nhân viên marketing sản phẩm dùng gói Pro, ngày mai phải báo cáo lãnh đạo về cách năm đối thủ định giá sản phẩm mới nhất của họ. Chị muốn một bản so sánh có dẫn nguồn, lấy từ các nguồn web công khai và từ ghi chú của nhóm trong Google Drive đã kết nối. Cách nào phù hợp nhất?</span>
+    </div>
+    <span class="lbl">Bạn chọn đáp án nào?</span>
+    <div class="qopts">
+      <button type="button" class="qopt" data-k="A"><b class="k">A.</b><span class="body"><span class="en">“Start Research from the web or desktop app with web search on, and ask for a cited comparison.”</span><span class="vi">Bắt đầu Research từ bản web hoặc desktop, bật web search, và yêu cầu một bản so sánh có dẫn nguồn.</span></span></button>
+      <button type="button" class="qopt" data-k="B"><b class="k">B.</b><span class="body"><span class="en">“Create a Project and upload screenshots of each competitor’s pricing page as project knowledge, then ask Claude to compare them.”</span><span class="vi">Tạo một Project, tải ảnh chụp trang giá của từng đối thủ lên làm project knowledge, rồi nhờ Claude so sánh.</span></span></button>
+      <button type="button" class="qopt" data-k="C"><b class="k">C.</b><span class="body"><span class="en">“Ask in a regular chat with web search turned off, relying on what Claude already knows about each competitor’s pricing.”</span><span class="vi">Hỏi trong chat thường, tắt web search, dựa vào những gì Claude đã biết về giá của từng đối thủ.</span></span></button>
+      <button type="button" class="qopt" data-k="D"><b class="k">D.</b><span class="body"><span class="en">“Switch the chat to Haiku before turning on Research, so that the investigation uses less of her usage limit.”</span><span class="vi">Đổi chat sang Haiku trước khi bật Research, để cuộc tìm hiểu tốn ít hạn mức hơn.</span></span></button>
+    </div>
+    <p class="qfb" hidden></p>
+    <div class="qexp" hidden>
+      <span class="lbl">Phân tích đề</span>
+      <ul>
+        <li><b>Đề kể:</b> năm đối thủ, sản phẩm mới nhất, cần dẫn nguồn, nguồn nằm cả trên web lẫn trong Drive.</li>
+        <li><b>Chỗ khó:</b> thông tin mới, có thể ra sau thời điểm kiến thức của model. Nhiều nguồn, hai loại nguồn. Và người làm lo chuyện hạn mức.</li>
+        <li><b>Đề hỏi:</b> cách tiếp cận phù hợp nhất cho một cuộc tìm hiểu nhiều nguồn.</li>
+      </ul>
+      <span class="lbl">Cần biết để chọn</span>
+      <ol>
+        <li>Research chạy nhiều lượt tìm nối tiếp, trên web và công cụ đã kết nối như Google Workspace. Cần gói trả phí và bật web search.</li>
+        <li>Research luôn chạy trên Opus 5.5 (dự phòng Opus 4.8), bất kể model đang chọn trong chat.</li>
+        <li>Bắt đầu Research trên mobile thì Claude chỉ tìm web, không dùng connector.</li>
+        <li>Kiến thức của model dừng ở một thời điểm. Giá “mới nhất” phải đi tìm, không dựa vào trí nhớ của model.</li>
+      </ol>
+      <span class="lbl">Từng đáp án</span>
+      <ul class="verdict">
+        <li class="ok"><b>A đúng.</b> Đúng loại việc của Research: nhiều nguồn, hai loại nguồn, cần dẫn nguồn (ý 1). Bắt đầu từ web hoặc desktop để Research dùng được connector Drive (ý 3).</li>
+        <li><b>B sai.</b> Phải tự tay đi chụp từng trang, ảnh chụp đứng yên và sẽ cũ, còn ghi chú trong Drive thì bị bỏ ngoài. Project hợp với tài liệu dùng lại nhiều lần, không phải một cuộc điều tra một lần.</li>
+        <li><b>C sai.</b> Không tìm thì không có nguồn để dẫn, và giá của bản phát hành mới có thể ra sau thời điểm kiến thức của model (ý 4).</li>
+        <li><b>D sai.</b> Hấp dẫn vì nghe tiết kiệm, nhưng Research không chạy trên model bạn chọn trong chat (ý 2). Đổi sang Haiku không đổi được gì.</li>
+      </ul>
+      <button type="button" class="qreset">Làm lại câu này</button>
+    </div>
+  </div>
+
+  <div class="more"><b>Biết thêm</b><ul>
+    <li><b>Guide v1.0 gọi là “research mode”.</b> App hiện tại gọi là Research (nút “+” → Research). Khi thi chọn theo guide: “research mode” chính là Research.</li>
+    <li><b>Research dùng connector mà không hỏi duyệt từng lần.</b> Nhưng nó không dùng được MCP server cục bộ (máy chủ kết nối công cụ chạy trên chính máy bạn) cấu hình trong bản Desktop.</li>
+    <li><b>Team, Enterprise: admin tắt cả Opus 5.5 lẫn Opus 4.8 cho vai trò của bạn thì Research không chạy.</b></li>
+    <li><b>Trong giao diện Claude mới, web search không còn nút bật tắt.</b> Claude tự tìm khi thấy cần.</li>
+    <li><b>Tên và mô tả của Project không hiện cho Claude.</b> Muốn Claude biết điều gì thì viết vào instructions hoặc knowledge.</li>
+    <li><b>Artifact có thể tự gọi Claude bên trong</b> (“Artifacts that use Claude”, trước gọi là AI-powered artifacts). Người xem đăng nhập bằng tài khoản Claude của mình, hạn mức trừ vào gói của người xem, người tạo không trả gì.</li>
+  </ul></div>
+  <div class="rule">Quy tắc: bắt đầu bằng chat. Lặp lại trên cùng tài liệu thì Project, cần tìm và dẫn nhiều nguồn thì Research, sản phẩm sẽ sửa, dùng lại, chia sẻ thì artifact.</div>
+  <div class="remember"><b>Nhớ nhanh</b><ul>
+    <li>Ba thứ chat thiếu: lặp lại (Project), nhiều nguồn (Research), giữ lâu (artifact).</li>
+    <li>Research: gói trả phí, cần web search, luôn chạy Opus 5.5. Cần connector thì bắt đầu trên web hoặc desktop.</li>
+    <li>Project: knowledge và instructions áp cho mọi chat. Các chat không thấy nhau. Chia sẻ có Can view, Can edit.</li>
+    <li>Artifact: thường trên 15 dòng, lưu ở tab Artifacts, cần bật code execution.</li>
+  </ul></div>
+  <div class="src">Đọc thêm: <a href="https://support.claude.com/en/articles/9519177-how-can-i-create-and-manage-projects">Create and manage projects</a> · <a href="https://support.claude.com/en/articles/9519189-project-visibility-and-sharing">Project visibility and sharing</a> · <a href="https://support.claude.com/en/articles/11088861-using-research-on-claude-ai">Using Research</a> · <a href="https://support.claude.com/en/articles/10684626-enabling-and-using-web-search">Web search</a> · <a href="https://support.claude.com/en/articles/9487310-what-are-artifacts-and-how-do-i-use-them">What are artifacts</a></div>
+  <label class="done"><input type="checkbox" data-lesson="l-3-1"> Đã học bài này</label>
+</article>
+
+<article class="lesson" id="l-3-2" data-domain="3" data-ts="3.2" data-min="11">
+  <header class="lh"><span class="ts">TS 3.2</span><h3>Haiku, Sonnet, Opus: ba tầng khác nhau ở độ sâu, tốc độ và hạn mức</h3><span class="rt">~11 phút</span></header>
+  <p class="need">Cần biết trước: model, model picker và context window ở <a href="#l-3-0">bài Nền tảng</a>.</p>
+  <div class="defs"><b>Khái niệm của bài</b><dl>
+    <dt>Tầng model (model tier)</dt><dd>Các cỡ của cùng một họ model Claude. Lên một tầng thì lập luận sâu hơn nhưng chậm hơn, tốn hơn. Xuống một tầng thì nhanh hơn, nhẹ hơn.</dd>
+    <dt>Haiku</dt><dd>Tầng nhỏ nhất: nhanh nhất, nhẹ hạn mức nhất. Hợp với việc đơn giản, cần ngay.</dd>
+    <dt>Sonnet</dt><dd>Tầng giữa, dùng hằng ngày. Anthropic khuyên chọn Sonnet khi chưa biết chọn gì.</dd>
+    <dt>Opus</dt><dd>Tầng mạnh nhất trong ba tầng guide nêu: lập luận sâu nhất, nhưng chậm hơn và tốn hạn mức hơn. Có từ gói Pro.</dd>
+    <dt>Độ trễ (latency)</dt><dd>Thời gian chờ tới khi có câu trả lời. Docs API xếp Haiku nhanh nhất, Sonnet nhanh, Opus chậm hơn hai tầng kia.</dd>
+  </dl></div>
+
+  <h4>Ba tầng của cùng một họ model</h4>
+  <p>Haiku, Sonnet, Opus không phải ba sản phẩm khác nhau. Đó là ba cỡ của cùng một họ, nằm trên cùng một trục đánh đổi: càng lên cao càng sâu, càng chậm, càng tốn.</p>
+  <div class="tw"><table>
+    <tr><th></th><th>Haiku</th><th>Sonnet</th><th>Opus</th></tr>
+    <tr><td>Hợp với (hướng dẫn cho người dùng app)</td><td>Trả lời nhanh, tóm tắt đơn giản, trích thông tin, tra cứu, phân loại</td><td>Viết, phân tích, nghiên cứu, việc nhiều bước, đọc ảnh, tạo tài liệu và bảng tính, viết code</td><td>Việc phức tạp cần lập luận nâng cao; nghiên cứu sâu, làm qua lại nhiều vòng</td></tr>
+    <tr><td>Tốc độ</td><td>Nhanh nhất</td><td>Nhanh</td><td>Chậm hơn hai tầng kia</td></tr>
+    <tr><td>Hạn mức trong app</td><td>Nhẹ nhất</td><td>Vừa</td><td>Nặng</td></tr>
+    <tr><td>Giá API mỗi 1M token vào / ra (để so tương đối)</td><td>Từ $0.10 / $0.50</td><td>$2 / $10</td><td>$4 / $20</td></tr>
+    <tr><td>Gói</td><td>Từ Free</td><td>Từ Free</td><td>Từ Pro</td></tr>
+  </table></div>
+  <p>Người dùng app không trả tiền theo token; họ tiêu hạn mức. Giá API chỉ cho thấy chênh lệch: mỗi token Opus đắt gấp đôi Sonnet, còn Haiku rẻ hơn nhiều lần. Haiku và Sonnet dùng ít token hơn; Opus suy nghĩ nhiều hơn nên tiêu nhiều token hơn.</p>
+
+  <h4>Cái giống nhau không giúp bạn chọn</h4>
+  <ul>
+    <li><b>Cùng thông số giới hạn.</b> Haiku 5.5, Sonnet 5.5, Opus 5.5 cùng có context window 1M token, cùng trả lời tối đa 128K token, cùng kiến thức tới tháng 6/2026, cùng nhận chữ và ảnh, cùng dùng tool (công cụ như tìm web).</li>
+    <li>Vậy “Opus đọc được nhiều hơn” hay “Haiku có context nhỏ hơn” đều sai. Ngược lại, “context như nhau nên tầng nào cũng như nhau” cũng sai. Thông số giới hạn chỉ cho biết bàn rộng cỡ nào, không cho biết người làm giỏi cỡ nào.</li>
+    <li><b>Không có tầng chuyên ngành.</b> Docs mô tả các tầng theo độ khó, tốc độ và lượng việc, không theo lĩnh vực. Không có “model cho tài chính” hay “model cho marketing”. Chữ “analysis” (phân tích) trong danh sách thế mạnh của Sonnet là một loại việc, không phải một ngành.</li>
+  </ul>
+
+  <h4>Khoảng cách lộ ra ở việc khó</h4>
+  <ul>
+    <li><b>Việc đơn giản</b> (tóm tắt email, phân loại, trích ngày tháng): ba tầng thường cho kết quả gần như nhau. Hướng dẫn chọn model của Anthropic viết: “Using Opus on a task Haiku could handle costs you tokens for no gain and slows you down in the process” (dùng Opus cho việc Haiku làm được là tốn token mà không được gì, lại còn chậm hơn).</li>
+    <li><b>Việc khó</b> (nhiều bước, lập luận dài, nhiều nguồn mâu thuẫn, chưa có cách làm sẵn): khác biệt giữa các tầng mới hiện ra.</li>
+    <li><b>Muốn so hai tầng, thử trên phần khó nhất của việc.</b> Đem 50 email dễ ra thử thì tầng nào cũng giống nhau, và bạn sẽ kết luận sai rằng tầng cao không hơn gì.</li>
+    <li>Hai câu tự hỏi để đặt việc vào tầng: việc có nhiều bước không? Có phải lập luận qua nhiều nguồn, nhiều ràng buộc không? Mỗi câu “có” kéo lên một tầng.</li>
+  </ul>
+
+  <h4>Hạn mức: tầng nặng tiêu nhanh hơn</h4>
+  <ul>
+    <li>Cùng một lượng việc, tầng nặng trừ hạn mức nhanh hơn. Chạy cả việc dễ lẫn việc khó trên Opus thì hạn mức cạn sớm.</li>
+    <li>Hướng dẫn của Anthropic cho người dùng app: chưa chắc thì <b>Sonnet</b>. Việc đơn giản, cần ngay thì <b>Haiku</b>. Đã thử Sonnet mà vẫn chật vật thì lên <b>Opus</b>.</li>
+    <li>Hết hạn mức giữa tuần vì việc dễ chạy trên Opus: chuyển việc dễ xuống Haiku, giữ Opus cho việc khó. Mở chat mới không giúp, vì hạn mức dùng tính chung trên mọi chat (<a href="#l-3-4">bài 3.4</a>).</li>
+  </ul>
+
+  <div class="story"><b>Tình huống.</b> Anh Quân ở phòng kế toán dùng Opus cho mọi việc, kể cả đổi định dạng ngày tháng trong 400 dòng Excel và gắn nhãn hóa đơn. Tới thứ Tư anh hết hạn mức tuần, đúng hôm cần phân tích chênh lệch giữa ba bản dự toán. Đồng nghiệp đề nghị chuyển hết sang Haiku “vì model nào cũng đọc được 1M token”. Cách đầu đốt hạn mức vào việc không cần lập luận sâu. Cách sau giao việc khó nhất cho tầng nhẹ nhất. Đúng ra: việc dễ, nhiều thì Haiku; phân tích dự toán thì Opus.</div>
+  <div class="vs">
+    <div class="bad"><b>Tệ</b><ul>
+      <li>Dùng Opus cho mọi việc “cho chắc”.</li>
+      <li>Chọn tầng theo ngành: “Opus cho tài chính”.</li>
+      <li>Nghĩ context như nhau thì tầng nào cũng như nhau.</li>
+      <li>So hai tầng trên việc dễ rồi kết luận tầng cao không hơn gì.</li>
+    </ul></div>
+    <div class="good"><b>Tốt</b><ul>
+      <li>Việc đơn giản, nhiều, cần nhanh: Haiku. Chưa chắc: Sonnet. Sonnet chật vật: Opus.</li>
+      <li>Chọn theo độ khó và tốc độ cần, không theo ngành.</li>
+      <li>Biết thông số giới hạn giống nhau, năng lực thì không.</li>
+      <li>So tầng trên phần khó nhất của việc.</li>
+    </ul></div>
+  </div>
+
+  <h4>Khi đi thi</h4>
+  <p class="need">Bài này thường ra 2 dạng câu hỏi. Đọc đề, <b>chọn một đáp án trước</b>; phần giải thích chỉ hiện ra sau khi bạn chọn.</p>
+
+  <div class="qcase" data-answer="D">
+    <h5 class="sub">Dạng 1: “context như nhau thì tầng nào cũng như nhau”</h5>
+    <span class="lbl">Đề sẽ viết kiểu này</span>
+    <div class="qtext">
+      <span class="en">“An analyst must compare the indemnity and termination clauses across 30 supplier contracts, flag conflicts between them, and recommend which contracts to renegotiate. The legal team will act on the result. A colleague says: ‘Haiku, Sonnet and Opus all have the same context window, so just use the cheapest.’ What is the best response?”</span>
+      <span class="vi">Dịch: Một chuyên viên phân tích phải so các điều khoản bồi thường và chấm dứt trong 30 hợp đồng nhà cung cấp, chỉ ra chỗ chúng mâu thuẫn nhau và đề xuất hợp đồng nào cần đàm phán lại. Bộ phận pháp chế sẽ hành động theo kết quả. Một đồng nghiệp nói: “Haiku, Sonnet và Opus đều có context window như nhau, cứ dùng cái rẻ nhất.” Đáp lại thế nào là đúng nhất?</span>
+    </div>
+    <span class="lbl">Bạn chọn đáp án nào?</span>
+    <div class="qopts">
+      <button type="button" class="qopt" data-k="A"><b class="k">A.</b><span class="body"><span class="en">“Agree. A model’s context window determines its capability, so identical windows mean identical results on this analysis.”</span><span class="vi">Đồng ý. Context window quyết định năng lực của model, window như nhau thì kết quả phân tích như nhau.</span></span></button>
+      <button type="button" class="qopt" data-k="B"><b class="k">B.</b><span class="body"><span class="en">“Agree, but ask Haiku to rate its confidence in each flagged conflict and recheck only the low-rated ones.”</span><span class="vi">Đồng ý, nhưng bảo Haiku tự chấm độ tin cậy cho từng chỗ mâu thuẫn, chỉ kiểm lại những chỗ điểm thấp.</span></span></button>
+      <button type="button" class="qopt" data-k="C"><b class="k">C.</b><span class="body"><span class="en">“Disagree, because Opus can produce a much longer maximum output than the other two tiers.”</span><span class="vi">Không đồng ý, vì Opus trả lời được dài hơn hẳn hai tầng còn lại.</span></span></button>
+      <button type="button" class="qopt" data-k="D"><b class="k">D.</b><span class="body"><span class="en">“Disagree. The shared limits do not separate the tiers; reasoning depth does, so this multi-step, high-stakes analysis fits a more capable tier.”</span><span class="vi">Không đồng ý. Giới hạn giống nhau không phân biệt được các tầng; độ sâu lập luận mới phân biệt, nên việc phân tích nhiều bước, rủi ro cao này hợp với tầng mạnh hơn.</span></span></button>
+    </div>
+    <p class="qfb" hidden></p>
+    <div class="qexp" hidden>
+      <span class="lbl">Phân tích đề</span>
+      <ul>
+        <li><b>Đề kể:</b> 30 hợp đồng, so chéo, tìm mâu thuẫn, đề xuất. Pháp chế sẽ làm theo.</li>
+        <li><b>Chỗ khó:</b> lập luận của đồng nghiệp đúng một nửa. Context window đúng là như nhau. Cái sai là kết luận rút ra từ đó.</li>
+        <li><b>Đề hỏi:</b> đáp lại đúng nhất, tức là vừa đúng tầng vừa đúng lý do.</li>
+      </ul>
+      <span class="lbl">Cần biết để chọn</span>
+      <ol>
+        <li>Haiku 5.5, Sonnet 5.5, Opus 5.5 cùng có context 1M token và cùng trả lời tối đa 128K token. Các thông số này không phân biệt được tầng.</li>
+        <li>Các tầng khác nhau ở độ sâu lập luận, tốc độ và hạn mức. Việc nhiều bước, nhiều nguồn mâu thuẫn, sai thì tốn kém: tầng cao.</li>
+        <li>Điểm tin cậy Claude tự chấm không phải bằng chứng đúng sai (<a href="#l-8-2">câu mẫu 1</a>).</li>
+      </ol>
+      <span class="lbl">Từng đáp án</span>
+      <ul class="verdict">
+        <li><b>A sai.</b> Gắn năng lực vào kích thước context (ý 1). Window chỉ là bàn rộng cỡ nào, không phải người làm giỏi cỡ nào.</li>
+        <li><b>B sai.</b> Vẫn là Claude chấm Claude (ý 3). Một mâu thuẫn bị bỏ sót sẽ không hiện ra để mà bị chấm điểm thấp.</li>
+        <li><b>C sai.</b> Kết luận đúng nhưng lý do sai: cả ba tầng cùng trần 128K token đầu ra (ý 1). Kiểu đáp án “đúng tầng, sai lý do” này dễ làm người ôn vội chọn nhầm.</li>
+        <li class="ok"><b>D đúng.</b> Chỉ đúng chỗ sai trong lập luận (ý 1) và chọn tầng theo độ khó, mức rủi ro (ý 2).</li>
+      </ul>
+      <button type="button" class="qreset">Làm lại câu này</button>
+    </div>
+  </div>
+
+  <div class="qcase" data-answer="B">
+    <h5 class="sub">Dạng 2: “model nào chuyên ngành của tôi”</h5>
+    <span class="lbl">Đề sẽ viết kiểu này</span>
+    <div class="qtext">
+      <span class="en">“A finance manager asks which Claude model is ‘the finance specialist’ she should use to write monthly budget-variance commentary for department heads. What is the most accurate guidance?”</span>
+      <span class="vi">Dịch: Một trưởng phòng tài chính hỏi model Claude nào là “model chuyên tài chính” để chị dùng viết phần giải thích chênh lệch ngân sách hằng tháng gửi các trưởng bộ phận. Hướng dẫn nào chính xác nhất?</span>
+    </div>
+    <span class="lbl">Bạn chọn đáp án nào?</span>
+    <div class="qopts">
+      <button type="button" class="qopt" data-k="A"><b class="k">A.</b><span class="body"><span class="en">“Opus, because it is the tier trained specifically for financial and numerical analysis.”</span><span class="vi">Opus, vì đó là tầng được huấn luyện riêng cho phân tích tài chính và số liệu.</span></span></button>
+      <button type="button" class="qopt" data-k="B"><b class="k">B.</b><span class="body"><span class="en">“No tier is a subject specialist; choose by task difficulty, speed and usage, starting with Sonnet if unsure.”</span><span class="vi">Không tầng nào chuyên một ngành; chọn theo độ khó của việc, tốc độ cần và hạn mức, chưa chắc thì bắt đầu với Sonnet.</span></span></button>
+      <button type="button" class="qopt" data-k="C"><b class="k">C.</b><span class="body"><span class="en">“Sonnet, because ‘analysis’ appears in its list of strengths, which makes it the designated finance tier.”</span><span class="vi">Sonnet, vì “analysis” (phân tích) có trong danh sách thế mạnh của nó, nên nó là tầng dành cho tài chính.</span></span></button>
+      <button type="button" class="qopt" data-k="D"><b class="k">D.</b><span class="body"><span class="en">“Haiku, because commentary on budget figures is mostly number extraction and needs little reasoning.”</span><span class="vi">Haiku, vì giải thích số liệu ngân sách chủ yếu là trích số, không cần lập luận mấy.</span></span></button>
+    </div>
+    <p class="qfb" hidden></p>
+    <div class="qexp" hidden>
+      <span class="lbl">Phân tích đề</span>
+      <ul>
+        <li><b>Đề kể:</b> một người hỏi model “chuyên tài chính” để viết giải thích chênh lệch ngân sách.</li>
+        <li><b>Chỗ khó:</b> câu hỏi đã gài sẵn một giả định sai: có model chuyên ngành. Ba đáp án nhận giả định đó, mỗi đáp án một tầng.</li>
+        <li><b>Đề hỏi:</b> hướng dẫn chính xác nhất, tức là sửa giả định trước khi chọn.</li>
+      </ul>
+      <span class="lbl">Cần biết để chọn</span>
+      <ol>
+        <li>Docs mô tả các tầng theo độ khó, tốc độ và lượng việc. Không tầng nào được mô tả là chuyên một ngành.</li>
+        <li>Hướng dẫn chọn model của Anthropic cho người dùng app: chưa chắc thì bắt đầu với Sonnet; Sonnet chật vật thì lên Opus.</li>
+        <li>Giải thích vì sao ngân sách lệch là việc lập luận (nêu nguyên nhân, so sánh), không chỉ chép số.</li>
+      </ol>
+      <span class="lbl">Từng đáp án</span>
+      <ul class="verdict">
+        <li><b>A sai.</b> Không tầng nào được huấn luyện riêng cho tài chính (ý 1). Opus mạnh hơn ở việc khó nói chung, không phải ở một ngành.</li>
+        <li class="ok"><b>B đúng.</b> Sửa giả định sai (ý 1), rồi đưa ra cách chọn đúng: theo đặc điểm của việc, xuất phát từ Sonnet (ý 2).</li>
+        <li><b>C sai.</b> “Analysis” là một loại việc, không phải một ngành (ý 1). Sonnet có thể là lựa chọn ổn ở đây, nhưng vì lý do khác hẳn.</li>
+        <li><b>D sai.</b> Giải thích chênh lệch cần lập luận (ý 3). Và chọn Haiku vì “ngành này toàn số” vẫn là chọn theo ngành.</li>
+      </ul>
+      <button type="button" class="qreset">Làm lại câu này</button>
+    </div>
+  </div>
+
+  <div class="more"><b>Biết thêm</b><ul>
+    <li><b>Guide v1.0 gọi ba tầng Haiku, Sonnet, Opus; app hiện có bốn.</b> Đó là Haiku 5.5, Sonnet 5.5, Opus 5.5 và Fable 5.1. Fable mạnh nhất, chậm nhất, tốn hạn mức nhất, chỉ có ở gói trả phí (Pro dùng qua usage credits, tức phần dùng thêm trả riêng; Max có sẵn tới một nửa hạn mức tuần). Khi thi chọn theo guide: ba tầng nhỏ nhanh, cân bằng, mạnh nhất.</li>
+    <li><b>Mythos 5.1</b> cùng năng lực với Fable nhưng chỉ dành cho tổ chức được Anthropic xác minh, không có trong app chat.</li>
+    <li><b>Docs API tả Haiku 5.5</b> là “for high-volume, latency-sensitive tasks such as classification, extraction, and routing” (cho việc số lượng lớn, cần phản hồi nhanh như phân loại, trích xuất, định tuyến).</li>
+    <li><b>Đổi model giữa chat được</b>, áp từ câu trả lời kế tiếp. Model picker còn mục “More models” (thêm model) cho các model đời cũ. Với vài chủ đề sinh học và an ninh, Claude có thể tự đổi model và báo cho bạn.</li>
+    <li><b>Enterprise:</b> admin tắt được model hoặc mức effort theo vai trò, và đặt model mặc định.</li>
+  </ul></div>
+  <div class="rule">Quy tắc: chọn tầng theo độ khó của việc, không theo ngành, không theo kích thước context.</div>
+  <div class="remember"><b>Nhớ nhanh</b><ul>
+    <li>Haiku nhanh nhất, nhẹ nhất. Sonnet cân bằng, mặc định khi chưa chắc. Opus mạnh nhất trong ba, chậm hơn, tốn hơn.</li>
+    <li>Cùng 1M token context, cùng 128K token đầu ra: không dùng để phân biệt.</li>
+    <li>Việc dễ thì ba tầng như nhau; khác biệt lộ ra ở việc khó.</li>
+    <li>Free có Haiku, Sonnet. Opus từ Pro.</li>
+  </ul></div>
+  <div class="src">Đọc thêm: <a href="https://platform.claude.com/docs/en/models/overview">Models overview</a> · <a href="https://platform.claude.com/docs/en/about-claude/models/choosing-a-model">Choosing the right model</a> · <a href="https://support.claude.com/en/articles/9797557-usage-limit-best-practices">Usage limit best practices</a> · <a href="https://support.claude.com/en/articles/10574485-using-extended-thinking">Using extended thinking</a></div>
+  <label class="done"><input type="checkbox" data-lesson="l-3-2"> Đã học bài này</label>
+</article>
+
+<article class="lesson" id="l-3-3" data-domain="3" data-ts="3.3" data-min="13">
+  <header class="lh"><span class="ts">TS 3.3</span><h3>Chọn model theo việc: cân chi phí, tốc độ và chất lượng</h3><span class="rt">~13 phút</span></header>
+  <p class="need">Cần biết trước: ba tầng Haiku, Sonnet, Opus ở <a href="#l-3-2">bài 3.2</a>.</p>
+  <div class="defs"><b>Khái niệm của bài</b><dl>
+    <dt>Chi phí (cost)</dt><dd>Trong app là hạn mức bị trừ. Trên API, và trên Enterprise tính theo lượng dùng, là tiền trả theo token.</dd>
+    <dt>Tốc độ (speed)</dt><dd>Bao lâu thì có câu trả lời. Quan trọng khi khách đang chờ, hoặc khi cả lô việc phải xong trước một giờ nhất định.</dd>
+    <dt>Chất lượng (quality)</dt><dd>Đúng, đủ, đủ sâu cho người dùng kết quả. Cái giá của một kết quả sai quyết định cần bao nhiêu chất lượng.</dd>
+    <dt>Effort (mức nỗ lực)</dt><dd>Cài đặt trong model picker quyết định Claude suy nghĩ kỹ đến đâu: Low, Medium, High, Extra high, Max. Mức cao hơn kỹ hơn, chậm hơn, tốn hơn.</dd>
+    <dt>Chi phí cho một việc xong</dt><dd>Tổng hạn mức (hoặc tiền) để ra một kết quả dùng được, tính cả lần chạy lại và thời gian sửa tay. Khác với giá mỗi token.</dd>
+  </dl></div>
+
+  <h4>Bốn câu hỏi trước khi chọn</h4>
+  <ol>
+    <li><b>Việc khó cỡ nào?</b> Nhiều bước, lập luận dài, nhiều nguồn mâu thuẫn thì lên tầng.</li>
+    <li><b>Cần nhanh cỡ nào?</b> Khách đang chờ, có hạn chót sát thì nghiêng về tầng nhanh.</li>
+    <li><b>Làm bao nhiêu lần?</b> Hàng trăm, hàng nghìn lần thì từng chút hạn mức cộng lại thành nhiều.</li>
+    <li><b>Sai thì mất gì?</b> Bản nháp nội bộ sai thì sửa. Nhận xét ảnh hưởng điểm học sinh, con số trong hợp đồng sai thì hậu quả thật, và cần người duyệt (<a href="#l-2-4">bài 2.4</a>).</li>
+  </ol>
+  <p>Câu 4 thường quyết định. Cùng là “viết nhận xét”, nhận xét cho bản nháp nội bộ và nhận xét đi kèm điểm số đòi hai mức chất lượng khác nhau.</p>
+  <div class="tw"><table>
+    <tr><th>Đề kể</th><th>Ưu tiên</th><th>Chọn</th></tr>
+    <tr><td>Nhiều, ngắn, đơn giản, cần nhanh và rẻ</td><td>Tốc độ, chi phí</td><td>Tầng nhanh, nhẹ (Haiku)</td></tr>
+    <tr><td>Việc hằng ngày, chưa chắc nên chọn gì</td><td>Cân bằng</td><td>Sonnet</td></tr>
+    <tr><td>Phân tích nhiều nguồn mâu thuẫn, sai thì tốn kém</td><td>Chất lượng</td><td>Opus</td></tr>
+    <tr><td>Lô lẫn lộn: phần lớn dễ, một ít ca khó</td><td>Cả ba</td><td>Tách ra: ca dễ tầng nhẹ, ca khó tầng mạnh</td></tr>
+  </table></div>
+  <div class="note"><b>Câu mẫu 2 của guide thuộc bài này.</b> Đề kể rất nhiều bản nháp trả lời khách, ngắn, tốc độ và chi phí quan trọng hơn lập luận sâu; đáp án là model nhanh, chi phí thấp. Lời giải guide nói dùng model mạnh nhất cho mọi việc là phí “cost and latency budget” (ngân sách chi phí và thời gian chờ). Phân tích đầy đủ ở <a href="#l-8-2">bài ôn 3 câu mẫu</a>.</div>
+
+  <h4>Hai điểm xuất phát cho một việc sẽ làm đi làm lại</h4>
+  <div class="tw"><table>
+    <tr><th></th><th>Đi từ nhẹ lên (efficiency-first)</th><th>Đi từ mạnh xuống (capability-first)</th></tr>
+    <tr><td>Bắt đầu với</td><td>Haiku</td><td>Opus</td></tr>
+    <tr><td>Rồi làm gì</td><td>Thử kỹ trên việc thật; chỉ nâng tầng khi thấy thiếu một năng lực cụ thể</td><td>Chỉnh prompt cho chạy tốt, xác nhận đạt yêu cầu, rồi hạ effort hoặc hạ tầng dần</td></tr>
+    <tr><td>Hợp với</td><td>Thử nghiệm ban đầu, cần phản hồi nhanh, ít ngân sách, việc nhiều mà đơn giản</td><td>Lập luận phức tạp, cần hiểu sắc thái, độ chính xác quan trọng hơn chi phí</td></tr>
+  </table></div>
+  <p>Hai cách này lấy từ trang chọn model trong docs API. Với một việc lẻ trong app mà chưa biết chọn gì, hướng dẫn cho người dùng app chỉ một câu: bắt đầu với Sonnet.</p>
+
+  <h4>Lô việc lẫn lộn: tách theo độ khó</h4>
+  <p>Ví dụ: 3.000 phản hồi khách sau một sự kiện, cần gắn nhãn theo sáu chủ đề trước sáng mai. Khoảng 5% là khiếu nại dài, nhiều ý, khó xếp loại.</p>
+  <ul>
+    <li><b>Dồn hết lên Opus:</b> chậm, hạn mức cạn nhanh, có thể không xong kịp. 95% phản hồi không cần tới mức lập luận đó.</li>
+    <li><b>Dồn hết xuống Haiku:</b> nhanh và nhẹ, nhưng đúng 5% ca khó dễ bị xếp sai.</li>
+    <li><b>Tách ra:</b> Haiku cho phần lớn, các ca dài hoặc được đánh dấu “không chắc” chuyển sang Sonnet hay Opus. Rồi kiểm ngẫu nhiên vài mẫu ở cả hai nhóm.</li>
+  </ul>
+  <p>Docs API gọi đây là kết hợp model: một model rẻ làm phần lớn, khi gặp quyết định khó thì chuyển cho một model mạnh hơn.</p>
+
+  <h4>Thử trên việc thật trước khi đổi tầng</h4>
+  <ul>
+    <li>Docs viết: “Having a good evaluation set is the most important step in the process” (có một bộ bài kiểm tốt là bước quan trọng nhất), và “Test with your actual prompts and data” (thử bằng prompt và dữ liệu thật của bạn).</li>
+    <li>So các tầng ở độ chính xác, chất lượng, cách xử lý ca khó. Rồi mới cân với chi phí.</li>
+    <li>Trong app: chạy cùng một đầu vào thật trên hai model, so mỗi bản với yêu cầu của việc, ghi lại mất bao lâu để sửa.</li>
+    <li><b>So chi phí cho một việc xong, không so giá mỗi token.</b> Tầng rẻ mà phải chạy lại ba lần hoặc sửa tay nửa tiếng thì chưa chắc rẻ.</li>
+    <li><b>Không tính là thử:</b>
+      <ul>
+        <li>Đổi luôn rồi chờ người dùng phàn nàn.</li>
+        <li>Hỏi Claude “Haiku có làm được không?”.</li>
+        <li>Cắt ngắn sản phẩm cho vừa sức model nhẹ.</li>
+      </ul></li>
+  </ul>
+
+  <h4>Chỉnh effort trước, đổi tầng sau</h4>
+  <p>Docs API: “Tuning effort is often a better lever than switching models” (chỉnh effort thường là đòn bẩy tốt hơn đổi model). Mức effort mặc định hợp với phần lớn việc; mức cao nhất để dành cho việc khó nhất.</p>
+  <div class="tw"><table>
+    <tr><th>Thấy gì</th><th>Làm gì</th></tr>
+    <tr><td>Chất lượng ổn, nhưng tốn hạn mức quá</td><td>Hạ effort trên model đang dùng</td></tr>
+    <tr><td>Đúng nhưng chậm</td><td>Hạ effort</td></tr>
+    <tr><td>Chất lượng tụt sau khi hạ effort</td><td>Trả effort về mức cũ trước khi nghĩ tới đổi model</td></tr>
+    <tr><td>Claude bỏ bước, làm dở chừng</td><td>Tăng effort</td></tr>
+    <tr><td>Đủ thông tin, đủ effort, vẫn sai</td><td>Lên tầng: đã chạm trần năng lực</td></tr>
+    <tr><td>Bản nháp mơ hồ vì yêu cầu viết mơ hồ</td><td>Sửa prompt; đổi model không chữa được (<a href="#l-7-1">bài 7.1</a>)</td></tr>
+  </table></div>
+
+  <div class="story"><b>Tình huống.</b> Cô Hà, tổ trưởng chuyên môn một trường cấp 3, nhờ Claude soạn nhận xét cho 160 bài luận. Thấy số lượng lớn, cô chọn Haiku cho nhanh. Vài nhận xét hiểu sai luận điểm chính của bài, mà nhận xét này đi kèm điểm. Cô đã hỏi “làm bao nhiêu lần” nhưng bỏ qua “sai thì mất gì”. Cách hợp lý: thử cả Haiku và Sonnet trên mười bài khó nhất, chọn tầng đạt yêu cầu, và giáo viên duyệt từng nhận xét trước khi trả cho học sinh.</div>
+  <div class="vs">
+    <div class="bad"><b>Tệ</b><ul>
+      <li>Luôn dùng model mạnh nhất cho mọi việc.</li>
+      <li>Chọn model rẻ nhất chỉ nhìn giá mỗi token.</li>
+      <li>Đổi tầng rồi chờ người dùng phàn nàn.</li>
+      <li>Đổi model khi vấn đề là yêu cầu viết mơ hồ.</li>
+    </ul></div>
+    <div class="good"><b>Tốt</b><ul>
+      <li>Hỏi bốn câu trước khi chọn, nhất là “sai thì mất gì”.</li>
+      <li>Tính chi phí cho một việc xong, cả công sửa.</li>
+      <li>Thử hai tầng trên dữ liệu thật, so với yêu cầu thật.</li>
+      <li>Chỉnh effort trước, đổi tầng sau.</li>
+    </ul></div>
+  </div>
+
+  <h4>Khi đi thi</h4>
+  <p class="need">Bài này thường ra 2 dạng câu hỏi. Đọc đề, <b>chọn một đáp án trước</b>; phần giải thích chỉ hiện ra sau khi bạn chọn.</p>
+
+  <div class="qcase" data-answer="A">
+    <h5 class="sub">Dạng 1: lô việc lẫn lộn, có hạn chót</h5>
+    <span class="lbl">Đề sẽ viết kiểu này</span>
+    <div class="qtext">
+      <span class="en">“Each night, an operations team must tag about 6,000 support tickets by category before a 7 a.m. stand-up. Most tickets are routine, but roughly 3% are long, ambiguous complaints that need judgement. Which approach best balances cost, speed and quality?”</span>
+      <span class="vi">Dịch: Mỗi đêm, đội vận hành phải gắn nhãn phân loại cho khoảng 6.000 phiếu hỗ trợ trước buổi họp 7 giờ sáng. Phần lớn là phiếu thường gặp, nhưng khoảng 3% là khiếu nại dài, mơ hồ, cần cân nhắc. Cách nào cân bằng tốt nhất chi phí, tốc độ và chất lượng?</span>
+    </div>
+    <span class="lbl">Bạn chọn đáp án nào?</span>
+    <div class="qopts">
+      <button type="button" class="qopt" data-k="A"><b class="k">A.</b><span class="body"><span class="en">“Tag the routine bulk with a fast, lightweight model and send only the ambiguous complaints to a more capable one.”</span><span class="vi">Gắn nhãn phần lớn phiếu thường gặp bằng model nhanh, nhẹ, chỉ chuyển các khiếu nại mơ hồ sang model mạnh hơn.</span></span></button>
+      <button type="button" class="qopt" data-k="B"><b class="k">B.</b><span class="body"><span class="en">“Run every ticket through the most capable model so that none of the ambiguous complaints is ever mislabeled.”</span><span class="vi">Cho mọi phiếu chạy qua model mạnh nhất để không khiếu nại mơ hồ nào bị gắn nhầm nhãn.</span></span></button>
+      <button type="button" class="qopt" data-k="C"><b class="k">C.</b><span class="body"><span class="en">“Run every ticket through the fastest model and accept whatever labels the ambiguous complaints happen to receive.”</span><span class="vi">Cho mọi phiếu chạy qua model nhanh nhất, các khiếu nại mơ hồ được gắn nhãn gì thì chấp nhận nhãn đó.</span></span></button>
+      <button type="button" class="qopt" data-k="D"><b class="k">D.</b><span class="body"><span class="en">“Ask Claude which single model it would recommend for this job, then use that model for the entire batch.”</span><span class="vi">Hỏi Claude nên dùng một model nào cho việc này, rồi dùng model đó cho cả lô.</span></span></button>
+    </div>
+    <p class="qfb" hidden></p>
+    <div class="qexp" hidden>
+      <span class="lbl">Phân tích đề</span>
+      <ul>
+        <li><b>Đề kể:</b> 6.000 phiếu mỗi đêm, có giờ chót 7 giờ sáng. 97% thường gặp, 3% cần cân nhắc.</li>
+        <li><b>Chỗ khó:</b> một lô mà hai loại việc. Bất kỳ đáp án nào dùng một model cho tất cả đều hy sinh một trong ba thứ.</li>
+        <li><b>Đề hỏi:</b> cách cân bằng tốt nhất cả chi phí, tốc độ và chất lượng.</li>
+      </ul>
+      <span class="lbl">Cần biết để chọn</span>
+      <ol>
+        <li>Tầng nhẹ làm tốt việc đơn giản, nhiều, nhanh và ít hạn mức. Tầng mạnh để dành cho chỗ cần cân nhắc.</li>
+        <li>Tốc độ cũng là một yêu cầu: lô lớn trên tầng chậm có thể trễ hạn, và tiêu hạn mức nhanh.</li>
+        <li>Lô lẫn lộn thì tách theo độ khó, không bắt một model gánh tất cả.</li>
+        <li>Lời Claude đoán về model nào hợp không thay được thử trên việc thật.</li>
+      </ol>
+      <span class="lbl">Từng đáp án</span>
+      <ul class="verdict">
+        <li class="ok"><b>A đúng.</b> Tách lô theo độ khó (ý 3): phần lớn chạy nhanh và nhẹ (ý 1, 2), 3% ca khó vẫn được cân nhắc đúng mức.</li>
+        <li><b>B sai.</b> Hấp dẫn vì nghe chắc ăn về chất lượng, nhưng 97% phiếu không cần tới tầng mạnh. Chậm hơn, tốn hạn mức hơn, có thể không xong trước 7 giờ (ý 2). Cùng kiểu sai với đáp án A của câu mẫu 2.</li>
+        <li><b>C sai.</b> Ngược lại: nhanh và rẻ, nhưng bỏ mặc đúng nhóm ca cần cân nhắc (ý 1, 3).</li>
+        <li><b>D sai.</b> Lời đoán của Claude không phải thử nghiệm (ý 4), và vẫn ép một model làm cả lô lẫn lộn (ý 3).</li>
+      </ul>
+      <button type="button" class="qreset">Làm lại câu này</button>
+    </div>
+  </div>
+
+  <div class="qcase" data-answer="D">
+    <h5 class="sub">Dạng 2: định đổi xuống tầng rẻ hơn, làm gì trước</h5>
+    <span class="lbl">Đề sẽ viết kiểu này</span>
+    <div class="qtext">
+      <span class="en">“A training coordinator uses Opus every week to turn workshop notes into a two-page summary that managers use to plan follow-up coaching. To save the team’s usage, her manager suggests moving the task to Sonnet. What should she do first?”</span>
+      <span class="vi">Dịch: Một điều phối viên đào tạo tuần nào cũng dùng Opus để biến ghi chú buổi workshop thành bản tóm tắt hai trang; các quản lý dựa vào bản này để lên kế hoạch kèm cặp tiếp theo. Để tiết kiệm hạn mức của nhóm, quản lý đề nghị chuyển việc này sang Sonnet. Chị nên làm gì trước tiên?</span>
+    </div>
+    <span class="lbl">Bạn chọn đáp án nào?</span>
+    <div class="qopts">
+      <button type="button" class="qopt" data-k="A"><b class="k">A.</b><span class="body"><span class="en">“Switch to Sonnet immediately and ask the managers to report any problems they notice in the summaries.”</span><span class="vi">Chuyển sang Sonnet ngay, nhờ các quản lý báo lại nếu thấy bản tóm tắt có vấn đề.</span></span></button>
+      <button type="button" class="qopt" data-k="B"><b class="k">B.</b><span class="body"><span class="en">“Ask Claude whether Sonnet would produce summaries as good as Opus does, and switch if it says yes.”</span><span class="vi">Hỏi Claude xem Sonnet có tóm tắt tốt bằng Opus không, nếu nó nói có thì chuyển.</span></span></button>
+      <button type="button" class="qopt" data-k="C"><b class="k">C.</b><span class="body"><span class="en">“Cut the summary down to one page so that the lighter model has less to get right.”</span><span class="vi">Rút bản tóm tắt xuống còn một trang để model nhẹ hơn có ít thứ phải làm đúng.</span></span></button>
+      <button type="button" class="qopt" data-k="D"><b class="k">D.</b><span class="body"><span class="en">“Run next week’s real notes through both models and compare each summary with what managers need, including editing time.”</span><span class="vi">Cho ghi chú thật của tuần tới chạy qua cả hai model, so mỗi bản tóm tắt với những gì quản lý cần, tính cả thời gian sửa.</span></span></button>
+    </div>
+    <p class="qfb" hidden></p>
+    <div class="qexp" hidden>
+      <span class="lbl">Phân tích đề</span>
+      <ul>
+        <li><b>Đề kể:</b> một việc lặp lại hằng tuần đang chạy tốt trên Opus. Có đề nghị chuyển xuống Sonnet để đỡ tốn.</li>
+        <li><b>Chỗ khó:</b> các quản lý dựa vào bản tóm tắt để ra quyết định. Đổi mà hỏng thì người chịu là họ.</li>
+        <li><b>Đề hỏi:</b> bước đầu tiên, tức là bước cho biết có nên đổi hay không.</li>
+      </ul>
+      <span class="lbl">Cần biết để chọn</span>
+      <ol>
+        <li>Docs: thử bằng prompt và dữ liệu thật; so độ chính xác, chất lượng, ca khó, rồi mới cân chi phí.</li>
+        <li>So chi phí cho một việc xong: bản rẻ hơn mà phải sửa tay lâu thì chưa chắc tiết kiệm.</li>
+        <li>Yêu cầu của sản phẩm do người dùng nó đặt ra, không phải do sức của model.</li>
+      </ol>
+      <span class="lbl">Từng đáp án</span>
+      <ul class="verdict">
+        <li><b>A sai.</b> Đổi trước, kiểm sau. Người phát hiện lỗi lại chính là các quản lý đang dựa vào bản tóm tắt để lên kế hoạch.</li>
+        <li><b>B sai.</b> Câu “được” của Claude nghe yên tâm nhưng không thử gì cả (ý 1). Lời đoán về một model khác không phải bằng chứng.</li>
+        <li><b>C sai.</b> Cắt bớt sản phẩm cho vừa sức model là đổi yêu cầu của việc (ý 3). Các quản lý vẫn cần đủ thông tin.</li>
+        <li class="ok"><b>D đúng.</b> Thử trên dữ liệu thật, so với yêu cầu thật, tính cả công sửa (ý 1, 2). Sonnet đạt thì đổi, có bằng chứng trong tay.</li>
+      </ul>
+      <button type="button" class="qreset">Làm lại câu này</button>
+    </div>
+  </div>
+
+  <div class="more"><b>Biết thêm</b><ul>
+    <li><b>Hai trang chính thức khuyên điểm xuất phát khác nhau.</b> Docs API viết “start with Claude Opus 5.5 for most workloads” (bắt đầu với Opus 5.5 cho phần lớn khối việc). Hướng dẫn cho người dùng app nói chưa chắc thì chọn Sonnet. Hai trang viết cho hai đối tượng. Đề Associate dành cho người dùng app, và câu mẫu 2 nghiêng về model nhẹ cho việc đơn giản: theo hướng dẫn cho app.</li>
+    <li><b>Fable 5.1 ở trên Opus.</b> Docs API: chỉ chuyển lên Fable khi Opus ở effort cao nhất vẫn chưa đạt. Giá API $10 / $50 mỗi 1M token vào / ra. Guide không nhắc Fable; khi thi nghĩ theo ba tầng.</li>
+    <li><b>Enterprise tính theo lượng dùng ở giá API</b>, nên ở đó chọn tầng là chọn tiền thật, không chỉ hạn mức.</li>
+    <li><b>Effort và thinking là hai cài đặt riêng.</b> Các model mới nhất không tắt được thinking; muốn nhẹ hơn thì hạ effort.</li>
+  </ul></div>
+  <div class="rule">Quy tắc: chọn tầng nhẹ nhất làm tốt được việc, tách lô lẫn lộn theo độ khó, và thử trên việc thật trước khi đổi.</div>
+  <div class="remember"><b>Nhớ nhanh</b><ul>
+    <li>Bốn câu: khó cỡ nào, cần nhanh cỡ nào, bao nhiêu lần, sai thì mất gì.</li>
+    <li>Chưa chắc thì Sonnet. Đơn giản, nhiều thì Haiku. Sonnet chật vật thì Opus.</li>
+    <li>So chi phí cho một việc xong, thử bằng dữ liệu thật.</li>
+    <li>Chất lượng ổn mà tốn thì hạ effort trước khi đổi model.</li>
+  </ul></div>
+  <div class="src">Đọc thêm: <a href="https://platform.claude.com/docs/en/about-claude/models/choosing-a-model">Choosing the right model</a> · <a href="https://platform.claude.com/docs/en/models/overview">Models overview</a> · <a href="https://support.claude.com/en/articles/10574485-using-extended-thinking">Using extended thinking (effort)</a> · <a href="https://support.claude.com/en/articles/9797557-usage-limit-best-practices">Usage limit best practices</a></div>
+  <label class="done"><input type="checkbox" data-lesson="l-3-3"> Đã học bài này</label>
+</article>
+
+<article class="lesson" id="l-3-4" data-domain="3" data-ts="3.4" data-min="14">
+  <header class="lh"><span class="ts">TS 3.4</span><h3>Context có hạn: khi nào mở chat mới, khi nào tóm tắt, khi nào lưu lại</h3><span class="rt">~14 phút</span></header>
+  <p class="need">Cần biết trước: token, context window và bảng “context, Project, memory” ở <a href="#l-3-0">bài Nền tảng</a>.</p>
+  <div class="defs"><b>Khái niệm của bài</b><dl>
+    <dt>Hạn mức dùng (usage limit)</dt><dd>Giới hạn tổng lượng dùng trên mọi chat theo thời gian. Gói trả phí có giới hạn theo phiên (reset đủ 5 giờ sau tin nhắn đầu tiên của phiên) và giới hạn theo tuần.</dd>
+    <dt>Giới hạn độ dài (length limit)</dt><dd>Giới hạn một chat dài được bao nhiêu. Do context window của model quyết định.</dd>
+    <dt>Tự quản lý context (automatic context management)</dt><dd>Trên gói trả phí có bật code execution, khi chat gần chạm giới hạn, Claude tự tóm tắt các tin nhắn cũ để chat tiếp.</dd>
+    <dt>Lưu lại (persist)</dt><dd>Đặt thông tin vào chỗ mà chat sau vẫn thấy: project knowledge, project instructions, Instructions for Claude (lời dặn cấp tài khoản, trước gọi là profile preferences), memory.</dd>
+    <dt>Memory</dt><dd>Claude ghi dần các ý về bạn thành từng chủ đề trong lúc chat, hoặc khi bạn bảo “nhớ cái này”, rồi dùng lại ở chat sau.</dd>
+    <dt>Chat ẩn danh (incognito chat)</dt><dd>Chat không lưu vào lịch sử, không ghi vào memory, không dùng memory cũ.</dd>
+  </dl></div>
+
+  <h4>Context chứa gì, và vì sao nhiều hơn chưa chắc tốt hơn</h4>
+  <ul>
+    <li>Mỗi lần trả lời, Claude dựa trên mọi thứ đang nằm trong context: tin nhắn cũ, file, instructions, knowledge, kết quả tool và connector.</li>
+    <li><b>Claude không học từ lời sửa ở chat khác.</b> Sửa ở chat tuần trước không làm model khá hơn ở chat tuần này. Chỉ thứ đã lưu mới đi theo.</li>
+    <li><b>Nhiều hơn chưa chắc tốt hơn.</b> Bài viết kỹ thuật của Anthropic gọi hiện tượng này là “context rot” (context bị mục): “as the number of tokens in the context window increases, the model’s ability to accurately recall information from that context decreases” (token trong context càng nhiều, khả năng nhớ chính xác thông tin trong đó càng giảm).</li>
+    <li>Tool và connector tốn nhiều token. Một chat có năm connector đang bật, ba bản nháp bỏ dở và hai file PDF không dùng nữa thì phần việc chính bị lẫn giữa đống thứ thừa.</li>
+  </ul>
+  <p>Dọn context:</p>
+  <ul>
+    <li>Gỡ file không dùng nữa khỏi chat hoặc Project.</li>
+    <li>Tắt connector và web search khi việc không cần.</li>
+    <li>Giữ project instructions ngắn, vì chúng nằm trong mọi chat.</li>
+    <li>Hạ effort khi không cần suy nghĩ sâu.</li>
+    <li>Mở chat mới cho việc không liên quan.</li>
+  </ul>
+
+  <h4>Hai giới hạn, hai cách xử lý</h4>
+  <div class="tw"><table>
+    <tr><th></th><th>Hạn mức dùng (usage limit)</th><th>Giới hạn độ dài (length limit)</th></tr>
+    <tr><td>Giới hạn cái gì</td><td>Tổng lượng dùng trên mọi chat, trong một khoảng thời gian</td><td>Độ dài của một chat</td></tr>
+    <tr><td>Do đâu</td><td>Gói của bạn</td><td>Context window của model</td></tr>
+    <tr><td>Khi nào hết</td><td>Phiên: reset 5 giờ sau tin nhắn đầu. Tuần: reset vào một mốc cố định mỗi tuần</td><td>Không reset; chat đó đã đầy</td></tr>
+    <tr><td>Xử lý</td><td>Chờ reset, nâng gói (áp ngay), hoặc dùng usage credits (phần dùng thêm trả riêng)</td><td>Mở chat mới, hoặc dùng Project</td></tr>
+    <tr><td>Nâng gói có giúp không</td><td>Có</td><td>Không. Help center: “you can’t increase the fixed context window size for your plan” (bạn không tăng được kích thước context window cố định của gói)</td></tr>
+  </table></div>
+  <ul>
+    <li>Xem hạn mức còn lại ở Settings → Usage. Claude trên web, Desktop và Claude Code trừ chung một hạn mức.</li>
+    <li><b>Hai giới hạn dính nhau.</b> Chat càng dài, mỗi tin nhắn càng tốn hạn mức. Help center khuyên: sắp hết hạn mức trong một chat dài thì thử mở chat mới.</li>
+    <li>Nhưng khi đã hết hạn mức thì mở chat mới không gỡ được, vì hạn mức tính chung trên mọi chat.</li>
+  </ul>
+
+  <h4>Chat dài trên gói trả phí: Claude tự tóm tắt</h4>
+  <ul>
+    <li><b>Điều kiện:</b> gói trả phí và bật code execution.</li>
+    <li><b>Claude làm gì:</b> tóm tắt các tin nhắn cũ để có chỗ cho nội dung mới, rồi chat tiếp. Toàn bộ lịch sử vẫn được giữ, Claude vẫn tham chiếu được. Model không đổi. Bạn có thể thấy dòng “organizing its thoughts” (đang sắp xếp suy nghĩ).</li>
+    <li><b>Cái giá:</b> tốn hạn mức hơn. Thỉnh thoảng vẫn chạm giới hạn.</li>
+    <li><b>Rủi ro:</b> bản tóm tắt nén chi tiết. Một con số hay một ràng buộc chốt từ đầu có thể bị nén mất, trong khi câu trả lời vẫn đọc rất trôi chảy và trông như đầy đủ.</li>
+    <li><b>Cách giữ:</b> nhắc lại con số, ràng buộc, quyết định quan trọng trong tin nhắn tiếp theo. Tốt hơn nữa, lưu chúng ra ngoài chat.</li>
+  </ul>
+
+  <h4>Mở chat mới, tóm tắt, hay lưu lại</h4>
+  <div class="tw"><table>
+    <tr><th>Tình huống</th><th>Làm gì</th></tr>
+    <tr><td>Chuyển sang một việc không liên quan</td><td><b>Mở chat mới</b></td></tr>
+    <tr><td>Cùng một mạch việc, chat đã dài, câu trả lời bắt đầu lệch</td><td><b>Tóm tắt:</b> tự liệt kê (hoặc nhờ Claude liệt kê rồi tự kiểm) các quyết định, con số, ràng buộc, việc còn mở; mang bản đó sang chat mới</td></tr>
+    <tr><td>Tài liệu, lời dặn mà mọi chat của việc này đều cần</td><td><b>Lưu</b> vào Project: knowledge và instructions</td></tr>
+    <tr><td>Điều về bạn lặp lại ở mọi chat (vai trò, cách trình bày ưa thích)</td><td><b>Lưu</b> vào Instructions for Claude hoặc để memory ghi</td></tr>
+    <tr><td>Tuần nào cũng gõ lại cùng một lời sửa</td><td>Dấu hiệu phải <b>lưu</b>: đưa lời sửa vào project instructions</td></tr>
+    <tr><td>Chuyện riêng, không muốn chat được lưu hay ghi vào memory</td><td><b>Chat ẩn danh</b></td></tr>
+  </table></div>
+  <ul>
+    <li>Mở chat mới chỉ “miễn phí” khi thứ quan trọng đã được lưu. Chưa lưu mà bỏ chat là bỏ luôn các quyết định trong đó.</li>
+    <li>Giữ phần lưu gọn. Project instructions nằm trong mọi chat; viết dài thì chat nào cũng tốn chỗ.</li>
+    <li>Memory hợp với ý ngắn về bạn. Tài liệu đầy đủ của một mảng việc thì để trong project knowledge.</li>
+  </ul>
+
+  <h4>Memory, tìm chat cũ, chat ẩn danh: cái gì được nhớ</h4>
+  <div class="tw"><table>
+    <tr><th></th><th>Memory</th><th>Chat search (tìm chat cũ)</th><th>Chat ẩn danh</th></tr>
+    <tr><td>Làm gì</td><td>Ghi các ý về bạn thành từng chủ đề trong lúc chat</td><td>Khi bạn hỏi, Claude tìm trong các chat cũ</td><td>Không lưu lịch sử, không ghi memory, không dùng memory cũ</td></tr>
+    <tr><td>Gói</td><td>Bật sẵn ở Free, Pro, Max, Ultra. Team, Enterprise: Owner bật, từng người tự bật</td><td>Gói trả phí</td><td>Mọi gói</td></tr>
+    <tr><td>Ranh giới</td><td>Mỗi Project có memory riêng. Chat trong Project dùng memory của Project đó và memory tài khoản, không dùng memory Project khác</td><td>Không vượt ranh giới Project. Không tìm trong chat ẩn danh</td><td>Không có trong Project</td></tr>
+    <tr><td>Quản lý</td><td>Settings → Your Claude → Manage: đọc, sửa, xóa từng chủ đề. Pause giữ memory nhưng ngừng dùng và ngừng ghi. Reset xóa hết, kể cả memory Project</td><td>Bật tắt bằng “Search and reference chats” (tìm và tham chiếu chat)</td><td>Bấm biểu tượng con ma khi mở chat mới ngoài Project; không đổi thành chat thường được</td></tr>
+  </table></div>
+  <ul>
+    <li><b>Xóa một chat không xóa các memory đã ghi từ chat đó.</b> Muốn Claude quên thì xóa trong phần quản lý memory, hoặc bảo Claude quên.</li>
+    <li><b>Tắt memory cho một chat:</b> tắt “Memory” trong menu “+” trước tin nhắn đầu tiên. Chat vẫn nằm trong lịch sử và tìm lại được. Đang ở trong Project, không có chat ẩn danh, thì dùng cách này.</li>
+    <li><b>Muốn tách hẳn một Project</b> khỏi memory tài khoản: tắt “Use account memory” (dùng memory tài khoản) ở trang của Project.</li>
+    <li><b>Không bao giờ được ghi vào memory:</b> số giấy tờ tùy thân, tiền án, số tài khoản tài chính, tình trạng cư trú. Chủ đề nhạy cảm (sức khỏe, tôn giáo, chính trị…) mặc định không ghi, trừ khi bạn tự bật.</li>
+    <li><b>Chat ẩn danh vẫn thấy</b> Instructions for Claude và style (kiểu trình bày câu trả lời) của bạn, vẫn được giữ 30 ngày theo mặc định, không dùng để huấn luyện model. Trên Team, Enterprise, chat ẩn danh vẫn hiện trong bản xuất dữ liệu và Compliance API (cổng để tổ chức truy xuất dữ liệu chat). Ẩn danh không phải cách lách chính sách dữ liệu (<a href="#l-6-2">bài 6.2</a>).</li>
+  </ul>
+
+  <div class="story"><b>Tình huống.</b> Anh Phong phân tích phản hồi khách của cả quý trong một chat, mỗi tuần dán thêm dữ liệu một tuần. Tới tuần thứ mười, Claude báo số khiếu nại về giao hàng thấp hơn hẳn số anh đếm tay. Chat đã được tự tóm tắt, và số liệu mấy tuần đầu bị nén. Cùng lúc, anh hết hạn mức sớm hơn mọi khi, vì chat dài làm mỗi tin nhắn tốn hơn. Cách làm đúng: mỗi tuần một chat, cuối tuần lưu bản tổng hợp số liệu (đã tự kiểm) vào project knowledge, cuối quý gộp từ các bản đã lưu.</div>
+  <div class="vs">
+    <div class="bad"><b>Tệ</b><ul>
+      <li>Một chat cho mọi việc, kéo dài hàng tuần.</li>
+      <li>Tin rằng bản tự tóm tắt giữ đủ mọi con số.</li>
+      <li>Nâng gói để chat chứa được nhiều hơn.</li>
+      <li>Mở chat mới khi chưa lưu những gì đã chốt.</li>
+      <li>Tuần nào cũng gõ lại cùng một lời sửa.</li>
+    </ul></div>
+    <div class="good"><b>Tốt</b><ul>
+      <li>Việc mới thì chat mới.</li>
+      <li>Chat đã dài thì nhắc lại con số, ràng buộc quan trọng.</li>
+      <li>Gặp giới hạn độ dài thì chat mới hoặc Project, chia nhỏ đầu vào.</li>
+      <li>Lưu quyết định ra Project trước khi rời chat.</li>
+      <li>Lời sửa lặp lại thì đưa vào instructions.</li>
+    </ul></div>
+  </div>
+
+  <h4>Khi đi thi</h4>
+  <p class="need">Bài này thường ra 2 dạng câu hỏi. Đọc đề, <b>chọn một đáp án trước</b>; phần giải thích chỉ hiện ra sau khi bạn chọn.</p>
+
+  <div class="qcase" data-answer="B">
+    <h5 class="sub">Dạng 1: giới hạn độ dài hay hạn mức dùng</h5>
+    <span class="lbl">Đề sẽ viết kiểu này</span>
+    <div class="qtext">
+      <span class="en">“A Pro-plan user has been working in one long chat and now pastes in a 250-page interview transcript. Claude responds that the message would exceed the length limit for this chat. She plans to upgrade to Max so that the chat can hold the transcript. What is the most appropriate next step?”</span>
+      <span class="vi">Dịch: Một người dùng gói Pro đang làm việc trong một chat dài, giờ dán vào bản ghi phỏng vấn 250 trang. Claude báo tin nhắn sẽ vượt giới hạn độ dài của chat này. Chị định nâng lên gói Max để chat chứa được bản ghi. Bước tiếp theo phù hợp nhất là gì?</span>
+    </div>
+    <span class="lbl">Bạn chọn đáp án nào?</span>
+    <div class="qopts">
+      <button type="button" class="qopt" data-k="A"><b class="k">A.</b><span class="body"><span class="en">“Upgrade to Max, because higher plans come with a larger context window for every chat.”</span><span class="vi">Nâng lên Max, vì gói cao hơn có context window lớn hơn cho mỗi chat.</span></span></button>
+      <button type="button" class="qopt" data-k="B"><b class="k">B.</b><span class="body"><span class="en">“Start a new chat or use a Project, and give Claude the transcript in parts or only the sections the task needs.”</span><span class="vi">Mở chat mới hoặc dùng Project, rồi đưa bản ghi theo từng phần, hoặc chỉ những đoạn việc này cần.</span></span></button>
+      <button type="button" class="qopt" data-k="C"><b class="k">C.</b><span class="body"><span class="en">“Wait for the five-hour usage reset, then paste the transcript into the same chat again.”</span><span class="vi">Chờ hạn mức reset sau 5 giờ, rồi dán lại bản ghi vào chính chat đó.</span></span></button>
+      <button type="button" class="qopt" data-k="D"><b class="k">D.</b><span class="body"><span class="en">“Switch the chat to Haiku, because a lighter model can fit more text into the same conversation.”</span><span class="vi">Đổi chat sang Haiku, vì model nhẹ hơn chứa được nhiều chữ hơn trong cùng một chat.</span></span></button>
+    </div>
+    <p class="qfb" hidden></p>
+    <div class="qexp" hidden>
+      <span class="lbl">Phân tích đề</span>
+      <ul>
+        <li><b>Đề kể:</b> một chat đã dài, thêm một bản ghi 250 trang, Claude báo vượt giới hạn độ dài.</li>
+        <li><b>Chỗ khó:</b> đề có hai loại giới hạn, và người dùng đang chữa nhầm loại. Thông báo nói “độ dài của chat này”, không nói “hết hạn mức”.</li>
+        <li><b>Đề hỏi:</b> bước tiếp theo phù hợp nhất.</li>
+      </ul>
+      <span class="lbl">Cần biết để chọn</span>
+      <ol>
+        <li>Giới hạn độ dài là của một chat, do context window của model quyết định. Help center: không tăng được kích thước context window cố định của gói.</li>
+        <li>Hạn mức dùng (phiên 5 giờ, tuần) là chuyện khác. Chờ reset hay nâng gói chỉ chữa hạn mức dùng.</li>
+        <li>Help center chỉ cách xử lý giới hạn độ dài: mở chat mới, hoặc dùng Project.</li>
+        <li>Haiku 5.5, Sonnet 5.5, Opus 5.5 cùng có context 1M token.</li>
+      </ol>
+      <span class="lbl">Từng đáp án</span>
+      <ul class="verdict">
+        <li><b>A sai.</b> Nhầm hai loại giới hạn (ý 1, 2). Nâng gói cho thêm hạn mức dùng, không làm context window to ra. Hấp dẫn vì “trả thêm tiền thì được nhiều hơn” nghe hợp lý.</li>
+        <li class="ok"><b>B đúng.</b> Đúng cách help center chỉ (ý 3). Chat mới không kéo theo phần lịch sử dài đang chiếm chỗ; chia nhỏ hoặc chỉ đưa đoạn cần thì vừa context hơn.</li>
+        <li><b>C sai.</b> Reset 5 giờ là của hạn mức dùng (ý 2). Chờ xong, chat cũ vẫn đầy như vậy.</li>
+        <li><b>D sai.</b> Cùng context 1M token (ý 4). Đổi sang Haiku không cho chat thêm chỗ.</li>
+      </ul>
+      <button type="button" class="qreset">Làm lại câu này</button>
+    </div>
+  </div>
+
+  <div class="qcase" data-answer="C">
+    <h5 class="sub">Dạng 2: chat dài quên điều đã chốt</h5>
+    <span class="lbl">Đề sẽ viết kiểu này</span>
+    <div class="qtext">
+      <span class="en">“An events coordinator has used one chat for four weeks to plan a conference. Claude’s newest schedule ignores two constraints agreed in week one: the venue holds 180 people, and nothing can be scheduled on Friday. What is the most appropriate next step?”</span>
+      <span class="vi">Dịch: Một điều phối viên sự kiện đã dùng một chat suốt bốn tuần để lên kế hoạch hội thảo. Lịch mới nhất của Claude bỏ qua hai ràng buộc đã chốt từ tuần đầu: hội trường chứa 180 người, và không xếp gì vào thứ Sáu. Bước tiếp theo phù hợp nhất là gì?</span>
+    </div>
+    <span class="lbl">Bạn chọn đáp án nào?</span>
+    <div class="qopts">
+      <button type="button" class="qopt" data-k="A"><b class="k">A.</b><span class="body"><span class="en">“Repeat both constraints in capital letters in the same chat and ask Claude to try again.”</span><span class="vi">Nhắc lại hai ràng buộc bằng chữ in hoa trong chính chat đó, rồi bảo Claude làm lại.</span></span></button>
+      <button type="button" class="qopt" data-k="B"><b class="k">B.</b><span class="body"><span class="en">“Ask Claude to write a full recap of the entire four-week chat, then keep working in the same thread.”</span><span class="vi">Nhờ Claude viết bản tóm tắt đầy đủ cả bốn tuần chat, rồi tiếp tục làm trong chính chat đó.</span></span></button>
+      <button type="button" class="qopt" data-k="C"><b class="k">C.</b><span class="body"><span class="en">“List the decisions and constraints that must hold, save them as project knowledge, and continue in a new chat in that Project.”</span><span class="vi">Liệt kê các quyết định và ràng buộc phải giữ, lưu chúng làm project knowledge, rồi làm tiếp trong một chat mới thuộc Project đó.</span></span></button>
+      <button type="button" class="qopt" data-k="D"><b class="k">D.</b><span class="body"><span class="en">“Delete the old chat so that Claude’s memory forgets the outdated drafts, then start the planning over.”</span><span class="vi">Xóa chat cũ để memory của Claude quên các bản nháp lỗi thời, rồi lên kế hoạch lại từ đầu.</span></span></button>
+    </div>
+    <p class="qfb" hidden></p>
+    <div class="qexp" hidden>
+      <span class="lbl">Phân tích đề</span>
+      <ul>
+        <li><b>Đề kể:</b> một chat bốn tuần. Hai ràng buộc chốt từ tuần đầu giờ bị bỏ qua.</li>
+        <li><b>Chỗ khó:</b> Claude không “cãi” ràng buộc, nó không còn thấy rõ chúng. Chat dài đã được tóm tắt, chi tiết đầu chat bị nén.</li>
+        <li><b>Đề hỏi:</b> bước tiếp theo phù hợp nhất, tức là cách sửa tận gốc chứ không chỉ sửa lịch lần này.</li>
+      </ul>
+      <span class="lbl">Cần biết để chọn</span>
+      <ol>
+        <li>Chat dài trên gói trả phí được tự tóm tắt. Chi tiết đầu chat có thể bị nén mất, trong khi câu trả lời vẫn trôi chảy.</li>
+        <li>Thứ phải đúng suốt cả việc nên được lưu ra ngoài chat (project knowledge, instructions). Chat mới trong Project thấy ngay.</li>
+        <li>Xóa một chat không xóa các memory đã ghi từ chat đó.</li>
+        <li>Nhờ Claude tóm tắt cả bốn tuần trong chính chat đó là nhờ nó dựa vào đúng phần lịch sử đang bị nén.</li>
+      </ol>
+      <span class="lbl">Từng đáp án</span>
+      <ul class="verdict">
+        <li><b>A sai.</b> Vá triệu chứng. Viết hoa có thể sửa được lượt này, nhưng chat vẫn dài thêm và chuyện cũ sẽ lặp lại (ý 1).</li>
+        <li><b>B sai.</b> Hấp dẫn vì nghe như “tóm tắt rồi đi tiếp”. Nhưng bản tóm tắt dựa trên lịch sử đã bị nén (ý 4), dài, tốn chỗ, và có thể sót đúng hai ràng buộc đang thiếu. Thiếu bước tự liệt kê và kiểm.</li>
+        <li class="ok"><b>C đúng.</b> Tự liệt kê thứ phải giữ, lưu ở chỗ mọi chat sau đều thấy (ý 2). Chat mới nhẹ, không kéo theo bốn tuần nháp cũ.</li>
+        <li><b>D sai.</b> Xóa chat không xóa memory (ý 3), và còn bỏ luôn bốn tuần công sức mà chưa lưu lại quyết định nào.</li>
+      </ul>
+      <button type="button" class="qreset">Làm lại câu này</button>
+    </div>
+  </div>
+
+  <div class="more"><b>Biết thêm</b><ul>
+    <li><b>Guide v1.0 nói “memory considerations” (những điều cần cân nhắc về memory).</b> App hiện nay có đủ bộ ba: memory (bật sẵn ở Free, Pro, Max, Ultra), tìm chat cũ (chỉ gói trả phí) và chat ẩn danh (mọi gói), cộng memory riêng cho từng Project. Khi thi chọn theo guide: biết lúc nào nên lưu, lúc nào nên bắt đầu lại.</li>
+    <li><b>Kích thước context trong chat gói trả phí:</b> Fable 5.1, Opus 5.5, Sonnet 5.5, Haiku 5.5 đều 1M token. Vài model đời cũ có 500K. Model không có tên trong danh sách thì 200K. Trang help về gói Team vẫn ghi 200K, là thông tin cũ. Một phần window để dành cho câu trả lời, nên chat dài nhất ngắn hơn window một chút.</li>
+    <li><b>Nội dung Project được lưu đệm (cache)</b> nên dùng lại tốn ít hạn mức hơn. Bộ đệm hết hạn khi lâu không dùng, nên tin nhắn đầu sau một thời gian nghỉ tính đủ.</li>
+    <li><b>Project nhiều tài liệu:</b> gói trả phí tự chuyển sang RAG khi knowledge gần chạm giới hạn context (<a href="#l-5-2">bài 5.2</a>).</li>
+    <li><b>Giới hạn file:</b> tối đa 20 file mỗi chat. File trong Project tối đa 30MB. PDF dài hơn 100 trang thì chỉ đọc chữ, không đọc hình.</li>
+    <li><b>Team, Enterprise:</b> Owner không xem được memory của thành viên. Owner tắt memory cho cả tổ chức là xóa vĩnh viễn memory của mọi người.</li>
+  </ul></div>
+  <div class="rule">Quy tắc: việc mới thì chat mới, việc cũ quá dài thì tóm tắt rồi tự kiểm, thứ phải dùng lại thì lưu vào Project hoặc memory trước khi rời chat.</div>
+  <div class="remember"><b>Nhớ nhanh</b><ul>
+    <li>Hạn mức dùng (mọi chat, reset theo phiên và tuần) khác giới hạn độ dài (một chat, do context window). Nâng gói không làm context to ra.</li>
+    <li>Chat dài được tự tóm tắt (gói trả phí, bật code execution): lịch sử giữ nguyên, chi tiết có thể bị nén.</li>
+    <li>Lời sửa lặp lại là dấu hiệu phải lưu. Mở chat mới chỉ an toàn khi thứ quan trọng đã được lưu.</li>
+    <li>Xóa chat không xóa memory. Chat ẩn danh không có trong Project; ở đó thì tắt Memory trong “+” trước tin đầu.</li>
+  </ul></div>
+  <div class="src">Đọc thêm: <a href="https://support.claude.com/en/articles/11647753-how-do-usage-and-length-limits-work">Usage and length limits</a> · <a href="https://support.claude.com/en/articles/8606394-how-large-is-the-context-window-on-paid-claude-plans">Context window on paid plans</a> · <a href="https://support.claude.com/en/articles/11817273-use-claude-s-chat-search-and-memory-to-build-on-previous-context">Chat search and memory</a> · <a href="https://support.claude.com/en/articles/12260368-use-incognito-chats">Incognito chats</a> · <a href="https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents">Effective context engineering</a></div>
+  <label class="done"><input type="checkbox" data-lesson="l-3-4"> Đã học bài này</label>
+</article>
+
+<section class="summary" id="sum-d3">
+  <h3>Tổng kết Domain 3</h3>
+  <ul>
+    <li><b>Bốn quyết định trước prompt:</b> dùng Claude ở đâu, bật tính năng nào, chọn model nào, context gồm những gì.</li>
+    <li><b>Chat là điểm xuất phát.</b> Lặp lại trên cùng tài liệu thì Project. Nhiều nguồn, cần dẫn nguồn thì Research. Sản phẩm để sửa, dùng lại, chia sẻ thì artifact.</li>
+    <li><b>Research:</b> gói trả phí, cần web search, luôn chạy Opus 5.5. Đổi model trong chat không làm Research rẻ hơn. Cần connector thì bắt đầu trên web hoặc desktop.</li>
+    <li><b>Ba tầng:</b> Haiku nhanh và nhẹ nhất, Sonnet cân bằng, Opus mạnh nhất trong ba nhưng chậm và tốn hơn. Cùng context 1M, cùng 128K đầu ra, và không tầng nào chuyên một ngành.</li>
+    <li><b>Chọn tầng</b> theo độ khó, tốc độ cần, số lượng và cái giá của sai. Lô lẫn lộn thì tách. Chưa chắc thì Sonnet.</li>
+    <li><b>Đổi tầng phải có bằng chứng:</b> chạy dữ liệu thật trên cả hai, so với yêu cầu, tính chi phí cho một việc xong. Chất lượng ổn mà tốn thì hạ effort trước.</li>
+    <li><b>Hạn mức dùng khác giới hạn độ dài.</b> Hạn mức tính trên mọi chat và reset theo phiên, theo tuần. Độ dài là của một chat, do context window. Nâng gói không làm context to ra.</li>
+    <li><b>Chat dài được tự tóm tắt</b> (gói trả phí, bật code execution). Lịch sử giữ nguyên nhưng chi tiết có thể bị nén; nhắc lại thứ quan trọng.</li>
+    <li><b>Việc mới thì chat mới, việc cũ dài thì tóm tắt và kiểm, thứ phải dùng lại thì lưu</b> vào Project, instructions hoặc memory trước khi rời chat.</li>
+    <li><b>Memory</b> bật sẵn ở gói cá nhân, mỗi Project có memory riêng, xóa chat không xóa memory. Chat ẩn danh không lưu, không dùng memory, không có trong Project.</li>
+  </ul>
+</section>
+
+<section class="cheat" id="cheat-d3">
+  <h3>Cheatsheet Domain 3</h3>
+  <div class="tw"><table>
+    <tr><th>Đề kể…</th><th>Chọn…</th><th>Vì sao</th></tr>
+    <tr class="grp"><th colspan="3">3.0 · Nền tảng</th></tr>
+    <tr><td>Artifact, Skills hay việc tự tóm tắt chat dài không chạy</td><td>Kiểm cài đặt code execution (“Create and edit files”)</td><td>Cả ba cần nó</td></tr>
+    <tr><td>Người dùng Free không thấy Research hoặc Opus</td><td>Cần gói trả phí</td><td>Free có Haiku, Sonnet, không có Research</td></tr>
+    <tr><td>Thành viên Team không bật được web search, connector</td><td>Owner phải bật cho tổ chức trước</td><td>Quyền quản trị</td></tr>
+    <tr><td>Một quy trình cụ thể cần dùng ở nhiều nơi</td><td>Skill</td><td>Claude chỉ nạp khi việc cần</td></tr>
+    <tr class="grp"><th colspan="3">3.1 · Chọn tính năng</th></tr>
+    <tr><td>Tuần nào cũng dán lại cùng tài liệu, cùng lời dặn</td><td>Project: knowledge + instructions</td><td>Đặt một lần, mọi chat đều thấy</td></tr>
+    <tr><td>Cả nhóm cần cùng tài liệu, chỉ một người được sửa</td><td>Project chia sẻ: nhóm Can view, người sửa Can edit</td><td>Không có bản sao cũ</td></tr>
+    <tr><td>So sánh nhiều nguồn, cần dẫn nguồn, có cả Drive</td><td>Research, bắt đầu trên web hoặc desktop</td><td>Trên mobile Research chỉ tìm web</td></tr>
+    <tr><td>Tra nhanh một sự thật mới</td><td>Chat + web search</td><td>Một hai lượt tìm là đủ</td></tr>
+    <tr><td>Bản dài, sẽ sửa nhiều lần, xuất Word, gửi sếp</td><td>Artifact</td><td>Đứng riêng, dùng lại, xuất được</td></tr>
+    <tr><td>Đổi sang Haiku trước khi chạy Research cho đỡ tốn</td><td>Không có tác dụng</td><td>Research luôn chạy Opus 5.5</td></tr>
+    <tr class="grp"><th colspan="3">3.2 · Ba tầng model</th></tr>
+    <tr><td>“Context như nhau nên dùng cái rẻ nhất” cho việc khó</td><td>Không đồng ý: tầng khác nhau ở độ sâu lập luận</td><td>1M context, 128K đầu ra giống nhau</td></tr>
+    <tr><td>“Model nào chuyên ngành X?”</td><td>Không có tầng chuyên ngành; chọn theo độ khó</td><td>Docs mô tả theo độ khó, tốc độ, lượng việc</td></tr>
+    <tr><td>Cần phản hồi nhanh nhất</td><td>Haiku</td><td>Nhanh nhất; Opus chậm nhất trong ba</td></tr>
+    <tr><td>Thử hai tầng trên việc dễ, thấy như nhau</td><td>Thử lại trên phần khó nhất</td><td>Khác biệt lộ ra ở việc khó</td></tr>
+    <tr class="grp"><th colspan="3">3.3 · Model theo chi phí, tốc độ, chất lượng</th></tr>
+    <tr><td>Nhiều, ngắn, đơn giản, cần nhanh và rẻ (câu mẫu 2)</td><td>Model nhanh, chi phí thấp</td><td>Để model mạnh cho lập luận khó</td></tr>
+    <tr><td>Lô lớn lẫn lộn, có hạn chót</td><td>Tách: phần dễ tầng nhẹ, ca khó tầng mạnh</td><td>Một model không gánh tốt cả lô</td></tr>
+    <tr><td>Định chuyển việc sang tầng rẻ hơn</td><td>Chạy dữ liệu thật trên cả hai, so với yêu cầu, tính cả công sửa</td><td>Bằng chứng, không phải lời đoán</td></tr>
+    <tr><td>Chất lượng ổn mà tốn hạn mức</td><td>Hạ effort trên model đang dùng</td><td>Effort thường là đòn bẩy tốt hơn đổi model</td></tr>
+    <tr><td>Đủ thông tin, đủ effort, vẫn sai</td><td>Lên tầng</td><td>Đã chạm trần năng lực</td></tr>
+    <tr class="grp"><th colspan="3">3.4 · Context, chat dài, memory</th></tr>
+    <tr><td>Báo vượt giới hạn độ dài của chat</td><td>Chat mới hoặc Project; chia nhỏ đầu vào</td><td>Nâng gói không làm context to ra</td></tr>
+    <tr><td>Báo hết hạn mức, phải chờ tới một giờ nhất định</td><td>Chờ reset, nâng gói, hoặc usage credits</td><td>Hạn mức tính trên mọi chat; chat mới không gỡ được</td></tr>
+    <tr><td>Chat dài quên ràng buộc đã chốt</td><td>Liệt kê, lưu vào Project, mở chat mới</td><td>Bản tự tóm tắt nén chi tiết</td></tr>
+    <tr><td>Tuần nào cũng gõ lại cùng một lời sửa</td><td>Đưa vào project instructions</td><td>Claude không học từ chat cũ</td></tr>
+    <tr><td>Muốn một chat không lưu, không dùng memory</td><td>Chat ẩn danh; trong Project thì tắt Memory ở “+” trước tin đầu</td><td>Chat ẩn danh không có trong Project</td></tr>
+    <tr><td>Xóa chat để Claude quên</td><td>Xóa trong phần quản lý memory</td><td>Xóa chat không xóa memory</td></tr>
+  </table></div>
+  <h4>Tên và con số phải thuộc</h4>
+  <ul class="names">
+    <li><b>Research:</b> chỉ gói trả phí (Pro, Max, Ultra, Team, Enterprise). Cần bật web search. Bật ở “+” → Research. Luôn chạy Opus 5.5 (dự phòng Opus 4.8). Guide gọi là “research mode”.</li>
+    <li><b>Projects:</b> Free tối đa 5. RAG chỉ gói trả phí, chứa tới gấp 10 lần. Chia sẻ trên Team, Enterprise với Can view, Can edit. Chia sẻ Project không chia sẻ chat.</li>
+    <li><b>Artifact:</b> thường trên 15 dòng, đứng riêng, sẽ dùng lại. Lưu ở tab Artifacts. Mới tạo là riêng tư. Cần code execution.</li>
+    <li><b>Code execution:</b> “Code execution and file creation”, giao diện mới là “Create and edit files”, ở Settings → Capabilities. Nền của artifact, Skills, đọc XLSX, tự tóm tắt chat dài.</li>
+    <li><b>Skills:</b> thư mục hướng dẫn, script, tài nguyên. Claude chỉ nạp khi cần. Mọi gói. Tải lên ở Customize → Skills.</li>
+    <li><b>Model:</b> Haiku nhanh nhất, nhẹ nhất. Sonnet cân bằng, mặc định khi chưa chắc. Opus mạnh nhất trong ba, từ Pro. Giá API mỗi 1M token vào / ra: Haiku từ $0.10 / $0.50, Sonnet $2 / $10, Opus $4 / $20 (Fable $10 / $50). Cùng 1M context, 128K đầu ra.</li>
+    <li><b>Effort:</b> Low, Medium, High, Extra high, Max.</li>
+    <li><b>Context:</b> 1M token cho các model mới nhất (chat gói trả phí). 200K cho model không có tên trong danh sách. 1M token khoảng 555 nghìn từ tiếng Anh.</li>
+    <li><b>Hạn mức:</b> phiên reset 5 giờ sau tin nhắn đầu. Tuần reset vào mốc cố định. Xem ở Settings → Usage.</li>
+    <li><b>Memory:</b> bật sẵn Free, Pro, Max, Ultra. Team, Enterprise do Owner bật, từng người tự bật. Chat search: gói trả phí. Chat ẩn danh: mọi gói, không có trong Project, giữ 30 ngày.</li>
+    <li><b>File:</b> 20 file mỗi chat. File Project tối đa 30MB. PDF trên 100 trang chỉ đọc chữ.</li>
+  </ul>
+</section>
+
+  <div class="quiz" data-course="d3"></div>
+  </div>
+</section>

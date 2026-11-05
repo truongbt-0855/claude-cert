@@ -1,0 +1,136 @@
+[
+  {
+    "q": "A user asks Claude to check today's stock levels in the company's internal warehouse system. Claude replies that it has no access to that system, and no connector exists for it. What is the most appropriate next step?",
+    "o": [
+      "Export the current stock report from the system and share it with Claude, or ask the system's owners about an integration.",
+      "Rephrase the request with more detail until Claude finds a way to reach the system.",
+      "Switch to the most capable model, which can reach more company systems.",
+      "Ask Claude to estimate today's stock levels from last month's figures."
+    ],
+    "a": 0,
+    "e": "Bài 7.0: đây là cần gạt 6, việc nằm ngoài những gì Claude đang có. Prompt hay model không tạo ra quyền truy cập; đưa dữ liệu vào hoặc nhờ đội quản lý hệ thống. Ước lượng từ số cũ là mời Claude bịa."
+  },
+  {
+    "q": "An HR coordinator has a Claude process that cuts her onboarding paperwork time in half. Twelve colleagues want to use it next month. What is the best way to roll it out?",
+    "o": [
+      "Let each colleague adapt the process in their own way from the start.",
+      "Write down the steps and instructions that worked, test them on two recent real cases, then share them and track time saved and quality.",
+      "Ask Claude to write a guide from a short verbal description of the process.",
+      "Train all twelve colleagues tomorrow, before anything is written down."
+    ],
+    "a": 1,
+    "e": "Bài 7.3: cách làm tốt phải được ghi lại (project instructions, mẫu prompt, Skill) và thử trên ca thật trước khi nhân rộng, rồi đo thời gian và chất lượng. Để mỗi người tự chế là đánh mất chính thứ đã làm nó hiệu quả."
+  },
+  {
+    "q": "What does the 'colleague test' check when Claude's output is poor?",
+    "o": [
+      "Whether a colleague agrees the output sounds professional",
+      "Whether a colleague gets the same answer from a different AI tool",
+      "Whether someone with no background on the task could do it correctly from the prompt alone",
+      "Whether a colleague can spot hallucinations faster than Claude"
+    ],
+    "a": 2,
+    "e": "Bài 7.1: phép thử đồng nghiệp kiểm prompt. Người không biết gì về việc mà phải hỏi lại hay đoán thì Claude cũng sẽ đoán. Nó không đo giọng văn hay so với công cụ khác."
+  },
+  {
+    "q": "Claude's answer about a supplier's payment terms is wrong. You ask it to quote the passage it relied on, and it quotes a 2023 contract that was later replaced. What does this tell you?",
+    "o": [
+      "The knowledge is missing, so Claude invented the terms.",
+      "The knowledge is stale; replace the old contract with the current one.",
+      "The prompt is unclear; add a role and an output format.",
+      "The model is too small; upgrade to a larger one."
+    ],
+    "a": 1,
+    "e": "Bài 7.1: trích được đoạn nhưng là bản cũ thì kiến thức cũ. Không trích được đoạn nào mới là thiếu. Dặn 'đừng đoán' không chữa được bệnh này, vì Claude không đoán mà đọc đúng một file đã lỗi thời."
+  },
+  {
+    "q": "Which TWO symptoms point first to the prompt rather than to knowledge, the conversation, or the model? (Choose TWO.)",
+    "o": [
+      "Drafts are generic and could apply to any company.",
+      "The answer confidently states last quarter's prices, which have since changed.",
+      "The same input produces a different format on each run.",
+      "Late in a long chat, Claude mixes in details from an earlier task.",
+      "Simple lookups take much longer than the task is worth."
+    ],
+    "a": [0, 2],
+    "e": "Bài 7.1: chung chung và mỗi lần chạy một định dạng là dấu hiệu prompt bỏ ngỏ bối cảnh, tiêu chí, định dạng. Giá cũ là cần gạt kiến thức, lẫn việc cũ là hội thoại, chậm cho việc nhỏ là model."
+  },
+  {
+    "q": "A multi-step margin analysis is still wrong. The prompt passes the colleague test, the data is complete, and the chat is new. A teammate suggests raising the effort level for all of the team's tasks. What is the best approach?",
+    "o": [
+      "Raise effort for every task now, since more thinking always helps.",
+      "Raise effort and switch to a larger model at the same time to be sure.",
+      "Try higher effort on a sample of these analyses, compare quality, time, and usage with the current setting, and use it only where it helps.",
+      "Remove the data and ask Claude to reason from general knowledge instead."
+    ],
+    "a": 2,
+    "e": "Bài 7.1: prompt, dữ liệu, chat đều ổn thì mới tới cần gạt lập luận. Effort cao chậm hơn và tốn hơn ở mọi lần chạy, nên đo trên mẫu và chỉ dùng cho việc cần. Đổi hai thứ cùng lúc thì không biết cái nào có tác dụng."
+  },
+  {
+    "q": "In a pilot, senior writers say Claude's first drafts are bland, while junior writers say the drafts save them hours. What should the team lead do first?",
+    "o": [
+      "Rewrite the shared instructions to match the senior writers' suggestions.",
+      "Keep the workflow for junior writers only.",
+      "Extend the pilot for two more months and decide later.",
+      "Agree on a specific standard for an acceptable draft, then judge real drafts from each group against it."
+    ],
+    "a": 3,
+    "e": "Bài 7.2: ý kiến trái chiều chỉ phân xử được bằng chuẩn đạt cụ thể, chấm trên output thật của cả hai nhóm. Sửa theo nhóm chê to nhất có thể làm hỏng thứ nhóm kia đang dùng tốt."
+  },
+  {
+    "q": "After a prompt rewrite, the summary of one sample report you tuned it on looks excellent. A colleague wants to save the new prompt to the shared Project today. What should happen first?",
+    "o": [
+      "Run the old and new prompts on several real reports, including difficult ones, and compare them against the agreed standard.",
+      "Save it now and roll back later if anyone complains.",
+      "Run the same sample report five more times to check it stays excellent.",
+      "Ask Claude which prompt it thinks is better and keep that one."
+    ],
+    "a": 0,
+    "e": "Bài 7.2: một input đã được chỉnh cho đẹp không chứng minh gì. Chạy lại cùng input chỉ đo độ ổn định; hỏi Claude bản nào hay hơn không thay được việc so trên input thật với chuẩn đạt."
+  },
+  {
+    "q": "Inputs and instructions are sound, but Claude's analysis of a complex pricing change is shallow. According to Anthropic's model guidance, what is usually the better first experiment?",
+    "o": [
+      "Switch to a different AI platform",
+      "Raise the effort level, then compare results on the same input",
+      "Shorten the prompt so Claude can focus",
+      "Turn off all features to save usage"
+    ],
+    "a": 1,
+    "e": "Bài 7.2: docs chọn model viết chỉnh effort thường là cần gạt tốt hơn đổi model. Vẫn chưa đủ thì thử model mạnh hơn và so trên cùng input. Đổi nền tảng hay tắt tính năng không chạm tới vấn đề."
+  },
+  {
+    "q": "Which TWO changes reduce usage without lowering output quality? (Choose TWO.)",
+    "o": [
+      "Send a long report one section per message so each message stays small.",
+      "Turn off web search and connectors for tasks that do not need current or external data.",
+      "Keep all of the month's work in one long chat so Claude never loses context.",
+      "Use the most capable model for every task to avoid any rework.",
+      "Group several related questions into one well-prepared message."
+    ],
+    "a": [1, 4],
+    "e": "Bài 7.3: công cụ và connector tốn nhiều token, gom câu hỏi liên quan thì bớt lượt hỏi lại. Gửi từng đoạn làm thêm lượt và mất toàn cảnh; chat kéo cả tháng tốn thêm; model mạnh nhất cho mọi việc tốn hạn mức mà không được gì thêm."
+  },
+  {
+    "q": "An analyst's Project holds large reference files. After two weeks away, her first message back uses noticeably more of her limit than usual. What is the most likely reason?",
+    "o": [
+      "The Project switched off its knowledge while she was away.",
+      "Her weekly limit was reduced because of inactivity.",
+      "Her first message used a larger model by default.",
+      "The cached Project content expired, so the first message counted it in full again."
+    ],
+    "a": 3,
+    "e": "Bài 7.3: nội dung Project được lưu đệm nên dùng lại thì tính ít hơn, nhưng bộ đệm hết hạn khi bỏ lâu. Tin đầu sau quãng nghỉ dài tính lại toàn bộ; các tin sau lại rẻ hơn."
+  },
+  {
+    "q": "On a paid plan, when does the five-hour session limit reset?",
+    "o": [
+      "Five hours after the first message of the session, in full",
+      "At midnight in your local time zone",
+      "On the same weekday that your subscription started",
+      "Gradually, a little after each message you send"
+    ],
+    "a": 0,
+    "e": "Bài 7.3: khung phiên bắt đầu từ tin nhắn đầu tiên và hồi đầy đủ sau 5 giờ. Hạn mức tuần thì reset vào một giờ cố định gắn với tài khoản, không theo ngày mua gói."
+  }
+]

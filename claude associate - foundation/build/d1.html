@@ -1,0 +1,946 @@
+<section class="domain" id="d1" data-domain="1">
+  <div class="dhead"><h2>Domain 1 · Prompting and Task Execution</h2><p class="dsub">14% · 1 bài nền tảng + 4 bài · ~62 phút</p><div class="dprog"><div class="wb"><i></i></div><span></span></div><button class="tog" type="button">Thu gọn</button></div>
+  <div class="dbody">
+<div class="dintro">
+  <p>Domain 1 chiếm 14% đề, khoảng 8 trên 60 câu.</p>
+  <p>Cả domain xoay quanh một câu: <b>Claude chỉ biết những gì bạn đưa vào cuộc trò chuyện, nên output tốt hay dở phần lớn nằm ở bản giao việc của bạn.</b></p>
+  <p>Đọc bài Nền tảng trước. Cuối mỗi bài có “Khi đi thi”: chọn đáp án trước rồi mới xem giải thích.</p>
+</div>
+
+<article class="lesson" id="l-1-0" data-domain="1" data-ts="1.0" data-min="12">
+  <header class="lh"><span class="ts">Nền tảng</span><h3>Prompt nhìn từ phía Claude: Claude thấy gì, và một bản giao việc tốt gồm những phần nào</h3><span class="rt">~12 phút</span></header>
+  <p>Bốn bài của Domain 1 cùng nói về một thứ: <b>prompt</b>. Bài này dựng nó từ con số 0, theo thứ tự: prompt là gì → Claude thấy được gì khi đọc nó → một prompt tốt gồm những phần nào → ráp lại thành một ca thật. Nắm bài này rồi, mỗi bài sau chỉ là làm tốt hơn một phần của prompt.</p>
+
+  <h4>1. Prompt là gì</h4>
+  <div class="defs"><b>Định nghĩa</b><dl>
+    <dt>Prompt</dt><dd>Mọi thứ bạn gửi cho Claude trong một lượt: lời dặn, câu hỏi, đoạn văn bạn dán vào, file bạn tải lên.</dd>
+    <dt>Output</dt><dd>Thứ Claude trả lại: câu trả lời, bản nháp, bảng, file. Notes này giữ chữ “output” như đề.</dd>
+    <dt>Context (ngữ cảnh)</dt><dd>Toàn bộ những gì Claude đọc được khi viết câu trả lời: prompt hiện tại, các lượt trước trong cùng cuộc trò chuyện, và vài nguồn đặt sẵn ở mục 2.</dd>
+  </dl></div>
+  <p>Hai điều cần nắm ngay:</p>
+  <ul>
+    <li><b>Claude chỉ làm việc với những gì nằm trong context.</b> Nó không đọc được suy nghĩ của bạn, không mở được file trên máy bạn, không biết quy ước ngầm của công ty bạn.</li>
+    <li><b>Chỗ nào bạn bỏ trống, Claude tự đoán.</b> Nó đoán theo kiểu câu trả lời phổ biến nhất. Vì thế prompt thiếu ý thường ra output chung chung, hoặc có chi tiết nghe hợp lý nhưng không đúng với bạn.</li>
+  </ul>
+
+  <h4>2. Claude thấy gì, không thấy gì</h4>
+  <div class="tw"><table>
+    <tr><th>Nguồn</th><th>Claude có thấy không</th></tr>
+    <tr><td>Tin nhắn, đoạn văn bạn dán, file bạn tải lên trong cuộc trò chuyện này</td><td><b>Có</b></td></tr>
+    <tr><td>Các lượt trước trong cùng cuộc trò chuyện</td><td><b>Có</b>, kể cả những bản nháp hỏng và những giả định sai bạn đã sửa</td></tr>
+    <tr><td>Khi chat nằm trong một Project (không gian làm việc có tài liệu và lời dặn dùng chung): project instructions (lời dặn chung) và project knowledge (tài liệu tải sẵn)</td><td><b>Có</b>, ở mọi chat của Project đó (<a href="#l-5-1">bài 5.1</a>)</td></tr>
+    <tr><td>Instructions for Claude (chỉ dẫn đặt cho cả tài khoản)</td><td><b>Có</b>, ở mọi cuộc trò chuyện</td></tr>
+    <tr><td>Memory (trí nhớ giữa các lần chat), nếu đang bật</td><td>Một số điều về bạn mà Claude tự ghi nhớ qua các lần chat. Đừng trông vào nó cho chi tiết của việc đang làm.</td></tr>
+    <tr><td>Dữ liệu ở Gmail, Google Drive và công cụ khác</td><td>Chỉ khi bạn bật connector (kết nối tới ứng dụng đó), và chỉ trong phạm vi quyền của chính bạn (<a href="#l-5-2">bài 5.2</a>)</td></tr>
+    <tr><td>Tên và mô tả của Project</td><td><b>Không.</b> Help Center ghi rõ Claude không thấy hai thứ này.</td></tr>
+    <tr><td>Chat khác, file trên máy chưa tải lên</td><td><b>Không</b> tự động. Chat search (tìm lại chat cũ, chỉ gói trả phí) lấy lại chat cũ khi bạn yêu cầu.</td></tr>
+    <tr><td>Người đọc là ai, bạn cần sâu tới đâu, công ty cấm hứa gì</td><td><b>Không</b>, trừ khi bạn viết ra</td></tr>
+  </table></div>
+  <div class="note"><b>Đọc đề:</b> nhiều đáp án sai giả định Claude “đã biết” người đọc, mẫu cũ hay chính sách. Đề không nói thứ đó nằm trong prompt hay trong Project thì coi như Claude không biết.</div>
+
+  <h4>3. Giao việc như cho một người thầu mới</h4>
+  <p>Help Center của Claude dùng đúng hình ảnh này:</p>
+  <ul>
+    <li>“Think of Claude as a newly-hired contractor.” <i>Hãy coi Claude như một người thầu vừa được thuê.</i></li>
+    <li>“It doesn't have any context about you, your task, or your organization.” <i>Nó không có chút ngữ cảnh nào về bạn, về việc của bạn hay về tổ chức của bạn.</i></li>
+  </ul>
+  <p>Docs (tài liệu hướng dẫn viết prompt chính thức của Anthropic) nói cùng ý: Claude là “a brilliant but new employee who lacks context on your norms and workflows” (một nhân viên rất giỏi nhưng mới vào, chưa biết quy ước và cách làm việc của bạn). Người giỏi không cần bạn dạy nghề. Họ cần bạn nói: việc gì, cho ai, để làm gì, trong giới hạn nào, dựa trên tài liệu nào, ra hình dạng gì.</p>
+  <div class="defs"><b>Định nghĩa</b><dl>
+    <dt>Phép thử đồng nghiệp (key test)</dt><dd>Docs viết: “Show your prompt to a colleague with minimal context on the task and ask them to follow it. If they'd be confused, Claude will be too.” Nghĩa: đưa prompt cho một đồng nghiệp gần như không biết gì về việc này và nhờ họ làm theo. Họ bối rối chỗ nào thì Claude cũng bối rối chỗ đó.</dd>
+  </dl></div>
+
+  <h4>4. Các phần của một prompt tốt</h4>
+  <div class="tw"><table>
+    <tr><th>Phần</th><th>Trả lời câu hỏi</th><th>Ví dụ</th><th>Thiếu thì Claude làm gì</th></tr>
+    <tr><td><b>Việc</b> (task)</td><td>Làm gì, sâu tới đâu thì xong</td><td>“Viết email báo khách đơn #4821 trễ 3 ngày”</td><td>Làm một việc gần giống</td></tr>
+    <tr><td><b>Bối cảnh</b></td><td>Cho ai đọc, để làm gì</td><td>“Khách là đại lý lâu năm, đang bực vì đây là lần trễ thứ hai”</td><td>Viết cho một người đọc chung chung</td></tr>
+    <tr><td><b>Ràng buộc và lý do</b></td><td>Giới hạn nào, vì sao có giới hạn đó</td><td>“Không hứa ngày giao mới, vì kho chưa xác nhận”</td><td>Tự đặt giới hạn, hoặc không có giới hạn</td></tr>
+    <tr><td><b>Nguồn</b> (source material)</td><td>Dựa vào tài liệu nào, tách khỏi lời dặn ra sao</td><td>Dán email khách và ghi chú của kho, mỗi thứ một khối có tên</td><td>Dùng kiến thức chung, có khi bịa</td></tr>
+    <tr><td><b>Ví dụ</b> (example)</td><td>Trông như thế nào</td><td>Dán một email xin lỗi cũ mà khách từng phản hồi tốt</td><td>Tự chọn giọng và độ dài</td></tr>
+    <tr><td><b>Định dạng output</b></td><td>Ra hình dạng gì, dài bao nhiêu</td><td>“Dưới 150 chữ, 3 đoạn ngắn”</td><td>Dùng định dạng mặc định</td></tr>
+    <tr><td><b>Vai</b> (role), tùy chọn</td><td>Đứng ở góc nhìn nào</td><td>“Bạn là trưởng nhóm chăm sóc khách hàng”</td><td>Giọng trung tính. Vai không thay được các phần trên.</td></tr>
+  </table></div>
+  <p>Không phải prompt nào cũng cần đủ bảy phần. Hỏi nhanh một định nghĩa thì một dòng là đủ. Việc càng quan trọng, người đọc càng nhiều, thì càng cần đủ.</p>
+
+  <h4>5. Ba thứ cần mô tả, theo khung AI Fluency</h4>
+  <p>Khóa “Prompting &amp; Task Execution” trong lộ trình ôn Associate của Anthropic xây trên năng lực <b>Description</b> (mô tả) của khung AI Fluency 4D. Khung này chia việc mô tả làm ba loại:</p>
+  <div class="tw"><table>
+    <tr><th>Loại</th><th>Mô tả cái gì</th><th>Trong prompt là</th></tr>
+    <tr><td><b>Product Description</b></td><td>Output bạn muốn: định dạng, người đọc, phong cách</td><td>Việc, bối cảnh, định dạng, ví dụ</td></tr>
+    <tr><td><b>Process Description</b></td><td>Claude nên làm theo cách nào, ví dụ từng bước</td><td>“Trích đoạn liên quan trước rồi mới trả lời”, chia bước (<a href="#l-1-2">bài 1.2</a>)</td></tr>
+    <tr><td><b>Performance Description</b></td><td>Claude nên cư xử ra sao khi làm cùng bạn: ngắn gọn hay chi tiết, phản biện hay hỗ trợ</td><td>“Thấy kế hoạch có lỗ hổng thì nói thẳng”</td></tr>
+  </table></div>
+
+  <h4>6. Ráp lại: một ca thật</h4>
+  <p>Prompt một dòng: “Viết email xin lỗi khách vì giao hàng trễ.” Bản đủ phần trông thế này:</p>
+<pre><code>&lt;email_khach&gt;
+(dán nguyên email phàn nàn của khách)
+&lt;/email_khach&gt;
+&lt;ghi_chu_kho&gt;
+(dán ghi chú của kho: hàng kẹt ở cảng, chưa có ngày giao mới)
+&lt;/ghi_chu_kho&gt;
+
+Viết email trả lời chị Hạnh, chủ một đại lý lâu năm. Đây là lần trễ thứ hai
+trong quý nên chị đang rất bực. Mục tiêu là giữ khách: nói thật tình hình và
+hẹn ngày cập nhật tiếp theo.
+Không hứa ngày giao mới, vì kho chưa xác nhận. Hứa rồi trễ tiếp thì mất khách.
+Không đưa mã giảm giá, vì việc này phải chờ trưởng phòng duyệt.
+Chỉ dùng thông tin trong hai khối trên. Thiếu gì thì ghi [CẦN BỔ SUNG].
+Dưới 150 chữ, 3 đoạn ngắn, giọng giống email mẫu dưới đây.
+&lt;email_mau&gt;
+(dán một email xin lỗi cũ mà khách từng phản hồi tốt)
+&lt;/email_mau&gt;</code></pre>
+  <p>Sáu phần có mặt, chỉ thiếu vai, vốn là phần tùy chọn. Mỗi giới hạn đi kèm một lý do. Nguồn nằm trong các khối có tên riêng, nên Claude không nhầm email của khách với lời dặn của bạn.</p>
+
+  <h4>7. Bản đồ Domain 1</h4>
+  <div class="tw"><table>
+    <tr><th>Bài</th><th>Câu hỏi của bài</th><th>Phần của prompt được đụng tới</th></tr>
+    <tr><td><a href="#l-1-1">1.1</a></td><td>Viết một prompt thế nào cho đủ?</td><td>Cả bảy phần, kỹ nhất là ràng buộc và lý do, nguồn, ví dụ, định dạng</td></tr>
+    <tr><td><a href="#l-1-2">1.2</a></td><td>Việc quá lớn cho một prompt thì sao?</td><td>Chia thành nhiều prompt nối nhau. Output đã kiểm của bước trước thành nguồn của bước sau.</td></tr>
+    <tr><td><a href="#l-1-3">1.3</a></td><td>Lần đầu chưa tốt thì sửa thế nào?</td><td>Tìm phần đang thiếu hay sai, đổi đúng phần đó, thử lại</td></tr>
+    <tr><td><a href="#l-1-4">1.4</a></td><td>Phân tích, research, soạn thảo, brainstorm khác nhau ra sao?</td><td>Mỗi loại việc cần nhấn mạnh một phần khác</td></tr>
+  </table></div>
+  <p>Ranh giới với domain khác: kiểm output đúng hay sai là D2 (<a href="#l-2-1">bài 2.1</a>). Chọn tính năng và model là D3. Đặt lời dặn dùng chung cho mọi chat vào Project là D5 (<a href="#l-5-3">bài 5.3</a>). Chẩn đoán rộng hơn prompt (tài liệu, hội thoại, model) là D7 (<a href="#l-7-1">bài 7.1</a>).</p>
+
+  <h4>Tự kiểm tra</h4>
+  <p class="need">Câu hỏi viết bằng tiếng Anh như đề thật. Bấm vào câu hỏi để xem nghĩa và đáp án.</p>
+  <details class="chk"><summary>1. In a brand-new chat outside any project, you type: “Rewrite the report in our usual style.” What is Claude missing?</summary>
+    <span class="vi">Nghĩa: trong một chat mới, không nằm trong Project nào, bạn gõ: “Viết lại báo cáo theo phong cách quen thuộc của bọn mình.” Claude đang thiếu gì?</span>
+    <span class="ans"><b>Đáp:</b> thiếu cả hai: bản báo cáo và “phong cách quen thuộc”. Không dán hay tải lên, không có trong Project, thì Claude không có chúng. Memory, nếu bật, cũng không giữ bản báo cáo cho bạn. Claude sẽ đoán một phong cách chung chung.</span></details>
+  <details class="chk"><summary>2. Your prompt says “Keep it under 100 words.” Why add “because it will be shown on a mobile push notification”?</summary>
+    <span class="vi">Nghĩa: prompt của bạn ghi “Dưới 100 chữ.” Vì sao nên thêm “vì nội dung sẽ hiện trên thông báo đẩy của điện thoại”?</span>
+    <span class="ans"><b>Đáp:</b> lý do giúp Claude tự xử các ca bạn chưa kể: đưa ý chính lên đầu, bỏ bảng, bỏ link dài. Một giới hạn không có lý do chỉ che đúng con số 100.</span></details>
+  <details class="chk"><summary>3. You paste a 30-page policy directly after your instructions, with no separation. What can go wrong, and how do you fix it?</summary>
+    <span class="vi">Nghĩa: bạn dán một chính sách 30 trang ngay sau lời dặn, không có gì ngăn cách. Có thể hỏng ở đâu, sửa thế nào?</span>
+    <span class="ans"><b>Đáp:</b> Claude có thể nhầm câu trong chính sách với lời dặn của bạn. Đặt tài liệu dài lên trước, bọc trong một khối có tên (thẻ hoặc tiêu đề), câu hỏi viết ở cuối.</span></details>
+
+  <div class="remember"><b>Nhớ nhanh</b><ul>
+    <li>Claude chỉ thấy context: prompt, các lượt trước, Project, Instructions for Claude, memory nếu bật. Không thấy tên và mô tả Project.</li>
+    <li>Giao việc như cho người thầu mới. Phép thử: đồng nghiệp đọc có bối rối không.</li>
+    <li>Bảy phần: việc, bối cảnh, ràng buộc và lý do, nguồn, ví dụ, định dạng, vai (tùy chọn).</li>
+    <li>Description gồm Product, Process, Performance.</li>
+  </ul></div>
+  <div class="src">Đọc thêm: <a href="https://support.claude.com/en/articles/7996853-introduction-to-prompt-design">Introduction to prompt design</a> · <a href="https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices">Prompting best practices</a> · <a href="https://support.claude.com/en/articles/9519177-how-can-i-create-and-manage-projects">Create and manage projects</a> · <a href="https://anthropic.skilljar.com/ai-fluency-framework-foundations">AI Fluency: Framework &amp; Foundations</a> · <a href="https://anthropic-partners.skilljar.com/path/claude-associate/prompting-task-execution">Prompting &amp; Task Execution</a></div>
+  <label class="done"><input type="checkbox" data-lesson="l-1-0"> Đã học bài này</label>
+</article>
+
+<article class="lesson" id="l-1-1" data-domain="1" data-ts="1.1" data-min="14">
+  <header class="lh"><span class="ts">TS 1.1</span><h3>Viết prompt cho việc văn phòng và việc kỹ thuật: nói rõ yêu cầu, lý do, nguồn và mẫu</h3><span class="rt">~14 phút</span></header>
+  <p class="need">Cần biết trước: bảy phần của một prompt và phép thử đồng nghiệp ở <a href="#l-1-0">bài Nền tảng</a>.</p>
+  <div class="defs"><b>Khái niệm của bài</b><dl>
+    <dt>Ràng buộc tường minh (explicit constraint)</dt><dd>Giới hạn viết thẳng vào prompt: độ dài, phạm vi, thứ không được đưa vào, ngân sách. Không viết ra thì Claude không biết.</dd>
+    <dt>Độ sâu (depth)</dt><dd>Mức chi tiết bạn cần: lướt ý chính hay phân tích kỹ. Người viết prompt hay quên nói phần này nhất.</dd>
+    <dt>Lý do (reason)</dt><dd>Câu “vì sao” đi kèm một lời dặn. Có lý do, Claude áp được lời dặn cho cả những ca bạn chưa kể.</dd>
+    <dt>Bám nguồn (grounding)</dt><dd>Buộc Claude trả lời dựa trên tài liệu bạn đưa, không dựa trên kiến thức chung.</dd>
+    <dt>Thẻ (XML tag)</dt><dd>Cặp nhãn như &lt;hop_dong&gt; … &lt;/hop_dong&gt; bọc quanh một khối nội dung, để Claude biết đâu là tài liệu, đâu là lời dặn.</dd>
+    <dt>One-shot, few-shot</dt><dd>Đưa một ví dụ (one-shot) hoặc vài ví dụ (few-shot) về output bạn muốn.</dd>
+  </dl></div>
+  <div class="story"><b>Tình huống.</b> Anh Minh, trưởng nhóm vận hành, gõ: “Viết email xin lỗi khách vì giao hàng trễ.” Claude trả về một email lịch sự, trơn tru, hứa “giao trong 24 giờ tới” và tặng mã giảm 10%. Công ty không có mã giảm giá nào, còn kho chưa biết bao giờ hàng về. Claude không viết kém. Nó lấp chỗ trống bằng những thứ email xin lỗi hay có, vì prompt không nói gì về ngày giao, chính sách bồi thường hay người nhận.</div>
+
+  <h4>Viết ra những gì đang nằm trong đầu bạn</h4>
+  <p>Prompt yếu hiếm khi yếu vì câu chữ. Nó yếu vì những gì người viết biết không được viết ra. Trước khi gửi, soát năm thứ:</p>
+  <ul>
+    <li><b>Việc và độ sâu:</b> làm gì, chi tiết tới mức nào.</li>
+    <li><b>Người đọc và mục tiêu:</b> ai đọc, đọc xong họ phải làm được gì.</li>
+    <li><b>Định dạng:</b> bảng, email, gạch ý, bao nhiêu chữ.</li>
+    <li><b>Ràng buộc:</b> độ dài, phạm vi, thứ phải loại ra.</li>
+    <li><b>Nguồn:</b> tài liệu nào là căn cứ.</li>
+  </ul>
+  <p>Ví dụ. Bản yếu: “Tóm tắt khảo sát nhân viên.” Bản đủ: “Tóm tắt khảo sát nhân viên quý 3 cho ban giám đốc, đọc trong 2 phút trước họp. Tối đa 300 chữ. Nêu 3 vấn đề lớn nhất, mỗi vấn đề kèm tỉ lệ người chọn và một việc nên làm. Không nêu tên phòng ban dưới 5 người, vì như vậy đoán ra được ai đã trả lời.”</p>
+  <p>Về độ sâu, docs viết: “If you want Claude to do more than the task strictly requires, explicitly request it.” <i>Muốn Claude làm nhiều hơn mức tối thiểu của việc thì nói thẳng ra.</i> Giới hạn cũng vậy: viết vào lời yêu cầu ngay từ đầu, đừng để lúc duyệt mới cắt.</p>
+
+  <h4>Nói lý do: một lời dặn có lý do che được cả những ca chưa kể</h4>
+  <p>Ví dụ trong docs của Anthropic:</p>
+  <ul>
+    <li>Kém: “NEVER use ellipses” <i>(KHÔNG BAO GIỜ dùng dấu ba chấm)</i>.</li>
+    <li>Tốt hơn: “Your response will be read aloud by a text-to-speech engine, so never use ellipses since the text-to-speech engine will not know how to pronounce them.” <i>Câu trả lời sẽ được máy đọc thành tiếng, nên đừng dùng dấu ba chấm vì máy không biết đọc nó.</i></li>
+  </ul>
+  <p>Docs kết luận: “Claude can generalize from the explanation” (Claude tự suy rộng ra được từ lời giải thích). Biết máy sẽ đọc thành tiếng, Claude tránh luôn cả những ký hiệu khác mà máy đọc sai. Một ví dụ văn phòng: “Không nhắc doanh thu tháng 10, vì số đó chưa kiểm toán và công ty chưa công bố.” Có lý do này, Claude cũng tránh luôn “doanh thu tăng mạnh” hay số dự báo.</p>
+  <p>Viết hoa, nhắc lại ba lần, thêm dấu chấm than chỉ làm lời dặn to hơn. Chúng không thêm thông tin nào.</p>
+
+  <h4>Dán nguồn thật, và tách nó khỏi lời dặn</h4>
+  <ul>
+    <li><b>Dán hoặc tải lên bản gốc</b>, đừng tả lại bằng lời mình (“hợp đồng có điều khoản phạt khá nặng”).</li>
+    <li><b>Tài liệu dài để trước, câu hỏi để cuối.</b> Docs: với tài liệu dài (từ khoảng 20.000 token, token là đơn vị Claude dùng để đếm độ dài văn bản), đặt câu hỏi ở cuối giúp chất lượng tăng tới 30% trong thử nghiệm, nhất là khi có nhiều tài liệu.</li>
+    <li><b>Mỗi tài liệu một khối có tên</b>, bằng thẻ hoặc tiêu đề, ghi rõ nguồn (tên file).</li>
+    <li><b>Tài liệu dài, nhiều chữ thừa:</b> bảo Claude trích nguyên văn đoạn liên quan trước, rồi trả lời từ các đoạn trích.</li>
+    <li><b>Nói trước khi nguồn không có câu trả lời thì làm gì.</b> Không có lối thoát này, Claude dễ điền bằng kiến thức chung.</li>
+  </ul>
+<pre><code>&lt;so_tay_nhan_vien&gt;
+(tải lên hoặc dán sổ tay)
+&lt;/so_tay_nhan_vien&gt;
+
+Trả lời câu hỏi của nhân viên dưới đây, chỉ dựa trên sổ tay.
+Trước tiên chép nguyên văn đoạn liên quan vào &lt;trich_dan&gt;, rồi trả lời từ đoạn đó.
+Sổ tay không nói tới thì ghi: "Sổ tay không đề cập. Vui lòng hỏi phòng Nhân sự."
+Câu hỏi: Nghỉ phép năm chưa dùng hết có được chuyển sang năm sau không?</code></pre>
+
+  <h4>Đưa một ví dụ thay cho đoạn tả dài</h4>
+  <ul>
+    <li>Một ví dụ cho thấy giọng, độ dài và cấu trúc nhanh hơn ba đoạn mô tả.</li>
+    <li>Claude bám rất sát chi tiết của ví dụ. Ví dụ phải giống việc thật: cùng loại tài liệu, cùng người đọc.</li>
+    <li>Bọc ví dụ trong thẻ &lt;vi_du&gt; để Claude không nhầm ví dụ với lời dặn.</li>
+    <li>Bắt đầu với một ví dụ. Output còn lệch thì thêm ví dụ, chọn những cái khác nhau để Claude không bắt chước nhầm một nét chung ngẫu nhiên. Docs nói 3–5 ví dụ cho kết quả tốt nhất.</li>
+    <li>Output sẽ dán vào chỗ khác (bảng tính, biểu mẫu): đưa khung mẫu, ghi tên cột đúng thứ tự.</li>
+  </ul>
+
+  <h4>Định dạng: nói cái muốn có, và để prompt trông giống output</h4>
+  <ul>
+    <li>Docs: “Tell Claude what to do instead of what not to do.” <i>Nói Claude nên làm gì, thay vì không được làm gì.</i></li>
+    <li>Ví dụ trong docs: thay “Do not use markdown in your response” (đừng dùng markdown, tức các ký hiệu định dạng như **, #, gạch đầu dòng) bằng “Your response should be composed of smoothly flowing prose paragraphs” (hãy viết thành các đoạn văn liền mạch).</li>
+    <li>Kiểu viết của prompt kéo theo kiểu viết của output. Docs: bỏ markdown khỏi prompt thì output bớt markdown. Prompt đầy tiêu đề và gạch đầu dòng mà dặn “trả lời bằng đoạn văn” thì hay hỏng.</li>
+    <li>Cần kiểm soát kỹ thì viết một đoạn quy định: khi nào dùng đoạn văn, khi nào dùng danh sách, tiêu đề ra sao.</li>
+  </ul>
+
+  <h4>Việc kỹ thuật: cùng khung, khác chi tiết</h4>
+  <div class="tw"><table>
+    <tr><th></th><th>Việc văn phòng (email, báo cáo, chính sách)</th><th>Việc kỹ thuật (công thức Excel, truy vấn SQL, macro)</th></tr>
+    <tr><td>Bối cảnh</td><td>Người đọc, mục tiêu, giọng</td><td>Công cụ (Excel hay Google Sheets), tên sheet, tên cột</td></tr>
+    <tr><td>Nguồn</td><td>Email, báo cáo, văn bản gốc</td><td>Vài dòng dữ liệu mẫu, thông báo lỗi chép nguyên văn</td></tr>
+    <tr><td>Thế nào là xong</td><td>Người đọc hiểu và làm theo được</td><td>Với dữ liệu mẫu này thì ra đúng kết quả kia</td></tr>
+    <tr><td>Lời yêu cầu</td><td>“Viết…”, “Tóm tắt…”</td><td>“Viết lại công thức…”, nói thẳng hành động</td></tr>
+  </table></div>
+  <p>Dòng cuối quan trọng. Docs: “If you say "can you suggest some changes," Claude will sometimes provide suggestions rather than implementing them.” <i>Hỏi “có thể gợi ý vài thay đổi không” thì đôi khi Claude chỉ đưa gợi ý, không sửa luôn.</i> Muốn bản sửa thì bảo sửa.</p>
+
+  <div class="vs">
+    <div class="bad"><b>Tệ</b><ul>
+      <li>“Tóm tắt khảo sát nhân viên.” rồi tự cắt, tự sửa sau.</li>
+      <li>“KHÔNG ĐƯỢC dùng viết tắt!!!” không kèm lý do.</li>
+      <li>Tả lại hợp đồng bằng lời mình thay vì dán bản gốc.</li>
+      <li>Ba đoạn tả giọng văn, không có mẫu nào.</li>
+      <li>Prompt đầy gạch đầu dòng, cuối dặn “trả lời bằng đoạn văn”.</li>
+    </ul></div>
+    <div class="good"><b>Tốt</b><ul>
+      <li>Người đọc, độ dài, phạm vi, độ sâu nằm ngay trong lời yêu cầu.</li>
+      <li>Một câu lý do đi kèm mỗi giới hạn.</li>
+      <li>Bản gốc để trước, câu hỏi để sau, có ranh giới rõ, có lối thoát khi nguồn không nói.</li>
+      <li>Một ví dụ thật, đúng loại, bọc trong thẻ.</li>
+      <li>Prompt viết bằng đoạn văn, nói thẳng định dạng muốn có.</li>
+    </ul></div>
+  </div>
+
+  <h4>Khi đi thi</h4>
+  <p class="need">Bài này thường ra 3 dạng câu hỏi. Đọc đề, <b>chọn một đáp án trước</b>; phần giải thích chỉ hiện ra sau khi bạn chọn.</p>
+
+  <div class="qcase" data-answer="C">
+    <h5 class="sub">Dạng 1: yêu cầu nằm trong đầu, không nằm trong prompt</h5>
+    <span class="lbl">Đề sẽ viết kiểu này</span>
+    <div class="qtext">
+      <span class="en">“An operations lead asks Claude to ‘summarize last quarter’s delivery incidents for the regional director.’ The director needs the summary to fit on one slide, include only incidents that cost more than $5,000, and open with recommended actions. The lead plans to trim and reorder Claude’s draft afterward. What is the most effective way to get a usable summary?”</span>
+      <span class="vi">Dịch: Một trưởng nhóm vận hành nhờ Claude “tóm tắt các sự cố giao hàng quý trước cho giám đốc vùng”. Giám đốc cần bản tóm tắt vừa một slide, chỉ gồm sự cố gây thiệt hại trên $5.000, và mở đầu bằng các việc nên làm. Trưởng nhóm định để Claude viết xong rồi tự cắt và sắp xếp lại. Cách hiệu quả nhất để có bản tóm tắt dùng được là gì?</span>
+    </div>
+    <span class="lbl">Bạn chọn đáp án nào?</span>
+    <div class="qopts">
+      <button type="button" class="qopt" data-k="A"><b class="k">A.</b><span class="body"><span class="en">“Open the prompt with ‘You are a senior operations analyst’ and let Claude decide which incidents and details matter most.”</span><span class="vi">Mở đầu prompt bằng “Bạn là chuyên viên phân tích vận hành cấp cao” và để Claude tự quyết sự cố, chi tiết nào quan trọng nhất.</span></span></button>
+      <button type="button" class="qopt" data-k="B"><b class="k">B.</b><span class="body"><span class="en">“Ask for a complete report of every incident first, then cut it down to one slide over several follow-up messages.”</span><span class="vi">Xin một báo cáo đầy đủ mọi sự cố trước, rồi cắt dần xuống một slide qua vài tin nhắn sau.</span></span></button>
+      <button type="button" class="qopt" data-k="C"><b class="k">C.</b><span class="body"><span class="en">“State the one-slide limit, the $5,000 threshold, the audience, and the actions-first order in the request.”</span><span class="vi">Ghi giới hạn một slide, ngưỡng $5.000, người đọc và thứ tự “việc nên làm trước” ngay trong lời yêu cầu.</span></span></button>
+      <button type="button" class="qopt" data-k="D"><b class="k">D.</b><span class="body"><span class="en">“Upload the full incident log and trust Claude to infer what a regional director would want to see.”</span><span class="vi">Tải lên toàn bộ nhật ký sự cố và tin rằng Claude sẽ tự suy ra giám đốc vùng muốn xem gì.</span></span></button>
+    </div>
+    <p class="qfb" hidden></p>
+    <div class="qexp" hidden>
+      <span class="lbl">Phân tích đề</span>
+      <ul>
+        <li><b>Đề kể:</b> trưởng nhóm biết rất rõ giám đốc cần gì (một slide, ngưỡng $5.000, việc nên làm lên đầu), nhưng prompt chỉ có một dòng.</li>
+        <li><b>Chỗ khó:</b> trưởng nhóm định “sửa sau”. Nghe tiện, nhưng mọi thứ cần sửa đều là thứ mình biết từ trước.</li>
+        <li><b>Đề hỏi:</b> cách hiệu quả nhất để có bản dùng được, tức là sửa ở đầu vào chứ không ở đầu ra.</li>
+      </ul>
+      <span class="lbl">Cần biết để chọn</span>
+      <ol>
+        <li>Claude chỉ biết những gì có trong context. Giới hạn không viết ra thì nó phải đoán.</li>
+        <li>Ràng buộc đặt vào lời yêu cầu ngay từ đầu, không để bước duyệt sau mới cắt.</li>
+        <li>Một câu vai chỉnh giọng và góc nhìn, nhưng không chứa giới hạn cụ thể nào.</li>
+      </ol>
+      <span class="lbl">Từng đáp án</span>
+      <ul class="verdict">
+        <li><b>A sai.</b> Vai không cho Claude biết ngưỡng $5.000 hay giới hạn một slide (ý 3). Hấp dẫn vì “chuyên gia” nghe như sẽ tự biết, nhưng chuyên gia mới vào cũng không đọc được suy nghĩ của sếp.</li>
+        <li><b>B sai.</b> Đúng cái kiểu “viết rồi sửa sau” mà đề cài (ý 2). Tốn nhiều lượt, và mỗi lần cắt lại có thể bỏ nhầm sự cố quan trọng.</li>
+        <li class="ok"><b>C đúng.</b> Đưa đúng những gì người giao việc biết vào prompt (ý 1, 2). Claude làm đúng ngay lần đầu, không phải đoán.</li>
+        <li><b>D sai.</b> Có nguồn là tốt, nhưng “tin Claude tự suy ra” chính là để nó đoán (ý 1). Claude có thể chọn ngưỡng khác hoặc xếp sự cố theo thời gian.</li>
+      </ul>
+      <button type="button" class="qreset">Làm lại câu này</button>
+    </div>
+  </div>
+
+  <div class="qcase" data-answer="A">
+    <h5 class="sub">Dạng 2: có luật mà Claude vẫn lách sang ca khác</h5>
+    <span class="lbl">Đề sẽ viết kiểu này</span>
+    <div class="qtext">
+      <span class="en">“A customer service team uses Claude to write scripts for its automated phone line, which a voice engine reads aloud to callers. The prompt says ‘Do not use abbreviations.’ Claude now avoids ‘e.g.’, but the scripts still contain ‘24/7’, ‘%’, and ‘&amp;’, which the voice engine reads incorrectly. What is the best change to the prompt?”</span>
+      <span class="vi">Dịch: Một nhóm chăm sóc khách hàng dùng Claude viết kịch bản cho tổng đài tự động, kịch bản được máy đọc thành tiếng cho người gọi. Prompt ghi “Không dùng chữ viết tắt.” Claude đã bỏ “e.g.”, nhưng kịch bản vẫn có “24/7”, “%” và “&amp;”, máy đọc sai cả ba. Thay đổi tốt nhất cho prompt là gì?</span>
+    </div>
+    <span class="lbl">Bạn chọn đáp án nào?</span>
+    <div class="qopts">
+      <button type="button" class="qopt" data-k="A"><b class="k">A.</b><span class="body"><span class="en">“Explain that the script will be read aloud by a voice engine, so everything must be written the way it should be spoken.”</span><span class="vi">Giải thích rằng kịch bản sẽ được máy đọc thành tiếng, nên mọi thứ phải viết đúng như cách đọc lên.</span></span></button>
+      <button type="button" class="qopt" data-k="B"><b class="k">B.</b><span class="body"><span class="en">“Add a complete list of every symbol, number format, and abbreviation that Claude must never use in a script.”</span><span class="vi">Thêm danh sách đầy đủ mọi ký hiệu, kiểu viết số và chữ viết tắt mà Claude không bao giờ được dùng trong kịch bản.</span></span></button>
+      <button type="button" class="qopt" data-k="C"><b class="k">C.</b><span class="body"><span class="en">“Repeat the rule in capital letters at the start and at the end of the prompt.”</span><span class="vi">Nhắc lại luật bằng chữ in hoa ở đầu và cuối prompt.</span></span></button>
+      <button type="button" class="qopt" data-k="D"><b class="k">D.</b><span class="body"><span class="en">“Add the role ‘You are a professional phone-script writer.’”</span><span class="vi">Thêm vai “Bạn là người viết kịch bản tổng đài chuyên nghiệp.”</span></span></button>
+    </div>
+    <p class="qfb" hidden></p>
+    <div class="qexp" hidden>
+      <span class="lbl">Phân tích đề</span>
+      <ul>
+        <li><b>Đề kể:</b> Claude theo đúng chữ của luật (bỏ “e.g.”), nhưng vẫn dùng những ký hiệu luật không gọi tên.</li>
+        <li><b>Chỗ khó:</b> “24/7”, “%”, “&amp;” không hẳn là chữ viết tắt. Claude không sai luật. Luật quá hẹp so với điều người viết thật sự lo.</li>
+        <li><b>Đề hỏi:</b> thay đổi nào cho prompt, để Claude tránh được cả những ký hiệu sẽ xuất hiện sau này.</li>
+      </ul>
+      <span class="lbl">Cần biết để chọn</span>
+      <ol>
+        <li>Một luật trần chỉ che đúng những ca nó gọi tên. Luật kèm lý do thì Claude tự suy ra các ca tương tự.</li>
+        <li>Viết hoa, nhắc lại chỉ thêm nhấn mạnh, không thêm thông tin.</li>
+      </ol>
+      <span class="lbl">Từng đáp án</span>
+      <ul class="verdict">
+        <li class="ok"><b>A đúng.</b> Lý do (“máy sẽ đọc thành tiếng”) cho Claude tiêu chí để tự xét mọi ký hiệu, kể cả những cái chưa ai nghĩ tới (ý 1). Đây đúng kiểu ví dụ dấu ba chấm trong docs.</li>
+        <li><b>B sai.</b> Danh sách dài hơn vẫn chỉ che những gì có trong danh sách (ý 1). Hấp dẫn vì trông kỹ lưỡng, nhưng tuần sau gặp “#” hay “km” là hỏng tiếp.</li>
+        <li><b>C sai.</b> Claude đã hiểu luật, chỉ là luật quá hẹp. Nói to hơn không làm luật rộng ra (ý 2).</li>
+        <li><b>D sai.</b> Vai không nói gì về máy đọc. Người viết kịch bản tổng đài chuyên nghiệp vẫn có thể viết “24/7” cho người đọc bằng mắt.</li>
+      </ul>
+      <button type="button" class="qreset">Làm lại câu này</button>
+    </div>
+  </div>
+
+  <div class="qcase" data-answer="D">
+    <h5 class="sub">Dạng 3: trả lời từ tài liệu dài mà lẫn kiến thức chung</h5>
+    <span class="lbl">Đề sẽ viết kiểu này</span>
+    <div class="qtext">
+      <span class="en">“An HR specialist uploads the 80-page employee handbook and pastes in questions from staff. Some answers mix in general HR practices that are not in the handbook, and when the handbook says nothing about a topic, Claude still answers confidently. What should she change first?”</span>
+      <span class="vi">Dịch: Một chuyên viên nhân sự tải lên sổ tay nhân viên 80 trang rồi dán vào các câu hỏi của nhân viên. Một số câu trả lời lẫn thông lệ nhân sự chung không có trong sổ tay, và khi sổ tay không nói gì về một chủ đề, Claude vẫn trả lời rất tự tin. Chị nên thay đổi gì trước tiên?</span>
+    </div>
+    <span class="lbl">Bạn chọn đáp án nào?</span>
+    <div class="qopts">
+      <button type="button" class="qopt" data-k="A"><b class="k">A.</b><span class="body"><span class="en">“Ask Claude to draw on its general HR knowledge as well, so that every answer is more complete.”</span><span class="vi">Bảo Claude dùng thêm kiến thức nhân sự chung, để câu trả lời nào cũng đầy đủ hơn.</span></span></button>
+      <button type="button" class="qopt" data-k="B"><b class="k">B.</b><span class="body"><span class="en">“Type each question before uploading the handbook, so Claude knows what to look for while it reads.”</span><span class="vi">Gõ câu hỏi trước rồi mới tải sổ tay lên, để Claude biết cần tìm gì khi đọc.</span></span></button>
+      <button type="button" class="qopt" data-k="C"><b class="k">C.</b><span class="body"><span class="en">“Ask Claude to rate its confidence in each answer, and share only the answers it rates as high.”</span><span class="vi">Nhờ Claude tự chấm độ tin cậy của mỗi câu trả lời, chỉ gửi những câu được chấm cao.</span></span></button>
+      <button type="button" class="qopt" data-k="D"><b class="k">D.</b><span class="body"><span class="en">“Tell Claude to answer only from the handbook, quote the relevant passage first, and say ‘The handbook does not cover this’ when none applies.”</span><span class="vi">Dặn Claude chỉ trả lời từ sổ tay, chép đoạn liên quan trước, và ghi “Sổ tay không đề cập” khi không có đoạn nào phù hợp.</span></span></button>
+    </div>
+    <p class="qfb" hidden></p>
+    <div class="qexp" hidden>
+      <span class="lbl">Phân tích đề</span>
+      <ul>
+        <li><b>Đề kể:</b> hai triệu chứng. Câu trả lời lẫn kiến thức ngoài sổ tay, và sổ tay im lặng thì Claude vẫn trả lời.</li>
+        <li><b>Chỗ khó:</b> cả hai cùng một gốc. Prompt không nói “chỉ dùng sổ tay”, và không cho Claude lối thoát khi sổ tay không có câu trả lời.</li>
+        <li><b>Đề hỏi:</b> thay đổi gì <i>trước tiên</i> trong prompt.</li>
+      </ul>
+      <span class="lbl">Cần biết để chọn</span>
+      <ol>
+        <li>Bám nguồn: nói rõ chỉ dùng tài liệu được đưa, và trích đoạn liên quan trước khi trả lời.</li>
+        <li>Nói trước phải làm gì khi nguồn không có câu trả lời. Docs: cho phép Claude nói không biết giảm mạnh thông tin sai.</li>
+        <li>Tài liệu dài để trước, câu hỏi để sau.</li>
+        <li>Độ tự tin Claude tự chấm không phải tín hiệu đáng tin về độ chính xác (<a href="#l-0-3">bài 0.3</a>).</li>
+      </ol>
+      <span class="lbl">Từng đáp án</span>
+      <ul class="verdict">
+        <li><b>A sai.</b> Làm triệu chứng thứ nhất nặng thêm. Nhân viên hỏi chính sách của công ty, không hỏi thông lệ chung (ý 1).</li>
+        <li><b>B sai.</b> Đảo ngược thứ tự docs khuyên (ý 3), và không đụng tới gốc của cả hai triệu chứng.</li>
+        <li><b>C sai.</b> Vẫn là Claude chấm Claude (ý 4). Một câu bịa hoàn toàn có thể đi kèm điểm tự tin cao.</li>
+        <li class="ok"><b>D đúng.</b> “Chỉ từ sổ tay” và “trích trước” chặn kiến thức ngoài (ý 1). Câu “Sổ tay không đề cập” là lối thoát khi sổ tay im lặng (ý 2).</li>
+      </ul>
+      <button type="button" class="qreset">Làm lại câu này</button>
+    </div>
+  </div>
+
+  <div class="more"><b>Biết thêm</b><ul>
+    <li><b>Vai giúp, nhưng không thay được phần nào khác.</b> Docs: chỉ một câu vai đã chỉnh được hành vi và giọng của Claude. Vai dùng lại ở mọi chat thì đặt vào project instructions (<a href="#l-5-3">bài 5.3</a>).</li>
+    <li><b>Thẻ không có cú pháp bắt buộc.</b> Tên thẻ rõ nghĩa và dùng thống nhất là được. Một tiêu đề như “TÀI LIỆU:” cũng tách được nội dung.</li>
+    <li><b>Prompt dài hơn không tự tốt hơn.</b> Thêm đúng phần đang thiếu, đừng thêm cho dài.</li>
+    <li><b>Đáp án nhắc chỉnh “temperature”</b> (độ ngẫu nhiên): người dùng app không có nút này, và nó cũng không làm Claude theo lời dặn tốt hơn. Loại.</li>
+    <li><b>Viết rõ từ đầu cũng tiết kiệm hạn mức.</b> Help Center khuyên nói cụ thể và gom yêu cầu để bớt những lượt hỏi lại.</li>
+  </ul></div>
+  <div class="rule">Quy tắc: điều gì bạn biết mà Claude cần thì viết vào prompt: việc, người đọc, giới hạn kèm lý do, nguồn gốc, một mẫu.</div>
+  <div class="remember"><b>Nhớ nhanh</b><ul>
+    <li>Ràng buộc viết vào lời yêu cầu, không để duyệt sau mới cắt. Nói cả độ sâu.</li>
+    <li>Luật kèm lý do thì Claude tự suy ra ca chưa kể. Viết hoa không thêm thông tin.</li>
+    <li>Tài liệu trước, câu hỏi sau. Trích trước rồi trả lời. Có lối thoát khi nguồn không nói.</li>
+    <li>Một ví dụ đúng loại. Nói định dạng muốn có. Muốn bản sửa thì bảo sửa.</li>
+  </ul></div>
+  <div class="src">Đọc thêm: <a href="https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices">Prompting best practices</a> · <a href="https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-hallucinations">Reduce hallucinations</a> · <a href="https://support.claude.com/en/articles/7996853-introduction-to-prompt-design">Introduction to prompt design</a> · <a href="https://support.claude.com/en/articles/9797557-usage-limit-best-practices">Usage limit best practices</a></div>
+  <label class="done"><input type="checkbox" data-lesson="l-1-1"> Đã học bài này</label>
+</article>
+
+<article class="lesson" id="l-1-2" data-domain="1" data-ts="1.2" data-min="12">
+  <header class="lh"><span class="ts">TS 1.2</span><h3>Chia việc lớn thành chuỗi bước: mỗi bước một việc, kết quả đã kiểm của bước trước làm đầu vào bước sau</h3><span class="rt">~12 phút</span></header>
+  <p class="need">Cần biết trước: Claude thấy gì trong một cuộc trò chuyện, và các phần của prompt ở <a href="#l-1-0">bài Nền tảng</a>.</p>
+  <div class="defs"><b>Khái niệm của bài</b><dl>
+    <dt>Chia việc (task decomposition)</dt><dd>Tách một yêu cầu lớn thành các bước nhỏ, mỗi bước làm một việc rõ ràng.</dd>
+    <dt>Nối chuỗi prompt (prompt chaining)</dt><dd>Chạy các bước theo thứ tự, output đã kiểm của bước trước làm đầu vào của bước sau. Trong app, mỗi bước là một lượt chat, hoặc một chat riêng.</dd>
+    <dt>Output trung gian (intermediate output)</dt><dd>Kết quả của một bước giữa chừng: danh sách vấn đề, bảng số liệu trích ra, dàn ý. Đây là chỗ bạn kiểm được trước khi đi tiếp.</dd>
+    <dt>Tiêu chí xong (definition of done)</dt><dd>Mô tả cụ thể thế nào là một bước làm xong, rõ tới mức người ngoài nhìn vào chấm được đạt hay không.</dd>
+    <dt>Phần độc lập, phần phụ thuộc</dt><dd>Phần độc lập làm riêng được rồi gộp lại (mỗi khu vực, mỗi nhóm khách). Phần phụ thuộc cần kết quả của phần trước nên phải làm sau.</dd>
+  </dl></div>
+  <div class="story"><b>Tình huống.</b> Chị Hoa, quản lý dự án, dán 40 trang biên bản họp cả quý vào một prompt: “Tổng hợp các quyết định và việc còn tồn, rồi viết email cập nhật cho khách.” Email trơn tru, nhưng có một quyết định đã bị hủy ở cuộc họp sau, và hai việc tồn bị sót. Lỗi nằm ở bước tổng hợp, nhưng chị chỉ thấy email, không có chỗ nào để kiểm giữa chừng.</div>
+
+  <h4>Khi nào nên chia, khi nào giữ một prompt</h4>
+  <div class="tw"><table>
+    <tr><th>Nên chia khi</th><th>Giữ một prompt khi</th></tr>
+    <tr><td>Một prompt phải lo nhiều thứ cạnh tranh nhau: đúng số liệu, đúng giọng, đúng quy định, đúng định dạng</td><td>Việc đơn giản, một output, đã chạy tốt</td></tr>
+    <tr><td>Chạy mấy lần ra mấy kiểu khác nhau</td><td>Chia chỉ thêm lượt chat, thêm thời gian, thêm hạn mức, mà không thêm chỗ nào cần kiểm</td></tr>
+    <tr><td>Bạn cần kiểm một kết quả giữa chừng trước khi đi tiếp</td><td>Bạn chưa thử viết lại prompt cho rõ. Thử một prompt rõ hơn trước khi chia.</td></tr>
+    <tr><td>Đầu vào lớn và tự chia nhóm được: 300 ý kiến khách theo chủ đề, báo cáo theo khu vực</td><td>Các phần dính chặt vào nhau, tách ra thì bước nào cũng thiếu thông tin</td></tr>
+  </table></div>
+  <p>Docs của Anthropic nói model hiện nay tự xử lý được phần lớn việc suy luận nhiều bước, và chia chuỗi vẫn “useful when you need to inspect intermediate outputs” (có ích khi bạn cần kiểm các output trung gian). Nói cách khác: chia khi cần kiểm, không phải chia theo thói quen.</p>
+
+  <h4>Một chuỗi trong chat, từng bước</h4>
+  <p>Ca của chị Hoa, làm lại:</p>
+  <div class="tw"><table>
+    <tr><th>Bước</th><th>Chị gõ</th><th>Chị kiểm</th></tr>
+    <tr><td>1</td><td>“Từ các biên bản dưới đây, liệt kê mọi quyết định: ngày, nội dung, chép nguyên câu trong biên bản. Quyết định nào bị đổi ở cuộc họp sau thì ghi rõ.”</td><td>Đối chiếu vài dòng với biên bản, gạch quyết định đã hủy</td></tr>
+    <tr><td>2</td><td>“Từ cùng biên bản, liệt kê việc còn tồn: ai làm, hạn chót, câu trích.”</td><td>Hỏi lại người phụ trách những dòng còn nghi</td></tr>
+    <tr><td>3</td><td>“Dựa trên hai bảng đã kiểm dưới đây, viết email cập nhật cho khách…” (dán hai bảng)</td><td>Đọc bản nháp</td></tr>
+    <tr><td>4</td><td>“Rà bản nháp theo 3 tiêu chí: … Chỉ ra chỗ chưa đạt.” Rồi: “Sửa theo nhận xét.”</td><td>Đọc bản cuối</td></tr>
+  </table></div>
+  <ul>
+    <li>Bước 1 và 2 là phần độc lập. Làm trước làm sau đều được.</li>
+    <li>Bước 3 phụ thuộc cả hai, nên phải chờ hai bảng đã kiểm.</li>
+    <li>Bước 4 là mẫu chuỗi phổ biến nhất theo docs: soạn → rà theo tiêu chí → sửa theo nhận xét.</li>
+  </ul>
+  <p>Hai phần phụ thuộc mà chạy riêng, mỗi bên tự đặt giả định, thì kết quả mâu thuẫn nhau. Ví dụ: một chat ước lượng quy mô thị trường, chat khác đặt ngân sách theo một quy mô tự đoán.</p>
+
+  <h4>Bước sau cần nhận gì</h4>
+  <ul>
+    <li><b>Mục tiêu gốc,</b> để bước sau không lạc hướng.</li>
+    <li><b>Lời dặn riêng của bước đó.</b></li>
+    <li><b>Tài liệu thật mà bước đó cần:</b> bảng đã kiểm, đoạn trích nguyên văn. Không phải bản tóm tắt. Tóm tắt bỏ mất con số và chữ gốc, đúng thứ bước sau hay cần.</li>
+    <li><b>So hai tài liệu dài</b> (hai hợp đồng, hai bản đề xuất): trích nguyên văn điều khoản cần so từ mỗi bên, kiểm, rồi mới so. Đừng so hai bản tóm tắt.</li>
+    <li><b>Mở chat mới cho một bước thì chat đó trống</b> (trừ những gì nằm trong Project). Dán lại tiêu chí và tài liệu. Câu “như đã thống nhất” không mang theo được gì. Khi nào nên mở chat mới, xem <a href="#l-3-4">bài 3.4</a>.</li>
+  </ul>
+
+  <h4>Đặt điểm kiểm ở đâu</h4>
+  <ul>
+    <li><b>Lỗi ở bước đầu chảy xuống mọi bước sau.</b> Chỉ kiểm ở cuối thì phải lần ngược qua cả chuỗi.</li>
+    <li><b>Kiểm ở output mà nhiều bước sau dựa vào, và khó sửa về sau:</b> dàn ý đã duyệt, bảng số liệu trích ra, bản nháp đầu.</li>
+    <li><b>Viết tiêu chí xong cho mỗi bước trước khi bắt đầu.</b> Ví dụ: “Bảng quyết định đạt khi mỗi dòng có ngày, nội dung và câu trích nguyên văn.”</li>
+    <li>Việc rủi ro cao thì người có chuyên môn kiểm (<a href="#l-2-4">bài 2.4</a>).</li>
+  </ul>
+
+  <div class="vs">
+    <div class="bad"><b>Tệ</b><ul>
+      <li>Một prompt: tổng hợp, phân tích, đề xuất, viết email, chỉ kiểm ở cuối.</li>
+      <li>Chia một việc đơn giản đã chạy tốt thành bốn bước “cho chắc”.</li>
+      <li>Chạy hai phần phụ thuộc ở hai chat riêng, mỗi bên tự giả định.</li>
+      <li>Đưa bản tóm tắt sang bước sau, hoặc gõ “như đã thống nhất”.</li>
+    </ul></div>
+    <div class="good"><b>Tốt</b><ul>
+      <li>Mỗi bước một việc, có tiêu chí xong, kiểm output trung gian.</li>
+      <li>Việc đơn giản thì giữ một prompt, viết cho rõ.</li>
+      <li>Phần phụ thuộc chạy sau, nhận output đã kiểm của phần trước.</li>
+      <li>Đưa bảng đã kiểm hoặc đoạn trích nguyên văn, kèm mục tiêu gốc.</li>
+    </ul></div>
+  </div>
+
+  <h4>Khi đi thi</h4>
+  <p class="need">Bài này thường ra 2 dạng câu hỏi. Đọc đề, <b>chọn một đáp án trước</b>; phần giải thích chỉ hiện ra sau khi bạn chọn.</p>
+
+  <div class="qcase" data-answer="B">
+    <h5 class="sub">Dạng 1: một prompt ôm quá nhiều</h5>
+    <span class="lbl">Đề sẽ viết kiểu này</span>
+    <div class="qtext">
+      <span class="en">“A product manager pastes 300 open-ended survey comments into one prompt and asks Claude to find the three biggest issues, propose fixes, and write a memo for the leadership team. Each run names different top issues, and she has no way to check the issue list before the memo is written. What is the best way to restructure the work?”</span>
+      <span class="vi">Dịch: Một quản lý sản phẩm dán 300 ý kiến khảo sát dạng tự do vào một prompt, nhờ Claude tìm 3 vấn đề lớn nhất, đề xuất cách sửa và viết bản ghi nhớ cho ban lãnh đạo. Mỗi lần chạy lại ra một bộ vấn đề khác, và chị không có cách nào kiểm danh sách vấn đề trước khi bản ghi nhớ được viết. Cách tổ chức lại công việc tốt nhất là gì?</span>
+    </div>
+    <span class="lbl">Bạn chọn đáp án nào?</span>
+    <div class="qopts">
+      <button type="button" class="qopt" data-k="A"><b class="k">A.</b><span class="body"><span class="en">“Keep the single prompt but add ‘Be thorough and accurate’ and ‘Double-check your work before answering.’”</span><span class="vi">Giữ một prompt nhưng thêm “Hãy kỹ lưỡng và chính xác” và “Tự kiểm lại trước khi trả lời.”</span></span></button>
+      <button type="button" class="qopt" data-k="B"><b class="k">B.</b><span class="body"><span class="en">“Group the comments into issues with counts and sample quotes, check that list, then ask for fixes, then the memo.”</span><span class="vi">Gom ý kiến thành các vấn đề kèm số lượng và câu trích mẫu, kiểm danh sách đó, rồi mới xin cách sửa, rồi mới tới bản ghi nhớ.</span></span></button>
+      <button type="button" class="qopt" data-k="C"><b class="k">C.</b><span class="body"><span class="en">“Switch to the most capable model available so that the single prompt produces the same top issues every time.”</span><span class="vi">Đổi sang model mạnh nhất để prompt duy nhất kia lần nào cũng ra cùng một bộ vấn đề.</span></span></button>
+      <button type="button" class="qopt" data-k="D"><b class="k">D.</b><span class="body"><span class="en">“Ask for the memo first, then ask Claude in a follow-up message which issues and comments it based the memo on.”</span><span class="vi">Xin bản ghi nhớ trước, rồi hỏi tiếp Claude xem bản ghi nhớ dựa trên những vấn đề và ý kiến nào.</span></span></button>
+    </div>
+    <p class="qfb" hidden></p>
+    <div class="qexp" hidden>
+      <span class="lbl">Phân tích đề</span>
+      <ul>
+        <li><b>Đề kể:</b> một prompt làm ba việc: gom vấn đề, đề xuất, viết bản ghi nhớ.</li>
+        <li><b>Chỗ khó:</b> hai dấu hiệu nằm ngay trong đề. Kết quả chập chờn giữa các lần chạy, và không kiểm được danh sách vấn đề trước khi nó thành bản ghi nhớ.</li>
+        <li><b>Đề hỏi:</b> tổ chức lại <i>công việc</i>, không phải chỉnh câu chữ.</li>
+      </ul>
+      <span class="lbl">Cần biết để chọn</span>
+      <ol>
+        <li>Kết quả chập chờn và cần kiểm giữa chừng là hai lý do chính để chia.</li>
+        <li>Điểm kiểm đặt ở output mà các bước sau dựa vào: ở đây là danh sách vấn đề.</li>
+        <li>Lời dặn chung chung (“hãy chính xác”) không tạo ra chỗ kiểm nào.</li>
+      </ol>
+      <span class="lbl">Từng đáp án</span>
+      <ul class="verdict">
+        <li><b>A sai.</b> Thêm lời dặn nhưng cấu trúc vẫn y nguyên (ý 3). Chị vẫn không thấy danh sách vấn đề trước khi bản ghi nhớ được viết.</li>
+        <li class="ok"><b>B đúng.</b> Chia đúng chỗ có hai dấu hiệu (ý 1). Danh sách vấn đề có số lượng và câu trích là điểm kiểm đúng chỗ (ý 2), các bước sau dựa trên một danh sách đã kiểm.</li>
+        <li><b>C sai.</b> Hấp dẫn vì “model mạnh thì ổn định hơn”, nhưng vấn đề là thiếu chỗ kiểm, không phải thiếu sức. Model nào thì vẫn không có bước để chị duyệt (ý 2).</li>
+        <li><b>D sai.</b> Kiểm sau khi bản ghi nhớ đã viết là đi ngược. Lỗi ở danh sách vấn đề đã lan vào bản ghi nhớ (ý 2).</li>
+      </ul>
+      <button type="button" class="qreset">Làm lại câu này</button>
+    </div>
+  </div>
+
+  <div class="qcase" data-answer="D">
+    <h5 class="sub">Dạng 2: hai bước phụ thuộc chạy riêng</h5>
+    <span class="lbl">Đề sẽ viết kiểu này</span>
+    <div class="qtext">
+      <span class="en">“A marketing team works in two separate chats. In the first, Claude estimates how many small businesses in the region fit the target profile. In the second, Claude proposes a campaign budget. The budget assumes a market three times larger than the estimate from the first chat. What is the best fix?”</span>
+      <span class="vi">Dịch: Một nhóm marketing làm ở hai chat riêng. Chat thứ nhất, Claude ước lượng số doanh nghiệp nhỏ trong vùng khớp với chân dung khách mục tiêu. Chat thứ hai, Claude đề xuất ngân sách chiến dịch. Ngân sách giả định thị trường lớn gấp ba con số ước lượng ở chat thứ nhất. Cách sửa tốt nhất là gì?</span>
+    </div>
+    <span class="lbl">Bạn chọn đáp án nào?</span>
+    <div class="qopts">
+      <button type="button" class="qopt" data-k="A"><b class="k">A.</b><span class="body"><span class="en">“Run both chats several more times and keep whichever pair of answers happens to agree with each other.”</span><span class="vi">Chạy lại cả hai chat vài lần, giữ cặp câu trả lời nào tình cờ khớp nhau.</span></span></button>
+      <button type="button" class="qopt" data-k="B"><b class="k">B.</b><span class="body"><span class="en">“In the budget chat, ask Claude to make more conservative assumptions about the size of the market.”</span><span class="vi">Trong chat ngân sách, bảo Claude giả định quy mô thị trường thận trọng hơn.</span></span></button>
+      <button type="button" class="qopt" data-k="C"><b class="k">C.</b><span class="body"><span class="en">“Combine all the raw data and both questions into one long prompt so that Claude handles everything at once.”</span><span class="vi">Gộp toàn bộ dữ liệu thô và cả hai câu hỏi vào một prompt dài để Claude xử lý một lượt.</span></span></button>
+      <button type="button" class="qopt" data-k="D"><b class="k">D.</b><span class="body"><span class="en">“Run the budget step after the estimate: check the estimate, then paste it and its assumptions into the budget prompt.”</span><span class="vi">Chạy bước ngân sách sau bước ước lượng: kiểm con số ước lượng, rồi dán nó cùng các giả định vào prompt ngân sách.</span></span></button>
+    </div>
+    <p class="qfb" hidden></p>
+    <div class="qexp" hidden>
+      <span class="lbl">Phân tích đề</span>
+      <ul>
+        <li><b>Đề kể:</b> ngân sách phụ thuộc vào quy mô thị trường, nhưng hai việc chạy ở hai chat tách rời.</li>
+        <li><b>Chỗ khó:</b> chat ngân sách không thấy con số ước lượng, vì chat này không đọc được chat kia. Nó tự đoán một quy mô.</li>
+        <li><b>Đề hỏi:</b> sửa tận gốc, không phải chọn con số nào nghe hợp lý.</li>
+      </ul>
+      <span class="lbl">Cần biết để chọn</span>
+      <ol>
+        <li>Phần phụ thuộc phải chạy sau phần nó dựa vào, và nhận output đã kiểm của phần đó.</li>
+        <li>Mỗi chat chỉ thấy context của chính nó. Thứ gì cần thì phải dán sang.</li>
+        <li>Gộp mọi thứ vào một prompt làm mất điểm kiểm giữa chừng.</li>
+      </ol>
+      <span class="lbl">Từng đáp án</span>
+      <ul class="verdict">
+        <li><b>A sai.</b> Chạy lại cho tới khi khớp là chọn may rủi. Gốc vẫn còn: chat ngân sách không có con số ước lượng (ý 2).</li>
+        <li><b>B sai.</b> Vá triệu chứng. “Thận trọng hơn” vẫn là một con số tự đoán, chỉ nhỏ hơn (ý 1).</li>
+        <li><b>C sai.</b> Hấp dẫn vì “một chỗ thì không lệch nhau”, nhưng con số ước lượng không được kiểm trước khi ngân sách dựa vào nó (ý 3).</li>
+        <li class="ok"><b>D đúng.</b> Nối chuỗi đúng nghĩa: bước sau nhận output đã kiểm của bước trước (ý 1), dán sang vì chat mới không tự thấy (ý 2).</li>
+      </ul>
+      <button type="button" class="qreset">Làm lại câu này</button>
+    </div>
+  </div>
+
+  <div class="more"><b>Biết thêm</b><ul>
+    <li><b>Chia không làm nhanh hơn.</b> Thêm lượt, thêm thời gian, thêm hạn mức. Đổi lại bạn kiểm được từng bước và kết quả ổn định hơn.</li>
+    <li><b>Nhiều bước hơn không tự an toàn hơn.</b> Mỗi bước thêm một chỗ có thể truyền thiếu thông tin.</li>
+    <li><b>Chưa biết chia thế nào</b> thì nhờ Claude đề xuất các bước trước, bạn duyệt rồi mới làm. Help Center cũng khuyên lên kế hoạch trước.</li>
+    <li><b>Chia việc khác với viết sẵn từng bước suy nghĩ.</b> Chia việc là nhiều lượt có kiểm ở giữa. Còn trong một prompt, docs nói “think thoroughly” (hãy suy nghĩ kỹ) thường cho kết quả tốt hơn một kế hoạch từng bước do người tự viết.</li>
+    <li><b>Research tự chia phần tìm kiếm.</b> Tính năng Research của app (guide gọi là research mode) chạy nhiều lượt tìm kiếm nối nhau (<a href="#l-3-1">bài 3.1</a>). Phân tích và viết từ kết quả vẫn là phần bạn chia.</li>
+  </ul></div>
+  <div class="rule">Quy tắc: chia khi cần kiểm giữa chừng. Bước sau nhận output đã kiểm, bằng chữ gốc, không nhận bản tóm tắt.</div>
+  <div class="remember"><b>Nhớ nhanh</b><ul>
+    <li>Dấu hiệu nên chia: nhiều mục tiêu cạnh tranh, kết quả chập chờn, cần kiểm giữa chừng, đầu vào lớn tự chia nhóm.</li>
+    <li>Việc đơn giản đã chạy tốt: giữ một prompt.</li>
+    <li>Phụ thuộc thì nối tiếp. Độc lập thì làm riêng rồi gộp.</li>
+    <li>Điểm kiểm ở output nhiều bước dựa vào. Chuỗi hay gặp: soạn → rà theo tiêu chí → sửa.</li>
+  </ul></div>
+  <div class="src">Đọc thêm: <a href="https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices">Prompting best practices (Chain complex prompts)</a> · <a href="https://support.claude.com/en/articles/9797557-usage-limit-best-practices">Usage limit best practices</a> · <a href="https://anthropic-partners.skilljar.com/path/claude-associate/prompting-task-execution">Prompting &amp; Task Execution</a></div>
+  <label class="done"><input type="checkbox" data-lesson="l-1-2"> Đã học bài này</label>
+</article>
+
+<article class="lesson" id="l-1-3" data-domain="1" data-ts="1.3" data-min="12">
+  <header class="lh"><span class="ts">TS 1.3</span><h3>Lặp prompt: chẩn đoán câu trả lời yếu, đổi một chỗ, thử lại</h3><span class="rt">~12 phút</span></header>
+  <p class="need">Cần biết trước: các phần của prompt ở <a href="#l-1-0">bài Nền tảng</a>, cách viết từng phần ở <a href="#l-1-1">bài 1.1</a>.</p>
+  <div class="defs"><b>Khái niệm của bài</b><dl>
+    <dt>Tiêu chí thành công (success criteria)</dt><dd>Danh sách cụ thể để chấm một output: độ dài, độ sâu, định dạng, số liệu phải khớp nguồn. Đặt trước khi sửa prompt.</dd>
+    <dt>Chẩn đoán (diagnose)</dt><dd>Đọc output yếu, gọi tên nó yếu ở đâu, rồi tìm phần nào của prompt gây ra.</dd>
+    <dt>Lặp prompt (iterate)</dt><dd>Vòng chẩn đoán → đổi một chỗ → thử lại → giữ cái có tác dụng, cho tới khi đạt tiêu chí.</dd>
+    <dt>Bộ đầu vào thử</dt><dd>Vài đầu vào thật, khác nhau, có cả ca khó, dùng để thử prompt trước khi dùng lâu dài.</dd>
+    <dt>Overfit (khớp quá)</dt><dd>Prompt chỉnh mãi trên một đầu vào nên chạy rất tốt với nó, gặp đầu vào khác thì hỏng.</dd>
+  </dl></div>
+  <div class="story"><b>Tình huống.</b> Chị Mai, marketing, nhờ Claude viết 5 tiêu đề email cho chiến dịch. Lần đầu chung chung. Chị gõ “viết hay hơn đi” ba lần, lần nào cũng khác nhưng không lần nào tốt hơn. Rồi chị viết lại prompt dài gấp ba: thêm vai “copywriter 20 năm kinh nghiệm”, thêm 10 luật, thêm mô tả khách hàng. Output khá hơn, nhưng chị không biết thay đổi nào có tác dụng. Tuần sau dùng prompt đó cho chiến dịch khác thì hỏng.</div>
+
+  <h4>Đặt tiêu chí trước khi sửa</h4>
+  <p>Không có tiêu chí thì bạn chỉ biết output “khác đi”, không biết nó “tốt hơn” chưa. Với ca chị Mai, tiêu chí có thể là:</p>
+  <ul>
+    <li>Dưới 50 ký tự.</li>
+    <li>Nhắc ưu đãi cụ thể của chiến dịch.</li>
+    <li>Giọng giống ba tiêu đề cũ có tỉ lệ mở cao.</li>
+    <li>Năm tiêu đề phải khác hướng nhau, không phải năm cách nói một ý.</li>
+  </ul>
+
+  <h4>Đọc triệu chứng, tìm phần của prompt gây ra</h4>
+  <p>Hai output trông yếu giống nhau có thể do hai nguyên nhân khác nhau, và mỗi nguyên nhân một cách sửa.</p>
+  <div class="tw"><table>
+    <tr><th>Triệu chứng</th><th>Nguyên nhân hay gặp</th><th>Sửa phần nào</th></tr>
+    <tr><td>Chung chung, nông, đúng với công ty nào cũng được</td><td>Thiếu bối cảnh cụ thể, không nói độ sâu</td><td>Thêm chi tiết của bạn, nói rõ cần sâu tới đâu, thêm ví dụ</td></tr>
+    <tr><td>Lạc đề, trả lời một câu hỏi khác</td><td>Không nói mục tiêu, không nói để làm gì</td><td>Nêu mục tiêu, người đọc và lý do</td></tr>
+    <tr><td>Định dạng lúc thế này lúc thế khác</td><td>Không có mẫu</td><td>Đưa một ví dụ hoặc khung mẫu, viết prompt giống output muốn có</td></tr>
+    <tr><td>Bỏ sót, rối khi việc có nhiều phần</td><td>Một prompt ôm quá nhiều</td><td>Chia bước (<a href="#l-1-2">bài 1.2</a>)</td></tr>
+    <tr><td>Bịa chi tiết khi nguồn không có</td><td>Không có lối thoát</td><td>Cho phép nói “không có trong tài liệu”, buộc trích nguồn</td></tr>
+    <tr><td>Chỉ gợi ý trong khi bạn muốn bản sửa</td><td>Lời yêu cầu mơ hồ</td><td>Nói thẳng hành động: “Viết lại đoạn này…”</td></tr>
+    <tr><td>Một luật bị lách sang ca khác</td><td>Luật trần, không lý do</td><td>Thêm lý do của luật</td></tr>
+  </table></div>
+  <p>Những cách sửa nghe hợp lý mà không sửa gì:</p>
+  <ul>
+    <li><b>Gõ lại y nguyên, hay “viết hay hơn đi”.</b> Điều kiện gây ra output yếu vẫn còn nguyên. Bạn nhận một bản khác, không chắc tốt hơn.</li>
+    <li><b>Viết prompt dài gấp đôi.</b> Một yêu cầu mơ hồ dài hơn vẫn mơ hồ.</li>
+    <li><b>Viết hoa, nhắc lại ba lần.</b> Thêm nhấn mạnh, không thêm thông tin.</li>
+    <li><b>Chia nhỏ một việc chỉ đang thiếu thông tin.</b> Các bước nhỏ vẫn thiếu đúng thông tin đó.</li>
+  </ul>
+
+  <h4>Mỗi vòng đổi một chỗ</h4>
+  <ul>
+    <li><b>Đổi nhiều thứ một lúc</b> thì output tốt lên hay tệ đi bạn cũng không biết vì đâu. Ca chị Mai: vai, 10 luật hay mô tả khách, cái nào có tác dụng?</li>
+    <li><b>So có và không có thay đổi, trên cùng vài đầu vào.</b> Trong app, sửa lại một tin nhắn cũ thì app tạo một phiên bản riêng, bản cũ vẫn còn để so. Hoặc mở hai chat, dán cùng đầu vào.</li>
+    <li><b>Giữ cái có tác dụng, bỏ cái thử rồi không thấy khác.</b> Mỗi dòng thêm vào đều tốn context và hạn mức.</li>
+    <li><b>Đổi cách diễn đạt cho thẳng hơn</b> cũng là một thay đổi hợp lệ. Vẫn một thay đổi mỗi vòng.</li>
+    <li><b>Hỏi Claude “bản này tốt hơn chưa?” không phải phép thử.</b> So với tiêu chí bạn đã đặt.</li>
+  </ul>
+
+  <h4>Thử trên nhiều đầu vào trước khi dùng chung</h4>
+  <ul>
+    <li>Prompt chỉnh trên một đầu vào dễ overfit: nó học cả những nét riêng của đầu vào đó.</li>
+    <li>Thử trên vài đầu vào thật, khác nhau, có ca khó: thiếu dữ liệu, rất dài, mơ hồ, lạc chủ đề.</li>
+    <li>Chạy vài lần cùng một đầu vào để xem kết quả có ổn định không.</li>
+  </ul>
+
+  <h4>Dừng, bắt đầu lại, hay lưu</h4>
+  <div class="tw"><table>
+    <tr><th>Tình huống</th><th>Làm gì</th></tr>
+    <tr><td>Output đạt tiêu chí ổn định, hoặc vài vòng gần nhất không cải thiện thêm</td><td><b>Dừng.</b> Giữ bản prompt gọn nhất mà vẫn đạt tiêu chí.</td></tr>
+    <tr><td>Đã sửa nhiều vòng trong cùng một chat, output vẫn mang lỗi của hướng ban đầu, hoặc mục tiêu đã đổi hẳn</td><td><b>Bắt đầu lại:</b> mở chat mới với một prompt đã gom mọi điều chỉnh. Claude đọc cả các lượt trước, kể cả bản nháp hỏng, nên đừng mang chúng theo (<a href="#l-3-4">bài 3.4</a>).</td></tr>
+    <tr><td>Prompt đã qua thử nhiều đầu vào và sẽ dùng lặp lại</td><td><b>Lưu</b> thành khung mẫu. Phần lời dặn cố định cho mọi lần thì đặt vào project instructions (<a href="#l-5-3">bài 5.3</a>).</td></tr>
+  </table></div>
+
+  <div class="vs">
+    <div class="bad"><b>Tệ</b><ul>
+      <li>Gõ “viết hay hơn đi” cho tới khi gặp bản ưng.</li>
+      <li>Đổi vai, thêm ví dụ, thêm luật, đổi độ dài trong cùng một vòng.</li>
+      <li>Giữ mọi thứ đã thêm “cho chắc”.</li>
+      <li>Chỉnh trên một mẫu rồi đem dùng cho cả nhóm.</li>
+    </ul></div>
+    <div class="good"><b>Tốt</b><ul>
+      <li>Đặt tiêu chí, gọi tên triệu chứng, tìm phần gây ra.</li>
+      <li>Một thay đổi mỗi vòng, so trên cùng đầu vào.</li>
+      <li>Bỏ phần thử rồi không thấy khác.</li>
+      <li>Thử trên nhiều đầu vào thật, có ca khó, rồi mới lưu và chia sẻ.</li>
+    </ul></div>
+  </div>
+
+  <h4>Khi đi thi</h4>
+  <p class="need">Bài này thường ra 2 dạng câu hỏi. Đọc đề, <b>chọn một đáp án trước</b>; phần giải thích chỉ hiện ra sau khi bạn chọn.</p>
+
+  <div class="qcase" data-answer="A">
+    <h5 class="sub">Dạng 1: bước đầu tiên khi output yếu</h5>
+    <span class="lbl">Đề sẽ viết kiểu này</span>
+    <div class="qtext">
+      <span class="en">“A training coordinator asks Claude for ‘an onboarding checklist for new warehouse staff.’ The result is generic: it could fit any company and leaves out the site’s forklift and cold-room safety rules. What should she do first?”</span>
+      <span class="vi">Dịch: Một điều phối viên đào tạo nhờ Claude “lập checklist hội nhập cho nhân viên kho mới”. Kết quả chung chung: công ty nào dùng cũng được, và thiếu các quy định an toàn về xe nâng và kho lạnh của chính kho đó. Chị nên làm gì trước tiên?</span>
+    </div>
+    <span class="lbl">Bạn chọn đáp án nào?</span>
+    <div class="qopts">
+      <button type="button" class="qopt" data-k="A"><b class="k">A.</b><span class="body"><span class="en">“Work out what the prompt left out, such as the site, the roles, and the safety manual, and add that context and the manual.”</span><span class="vi">Tìm xem prompt bỏ sót gì (kho nào, vị trí nào, sổ tay an toàn), rồi thêm bối cảnh đó và đưa sổ tay vào.</span></span></button>
+      <button type="button" class="qopt" data-k="B"><b class="k">B.</b><span class="body"><span class="en">“Regenerate the answer a few times and keep whichever version looks the most complete.”</span><span class="vi">Tạo lại câu trả lời vài lần, giữ bản nào trông đầy đủ nhất.</span></span></button>
+      <button type="button" class="qopt" data-k="C"><b class="k">C.</b><span class="body"><span class="en">“Rewrite the request at twice the length, stressing that the checklist must be detailed, specific, and of high quality.”</span><span class="vi">Viết lại yêu cầu dài gấp đôi, nhấn mạnh checklist phải chi tiết, cụ thể, chất lượng cao.</span></span></button>
+      <button type="button" class="qopt" data-k="D"><b class="k">D.</b><span class="body"><span class="en">“Break the checklist into five separate prompts, one for each section of the onboarding week.”</span><span class="vi">Chia checklist thành năm prompt riêng, mỗi prompt một phần của tuần hội nhập.</span></span></button>
+    </div>
+    <p class="qfb" hidden></p>
+    <div class="qexp" hidden>
+      <span class="lbl">Phân tích đề</span>
+      <ul>
+        <li><b>Đề kể:</b> output chung chung, thiếu đúng những thứ riêng của kho này.</li>
+        <li><b>Chỗ khó:</b> triệu chứng “chung chung” chỉ thẳng vào nguyên nhân: prompt không có gì riêng của kho, nên Claude không có gì riêng để viết.</li>
+        <li><b>Đề hỏi:</b> làm gì <i>trước tiên</i>, tức bước mở đầu vòng lặp.</li>
+      </ul>
+      <span class="lbl">Cần biết để chọn</span>
+      <ol>
+        <li>Vòng lặp mở đầu bằng chẩn đoán: gọi tên triệu chứng, tìm phần của prompt gây ra.</li>
+        <li>Chung chung thường do thiếu bối cảnh và nguồn. Claude không thể viết quy định an toàn mà nó chưa từng thấy.</li>
+        <li>Gõ lại, viết dài hơn, chia nhỏ không thêm thông tin còn thiếu.</li>
+      </ol>
+      <span class="lbl">Từng đáp án</span>
+      <ul class="verdict">
+        <li class="ok"><b>A đúng.</b> Chẩn đoán trước (ý 1), và sửa đúng phần gây ra: thêm bối cảnh và sổ tay an toàn (ý 2).</li>
+        <li><b>B sai.</b> Hấp dẫn vì nhanh. Nhưng lần nào Claude cũng thiếu sổ tay, nên lần nào cũng chung chung (ý 3).</li>
+        <li><b>C sai.</b> Dài hơn và nhấn mạnh hơn, nhưng vẫn không có quy định xe nâng và kho lạnh nào trong prompt (ý 3).</li>
+        <li><b>D sai.</b> Chia bước chữa việc quá tải, không chữa việc thiếu thông tin. Năm prompt nhỏ vẫn thiếu đúng cuốn sổ tay đó (ý 3).</li>
+      </ul>
+      <button type="button" class="qreset">Làm lại câu này</button>
+    </div>
+  </div>
+
+  <div class="qcase" data-answer="C">
+    <h5 class="sub">Dạng 2: prompt chạy tốt trên một mẫu, sắp dùng cho cả nhóm</h5>
+    <span class="lbl">Đề sẽ viết kiểu này</span>
+    <div class="qtext">
+      <span class="en">“A sales operations analyst refined a prompt that turns call notes into CRM summaries. After six rounds on notes from one sales rep, the output is exactly right. Her manager wants the whole team of 20 reps to start using it next week. What should she do before rolling it out?”</span>
+      <span class="vi">Dịch: Một chuyên viên vận hành bán hàng đã chỉnh một prompt biến ghi chú cuộc gọi thành bản tóm tắt trong CRM (phần mềm quản lý khách hàng). Sau sáu vòng chỉnh trên ghi chú của một nhân viên bán hàng, output đã đúng hoàn toàn. Sếp muốn cả nhóm 20 người dùng nó từ tuần sau. Chị nên làm gì trước khi triển khai?</span>
+    </div>
+    <span class="lbl">Bạn chọn đáp án nào?</span>
+    <div class="qopts">
+      <button type="button" class="qopt" data-k="A"><b class="k">A.</b><span class="body"><span class="en">“Save the prompt now as the team standard and fix any problems as reps report them.”</span><span class="vi">Lưu prompt làm chuẩn của nhóm ngay, nhân viên báo lỗi thì sửa dần.</span></span></button>
+      <button type="button" class="qopt" data-k="B"><b class="k">B.</b><span class="body"><span class="en">“Run the same rep’s notes through the prompt five more times to confirm that the output stays stable.”</span><span class="vi">Chạy lại ghi chú của chính nhân viên đó thêm năm lần để chắc output ổn định.</span></span></button>
+      <button type="button" class="qopt" data-k="C"><b class="k">C.</b><span class="body"><span class="en">“Test it on notes from several reps, including very short, messy, and incomplete notes, against her criteria.”</span><span class="vi">Thử trên ghi chú của nhiều nhân viên, có cả ghi chú rất ngắn, lộn xộn, thiếu thông tin, và chấm theo tiêu chí của chị.</span></span></button>
+      <button type="button" class="qopt" data-k="D"><b class="k">D.</b><span class="body"><span class="en">“Ask Claude to confirm that the prompt will work correctly for every rep’s style of note-taking.”</span><span class="vi">Hỏi Claude xác nhận rằng prompt sẽ chạy đúng với mọi kiểu ghi chú của mọi nhân viên.</span></span></button>
+    </div>
+    <p class="qfb" hidden></p>
+    <div class="qexp" hidden>
+      <span class="lbl">Phân tích đề</span>
+      <ul>
+        <li><b>Đề kể:</b> sáu vòng chỉnh, tất cả trên ghi chú của một người.</li>
+        <li><b>Chỗ khó:</b> “đúng hoàn toàn” nghe như xong rồi. Nhưng 20 người ghi chú 20 kiểu, và prompt chưa gặp kiểu nào khác.</li>
+        <li><b>Đề hỏi:</b> việc cần làm <i>trước khi</i> dùng chung.</li>
+      </ul>
+      <span class="lbl">Cần biết để chọn</span>
+      <ol>
+        <li>Prompt chỉnh trên một đầu vào dễ overfit với nét riêng của đầu vào đó.</li>
+        <li>Thử trên nhiều đầu vào thật, có ca khó, chấm theo tiêu chí đã đặt, rồi mới lưu và chia sẻ.</li>
+        <li>Claude tự xác nhận không phải phép thử.</li>
+      </ol>
+      <span class="lbl">Từng đáp án</span>
+      <ul class="verdict">
+        <li><b>A sai.</b> Dùng 20 người làm bộ thử, và lỗi lọt vào CRM trước khi ai kịp báo (ý 2). Hấp dẫn vì sếp đang giục.</li>
+        <li><b>B sai.</b> Kiểm được độ ổn định, nhưng vẫn trên đúng một kiểu ghi chú (ý 1). Nghe giống thử nghiệm, nhưng không thử thứ đang có rủi ro.</li>
+        <li class="ok"><b>C đúng.</b> Thử trên nhiều người và các ca khó (ý 2) là cách lộ ra overfit trước khi cả nhóm dùng (ý 1).</li>
+        <li><b>D sai.</b> Claude chưa thấy ghi chú của 19 người còn lại. Lời xác nhận của nó không phải bằng chứng (ý 3).</li>
+      </ul>
+      <button type="button" class="qreset">Làm lại câu này</button>
+    </div>
+  </div>
+
+  <div class="more"><b>Biết thêm</b><ul>
+    <li><b>Khung AI Fluency gọi vòng này là Description-Discernment loop:</b> mô tả (Description) → đánh giá output (Discernment) → mô tả lại.</li>
+    <li><b>Việc có tính toán:</b> docs gợi ý thêm một câu cuối như “Before you finish, verify your answer against [test criteria]” (trước khi xong, tự soát câu trả lời theo [tiêu chí]). Số liệu quan trọng thì bạn vẫn tự kiểm với nguồn (<a href="#l-2-3">bài 2.3</a>).</li>
+    <li><b>Sửa lại tin nhắn cũ tốt hơn chồng thêm lời chỉnh.</b> Chồng thêm thì bản nháp hỏng vẫn nằm trong context.</li>
+    <li><b>Bài này chỉ lo phần prompt.</b> Output kém vì tài liệu trong Project, vì cuộc trò chuyện quá dài hay vì chọn model là phần của D7 (<a href="#l-7-1">bài 7.1</a>).</li>
+  </ul></div>
+  <div class="rule">Quy tắc: đặt tiêu chí, chẩn đoán trước, mỗi vòng đổi một chỗ, thử trên nhiều đầu vào rồi mới dùng chung.</div>
+  <div class="remember"><b>Nhớ nhanh</b><ul>
+    <li>Tiêu chí trước. Không có tiêu chí thì chỉ thấy “khác”, không thấy “tốt hơn”.</li>
+    <li>Mỗi triệu chứng một nguyên nhân, một cách sửa. Gõ lại, viết dài hơn, viết hoa không phải là sửa.</li>
+    <li>Một thay đổi mỗi vòng, so trên cùng đầu vào. Bỏ phần không có tác dụng.</li>
+    <li>Thử nhiều đầu vào trước khi dùng chung. Rối quá thì mở chat mới với prompt đã gom.</li>
+  </ul></div>
+  <div class="src">Đọc thêm: <a href="https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices">Prompting best practices</a> · <a href="https://support.claude.com/en/articles/9487310-what-are-artifacts-and-how-do-i-use-them">What are artifacts (sửa tin nhắn tạo phiên bản riêng)</a> · <a href="https://anthropic.skilljar.com/ai-fluency-framework-foundations">AI Fluency: Framework &amp; Foundations</a></div>
+  <label class="done"><input type="checkbox" data-lesson="l-1-3"> Đã học bài này</label>
+</article>
+
+<article class="lesson" id="l-1-4" data-domain="1" data-ts="1.4" data-min="12">
+  <header class="lh"><span class="ts">TS 1.4</span><h3>Đổi cách prompt theo loại việc: phân tích, research, soạn thảo, brainstorm</h3><span class="rt">~12 phút</span></header>
+  <p class="need">Cần biết trước: các phần của prompt ở <a href="#l-1-0">bài Nền tảng</a>, bám nguồn ở <a href="#l-1-1">bài 1.1</a>, chuỗi soạn → rà → sửa ở <a href="#l-1-2">bài 1.2</a>.</p>
+  <div class="defs"><b>Khái niệm của bài</b><dl>
+    <dt>Phân tích (analysis)</dt><dd>Rút kết luận từ dữ liệu hay tài liệu bạn đưa: vì sao chi phí tăng, hợp đồng có rủi ro gì.</dd>
+    <dt>research (tìm hiểu)</dt><dd>Loại việc: gom thông tin từ nhiều nguồn để trả lời một câu hỏi. Đừng nhầm với tính năng <b>Research</b> của app, guide gọi là “research mode” (<a href="#l-3-1">bài 3.1</a>). Tính năng là một công cụ để làm loại việc này. Bài này viết chữ thường cho loại việc, chữ hoa cho tính năng.</dd>
+    <dt>Soạn thảo (drafting)</dt><dd>Viết một văn bản sẽ gửi đi: email, thông cáo, đề xuất, bản tin.</dd>
+    <dt>Brainstorm (động não)</dt><dd>Nghĩ ra thật nhiều ý khác nhau, chưa chấm điểm.</dd>
+    <dt>Giọng (voice)</dt><dd>Cách một tổ chức hay một người viết: chọn chữ, độ dài câu, mức trang trọng.</dd>
+  </dl></div>
+  <div class="story"><b>Tình huống.</b> Anh Tuấn gõ một prompt: “Tìm hiểu đối thủ, phân tích vì sao doanh số mình giảm, đưa vài ý tưởng và viết đề xuất cho sếp.” Output là một bản đề xuất trôi chảy. Trong đó có số thị phần không rõ nguồn, nguyên nhân giảm doanh số đoán theo kiến thức chung, ba ý tưởng quen thuộc, và giọng văn không giống ai trong công ty. Bốn loại việc trong một prompt, và mỗi loại hỏng theo một kiểu.</div>
+
+  <h4>Bốn loại việc, bốn kiểu hỏng</h4>
+  <p>Khung chung của bài 1.1 vẫn dùng cho mọi loại việc. Khác nhau ở chỗ phần nào cần nhấn mạnh.</p>
+  <div class="tw"><table>
+    <tr><th>Loại việc</th><th>Đưa gì</th><th>Đòi gì</th><th>Hỏng hay gặp</th><th>Chấm output</th></tr>
+    <tr><td><b>Phân tích</b></td><td>Dữ liệu thật, các điểm cần soi</td><td>Kết luận kèm số liệu hoặc đoạn trích, quyền nói “dữ liệu không đủ”</td><td>Kết luận mà dữ liệu không đỡ được</td><td>Kết luận nào cũng trỏ về dữ liệu? Chỗ thiếu có được nói ra?</td></tr>
+    <tr><td><b>research</b></td><td>Bạn là ai, cần để quyết định gì, khung thời gian, khu vực, câu trả lời tốt trông thế nào</td><td>Kiểm chéo nhiều nguồn, ghi nguồn</td><td>Rộng, chung chung, hoặc dựa vào một nguồn</td><td>Có nguồn? Các nguồn có khớp nhau? Có giúp đúng quyết định của bạn?</td></tr>
+    <tr><td><b>Soạn thảo</b></td><td>Bài cũ làm mẫu giọng, dữ kiện thật chỉ bạn biết</td><td>Chỉ dùng dữ kiện đã đưa</td><td>Giọng chung chung, chi tiết bịa</td><td>Ý nào cũng có trong dữ kiện? Đọc lên có giống tổ chức mình?</td></tr>
+    <tr><td><b>Brainstorm</b></td><td>Ràng buộc: ngân sách, người dùng, thời hạn</td><td>Nhiều ý, khác nhau, theo các góc có tên</td><td>Vài ý quen thuộc, giống nhau</td><td>Đủ nhiều, đủ khác? Chấm ở bước riêng?</td></tr>
+  </table></div>
+
+  <h4>Phân tích: cho Claude quyền nói “không đủ dữ liệu”</h4>
+  <ul>
+    <li>Dán dữ liệu thật, bọc trong thẻ, nêu rõ các điểm cần soi.</li>
+    <li>Bảo Claude chỉ dựa trên dữ liệu đã đưa, và chỉ ra số liệu hay đoạn trích đứng sau mỗi kết luận.</li>
+    <li>Cho phép nói thiếu dữ liệu. Docs có ví dụ: “If you're unsure about any aspect or if the report lacks necessary information, say "I don't have enough information to confidently assess this."” <i>Chỗ nào không chắc, hoặc báo cáo thiếu thông tin cần thiết, thì nói “Tôi không đủ thông tin để đánh giá chắc chắn điểm này.”</i></li>
+  </ul>
+  <p>Ví dụ: bạn dán bảng chấm công 6 tháng và hỏi vì sao chi phí tăng ca tăng. Bảng không có số đơn hàng. Không có quyền nói “không đủ”, Claude dễ trả lời “do đơn hàng tăng”, một câu nghe hợp lý mà dữ liệu không hề chứng minh.</p>
+
+  <h4>research: phạm vi là phần quan trọng nhất</h4>
+  <ul>
+    <li><b>Phạm vi:</b> bạn là ai, cần để quyết định việc gì, khung thời gian, khu vực. Docs: “Provide clear success criteria” (cho tiêu chí rõ thế nào là một câu trả lời tốt).</li>
+    <li><b>Kiểm nguồn:</b> docs khuyên “Ask Claude to verify information across multiple sources” (bảo Claude kiểm thông tin qua nhiều nguồn). Help Center: câu trả lời có dùng web search (tìm trên web) luôn kèm trích dẫn.</li>
+    <li><b>Câu hỏi mở,</b> nhiều cách giải thích: bảo Claude giữ vài giả thuyết song song, ghi mức tin cậy cho từng cái, tự phản biện cách mình đang tìm. Chốt sớm một giả thuyết thì các lượt tìm sau chỉ đi tìm cái xác nhận nó.</li>
+    <li><b>Tính năng Research</b> tự chạy nhiều lượt tìm kiếm nối nhau, nhưng nó vẫn chỉ biết phạm vi bạn viết ra.</li>
+  </ul>
+
+  <h4>Soạn thảo: đưa mẫu giọng và dữ kiện thật</h4>
+  <ul>
+    <li><b>Mẫu giọng:</b> dán một hai bài cũ đã thành công. Mẫu thật đáng tin hơn tả bằng tính từ như “thân thiện mà chuyên nghiệp”.</li>
+    <li><b>Dữ kiện thật:</b> số liệu, tên chương trình, ngày tháng. Đây là thứ chỉ bạn có.</li>
+    <li><b>Giới hạn vào dữ kiện đó.</b> Docs có ví dụ thông cáo báo chí viết “using only information from these product briefs and market reports” (chỉ dùng thông tin trong các tài liệu sản phẩm và báo cáo thị trường này). Sau đó bảo Claude tìm câu trích đỡ cho từng ý, ý nào không có câu trích thì bỏ.</li>
+    <li><b>Soạn, rà, sửa là ba bước riêng</b> (<a href="#l-1-2">bài 1.2</a>), để bạn thấy được phần rà.</li>
+  </ul>
+
+  <h4>Brainstorm: đòi độ rộng, chấm ở bước sau</h4>
+  <ul>
+    <li><b>Nói rõ cần nhiều ý và khác nhau,</b> kèm các góc có tên: hình thức, thời điểm, chi phí, đối tác.</li>
+    <li><b>Ràng buộc không phải chấm điểm sớm.</b> Ngân sách, người dùng, thời hạn chỉ khoanh vùng cho ý, không loại ý nào.</li>
+    <li><b>Chấm ở bước riêng,</b> với tiêu chí rõ. Đòi “chỉ những ý chắc chắn hiệu quả” ngay lúc nghĩ ý là tự cắt mất độ rộng.</li>
+  </ul>
+
+  <h4>Yêu cầu trộn nhiều loại việc</h4>
+  <p>Tách ở chỗ loại việc thay đổi. Kiểm output ở chỗ nối. Chỉ đưa sang bước sau những dữ kiện đã kiểm. Ca anh Tuấn thành bốn bước:</p>
+  <ol>
+    <li>research về đối thủ, có phạm vi và nguồn. Anh kiểm các số thị phần.</li>
+    <li>Phân tích doanh số từ dữ liệu bán hàng thật, có quyền nói “không đủ dữ liệu”.</li>
+    <li>Brainstorm giải pháp từ hai kết quả đã kiểm, rồi chấm ở bước riêng.</li>
+    <li>Soạn đề xuất từ các ý đã chọn, có đề xuất cũ làm mẫu giọng.</li>
+  </ol>
+
+  <div class="vs">
+    <div class="bad"><b>Tệ</b><ul>
+      <li>Phân tích: dán dữ liệu, không cho lối thoát khi dữ liệu thiếu.</li>
+      <li>Research: một câu hỏi rộng, không nói mình là ai, cần để làm gì.</li>
+      <li>Soạn thảo: tả giọng bằng tính từ, để Claude tự điền dữ kiện.</li>
+      <li>Brainstorm: đòi “5 ý hay nhất” ngay từ đầu.</li>
+      <li>Bốn loại việc trong một prompt.</li>
+    </ul></div>
+    <div class="good"><b>Tốt</b><ul>
+      <li>Phân tích: chỉ dựa trên dữ liệu, trỏ số liệu cho mỗi kết luận, được nói “không đủ”.</li>
+      <li>Research: phạm vi rõ, kiểm chéo nhiều nguồn, giữ vài giả thuyết.</li>
+      <li>Soạn thảo: bài cũ làm mẫu, chỉ dùng dữ kiện đã đưa.</li>
+      <li>Brainstorm: nhiều ý, khác góc, chấm ở bước sau.</li>
+      <li>Tách ở chỗ đổi loại việc, kiểm ở chỗ nối.</li>
+    </ul></div>
+  </div>
+
+  <h4>Khi đi thi</h4>
+  <p class="need">Bài này thường ra 2 dạng câu hỏi. Đọc đề, <b>chọn một đáp án trước</b>; phần giải thích chỉ hiện ra sau khi bạn chọn.</p>
+
+  <div class="qcase" data-answer="B">
+    <h5 class="sub">Dạng 1: Research ra báo cáo dài mà không dùng được</h5>
+    <span class="lbl">Đề sẽ viết kiểu này</span>
+    <div class="qtext">
+      <span class="en">“The director of a small nonprofit that runs after-school programs uses Research with the question ‘What are the trends in youth education funding?’ She gets a long, wide-ranging report that does not help her decide where to apply for grants this year. What should she change?”</span>
+      <span class="vi">Dịch: Giám đốc một tổ chức phi lợi nhuận nhỏ chuyên chạy chương trình sau giờ học dùng Research với câu hỏi “Xu hướng tài trợ cho giáo dục thanh thiếu niên là gì?” Chị nhận một báo cáo dài, bao quát đủ thứ, nhưng không giúp chị quyết định năm nay nên nộp đơn xin tài trợ ở đâu. Chị nên thay đổi gì?</span>
+    </div>
+    <span class="lbl">Bạn chọn đáp án nào?</span>
+    <div class="qopts">
+      <button type="button" class="qopt" data-k="A"><b class="k">A.</b><span class="body"><span class="en">“Ask for a longer and more detailed report that covers every funding trend in more depth.”</span><span class="vi">Xin một báo cáo dài và chi tiết hơn, đi sâu hơn vào mọi xu hướng tài trợ.</span></span></button>
+      <button type="button" class="qopt" data-k="B"><b class="k">B.</b><span class="body"><span class="en">“Add who her organization serves, where it operates, the decision the research supports, the time frame, and what a useful answer contains.”</span><span class="vi">Thêm tổ chức của chị phục vụ ai, hoạt động ở đâu, kết quả dùng cho quyết định gì, khung thời gian, và một câu trả lời hữu ích gồm những gì.</span></span></button>
+      <button type="button" class="qopt" data-k="C"><b class="k">C.</b><span class="body"><span class="en">“Turn off Research and ask the same question in a normal chat so the answer is shorter.”</span><span class="vi">Tắt Research, hỏi lại đúng câu đó trong chat thường để câu trả lời ngắn hơn.</span></span></button>
+      <button type="button" class="qopt" data-k="D"><b class="k">D.</b><span class="body"><span class="en">“Ask Claude to pick the single most reliable source it can find and summarize only that one.”</span><span class="vi">Bảo Claude chọn một nguồn đáng tin nhất tìm được và chỉ tóm tắt nguồn đó.</span></span></button>
+    </div>
+    <p class="qfb" hidden></p>
+    <div class="qexp" hidden>
+      <span class="lbl">Phân tích đề</span>
+      <ul>
+        <li><b>Đề kể:</b> câu hỏi rộng, báo cáo rộng. Research làm đúng việc được giao.</li>
+        <li><b>Chỗ khó:</b> báo cáo không hỏng vì thiếu thông tin, mà vì không nhắm vào quyết định chị cần: nộp đơn ở đâu, năm nay.</li>
+        <li><b>Đề hỏi:</b> thay đổi gì trong cách hỏi.</li>
+      </ul>
+      <span class="lbl">Cần biết để chọn</span>
+      <ol>
+        <li>Research cần phạm vi: bạn là ai, cần để quyết định gì, khung thời gian, khu vực, câu trả lời tốt trông thế nào.</li>
+        <li>Tính năng Research chỉ biết bối cảnh bạn viết ra.</li>
+        <li>Research cần kiểm chéo nhiều nguồn, không dựa vào một nguồn.</li>
+      </ol>
+      <span class="lbl">Từng đáp án</span>
+      <ul class="verdict">
+        <li><b>A sai.</b> Dài hơn vẫn là câu trả lời cho câu hỏi rộng đó. Không thêm chút phạm vi nào (ý 1).</li>
+        <li class="ok"><b>B đúng.</b> Đưa đúng những thứ Research không tự biết (ý 1, 2). Kết quả nhắm vào quyết định nộp đơn của chị.</li>
+        <li><b>C sai.</b> Né vấn đề. Câu hỏi vẫn rộng, chỉ là câu trả lời ngắn hơn và ít nguồn hơn.</li>
+        <li><b>D sai.</b> Hấp dẫn vì “đáng tin nhất” nghe chắc ăn, nhưng bỏ luôn kiểm chéo (ý 3), mà vẫn không có phạm vi.</li>
+      </ul>
+      <button type="button" class="qreset">Làm lại câu này</button>
+    </div>
+  </div>
+
+  <div class="qcase" data-answer="D">
+    <h5 class="sub">Dạng 2: brainstorm ra vài ý an toàn</h5>
+    <span class="lbl">Đề sẽ viết kiểu này</span>
+    <div class="qtext">
+      <span class="en">“A community manager asks Claude for ideas to raise attendance at the company’s monthly webinars. Claude returns five safe, similar ideas. Which change to the prompt is most likely to produce a more useful set of ideas?”</span>
+      <span class="vi">Dịch: Một quản lý cộng đồng nhờ Claude nghĩ ý tưởng để tăng số người tham dự webinar hằng tháng của công ty. Claude đưa năm ý an toàn, na ná nhau. Thay đổi nào trong prompt nhiều khả năng cho ra bộ ý tưởng hữu ích hơn nhất?</span>
+    </div>
+    <span class="lbl">Bạn chọn đáp án nào?</span>
+    <div class="qopts">
+      <button type="button" class="qopt" data-k="A"><b class="k">A.</b><span class="body"><span class="en">“Ask Claude to narrow the list to the two or three ideas it is most confident will work, with a reason for each.”</span><span class="vi">Bảo Claude rút gọn còn hai ba ý nó tin chắc nhất là hiệu quả, mỗi ý kèm lý do.</span></span></button>
+      <button type="button" class="qopt" data-k="B"><b class="k">B.</b><span class="body"><span class="en">“Ask Claude to score every idea for cost and impact while generating them, and drop the low scorers.”</span><span class="vi">Bảo Claude vừa nghĩ ý vừa chấm điểm chi phí và hiệu quả, ý nào điểm thấp thì bỏ.</span></span></button>
+      <button type="button" class="qopt" data-k="C"><b class="k">C.</b><span class="body"><span class="en">“Add the role ‘You are a world-class event marketer’ at the top of the prompt.”</span><span class="vi">Thêm vai “Bạn là chuyên gia marketing sự kiện hàng đầu thế giới” lên đầu prompt.</span></span></button>
+      <button type="button" class="qopt" data-k="D"><b class="k">D.</b><span class="body"><span class="en">“Ask for 20 clearly different ideas across named angles, within the budget and audience, and judge them later.”</span><span class="vi">Xin 20 ý thật khác nhau theo các góc có tên, trong phạm vi ngân sách và người tham dự, rồi chấm ở bước sau.</span></span></button>
+    </div>
+    <p class="qfb" hidden></p>
+    <div class="qexp" hidden>
+      <span class="lbl">Phân tích đề</span>
+      <ul>
+        <li><b>Đề kể:</b> ít ý, và các ý giống nhau.</li>
+        <li><b>Chỗ khó:</b> cái thiếu là độ rộng. Cách sửa nào thu hẹp thêm là đi ngược.</li>
+        <li><b>Đề hỏi:</b> thay đổi nào cho bộ ý hữu ích hơn.</li>
+      </ul>
+      <span class="lbl">Cần biết để chọn</span>
+      <ol>
+        <li>Brainstorm phải đòi độ rộng thẳng ra: nhiều ý, khác nhau, theo các góc có tên.</li>
+        <li>Ràng buộc (ngân sách, người dùng) khoanh vùng, không phải chấm điểm sớm.</li>
+        <li>Chấm ý ở bước riêng. Chấm ngay lúc nghĩ ý thì ý lạ bị loại trước khi kịp xuất hiện.</li>
+      </ol>
+      <span class="lbl">Từng đáp án</span>
+      <ul class="verdict">
+        <li><b>A sai.</b> Thu hẹp thêm một danh sách vốn đã hẹp (ý 1). Ý “chắc chắn hiệu quả” thường chính là ý quen thuộc.</li>
+        <li><b>B sai.</b> Trộn chấm điểm vào lúc nghĩ ý (ý 3). Nghe chuyên nghiệp, nhưng ý táo bạo bị cắt ngay vòng đầu.</li>
+        <li><b>C sai.</b> Vai không đòi thêm ý, cũng không đòi ý khác nhau (ý 1). Chuyên gia vẫn có thể đưa năm ý an toàn.</li>
+        <li class="ok"><b>D đúng.</b> Đòi độ rộng có góc cụ thể (ý 1), giữ ràng buộc làm khung (ý 2), để chấm sang bước sau (ý 3).</li>
+      </ul>
+      <button type="button" class="qreset">Làm lại câu này</button>
+    </div>
+  </div>
+
+  <div class="more"><b>Biết thêm</b><ul>
+    <li><b>“Research” có hai nghĩa trong đề.</b> Loại việc (tìm hiểu nhiều nguồn) và tính năng Research (guide gọi là research mode). Tính năng chỉ có ở gói trả phí và cần bật web search (<a href="#l-3-1">bài 3.1</a>).</li>
+    <li><b>Giữ ý cũ lại không có hại khi brainstorm.</b> Ghi chú các giả thuyết bị loại khi research cũng vậy: chúng cho thấy vì sao một kết luận thắng.</li>
+    <li><b>Đòi tham vọng hơn cũng là một cách mở rộng.</b> Docs có ví dụ thêm câu “Go beyond the basics” (vượt qua mức cơ bản) để Claude làm nhiều hơn mức tối thiểu.</li>
+    <li><b>Mọi kỹ thuật bám nguồn chỉ giảm bịa, không xóa hết.</b> Docs: chúng “don't eliminate them entirely” (không loại bỏ hoàn toàn). Thông tin quan trọng vẫn phải kiểm (<a href="#l-2-2">bài 2.2</a>).</li>
+  </ul></div>
+  <div class="rule">Quy tắc: nhận ra loại việc trước, rồi nhấn đúng phần nó cần: dữ liệu cho phân tích, phạm vi cho research, mẫu giọng cho soạn thảo, độ rộng cho brainstorm.</div>
+  <div class="remember"><b>Nhớ nhanh</b><ul>
+    <li>Phân tích: chỉ dựa trên dữ liệu, được nói “không đủ dữ liệu”.</li>
+    <li>Research: phạm vi rõ, kiểm chéo nhiều nguồn, giữ vài giả thuyết.</li>
+    <li>Soạn thảo: bài cũ làm mẫu giọng, chỉ dùng dữ kiện thật đã đưa.</li>
+    <li>Brainstorm: nhiều ý, khác góc, chấm ở bước sau. Việc trộn thì tách ở chỗ đổi loại.</li>
+  </ul></div>
+  <div class="src">Đọc thêm: <a href="https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-hallucinations">Reduce hallucinations</a> · <a href="https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices">Prompting best practices (Research and information gathering)</a> · <a href="https://support.claude.com/en/articles/11088861-using-research-on-claude-ai">Using Research</a> · <a href="https://support.claude.com/en/articles/10684626-enabling-and-using-web-search">Web search</a></div>
+  <label class="done"><input type="checkbox" data-lesson="l-1-4"> Đã học bài này</label>
+</article>
+
+<section class="summary" id="sum-d1">
+  <h3>Tổng kết Domain 1</h3>
+  <ul>
+    <li><b>Claude chỉ biết những gì có trong context:</b> prompt, các lượt trước, Project instructions và knowledge, Instructions for Claude, memory nếu bật. Nó không thấy tên và mô tả Project, file chưa tải lên, quy ước ngầm của công ty.</li>
+    <li><b>Giao việc như cho một người thầu mới.</b> Phép thử: đồng nghiệp ít ngữ cảnh đọc prompt có bối rối không.</li>
+    <li><b>Bảy phần của prompt:</b> việc (kèm độ sâu), bối cảnh, ràng buộc kèm lý do, nguồn có ranh giới, ví dụ, định dạng, vai (tùy chọn).</li>
+    <li><b>Ràng buộc viết vào lời yêu cầu,</b> không để duyệt sau. Luật kèm lý do thì Claude tự suy ra ca chưa kể. Viết hoa không thêm thông tin.</li>
+    <li><b>Tài liệu dài:</b> tài liệu trước, câu hỏi sau, trích nguyên văn trước rồi trả lời, nói trước phải làm gì khi nguồn không có câu trả lời.</li>
+    <li><b>Chia việc</b> khi nhiều mục tiêu cạnh tranh, kết quả chập chờn, cần kiểm giữa chừng. Việc đơn giản đã chạy tốt thì giữ một prompt. Chia không làm nhanh hơn.</li>
+    <li><b>Bước phụ thuộc chạy nối tiếp,</b> nhận output đã kiểm bằng chữ gốc, không nhận bản tóm tắt. Điểm kiểm đặt ở output nhiều bước dựa vào.</li>
+    <li><b>Lặp prompt:</b> tiêu chí trước → chẩn đoán → đổi một chỗ → thử trên nhiều đầu vào. Gõ lại, viết dài gấp đôi, đổi bốn thứ một lúc đều không phải là sửa.</li>
+    <li><b>Theo loại việc:</b> phân tích cần dữ liệu và quyền nói “không đủ”, research cần phạm vi và nhiều nguồn, soạn thảo cần mẫu giọng và dữ kiện thật, brainstorm cần độ rộng và chấm ở bước sau.</li>
+  </ul>
+</section>
+
+<section class="cheat" id="cheat-d1">
+  <h3>Cheatsheet Domain 1</h3>
+  <div class="tw"><table>
+    <tr><th>Đề kể…</th><th>Chọn…</th><th>Vì sao</th></tr>
+    <tr class="grp"><th colspan="3">1.0 · Claude thấy gì</th></tr>
+    <tr><td>Đáp án giả định Claude đã biết người đọc, mẫu cũ, chính sách</td><td>Đưa thứ đó vào prompt hoặc vào Project</td><td>Claude chỉ thấy context</td></tr>
+    <tr><td>Lời dặn đặt trong tên hay mô tả Project</td><td>Chuyển sang project instructions</td><td>Claude không thấy tên và mô tả Project</td></tr>
+    <tr class="grp"><th colspan="3">1.1 · Viết prompt</th></tr>
+    <tr><td>Output thiếu giới hạn mà người giao việc biết (độ dài, phạm vi, người đọc)</td><td>Viết ràng buộc thẳng vào lời yêu cầu</td><td>Không để duyệt sau, không bắt Claude đoán</td></tr>
+    <tr><td>Có luật mà Claude vẫn lách sang ca khác</td><td>Thêm lý do của luật</td><td>Lý do giúp Claude tự suy. Liệt kê hay viết hoa chỉ che ca đã nêu.</td></tr>
+    <tr><td>Trả lời từ tài liệu dài mà lẫn kiến thức chung</td><td>Chỉ dùng tài liệu, trích trước rồi trả lời, nói rõ khi tài liệu không có</td><td>Bám nguồn, có lối thoát</td></tr>
+    <tr><td>Giọng hay khung khó tả bằng lời</td><td>Một ví dụ đúng loại, bọc thẻ. Còn lệch thì thêm.</td><td>Claude bám sát ví dụ</td></tr>
+    <tr><td>“Đừng dùng markdown” mà vẫn ra markdown</td><td>Nói định dạng muốn có, viết prompt không markdown</td><td>Claude bắt chước kiểu của prompt</td></tr>
+    <tr><td>Hỏi “gợi ý được không” mà muốn bản sửa</td><td>Nói thẳng hành động</td><td>Claude có thể chỉ gợi ý</td></tr>
+    <tr class="grp"><th colspan="3">1.2 · Chia việc</th></tr>
+    <tr><td>Kết quả chập chờn, nhiều mục tiêu, không kiểm được giữa chừng</td><td>Chia bước, kiểm output trung gian</td><td>Lỗi bị chặn trước khi lan</td></tr>
+    <tr><td>Việc ngắn đã chạy tốt, có người đề nghị chia nhiều bước</td><td>Giữ một prompt</td><td>Chia chỉ thêm lượt và hạn mức</td></tr>
+    <tr><td>Hai phần phụ thuộc chạy riêng, kết quả mâu thuẫn</td><td>Nối tiếp: bước sau nhận output đã kiểm của bước trước</td><td>Chat này không thấy chat kia</td></tr>
+    <tr><td>So sánh các tài liệu dài</td><td>Trích đúng điều khoản, con số từ mỗi tài liệu, kiểm, rồi mới so</td><td>Tóm tắt làm mất chữ gốc</td></tr>
+    <tr><td>Chuỗi dài, chỉ kiểm ở cuối</td><td>Kiểm ở output mà các bước sau dựa vào (dàn ý, số liệu trích)</td><td>Lỗi sớm lan xuống mọi bước</td></tr>
+    <tr class="grp"><th colspan="3">1.3 · Lặp prompt</th></tr>
+    <tr><td>Output yếu, đề hỏi bước đầu tiên</td><td>Chẩn đoán phần nào của prompt gây ra</td><td>Mỗi triệu chứng một cách sửa</td></tr>
+    <tr><td>Đổi nhiều thứ một lúc, output tốt lên</td><td>Mỗi vòng một thay đổi, so trên cùng đầu vào</td><td>Mới biết cái nào có tác dụng</td></tr>
+    <tr><td>Một đoạn thêm vào mà thử không thấy khác</td><td>Bỏ đi</td><td>Tốn context và hạn mức</td></tr>
+    <tr><td>Prompt tốt trên một mẫu, sắp dùng cho cả nhóm</td><td>Thử nhiều đầu vào thật, có ca khó</td><td>Tránh overfit</td></tr>
+    <tr class="grp"><th colspan="3">1.4 · Theo loại việc</th></tr>
+    <tr><td>Phân tích suy diễn vượt dữ liệu</td><td>Chỉ dựa trên dữ liệu, trỏ số liệu cho mỗi kết luận, được nói “không đủ”</td><td>Có lối thoát thì bớt đoán</td></tr>
+    <tr><td>Research dài, rộng, không dùng được</td><td>Thêm bạn là ai, quyết định gì, thời gian, khu vực, câu trả lời tốt trông thế nào</td><td>Research chỉ biết phạm vi bạn viết</td></tr>
+    <tr><td>Bản nháp chung chung, có chi tiết bịa</td><td>Bài cũ làm mẫu giọng, dữ kiện thật, chỉ dùng dữ kiện đó</td><td>Tả giọng bằng tính từ yếu hơn đưa mẫu</td></tr>
+    <tr><td>Brainstorm ra vài ý an toàn</td><td>Đòi nhiều ý khác nhau theo góc có tên, chấm ở bước sau</td><td>Chấm sớm cắt mất độ rộng</td></tr>
+    <tr><td>Một yêu cầu trộn research, phân tích, soạn thảo</td><td>Tách ở chỗ đổi loại việc, kiểm ở chỗ nối</td><td>Mỗi loại hỏng một kiểu</td></tr>
+  </table></div>
+  <h4>Tên và con số phải thuộc</h4>
+  <ul class="names">
+    <li><b>Hình ảnh giao việc:</b> Help Center “newly-hired contractor” (người thầu vừa được thuê). Docs “brilliant but new employee” (nhân viên giỏi nhưng mới vào). Phép thử đồng nghiệp là “key test”.</li>
+    <li><b>Bảy phần của prompt:</b> việc, bối cảnh, ràng buộc kèm lý do, nguồn, ví dụ, định dạng, vai (tùy chọn).</li>
+    <li><b>AI Fluency, Description:</b> Product, Process, Performance. Vòng mô tả rồi đánh giá: Description-Discernment loop.</li>
+    <li><b>Tài liệu dài</b> (từ khoảng 20.000 token): tài liệu trước, câu hỏi sau. Docs: tăng chất lượng tới 30% trong thử nghiệm.</li>
+    <li><b>Ví dụ:</b> bọc trong thẻ, đúng loại, khác nhau. Docs: 3–5 ví dụ cho kết quả tốt nhất. Bắt đầu từ một.</li>
+    <li><b>Định dạng:</b> nói điều muốn làm thay vì điều cấm. Bỏ markdown khỏi prompt thì output bớt markdown.</li>
+    <li><b>Chuỗi phổ biến nhất:</b> soạn → rà theo tiêu chí → sửa (docs gọi là self-correction).</li>
+    <li><b>Lặp prompt:</b> tiêu chí → chẩn đoán → đổi một chỗ → thử trên nhiều đầu vào.</li>
+    <li><b>Giảm bịa:</b> cho phép nói “không đủ thông tin”, trích nguyên văn trước, mỗi ý một câu trích, chỉ dùng tài liệu đã đưa. Giảm, không xóa hết.</li>
+  </ul>
+</section>
+  <div class="quiz" data-course="d1"></div>
+  </div>
+</section>

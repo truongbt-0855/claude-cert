@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ghi chú ôn CCDV-F – Path Claude Developer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F2F4F6; --surface:#FFFFFF; --ink:#18212C; --muted:#5A6878; --line:#D8DEE5;
+  --accent:#2E7D6B; --accent-soft:#E2F1EC; --core:#7A5BB5; --core-soft:#EEE8F8;
+  --ok:#1F8A5B; --bad:#B23B3B; --warn:#A35A12; --code-bg:#F5F7F9;
+  color-scheme:light;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0F151C; --surface:#17202A; --ink:#E4EAF1; --muted:#95A3B4; --line:#2A3542;
+    --accent:#5CC0A4; --accent-soft:#163A33; --core:#B39AE6; --core-soft:#2C2342;
+    --ok:#4CC38A; --bad:#F07C7C; --warn:#F0A960; --code-bg:#111921;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0F151C; --surface:#17202A; --ink:#E4EAF1; --muted:#95A3B4; --line:#2A3542;
+  --accent:#5CC0A4; --accent-soft:#163A33; --core:#B39AE6; --core-soft:#2C2342;
+  --ok:#4CC38A; --bad:#F07C7C; --warn:#F0A960; --code-bg:#111921;
+  color-scheme:dark;
+}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 16px);scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Be Vietnam Pro",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;font-size:16px;line-height:1.65}
+.layout{display:grid;grid-template-columns:280px minmax(0,1fr);max-width:1180px;margin:0 auto}
+nav.side{position:sticky;top:env(safe-area-inset-top,0px);height:100vh;overflow-y:auto;padding:28px 18px 40px;border-right:1px solid var(--line)}
+nav.side h1{font-size:1.05rem;margin:0 0 4px;line-height:1.3}
+nav.side .meta{color:var(--muted);font-size:.82rem;margin:0 0 18px}
+.prog{height:6px;background:var(--line);border-radius:3px;overflow:hidden;margin:0 0 6px}
+.prog i{display:block;height:100%;width:0;background:var(--accent);transition:width .3s}
+.progtxt{font-size:.8rem;color:var(--muted);margin-bottom:20px}
+.grp{font-size:.78rem;font-weight:600;color:var(--muted);margin:18px 0 6px}
+nav.side ol{list-style:none;margin:0;padding:0}
+nav.side li a{display:flex;gap:10px;align-items:flex-start;padding:7px 8px;border-radius:6px;color:var(--ink);text-decoration:none;font-size:.9rem;line-height:1.35}
+nav.side li a:hover{background:var(--accent-soft)}
+nav.side li a .n{flex:none;width:24px;height:24px;border-radius:50%;display:grid;place-items:center;font-size:.75rem;font-weight:600;background:var(--line)}
+nav.side li a.core .n{background:var(--core-soft);color:var(--core)}
+nav.side li a.role .n{background:var(--accent-soft);color:var(--accent)}
+nav.side li a.extra .n{background:color-mix(in srgb,var(--warn) 18%,transparent);color:var(--warn)}
+section.course.extra header .num{background:color-mix(in srgb,var(--warn) 18%,transparent);color:var(--warn)}
+nav.side li a.done .n{background:var(--ok);color:#fff}
+nav.side li a.done .n::after{content:"✓"}
+nav.side li a.done .n span{display:none}
+.mobnav{display:none}
+main{padding:36px 40px 80px;max-width:820px}
+.hero h2{font-size:2rem;line-height:1.2;margin:0 0 10px;letter-spacing:-.01em}
+.hero p{color:var(--muted);margin:0 0 16px;max-width:65ch}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin:22px 0 10px}
+.fact{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px 14px}
+.fact b{display:block;font-size:1.3rem}
+.fact span{color:var(--muted);font-size:.82rem}
+section.course{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:26px 28px;margin:28px 0}
+section.course header{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 14px;margin-bottom:6px}
+section.course header .num{font-weight:700;font-size:.85rem;padding:2px 10px;border-radius:999px}
+section.course.core header .num{background:var(--core-soft);color:var(--core)}
+section.course.role header .num{background:var(--accent-soft);color:var(--accent)}
+section.course h3{font-size:1.45rem;margin:0;line-height:1.25;flex:1 1 260px}
+.sub{color:var(--muted);font-size:.9rem;margin:0 0 14px}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 16px}
+.chip{font-size:.78rem;border:1px solid var(--line);border-radius:999px;padding:2px 10px;color:var(--muted)}
+.chip.hi{border-color:var(--accent);color:var(--accent);font-weight:600}
+h4{font-size:1.05rem;margin:24px 0 8px}
+p{margin:0 0 12px;max-width:72ch}
+ul,ol.x{margin:0 0 14px;padding-left:22px}
+li{margin:4px 0}
+.tw{overflow-x:auto;margin:0 0 16px}
+table{border-collapse:collapse;width:100%;font-size:.9rem}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left;vertical-align:top}
+th{background:var(--bg);font-weight:600}
+code{font-family:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;font-size:.86em;background:var(--code-bg);padding:1px 5px;border-radius:4px}
+pre{background:var(--code-bg);border:1px solid var(--line);border-radius:8px;padding:14px;overflow-x:auto;font-size:.84rem;line-height:1.5;margin:0 0 16px}
+pre code{background:none;padding:0}
+.key{border-left:4px solid var(--accent);background:var(--accent-soft);padding:10px 14px;border-radius:0 8px 8px 0;margin:0 0 16px}
+.key p:last-child{margin:0}
+.note{border-left:4px solid var(--warn);padding:10px 14px;margin:0 0 16px;background:var(--bg);border-radius:0 8px 8px 0;font-size:.92rem}
+.quiz{margin-top:24px;border-top:1px dashed var(--line);padding-top:16px}
+.quiz h4{margin-top:0}
+.q{margin:0 0 18px}
+.q .p{font-weight:500;margin-bottom:8px}
+.q button{display:block;width:100%;text-align:left;font:inherit;font-size:.92rem;background:var(--bg);color:var(--ink);border:1px solid var(--line);border-radius:8px;padding:8px 12px;margin:6px 0;cursor:pointer}
+.q button:hover:not([disabled]){border-color:var(--accent)}
+.q button:focus-visible,a:focus-visible,.donebtn:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.q button.right{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 14%,transparent)}
+.q button.wrong{border-color:var(--bad);background:color-mix(in srgb,var(--bad) 12%,transparent)}
+.q .ex{display:none;font-size:.9rem;color:var(--muted);margin-top:6px}
+.q.answered .ex{display:block}
+.result{display:none;margin-top:8px;padding:12px 14px;border-radius:8px;background:var(--accent-soft);font-weight:500}
+.result.show{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between}
+.retry{font:inherit;font-size:.88rem;background:var(--surface);color:var(--ink);border:1px solid var(--accent);border-radius:8px;padding:6px 12px;cursor:pointer}
+.retry:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.donebtn{margin-top:10px;font:inherit;font-size:.9rem;font-weight:600;background:var(--accent);color:#fff;border:0;border-radius:8px;padding:9px 16px;cursor:pointer}
+section.course.isdone .donebtn{background:var(--ok)}
+a{color:var(--accent)}
+footer{color:var(--muted);font-size:.85rem;margin-top:40px}
+@media (max-width:900px){
+  .layout{grid-template-columns:1fr}
+  nav.side{display:none}
+  .mobnav{display:block;position:sticky;top:0;z-index:5;background:var(--bg);padding:10px 16px;border-bottom:1px solid var(--line);padding-top:calc(10px + env(safe-area-inset-top,0px))}
+  .mobnav select{width:100%;font:inherit;padding:8px;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--ink)}
+  main{padding:22px 16px 60px}
+  section.course{padding:20px 16px}
+  .hero h2{font-size:1.6rem}
+}
+</style>
+</head>
+<body>
+<div class="mobnav"><select id="jump" aria-label="Chuyển đến khóa"></select></div>
+<div class="layout">
+<nav class="side" aria-label="Mục lục">
+  <h1>Path Claude Developer</h1>
+  <p class="meta">Ghi chú tiếng Việt để ôn CCDV-F</p>
+  <div class="prog"><i id="pbar"></i></div>
+  <div class="progtxt" id="ptxt">0/11 phần đã học</div>
+  <div class="grp">Core</div>
+  <ol id="navcore"></ol>
+  <div class="grp">Role courses</div>
+  <ol id="navrole"></ol>
+  <div class="grp">Bổ sung</div>
+  <ol id="navextra"></ol>
+</nav>
+
+<main>
+<div class="hero" id="top">
+  <h2>Ghi chú 10 khóa của path Claude Developer</h2>
+  <p>Tóm tắt và giảng lại bằng tiếng Việt nội dung 4 khóa core và 6 khóa role trong Partner Academy, cộng một phần bổ sung những gì exam guide yêu cầu mà path chưa dạy kỹ. Mỗi khóa có bài test cuối bài, đáp án được đảo mỗi lần làm lại. Đây là ghi chú cá nhân để ôn, không thay thế khóa gốc. Bấm “Đã học xong” ở cuối mỗi phần để theo dõi tiến độ.</p>
+  <div class="facts">
+    <div class="fact"><b>53 câu</b><span>120 phút, có câu chọn nhiều đáp án (đề ghi rõ chọn mấy)</span></div>
+    <div class="fact"><b>720/1000</b><span>điểm quy đổi để đậu</span></div>
+    <div class="fact"><b>24 giờ</b><span>hạn chót đổi/hủy lịch</span></div>
+    <div class="fact"><b>14 ngày</b><span>chờ thi lại sau lần trượt đầu</span></div>
+  </div>
+  <div class="note"><b>Nguồn:</b> số câu, điểm, chính sách và bảng domain bên dưới lấy từ <b>Exam Guide chính thức</b> của Claude Certified Developer – Foundations (Version 1.0, hiệu lực tháng 7/2026), tải từ trang Partner Certifications. Đề có 8 domain chia thành 25 kỹ năng. Điểm theo từng domain trên phiếu kết quả chỉ để tham khảo, đậu hay trượt dựa vào tổng điểm quy đổi. Từ 7/12/2026 đề có nội dung cập nhật và guide mới ra ngày 17/11/2026; nếu thi trước 7/12 thì dùng guide hiện tại.</div>
+
+  <h4>Blueprint chính thức và mức path đã phủ</h4>
+  <p>Cột “Tỉ trọng” lấy từ exam guide. Hai cột “Khóa trong path” và “Path phủ” là <b>đánh giá của tôi</b> sau khi đọc các khóa, không phải thông tin chính thức. 10 khóa không tương ứng 1-1 với 8 domain: một khóa có thể chạm nhiều domain, và có kỹ năng gần như không khóa nào dạy. Những kỹ năng phủ “Ít” hoặc “Một phần” được bổ sung ở <a href="#c11">phần 11</a>.</p>
+  <div class="tw"><table>
+  <tr><th>Domain / kỹ năng</th><th>Tỉ trọng</th><th>Khóa trong path</th><th>Path phủ</th></tr>
+  <tr><th colspan="4">1. Agents and Workflows · 14,7%</th></tr>
+  <tr><td>Agent Architecture: workflow hay agent, mô hình manager/supervisor, vai trò subagent</td><td>4,5%</td><td>5, 10</td><td>Một phần</td></tr>
+  <tr><td>Agent Construction: Agent SDK, agent loop tự viết, managed agents (tự host hay Anthropic host), hooks</td><td>5,3%</td><td>5, 6, 7</td><td>Tốt</td></tr>
+  <tr><td>Agent Patterns & Frameworks: tool-use loop, subagent, memory, quản lý context; framework như Strands, LangGraph, PydanticAI</td><td>4,9%</td><td>5, 10</td><td>Một phần</td></tr>
+  <tr><th colspan="4">2. Applications and Integration · 33,1%</th></tr>
+  <tr><td>Understanding Requirements: yêu cầu chức năng và hạ tầng từ yêu cầu nghiệp vụ</td><td>3,4%</td><td>2</td><td>Một phần</td></tr>
+  <tr><td>Systems Life Cycle: phát triển, triển khai, vận hành, bảo trì hệ thống</td><td>2,8%</td><td>2</td><td>Ít</td></tr>
+  <tr><td>Claude API Mechanics: messages, tools, streaming, vision, thinking, caching, gọi qua nhà cung cấp thứ ba, Batch API, chọn realtime hay batch</td><td>6,8%</td><td>5</td><td>Một phần</td></tr>
+  <tr><td>Software Engineering Foundations: REST, JSON, async, version control, SDLC, code review, refactor</td><td>7,4%</td><td>Không có khóa riêng</td><td>Ít</td></tr>
+  <tr><td>Claude Application Design: Claude hiểu chỉ dẫn khác nhau giữa các giao diện, ranh giới nội dung, thiết kế schema, session hygiene, quản lý plugin</td><td>8,6%</td><td>3, 5, 7</td><td>Một phần</td></tr>
+  <tr><td>Configuration Management: CLAUDE.md, settings.json, ghim phiên bản model, version prompt, dependency plugin</td><td>4,1%</td><td>6, 7</td><td>Một phần</td></tr>
+  <tr><th colspan="4">3. Claude Code · 3,1%</th></tr>
+  <tr><td>Claude Code Operation: rules, skills, commands, agents, memory, slash command, headless, auto mode, phân cấp CLAUDE.md, settings.json</td><td>3,1%</td><td>6, 7, 9, 10</td><td>Tốt</td></tr>
+  <tr><th colspan="4">4. Eval, Testing, and Debugging · 2,6%</th></tr>
+  <tr><td>Debugging & Error Handling: nhận diện loại lỗi, chọn cách phục hồi, phân tích trace, tách lỗi tầng tích hợp với lỗi output model</td><td>2,6%</td><td>2</td><td>Ít</td></tr>
+  <tr><th colspan="4">5. Model Selection and Optimization · 16,8%</th></tr>
+  <tr><td>LLM Fundamentals: token, context window, sampling, non-determinism; fast mode, extended/adaptive thinking, effort; zero/single/multi-shot</td><td>5,2%</td><td>1, 3, 5</td><td>Tốt</td></tr>
+  <tr><td>Technical Fundamentals: SDK bọc REST API, websockets</td><td>6,1%</td><td>5</td><td>Một phần</td></tr>
+  <tr><td>Model Selection & Tradeoffs: Opus/Sonnet/Haiku, chất lượng–độ trễ–chi phí, thay đổi phá vỡ giữa các bản model</td><td>2,7%</td><td>3, 4, 5</td><td>Tốt</td></tr>
+  <tr><td>Cost & Token Management: theo dõi token, mô hình chi phí, prompt caching, cache checkpoint</td><td>2,8%</td><td>5</td><td>Một phần</td></tr>
+  <tr><th colspan="4">6. Prompt and Context Engineering · 11,0%</th></tr>
+  <tr><td>Context Engineering: quản lý context, chống drift và bloat (cắt bớt output tool, compaction), cô lập context bằng subagent</td><td>3,8%</td><td>1, 5, 10</td><td>Tốt</td></tr>
+  <tr><td>Prompt Engineering: chỉ dẫn rõ, few-shot, đặt ở system hay user, ràng buộc output, tinh chỉnh lặp, làm sạch input</td><td>4,6%</td><td>1</td><td>Ít</td></tr>
+  <tr><td>Output Handling: structured output, validate response, parse phòng thủ, hoài nghi output tự tin</td><td>2,6%</td><td>1</td><td>Ít</td></tr>
+  <tr><th colspan="4">7. Security and Safety · 8,1%</th></tr>
+  <tr><td>AI Application Security: prompt injection, jailbreak, input không tin cậy, rò rỉ dữ liệu, PII, xác thực và phân quyền</td><td>3,2%</td><td>Không có khóa riêng</td><td>Ít</td></tr>
+  <tr><td>Guardrails & Safe Deployment: nhiều lớp guardrail, secure-by-design, least privilege</td><td>2,3%</td><td>7</td><td>Một phần</td></tr>
+  <tr><td>Claude Hooks: dùng hook chặn hành động phá hủy</td><td>1,0%</td><td>6, 7</td><td>Tốt</td></tr>
+  <tr><td>Identity, Secrets & Key Management: quản lý API key, credential giữa dev và production, giám sát truy cập</td><td>1,6%</td><td>5 (chỉ nhắc .env)</td><td>Ít</td></tr>
+  <tr><th colspan="4">8. Tools and MCPs · 10,6%</th></tr>
+  <tr><td>Tool Implementation: function calling, viết description, xử lý lỗi tool, tool phía client hay server, pattern phê duyệt</td><td>4,4%</td><td>5</td><td>Tốt</td></tr>
+  <tr><td>MCP Server Development: viết và deploy server; resources, tools, prompts; giao tiếp stdio, socket</td><td>2,1%</td><td>8 (chỉ video)</td><td>Một phần</td></tr>
+  <tr><td>Agentic Customization: chọn giữa built-in tool, custom tool, Skill, MCP</td><td>4,1%</td><td>5, 9</td><td>Tốt</td></tr>
+  </table></div>
+  <div class="note">Trang path khuyên học tiếp <b>Claude Certified Developer – Foundations Prep Course</b> (5 module, khoảng 13 giờ: MSO Foundations; Production-Grade Prompting, Agents & Tool Use; Claude Code, MCP & Integration; Production Engineering, Evals & Security; Accelerators & IP Contribution). Tài khoản chưa đăng ký khóa này nên nội dung chưa được đưa vào ghi chú. Nếu thích học theo thứ tự, đọc <a href="#c5">khóa 5</a> trước, rồi đến <a href="#c11">phần 11</a>.</div>
+</div>
+
+<!-- ========== COURSE 1 ========== -->
+<section class="course core" id="c1" data-title="AI Capabilities and Limitations">
+<header><span class="num">Core 1</span><h3>AI Capabilities and Limitations</h3></header>
+<p class="sub">Khoảng 60 phút. Vì sao model hành xử như vậy: dự đoán token, kiến thức, trí nhớ làm việc, khả năng điều khiển.</p>
+<div class="chips"><span class="chip hi">Domain 5</span><span class="chip hi">Domain 6</span><span class="chip">Domain 8</span></div>
+
+<div class="key"><p>AI không giỏi đều, cũng không kém đều. Nó mạnh hay yếu theo 4 thuộc tính. Mỗi thuộc tính là một dải từ “làm tốt” đến “dễ hỏng”. Việc của bạn là xác định task nằm ở đâu trên từng dải, rồi kiểm tra và bổ sung cho phù hợp. Ranh giới sẽ dịch chuyển khi model tốt lên, nhưng 4 thuộc tính thì giữ nguyên.</p></div>
+
+<div class="tw"><table>
+<tr><th>Thuộc tính</th><th>Câu hỏi</th><th>Làm tốt</th><th>Dễ hỏng</th></tr>
+<tr><td>Next Token Prediction</td><td>Câu trả lời đến từ đâu?</td><td>Tóm tắt, đổi định dạng, giải thích khái niệm phổ biến</td><td>Vùng mới lạ, ít dữ liệu, phân biệt “đúng” với “nghe có vẻ đúng”</td></tr>
+<tr><td>Knowledge</td><td>Model thực sự biết gì?</td><td>Chủ đề phổ biến, nhất quán, ngôn ngữ lập trình phổ biến</td><td>Chủ đề hiếm, sau cutoff, ngách, địa phương, gây tranh cãi</td></tr>
+<tr><td>Working Memory</td><td>Model đang chú ý vào gì?</td><td>Tài liệu vừa context, phiên hiện tại, bạn cung cấp đủ context</td><td>Tài liệu hoặc hội thoại rất dài, mong model nhớ giữa các phiên</td></tr>
+<tr><td>Steerability</td><td>Mình kiểm soát được bao nhiêu?</td><td>Chỉ dẫn ngắn, cụ thể, kiểm tra được</td><td>Chuỗi suy luận dài, yêu cầu trừu tượng, tính toán chính xác</td></tr>
+</table></div>
+
+<h4>Model có “tính cách” từ đâu</h4>
+<ul>
+<li><b>Pretraining:</b> đọc lượng văn bản khổng lồ và học đoán chữ tiếp theo. Kết quả là một cỗ máy viết tiếp văn bản, chưa biết khái niệm “giúp người dùng”.</li>
+<li><b>Fine-tuning:</b> dựa trên đánh giá của con người, model học coi input là một yêu cầu, trả lời giúp ích, từ chối yêu cầu có hại.</li>
+<li>Fine-tuning để lại 4 dấu vân tay: <b>sycophancy</b> (dễ đồng ý với tiền đề sai), <b>verbosity</b> (mặc định dài), <b>over-caution</b> (thận trọng quá mức), <b>loose calibration</b> (độ tự tin không khớp độ chính xác).</li>
+</ul>
+
+<h4>Next Token Prediction</h4>
+<ul>
+<li>Model giống autocomplete cực kỳ tinh vi hơn là công cụ tìm kiếm. Cùng một cơ chế tạo ra cả sự trôi chảy lẫn hallucination.</li>
+<li><b>Chỗ hay bịa nhất là chi tiết cụ thể:</b> tên, ngày, số liệu, trích dẫn, URL. Càng cụ thể càng phải kiểm tra.</li>
+<li>Cách khắc phục: trích dẫn nguồn, để model báo khi không chắc, giới hạn đầu ra, pattern generator-verifier.</li>
+<li><b>Sampling:</b> model tính phân phối xác suất cho token tiếp theo rồi chọn một token. <b>Temperature</b> thấp thì tập trung, cao thì ngẫu nhiên. <b>Top-k</b> giữ k lựa chọn cao nhất. <b>Top-p</b> giữ nhóm nhỏ nhất có tổng xác suất đạt p, và tự co giãn theo độ tự tin của model.</li>
+</ul>
+
+<h4>Knowledge</h4>
+<ul>
+<li>Kiến thức đóng băng tại knowledge cutoff. Câu hỏi đúng là “chủ đề này xuất hiện nhiều đến mức nào trong dữ liệu huấn luyện”.</li>
+<li>Lỗi đặc trưng: thông tin cũ, độ phủ không đều, thiên kiến kế thừa, không nhớ nguồn.</li>
+<li>Cách khắc phục: web search, RAG, MCP, tool use.</li>
+<li><b>Embedding:</b> biến text thành vector độ dài cố định (ví dụ 1.024 chiều). Text gần nghĩa thì vector gần nhau. Retrieval là lấy k tài liệu gần câu hỏi nhất, thường đo bằng <b>cosine similarity</b>.</li>
+</ul>
+
+<h4>Working Memory</h4>
+<ul>
+<li>Context window có kích thước cố định. Đây là <b>vách đá, không phải dốc thoải</b>: chạy tốt cho đến khi bỗng hỏng, thường bị cắt bớt âm thầm.</li>
+<li>Model <b>không học từ việc bạn sửa nó</b>. Phiên mới là bắt đầu từ con số 0.</li>
+<li><b>Lost in the middle:</b> model nhớ tốt phần đầu và phần cuối, phần giữa dễ bị bỏ sót (đường cong chữ U). Đặt chỉ dẫn quan trọng ở đầu và nhắc lại ở cuối. Nhiều context hơn không có nghĩa là tốt hơn.</li>
+<li>Cách khắc phục: memory, compaction, project, context lớn hơn, workflow nhiều agent.</li>
+</ul>
+
+<h4>Steerability</h4>
+<ul>
+<li>Model làm theo chỉ dẫn bằng cách viết tiếp pattern, không phải vì hiểu ý bạn.</li>
+<li>Lỗi đặc trưng: <b>reasoning drift</b> (lỗi nhỏ cộng dồn qua nhiều bước) và <b>letter over spirit</b> (đúng câu chữ, sai ý định).</li>
+<li>Cách khắc phục: system prompt, code execution, cho model hiển thị suy luận, structured output.</li>
+<li>Khi model làm đúng chữ mà vô dụng: <b>nêu rõ mục tiêu</b>, đừng lặp lại chỉ dẫn mạnh hơn.</li>
+</ul>
+
+<h4>Khi các thuộc tính va nhau</h4>
+<div class="tw"><table>
+<tr><th>Cặp</th><th>Triệu chứng</th><th>Cách sửa</th></tr>
+<tr><td>Next Token Prediction + Knowledge</td><td>Bịa trích dẫn, số liệu</td><td>Kiểm tra lại, dùng search hoặc RAG</td></tr>
+<tr><td>Working Memory + Steerability</td><td>Hội thoại dài thì quên chỉ dẫn ban đầu</td><td>Đưa lại context, mở phiên mới kèm tóm tắt</td></tr>
+<tr><td>Khác</td><td>Tính sai mà tự tin; dễ dãi đồng ý tiền đề sai</td><td>Chuyển tính toán cho code; mời model phản biện</td></tr>
+</table></div>
+
+<div class="quiz" data-course="c1"></div>
+<button class="donebtn" type="button">Đã học xong</button>
+</section>
+
+<!-- ========== COURSE 2 ========== -->
+<section class="course core" id="c2" data-title="AI Fluency for Builders">
+<header><span class="num">Core 2</span><h3>AI Fluency for Builders</h3></header>
+<p class="sub">Khoảng 45 phút. Các quyết định của người build sản phẩm: giao việc, mô tả, đánh giá, chịu trách nhiệm.</p>
+<div class="chips"><span class="chip">Domain 4</span><span class="chip">Domain 7</span></div>
+
+<h4>4D Framework</h4>
+<ul>
+<li><b>Delegation:</b> việc nào giao cho AI, việc nào giữ lại.</li>
+<li><b>Description:</b> nói rõ bạn cần gì và muốn AI làm theo cách nào.</li>
+<li><b>Discernment:</b> đánh giá output trước khi dùng.</li>
+<li><b>Diligence:</b> chịu trách nhiệm hoàn toàn về kết quả, bất kể AI đóng góp bao nhiêu.</li>
+</ul>
+<p>Description và Discernment là <b>vòng trong</b> (tương tác hằng ngày). Delegation và Diligence là <b>vòng ngoài</b> (quyết định lớn).</p>
+
+<h4>Bộ công cụ của builder</h4>
+<div class="tw"><table>
+<tr><th>Empathy</th><th>Design</th><th>Architecture</th><th>Implementation</th><th>Judgment</th><th>Shipping</th></tr>
+<tr><td>AI yếu</td><td>Vừa</td><td>Vừa</td><td><b>Mạnh</b></td><td>Yếu</td><td>Vừa</td></tr>
+</table></div>
+<div class="key"><p>Giao phần implementation thì an toàn, giao phần judgment thì không. Viết acceptance test trước khi viết code để bạn và AI có chung định nghĩa “xong”.</p></div>
+<p>Ba chế độ hợp tác: <b>Automation</b> (AI làm, bạn kiểm tra), <b>Augmentation</b> (cùng làm), <b>Agency</b> (AI tự hành trong giới hạn bạn đặt).</p>
+
+<h4>Description Chain</h4>
+<p>Tiếng nói người dùng → requirement → technical spec → chỉ dẫn cho AI → test. Prompt engineering chỉ là một mắt xích. <b>Test là dạng mô tả chính xác nhất.</b> Code chạy mà sản phẩm hỏng là lỗi mô tả ở mắt xích phía trước.</p>
+
+<h4>5 lăng kính đánh giá</h4>
+<ol class="x">
+<li><b>Functional integrity:</b> chạy đúng với dữ liệu thật, không chỉ dữ liệu test.</li>
+<li><b>Production readiness:</b> chịu tải, không race condition.</li>
+<li><b>Problem fit:</b> giải quyết đúng nhu cầu thật, không chỉ đúng spec chữ.</li>
+<li><b>Experience quality:</b> người dùng làm được việc mà không cần hướng dẫn.</li>
+<li><b>Responsible impact:</b> minh bạch vai trò của AI, không bỏ sót nhóm người dùng.</li>
+</ol>
+<p>Điểm mù hay gặp của AI: <b>concurrency, security, và lỗi chỉ xuất hiện khi lên quy mô</b>. AI cũng không tự nhắc về migration, versioning, rate limit, feature flag, trừ khi bạn hỏi.</p>
+<p>UX: bốn nguyên tắc clarity, hierarchy, accessibility, feedback. “Làm cho đẹp” là mong muốn, không phải spec. AI không tự làm đúng accessibility, phải yêu cầu rồi kiểm tra.</p>
+
+<div class="quiz" data-course="c2"></div>
+<button class="donebtn" type="button">Đã học xong</button>
+</section>
+
+<!-- ========== COURSE 3 ========== -->
+<section class="course core" id="c3" data-title="Claude Platform & Model Foundations">
+<header><span class="num">Core 3</span><h3>Claude Platform & Model Foundations</h3></header>
+<p class="sub">59 phút. Bốn quyết định trước khi viết prompt: entry point, tính năng, model, context. Khóa này là Module 1 của lộ trình Associate, hướng về claude.ai.</p>
+<div class="chips"><span class="chip hi">Domain 5</span><span class="chip hi">Domain 6</span></div>
+
+<h4>5 hành vi luôn đúng</h4>
+<ol class="x">
+<li>Câu trả lời thay đổi giữa các lần chạy.</li>
+<li>Giọng văn tự tin không có nghĩa là chính xác.</li>
+<li>Context là một ngân sách có hạn.</li>
+<li>Kiến thức dừng ở training cutoff.</li>
+<li>Skill giảm độ dao động nhưng không loại bỏ, nên luôn phải review.</li>
+</ol>
+
+<h4>Entry point trên claude.ai</h4>
+<div class="tw"><table>
+<tr><th>Cổng</th><th>Dùng khi</th></tr>
+<tr><td>Chat</td><td>Việc một lần, nháp nhanh, thử nghiệm</td></tr>
+<tr><td>Project</td><td>Việc lặp lại: instructions cố định, knowledge base, lịch sử hội thoại riêng</td></tr>
+<tr><td>Artifact</td><td>Output là sản phẩm bàn giao</td></tr>
+<tr><td>Research</td><td>Cần tổng hợp sâu từ nhiều nguồn</td></tr>
+</table></div>
+<p><b>Có nên dựng Project?</b> Hỏi ba câu: task có lặp lại, context có ổn định, format có cố định. Đúng từ 2 câu trở lên thì dựng.</p>
+
+<h4>Bốn lớp năng lực</h4>
+<ul>
+<li><b>Project</b> mang context.</li>
+<li><b>Skill</b> định nghĩa quy trình lặp lại.</li>
+<li><b>Code Execution</b> kiểm chứng tính toán. Model sinh chữ chỉ tạo con số “nghe hợp lý”. Con số nào sẽ được dùng thật, dữ liệu cần làm sạch, biểu đồ, file thật (xlsx, pptx…) thì dùng code execution.</li>
+<li><b>Memory</b> giữ liên tục giữa các phiên. Memory theo phạm vi Project nên khách hàng A không lẫn sang khách hàng B. Incognito giữ phiên khỏi memory và lịch sử.</li>
+</ul>
+
+<h4>Chọn model</h4>
+<ul>
+<li><b>Haiku:</b> việc có cấu trúc, khối lượng lớn (phân loại 500 hợp đồng theo rubric rõ ràng).</li>
+<li><b>Sonnet:</b> điểm khởi đầu cho hầu hết việc chuyên môn.</li>
+<li><b>Opus:</b> phán đoán phức tạp, input mơ hồ, rủi ro cao.</li>
+</ul>
+
+<h4>Khi context suy giảm</h4>
+<p>Dấu hiệu: model bỏ qua chỉ dẫn đã làm đúng trước đó, chỉ phản hồi lượt gần nhất. Ba cách xử lý: <b>Restart</b>, <b>Summarize</b> rồi mở phiên mới kèm tóm tắt, <b>Persist</b> vào Memory hoặc knowledge base.</p>
+<div class="note">Bẫy hay gặp: nhắc lại chỉ dẫn trong một phiên đã suy giảm là sai, nâng lên model mạnh hơn cũng sai. Đáp án đúng là mở phiên mới mang theo bản tóm tắt.</div>
+
+<div class="quiz" data-course="c3"></div>
+<button class="donebtn" type="button">Đã học xong</button>
+</section>
+
+<!-- ========== COURSE 4 ========== -->
+<section class="course core" id="c4" data-title="Choosing the right Claude model">
+<header><span class="num">Core 4</span><h3>Choosing the right Claude model</h3></header>
+<p class="sub">Khoảng 10 phút, trên Claude Academy. Mỗi model mạnh ở việc gì và tốn rate limit bao nhiêu.</p>
+<div class="chips"><span class="chip hi">Domain 5</span></div>
+
+<div class="tw"><table>
+<tr><th>Model</th><th>Tốn rate limit</th><th>Hợp với</th></tr>
+<tr><td>Haiku</td><td>Nhẹ nhất</td><td>Trả lời nhanh, tóm tắt, trích xuất đơn giản, tra cứu, phân loại</td></tr>
+<tr><td>Sonnet</td><td>Vừa</td><td>Code, viết, phân tích, workflow nhiều bước. Mặc định khi không chắc</td></tr>
+<tr><td>Opus</td><td>Nặng</td><td>Nghiên cứu sâu, suy luận phức tạp, phiên làm việc qua lại; khi Sonnet đã thử mà không đạt</td></tr>
+<tr><td>Fable</td><td>Nặng nhất</td><td>Dự án lớn, task dài nhiều bước liên kết, độ chính xác quan trọng; khi Opus đã thử mà không đạt</td></tr>
+</table></div>
+
+<ul>
+<li>Dùng model nặng cho task mà model nhẹ làm được là tốn token vô ích và chậm hơn.</li>
+<li><b>Effort</b> chỉnh độ sâu suy luận: mức mặc định hợp với đa số việc, hạ xuống khi cần nhanh và tiết kiệm, mức cao nhất dành cho bài khó nhất.</li>
+<li>Kiểm tra kết quả theo mức độ rủi ro: tra cứu nhanh chỉ cần liếc qua, phân tích ảnh hưởng quyết định thì phải review kỹ.</li>
+<li>Cách thử: chạy cùng một task trên hai model, so sánh chỗ khác nhau (không phải độ dài). Nếu model nhẹ đã đủ thì task đó “hợp với model nhẹ”.</li>
+<li>Khi có model mới, thử lại những task từng chạm trần.</li>
+</ul>
+<div class="note">Hướng dẫn trên claude.ai khuyên bắt đầu với Sonnet khi không chắc. Docs API hiện tại có hai cách tiếp cận: bắt đầu từ Haiku rồi nâng dần (ưu tiên hiệu quả), hoặc bắt đầu từ model mạnh rồi tối ưu xuống (ưu tiên năng lực). Điểm chung là quyết định bằng eval.</div>
+
+<div class="quiz" data-course="c4"></div>
+<button class="donebtn" type="button">Đã học xong</button>
+</section>
+
+<!-- ========== COURSE 5 ========== -->
+<section class="course role" id="c5" data-title="Claude Platform 101">
+<header><span class="num">Role 5</span><h3>Claude Platform 101</h3></header>
+<p class="sub">Khoảng 90 phút. Từ API call đầu tiên đến agent loop, tool use, thinking, built-in tools, skills, MCP, context management và managed agents. Khóa quan trọng nhất cho đề.</p>
+<div class="chips"><span class="chip hi">Domain 2</span><span class="chip hi">Domain 5</span><span class="chip hi">Domain 8</span><span class="chip hi">Domain 1</span></div>
+
+<h4>1. Ba lớp của Platform</h4>
+<ul>
+<li><b>Primitives:</b> Messages API, tool use, files, web search, code execution, MCP, skills.</li>
+<li><b>Infrastructure:</b> managed agents, retry, queue, observability.</li>
+<li><b>Controls:</b> dashboard, eval.</li>
+</ul>
+<p>Tóm gọn: build bằng primitives, scale bằng infrastructure, vận hành bằng controls.</p>
+
+<h4>2. Cấu trúc request</h4>
+<ul>
+<li>Bắt buộc: <code>model</code>, <code>max_tokens</code>, <code>messages</code>. Tùy chọn: <code>system</code> để định vai trò.</li>
+<li><b><code>response.content</code> là mảng block, không phải chuỗi.</b> Lặp qua và kiểm tra <code>type</code>: <code>text</code>, <code>tool_use</code>, <code>thinking</code>…</li>
+<li>API key để trong <code>.env</code>, không hardcode.</li>
+</ul>
+<pre><code>import Anthropic from "@anthropic-ai/sdk";
+const client = new Anthropic();
+const res = await client.messages.create({
+  model: "claude-sonnet-5-5",
+  max_tokens: 1024,
+  system: "You are a terse senior code reviewer.",
+  messages: [{ role: "user", content: "Review this code: ..." }],
+});
+for (const block of res.content) {
+  if (block.type === "text") console.log(block.text);
+}</code></pre>
+
+<h4>3. Chọn model theo eval</h4>
+<ul>
+<li>Lấy 20–30 ví dụ thật làm bộ eval. Chạy từ Haiku, chưa đạt thì Sonnet, cần mới lên Opus. <b>Model đúng là model rẻ nhất mà output vẫn đủ tốt để ship.</b></li>
+<li><code>response.usage</code> trả về input và output token, là căn cứ tính tiền.</li>
+<li>Production: <b>route từng loại task sang model khác nhau</b> trong cùng endpoint (Haiku phân loại, Sonnet viết nháp, Opus xử lý việc khó).</li>
+</ul>
+
+<h4>4. Agent loop</h4>
+<ol class="x">
+<li>Gửi messages kèm tools.</li>
+<li>Nếu <code>stop_reason</code> là <code>tool_use</code>: chạy tool.</li>
+<li>Đẩy <b>toàn bộ</b> <code>response.content</code> vào messages với role <code>assistant</code>.</li>
+<li>Đẩy kết quả với role <code>user</code>, dạng block <code>tool_result</code> có <code>tool_use_id</code> trùng id lệnh gọi.</li>
+<li>Lặp đến khi <code>stop_reason</code> là <code>end_turn</code>.</li>
+</ol>
+<pre><code>while (true) {
+  const res = await client.messages.create({ model, max_tokens: 1024, tools, messages });
+  if (res.stop_reason !== "tool_use") break;
+  messages.push({ role: "assistant", content: res.content });
+  messages.push({
+    role: "user",
+    content: res.content
+      .filter(b =&gt; b.type === "tool_use")
+      .map(b =&gt; ({ type: "tool_result", tool_use_id: b.id, content: runTool(b.name, b.input) })),
+  });
+}</code></pre>
+<div class="key"><p>Bạn sở hữu vòng lặp và tool. Claude sở hữu phần suy luận.</p></div>
+
+<h4>5. Tool use</h4>
+<ul>
+<li><b>Claude không tự chạy tool, code của bạn chạy.</b></li>
+<li>Định nghĩa: <code>name</code>, <code>description</code>, <code>input_schema</code> (JSON Schema), truyền qua mảng <code>tools</code>.</li>
+<li><b>Description mơ hồ là lý do số một khiến agent gọi sai hoặc không gọi tool.</b></li>
+<li>Nhiều tool thì dispatch theo <code>name</code>. Claude có thể gọi nhiều tool trong cùng một lượt.</li>
+<li><b>Tool runner</b> (SDK TypeScript, Python, Ruby): tự sinh schema từ function và tự chạy vòng lặp. TS dùng <code>client.beta.messages.toolRunner(...)</code> rồi <code>runner.untilDone()</code>.</li>
+</ul>
+
+<h4>6. Thinking</h4>
+<ul>
+<li>Adaptive thinking: <code>thinking: { type: "adaptive" }</code>, model tự quyết định khi nào và nghĩ bao nhiêu.</li>
+<li>Độ sâu chỉnh bằng <code>effort</code> <b>đặt trong <code>output_config</code></b>, không đặt cạnh khối thinking. Mức: low, medium, high, xhigh, max. Mặc định tùy model.</li>
+<li>Nên dùng: toán, logic nhiều bước, debug, so sánh đánh đổi. Không nên: phân loại, trích xuất, boilerplate.</li>
+<li>Suy luận hiển thị trong response dưới dạng thinking block.</li>
+</ul>
+
+<h4>7. Built-in tools</h4>
+<ul>
+<li><b>Server tools</b> (web search, code execution, web fetch): Anthropic chạy, <b>không cần agent loop</b>, kết quả nằm luôn trong response với block <code>server_tool_use</code> và block kết quả.</li>
+<li><b>Client tools</b> (memory, bash): chạy ở phía bạn, SDK có sẵn schema và runner.</li>
+</ul>
+
+<h4>8. Skills trên API</h4>
+<ul>
+<li>Thư mục có <code>SKILL.md</code> (kèm script, tài nguyên). Upload một lần bằng <code>client.beta.skills.create</code>, gắn vào request qua <code>container.skills</code> (mảng, gắn được nhiều skill), cần beta header, thường đi kèm code execution.</li>
+<li><b>Tool là Claude làm được gì. Skill là bạn muốn việc đó làm theo cách nào.</b></li>
+<li>Ban đầu chỉ nạp tên và description, khi cần mới nạp toàn bộ skill.</li>
+</ul>
+
+<h4>9. MCP trên API</h4>
+<ul>
+<li>MCP tồn tại để <b>chuyển việc bảo trì integration sang nhà cung cấp dịch vụ</b>.</li>
+<li><b>Tool cho hệ thống của bạn, skill cho quy trình của bạn, MCP cho dịch vụ bên thứ ba.</b></li>
+<li>Khai báo trong <code>mcp_servers</code> (type, url, name, token tùy chọn), cấp quyền bằng tool loại <code>mcp_toolset</code>. Claude tự đọc danh sách tool từ server.</li>
+<li>Giới hạn quyền: <code>default_config: { enabled: false }</code>, rồi bật từng tool trong <code>configs</code>, ví dụ chỉ cho đọc Slack.</li>
+<li>MCP connector đang beta, cần beta header.</li>
+</ul>
+
+<h4>10. Context management</h4>
+<p>Context gồm system prompt, lịch sử, định nghĩa tool, kết quả tool, file, skill và <b>cả thinking block</b>. <b>Đầy context thì request lỗi.</b></p>
+<div class="tw"><table>
+<tr><th>Pattern</th><th>Cách làm</th><th>Giải quyết</th></tr>
+<tr><td>Just-in-time</td><td>Chỉ nạp thứ cần, để tool kéo phần còn lại (pattern thiết kế)</td><td>Kích thước context</td></tr>
+<tr><td>Server-side compaction</td><td><code>context_management: { edits: [{ type: "compact" }] }</code>, API tự tóm tắt lượt cũ khi vượt ngưỡng</td><td>Hội thoại dài</td></tr>
+<tr><td>Prompt caching</td><td>Đánh dấu phần ổn định (system prompt, tool, tài liệu) để tái sử dụng rẻ hơn</td><td>Chi phí</td></tr>
+<tr><td>Memory tool</td><td>Claude đọc/ghi thư mục memory, bạn tự triển khai lưu trữ phía client</td><td>Không có trạng thái giữa các phiên</td></tr>
+</table></div>
+
+<h4>11. Managed agents</h4>
+<ul>
+<li>Agent loop chạy trên hạ tầng Anthropic. Bốn primitive: <b>Agent</b> (model, system prompt, tool; dùng lại được), <b>Environment</b> (sandbox, mạng), <b>Session</b> (một lần chạy), <b>Events</b> (luồng vào ra).</li>
+<li><b>Mở event stream trước, rồi mới gửi tin nhắn khởi động</b>, vì stream chỉ nhận sự kiện xảy ra sau khi mở.</li>
+<li>Sự kiện chính: <code>agent.message</code>, <code>agent.tool_use</code>, <code>session.status_idle</code> (xong).</li>
+<li>Có rubric kèm grader riêng, memory store, điều phối nhiều agent, permission policy chờ người duyệt hành động nhạy cảm.</li>
+<li>Dùng khi vòng lặp chạy lâu, nhiều tool, cần resume. Muốn toàn quyền thì tự viết loop.</li>
+</ul>
+
+<h4>12. Dùng Claude Code để viết code API</h4>
+<p>Claude Code có skill Claude API (gọi bằng <code>/claude-api</code> hoặc tự kích hoạt khi thấy SDK). Prompt tốt nêu rõ file cần sửa, pattern cần dùng và kết quả mong muốn. Stub file, giao cho Claude Code, rồi review diff.</p>
+
+<div class="quiz" data-course="c5"></div>
+<button class="donebtn" type="button">Đã học xong</button>
+</section>
+
+<!-- ========== COURSE 6 ========== -->
+<section class="course role" id="c6" data-title="Claude Code 101">
+<header><span class="num">Role 6</span><h3>Claude Code 101</h3></header>
+<p class="sub">Khoảng 60 phút. Cài đặt, chế độ prompt, workflow explore-plan-code-commit, CLAUDE.md, subagents, skills, MCP, hooks.</p>
+<div class="chips"><span class="chip hi">Domain 3</span></div>
+<ul>
+<li>Claude Code là công cụ coding dạng agent: đọc codebase, sửa file, chạy lệnh, kết nối tool ngoài. Có trên terminal, VS Code, JetBrains, Desktop, web (web chỉ làm với repo GitHub). Tính năng mới thường ra trên terminal trước.</li>
+<li>Claude Code truy cập được thư mục bạn chạy lệnh <code>claude</code> và mọi thư mục con.</li>
+<li>Workflow: <b>Explore → Plan → Code → Commit</b>. <b>Plan mode</b> cho Claude nghiên cứu trước khi viết code.</li>
+<li><code>/compact</code> tóm tắt phiên dài, <code>/clear</code> bắt đầu sạch. Đẩy việc nặng sang subagent để context chính gọn.</li>
+<li>Review: dùng subagent để có góc nhìn khách quan. <code>/commit-push-pr</code> làm trọn luồng commit đến PR, <code>--from-pr</code> để quay lại làm tiếp một PR.</li>
+<li><b>CLAUDE.md:</b> stack, quy ước, lệnh hay dùng của project.</li>
+<li>MCP: <code>claude mcp add</code>, cấu hình chung cho team trong <code>.mcp.json</code>, tắt server không dùng để đỡ tốn context.</li>
+<li>Hooks: <b>PreToolUse chặn thao tác nguy hiểm, PostToolUse tự format hoặc log</b>. Cấu hình bằng <code>/hooks</code> hoặc <code>settings.json</code>.</li>
+</ul>
+<div class="key"><p>Việc gì bắt buộc lần nào cũng phải xảy ra thì đặt vào hook, đừng đặt vào prompt.</p></div>
+<div class="quiz" data-course="c6"></div>
+<button class="donebtn" type="button">Đã học xong</button>
+</section>
+
+<!-- ========== COURSE 7 ========== -->
+<section class="course role" id="c7" data-title="Claude Code in action">
+<header><span class="num">Role 7</span><h3>Claude Code in action</h3></header>
+<p class="sub">Khoảng 60 phút. Phiên dài, ít giám sát: điều hướng, kiểm chứng, permission mode, hooks, chạy headless, GitHub Actions.</p>
+<div class="chips"><span class="chip hi">Domain 3</span><span class="chip">Domain 7</span></div>
+
+<h4>Điều hướng phiên dài</h4>
+<ul>
+<li>Plan mode nghiên cứu ở chế độ chỉ đọc rồi đưa kế hoạch. Đọc kỹ kế hoạch, sửa kế hoạch rẻ hơn dọn hậu quả.</li>
+<li><code>/compact</code> kèm chỉ dẫn, ví dụ <code>/compact tập trung vào phần X</code>, để quyết định bản tóm tắt giữ lại gì.</li>
+<li>Rewind: nhấn Esc hai lần trên prompt trống, chọn khôi phục code, hội thoại, hoặc cả hai; hoặc tóm tắt từ một checkpoint.</li>
+</ul>
+
+<h4>CLAUDE.md</h4>
+<ul>
+<li><b>CLAUDE.md là hướng dẫn, không có tính cưỡng chế.</b> Mỗi dòng cạnh tranh sự chú ý với các dòng khác, file càng dài càng dễ bị bỏ qua. Giữ file gọn.</li>
+<li>Luật cứng như “không push lên main” đặt vào <b>PreToolUse hook</b>.</li>
+<li>Bốn vị trí, nạp chồng lên nhau: managed policy (tổ chức), user (cá nhân), project (chung team), local (git bỏ qua).</li>
+</ul>
+
+<h4>Permission modes</h4>
+<div class="tw"><table>
+<tr><th>Mode</th><th>Hành vi</th></tr>
+<tr><td>manual</td><td>Chỉ đọc tự do, còn lại phải hỏi</td></tr>
+<tr><td>accept edits</td><td>Tự sửa file và chạy lệnh file system thông dụng</td></tr>
+<tr><td>plan</td><td>Chỉ đọc, đề xuất thay đổi</td></tr>
+<tr><td>auto</td><td>Tự chạy, có classifier duyệt từng hành động</td></tr>
+<tr><td>don't ask</td><td>Chỉ tool đã duyệt trước, còn lại tự từ chối</td></tr>
+<tr><td>bypass</td><td>Bỏ mọi kiểm tra, chỉ dùng trong container hoặc VM</td></tr>
+</table></div>
+<p>Classifier của auto <b>kiểm tra ý định nguy hiểm, không kiểm tra code đúng hay sai</b>. Nó chặn deploy production, force push, gửi dữ liệu nhạy cảm ra ngoài, xóa file; cho qua sửa file local, cài dependency từ lock file.</p>
+
+<h4>Hooks</h4>
+<ul>
+<li>Sự kiện hay dùng: PreToolUse, PostToolUse, Stop, SubagentStop, PreCompact, PostCompact, InstructionsLoaded, SessionStart.</li>
+<li>PreToolUse in JSON với <code>permissionDecision</code>: <code>allow</code>, <code>deny</code>, <code>ask</code> (có <code>defer</code> cho chạy <code>-p</code>).</li>
+<li><b>Exit code 2</b> đẩy lỗi ngược lại cho Claude tự sửa.</li>
+<li>Đưa context trở lại sau compact: dùng <b>SessionStart với matcher <code>compact</code></b>, không dùng PostCompact.</li>
+</ul>
+
+<h4>Tự động hóa</h4>
+<ul>
+<li><b>Routines:</b> prompt + repo + connector chạy trên cloud của Anthropic. Kích hoạt bằng cron (tối đa mỗi giờ), HTTP POST, sự kiện GitHub. Tạo bằng <code>/schedule</code>. Đang research preview.</li>
+<li><b>Headless và Agent SDK:</b> chạy Claude Code từ script của bạn.</li>
+<li><b>Code Review</b> (dịch vụ có sẵn): bình luận inline theo mức độ nghiêm trọng, <b>không approve hay block PR</b>, không tự sửa. Sửa local bằng <code>/code-review --fix</code>. Việc ngoài review thì dùng GitHub Action.</li>
+</ul>
+
+<h4>Kiểm chứng lần chạy không giám sát</h4>
+<ul>
+<li>Càng ít theo dõi thì càng phải kiểm tra kỹ. Lần chạy không giám sát vẫn nên để auto mode, không bypass.</li>
+<li><b>Bắt đầu từ diff, đừng tin bản tóm tắt.</b></li>
+<li>Stop hook chạy test và không cho kết thúc khi test fail. PostToolUse chạy lint, type check sau mỗi lần sửa.</li>
+<li>Verification skill: chạy test, đọc diff, kiểm tra test không bị nới lỏng để cho qua.</li>
+</ul>
+
+<h4>Plugins</h4>
+<p>Gói skills, subagents, hooks, MCP thành một bản cài đặt. Team nên dùng marketplace riêng. Plugin chạy code với quyền của bạn, nên đọc kỹ hook trước khi cài.</p>
+
+<div class="quiz" data-course="c7"></div>
+<button class="donebtn" type="button">Đã học xong</button>
+</section>
+
+<!-- ========== COURSE 8 ========== -->
+<section class="course role" id="c8" data-title="Introduction to Model Context Protocol">
+<header><span class="num">Role 8</span><h3>Introduction to Model Context Protocol</h3></header>
+<p class="sub">Khoảng 60 phút. Viết MCP server và client bằng Python SDK: tools, resources, prompts, MCP Server Inspector.</p>
+<div class="chips"><span class="chip hi">Domain 8</span></div>
+<div class="note">Khóa này trên Academy chỉ có video, chưa có bản chữ. Ghi chú bên dưới tổng hợp từ bài MCP của Platform 101 và kiến thức chung về giao thức. Nên xem video để nắm phần code Python.</div>
+
+<h4>MCP là gì</h4>
+<ul>
+<li>Giao thức chuẩn để kết nối model với dịch vụ bên ngoài. Nhà cung cấp dịch vụ viết MCP server một lần, mọi client tương thích dùng được.</li>
+<li><b>Client</b> nằm trong ứng dụng của bạn (Claude Code, claude.ai, app tự viết), kết nối tới <b>server</b> và đưa danh sách tool cho model.</li>
+</ul>
+
+<h4>Ba primitive</h4>
+<div class="tw"><table>
+<tr><th>Primitive</th><th>Ai quyết định dùng</th><th>Ví dụ</th></tr>
+<tr><td>Tools</td><td>Model quyết định khi nào gọi</td><td>Tạo ticket, tìm tin nhắn</td></tr>
+<tr><td>Resources</td><td>Ứng dụng quyết định cung cấp dữ liệu gì</td><td>Nội dung file, bản ghi DB để đưa vào context</td></tr>
+<tr><td>Prompts</td><td>Người dùng chọn template</td><td>Lệnh dựng sẵn như “tóm tắt tài liệu này”</td></tr>
+</table></div>
+<ul>
+<li><b>Server Inspector:</b> công cụ test server, xem và gọi thử tools, resources, prompts mà không cần client thật.</li>
+<li>Tool trong MCP cũng có tên, mô tả, schema đầu vào. Mô tả tốt vẫn là yếu tố quyết định model gọi đúng tool.</li>
+<li>Dùng MCP từ API: xem mục 9 của <a href="#c5">khóa 5</a>. Trong Claude Code: <code>claude mcp add</code> và <code>.mcp.json</code>.</li>
+<li>Mỗi server bật lên đều thêm định nghĩa tool vào context. Tắt server không dùng, hoặc chỉ bật đúng tool cần.</li>
+</ul>
+
+<div class="quiz" data-course="c8"></div>
+<button class="donebtn" type="button">Đã học xong</button>
+</section>
+
+<!-- ========== COURSE 9 ========== -->
+<section class="course role" id="c9" data-title="Introduction to agent skills">
+<header><span class="num">Role 9</span><h3>Introduction to agent skills</h3></header>
+<p class="sub">Khoảng 30 phút. Tạo, cấu hình, chia sẻ skill trong Claude Code, và khi nào skill hợp hơn CLAUDE.md, subagent, hook hay MCP.</p>
+<div class="chips"><span class="chip hi">Domain 3</span><span class="chip">Domain 8</span></div>
+
+<h4>Cấu trúc</h4>
+<pre><code>---
+name: pr-description
+description: Writes pull request descriptions. Use when creating a PR or summarizing changes for a pull request.
+allowed-tools: Read, Grep, Glob, Bash
+model: sonnet
+---
+(hướng dẫn chi tiết bên dưới)</code></pre>
+<ul>
+<li><code>name</code> bắt buộc: chữ thường, số, gạch nối, tối đa 64 ký tự, trùng tên thư mục.</li>
+<li><code>description</code> bắt buộc, tối đa 1.024 ký tự, phải trả lời <b>skill làm gì và khi nào dùng</b>. Đây là thứ Claude dùng để so khớp.</li>
+<li><code>allowed-tools</code> giới hạn tool khi skill chạy (ví dụ chỉ đọc). <code>model</code> chọn model.</li>
+<li>Skill cá nhân: <code>~/.claude/skills</code>. Skill project: <code>.claude/skills</code> (commit cùng repo).</li>
+<li><b>Ưu tiên khi trùng tên: Enterprise > Personal > Project > Plugins.</b></li>
+</ul>
+
+<h4>Cách skill được nạp</h4>
+<ul>
+<li>Khi khởi động chỉ nạp tên và description. Khi yêu cầu khớp, Claude hỏi xác nhận rồi mới nạp toàn bộ.</li>
+<li><b>Progressive disclosure:</b> SKILL.md dưới 500 dòng, tách chi tiết ra <code>references/</code>, <code>scripts/</code>, <code>assets/</code>. <b>Script được chạy mà không nạp nội dung vào context</b>, chỉ output tốn token.</li>
+</ul>
+
+<h4>So với tính năng khác</h4>
+<div class="tw"><table>
+<tr><th>Tính năng</th><th>Khi nào nạp hoặc chạy</th><th>Dùng cho</th></tr>
+<tr><td>CLAUDE.md</td><td>Mọi hội thoại</td><td>Chuẩn chung luôn áp dụng</td></tr>
+<tr><td>Skill</td><td>Khi yêu cầu khớp</td><td>Chuyên môn theo task</td></tr>
+<tr><td>Subagent</td><td>Context riêng tách biệt</td><td>Giao việc độc lập</td></tr>
+<tr><td>Hook</td><td>Theo sự kiện</td><td>Việc bắt buộc, tự động</td></tr>
+<tr><td>MCP</td><td>Kết nối ngoài</td><td>Tool và dữ liệu bên ngoài</td></tr>
+</table></div>
+<ul>
+<li><b>Subagent không tự thấy skill</b>, phải liệt kê trong frontmatter của subagent tự tạo. Agent có sẵn (Explorer, Plan, Verify) không dùng được skill.</li>
+<li>Sự cố: không kích hoạt → gần như luôn do description. Không nạp → file phải tên đúng <code>SKILL.md</code>, nằm trong thư mục có tên. Chạy <code>claude --debug</code>. Chọn nhầm skill → description quá giống nhau.</li>
+</ul>
+<div class="quiz" data-course="c9"></div>
+<button class="donebtn" type="button">Đã học xong</button>
+</section>
+
+<!-- ========== COURSE 10 ========== -->
+<section class="course role" id="c10" data-title="Introduction to subagents">
+<header><span class="num">Role 10</span><h3>Introduction to subagents</h3></header>
+<p class="sub">Khoảng 20 phút. Chia task cho các subagent và thiết kế từng subagent cho tốt.</p>
+<div class="chips"><span class="chip hi">Domain 1</span><span class="chip hi">Domain 3</span></div>
+<ul>
+<li><b>Lợi ích:</b> chia việc thành phần tập trung, <b>giữ context chính sạch</b>, chỉ trả về bản tóm tắt.</li>
+<li>Tạo bằng <code>/agents</code>, phạm vi project hoặc user. File ở <code>.claude/agents/&lt;tên&gt;.md</code> với <code>name</code>, <code>description</code>, <code>tools</code>, <code>model</code> (haiku, sonnet, opus, inherit), <code>color</code>.</li>
+<li>Tên và description của mọi subagent nằm trong system prompt của agent chính. <b>Description vừa quyết định khi nào gọi, vừa định hình prompt mà agent chính viết để giao việc.</b> Ví dụ thêm “phải nêu chính xác file cần review” thì agent chính sẽ liệt kê file cụ thể.</li>
+<li><b>Định nghĩa output format là cải tiến quan trọng nhất</b>: tạo điểm dừng tự nhiên, tránh subagent chạy lan man. Ngoài ra nên cho subagent báo cáo khi gặp trở ngại, và giới hạn tool (reviewer không cần quyền sửa file).</li>
+<li><b>Nên dùng:</b> nghiên cứu (chỉ cần kết quả, không cần quá trình), review code (góc nhìn mới, không bị ảnh hưởng bởi quá trình viết), việc cần system prompt riêng (copywriting, styling theo design system).</li>
+<li><b>Không nên dùng:</b> khi các bước phụ thuộc chặt vào nhau, vì chi phí khởi tạo không đáng.</li>
+</ul>
+<div class="quiz" data-course="c10"></div>
+<button class="donebtn" type="button">Đã học xong</button>
+</section>
+
+<!-- ========== EXTRA 11 ========== -->
+<section class="course extra" id="c11" data-title="Bổ sung theo exam guide">
+<header><span class="num">Bổ sung 11</span><h3>Những gì exam guide yêu cầu mà path chưa dạy kỹ</h3></header>
+<p class="sub">Tổng hợp từ exam guide và docs chính thức, viết lại theo góc nhìn dev backend. Ưu tiên đọc phần A, B, C vì thuộc Domain 2, 6, 7.</p>
+<div class="chips"><span class="chip hi">Domain 2</span><span class="chip hi">Domain 6</span><span class="chip hi">Domain 7</span><span class="chip">Domain 1</span><span class="chip">Domain 4</span><span class="chip">Domain 5</span><span class="chip">Domain 8</span></div>
+
+<h4>A. API trong production (Domain 2, 5)</h4>
+<ul>
+<li><b>Realtime hay Batch:</b> việc khối lượng lớn, không cần kết quả ngay (chạy qua đêm, báo cáo định kỳ) thì dùng <b>Message Batches API</b>: xử lý bất đồng bộ trong cửa sổ 24 giờ với chi phí thấp hơn. Gọi song song nhiều request đồng bộ không làm giảm giá mỗi token. Đây là câu mẫu số 1 trong guide.</li>
+<li><b>Streaming:</b> dùng khi người dùng cần thấy chữ chạy ra dần hoặc response dài. Phải xử lý trường hợp stream bị ngắt giữa chừng: ghi nhận phần đã nhận, quyết định gửi lại hay báo lỗi rõ ràng.</li>
+<li><b>Lỗi và retry:</b> phân biệt lỗi nên retry (rate limit 429, quá tải hoặc lỗi phía server 5xx/529) với lỗi không nên retry (request sai 400, sai xác thực 401, thiếu quyền 403). Retry dùng exponential backoff có jitter và tôn trọng header <code>retry-after</code>. SDK chính thức đã có sẵn cơ chế retry mặc định, cấu hình được.</li>
+<li><b>Vision và PDF:</b> gửi ảnh hoặc tài liệu dưới dạng content block trong <code>messages</code>, cùng request với câu hỏi.</li>
+<li><b>Gọi qua nhà cung cấp thứ ba:</b> Claude có trên Amazon Bedrock, Google Cloud (Vertex AI), Microsoft Foundry và Claude Platform on AWS. Model ID, cách xác thực và một số tính năng có thể khác so với API trực tiếp, cần đọc docs của từng nền tảng.</li>
+<li><b>Ghim phiên bản model:</b> mỗi model ID là một snapshot cố định. Production nên ghim ID cụ thể, nâng cấp có chủ đích sau khi chạy eval, vì bản mới có thể có thay đổi phá vỡ (breaking changes).</li>
+<li><b>Version prompt:</b> quản lý prompt như code: lưu trong repo hoặc config có version, review khi đổi, chạy lại eval trước khi deploy.</li>
+<li><b>Theo dõi chi phí:</b> đọc <code>usage</code> trong mỗi response để log input/output token. Prompt caching: đánh dấu phần đầu ổn định của request bằng <code>cache_control</code>; phần được cache phải là tiền tố giống hệt nhau giữa các lần gọi (tools, system, rồi messages), nên phần thay đổi luôn đặt sau cùng.</li>
+<li><b>Fast mode:</b> tốc độ output cao hơn với giá cao hơn, chỉ có trên một số model.</li>
+<li><b>Claude hiểu chỉ dẫn khác nhau theo giao diện:</b> claude.ai có system prompt và tính năng riêng; API thì stateless, chỉ có những gì bạn gửi; Claude Code đọc thêm CLAUDE.md và settings.</li>
+</ul>
+
+<h4>B. Prompt engineering và output handling (Domain 6)</h4>
+<ul>
+<li><b>Chỉ dẫn rõ ràng, cụ thể:</b> nói rõ mục tiêu, đối tượng, định dạng, giới hạn. Đừng để model tự đoán.</li>
+<li><b>System hay user:</b> vai trò, quy tắc bền vững, giọng văn đặt ở system prompt. Dữ liệu và yêu cầu cụ thể của từng lượt đặt ở user message.</li>
+<li><b>XML tag</b> để tách từng phần: <code>&lt;instructions&gt;</code>, <code>&lt;document&gt;</code>, <code>&lt;example&gt;</code>. Tài liệu dài đặt trước, câu hỏi đặt cuối.</li>
+<li><b>Zero-shot, single-shot, multi-shot:</b> thêm ví dụ khi cần định dạng hoặc phong cách nhất quán. Ví dụ nên đa dạng để model không bắt chước một mẫu duy nhất.</li>
+<li><b>Tinh chỉnh lặp:</b> sửa prompt dựa trên bộ ví dụ cố định, đo bằng eval, không sửa theo cảm giác từ một lần chạy.</li>
+<li><b>Làm sạch input:</b> dữ liệu người dùng bọc trong tag riêng, giới hạn độ dài, loại bỏ nội dung không cần.</li>
+<li><b>Structured output:</b> dùng tính năng structured outputs hoặc định nghĩa schema qua tool để có JSON đúng cấu trúc. Dù vậy backend <b>vẫn phải validate</b> (ví dụ bằng Zod hoặc JSON Schema).</li>
+<li><b>Parse phòng thủ:</b> bỏ markdown fence trước khi parse, bọc <code>JSON.parse</code> trong try/catch, nếu sai thì gửi lại kèm thông báo lỗi để model sửa, giới hạn số lần thử.</li>
+<li><b>Hoài nghi output tự tin:</b> giọng chắc chắn không có nghĩa là đúng. Con số, trích dẫn, ID phải được kiểm tra với nguồn thật.</li>
+</ul>
+
+<h4>C. Security (Domain 7)</h4>
+<ul>
+<li><b>Prompt injection:</b> mọi nội dung lấy từ bên ngoài (web, file, email, kết quả tool) là <b>dữ liệu không tin cậy</b>. Tách khỏi chỉ dẫn tin cậy, không cho nội dung đó kích hoạt hành động nhạy cảm. Đây là câu mẫu số 2: tăng temperature, xin người dùng đừng chèn lệnh, hay đổi model lớn hơn đều không phải biện pháp.</li>
+<li><b>Nhiều lớp guardrail:</b> validate input, giới hạn tool, kiểm tra output, hook chặn hành động phá hủy, người duyệt cho hành động không thể hoàn tác.</li>
+<li><b>Least privilege:</b> agent chỉ có đúng quyền cần thiết. Tool đọc tách khỏi tool ghi. MCP chỉ bật tool cần dùng.</li>
+<li><b>PII và rò rỉ dữ liệu:</b> chỉ gửi dữ liệu cần thiết, che hoặc lược PII khi có thể, không log dữ liệu nhạy cảm, không đưa secret vào prompt.</li>
+<li><b>Secrets và API key:</b> lưu trong biến môi trường hoặc secret manager, không commit vào repo, tách key theo môi trường dev/staging/production, xoay vòng định kỳ, theo dõi usage bất thường.</li>
+<li><b>Xác thực và phân quyền:</b> hành động agent thực hiện thay người dùng phải kiểm tra quyền của chính người dùng đó ở backend, không dựa vào lời model.</li>
+</ul>
+
+<h4>D. Eval và debug (Domain 4)</h4>
+<ul>
+<li>Bộ eval là định nghĩa của “xong”: tập input đại diện kèm tiêu chí chấm. Chạy lại mỗi khi đổi prompt, model hoặc tool.</li>
+<li><b>Nhận diện loại lỗi:</b> lỗi HTTP/API (xác thực, rate limit, request sai) khác hẳn lỗi output (sai format, sai nội dung, bịa).</li>
+<li><b>Tách lỗi tầng tích hợp với lỗi model:</b> log request và response thô. Nếu request gửi đi đã thiếu context hoặc sai cấu trúc thì lỗi ở code của bạn; nếu request đúng mà output sai thì xem lại prompt, model, tool description.</li>
+<li><b>Trace analysis:</b> với agent, ghi lại từng lượt: tool nào được gọi, input gì, kết quả gì, stop_reason gì. Đọc trace để biết agent hỏng ở bước nào.</li>
+</ul>
+
+<h4>E. Kiến trúc agent (Domain 1)</h4>
+<ul>
+<li><b>Workflow hay agent:</b> các bước biết trước, cần ổn định và dễ kiểm soát thì dùng workflow (chaining, routing, chạy song song). Task mở, không đoán trước được số bước thì dùng agent. Mặc định chọn giải pháp đơn giản nhất chạy được.</li>
+<li><b>Manager/supervisor:</b> một agent điều phối giao việc cho các agent chuyên trách, mỗi agent có context riêng, rồi tổng hợp kết quả.</li>
+<li><b>Human-in-the-loop:</b> đặt điểm dừng chờ người duyệt trước hành động không thể hoàn tác (xóa, chuyển tiền, gửi ra ngoài).</li>
+<li><b>Framework:</b> Claude Agent SDK, hoặc các framework như Strands, LangGraph, PydanticAI giúp trừu tượng hóa agent loop. Tự viết loop cho toàn quyền kiểm soát; managed agents khi muốn Anthropic host vòng lặp.</li>
+</ul>
+
+<h4>F. Nền tảng kỹ thuật (Domain 2, 5)</h4>
+<ul>
+<li>SDK là lớp bọc REST API: hiểu request/response JSON bên dưới giúp debug khi SDK báo lỗi.</li>
+<li>Async và concurrency: gọi song song có giới hạn để không chạm rate limit, dùng hàng đợi cho tải lớn.</li>
+<li>Websockets và streaming để đẩy kết quả realtime về client.</li>
+<li>SDLC: đưa prompt, cấu hình và eval vào quy trình review và CI giống như code.</li>
+</ul>
+
+<h4>G. MCP server (Domain 8)</h4>
+<ul>
+<li><b>Khi nào viết MCP server:</b> khi muốn một năng lực (ví dụ API kho hàng nội bộ) được <b>nhiều ứng dụng Claude dùng chung</b> và bảo trì độc lập. Đây là câu mẫu số 3. Built-in tool không tự gọi được API nội bộ tùy ý.</li>
+<li><b>Transport:</b> stdio cho server chạy như tiến trình cục bộ cùng máy với client; kết nối mạng (HTTP, socket) cho server từ xa dùng chung.</li>
+<li>Server cung cấp tools, resources, prompts; client kết nối và đưa danh sách đó cho model.</li>
+</ul>
+
+<div class="quiz" data-course="c11"></div>
+<button class="donebtn" type="button">Đã học xong</button>
+</section>
+
+<footer>Ghi chú cá nhân để ôn thi, tóm tắt từ các khóa trên Anthropic Partner Academy và Claude Academy (tháng 10/2026). Tên model và tham số API có thể đổi theo thời gian, khi cần hãy đối chiếu docs chính thức.</footer>
+</main>
+</div>
+
+<script>
+window.QUIZ = {
+c11: [
+ {q:"Cần xử lý 10.000 tài liệu qua đêm cho báo cáo không gấp, chi phí là ưu tiên số một. Cách nào phù hợp nhất?", o:["Gửi song song toàn bộ request đồng bộ cho nhanh","Dùng Message Batches API xử lý bất đồng bộ trong 24 giờ với chi phí thấp hơn","Hạ max_tokens của các request đồng bộ","Chuyển sang model nhỏ nhất bất kể chất lượng"], a:1, e:"Việc khối lượng lớn, chấp nhận trễ là trường hợp của Batch API. Gọi song song không giảm giá mỗi token."},
+ {q:"Agent tóm tắt trang web do người dùng gửi. Một trang chứa đoạn ẩn yêu cầu model bỏ qua chỉ dẫn và tiết lộ system prompt. Biện pháp hiệu quả nhất?", o:["Tăng temperature","Coi nội dung trang là dữ liệu không tin cậy, tách khỏi chỉ dẫn tin cậy, dùng guardrail hoặc hook để nội dung đó không kích hoạt hành động nhạy cảm","Thêm vào system prompt lời nhờ người dùng đừng chèn lệnh","Đổi sang model lớn hơn"], a:1, e:"Prompt injection xử lý bằng cách cô lập dữ liệu không tin cậy và least privilege, không phải bằng lời nhờ hay đổi model."},
+ {q:"Nhiều ứng dụng Claude cần gọi API kho hàng nội bộ, và năng lực này phải bảo trì độc lập với từng app. Cách nào phù hợp?", o:["Viết logic kho hàng vào system prompt của từng app","Viết MCP server cung cấp các thao tác kho hàng dưới dạng tool","Dán dữ liệu tồn kho vào context mỗi request","Dùng built-in tool vì nó gọi được mọi API nội bộ"], a:1, e:"MCP server cho phép nhiều ứng dụng dùng chung và bảo trì riêng."},
+ {q:"Request bị lỗi 401. Nên xử lý thế nào?", o:["Retry với exponential backoff","Không retry; kiểm tra API key và cấu hình xác thực","Đổi sang model khác","Tăng timeout"], a:1, e:"Lỗi xác thực không tự hết khi thử lại. Retry dành cho rate limit và lỗi tạm thời phía server."},
+ {q:"Nhận lỗi 429 liên tục khi chạy tải cao. Cách xử lý đúng?", o:["Retry ngay lập tức không giới hạn","Exponential backoff có jitter, tôn trọng retry-after, giới hạn số request đồng thời hoặc dùng hàng đợi","Đổi API key liên tục","Bỏ qua lỗi"], a:1, e:"429 là rate limit: giảm tốc và retry có kiểm soát."},
+ {q:"Model trả JSON nhưng thỉnh thoảng bọc trong markdown fence hoặc thiếu trường. Cách xử lý phía backend tốt nhất?", o:["Tin output vì đã yêu cầu JSON trong prompt","Dùng structured output hoặc schema, vẫn validate bằng schema ở backend, parse phòng thủ và gửi lại kèm lỗi nếu sai","Tăng temperature","Dùng regex lấy số"], a:1, e:"Output handling: không tin mù quáng, luôn validate và có đường phục hồi."},
+ {q:"Quy tắc giọng văn và vai trò áp dụng cho mọi lượt nên đặt ở đâu?", o:["System prompt","Mỗi user message","Cuối tài liệu","Tool description"], a:0, e:"Vai trò và quy tắc bền vững đặt ở system; dữ liệu và yêu cầu từng lượt ở user."},
+ {q:"Sau khi Anthropic phát hành model mới, đội muốn nâng cấp production. Cách làm an toàn?", o:["Đổi alias sang bản mới ngay","Ghim model ID đang dùng, chạy eval với bản mới, xem breaking changes, rồi mới chuyển","Chờ người dùng báo lỗi","Dùng cả hai ngẫu nhiên"], a:1, e:"Configuration management: ghim phiên bản, nâng cấp có chủ đích sau eval."},
+ {q:"Agent trả lời sai. Log cho thấy request gửi đi thiếu đoạn tài liệu lẽ ra phải có. Lỗi thuộc tầng nào?", o:["Model","Tầng tích hợp: code xây request","Mạng","Rate limit"], a:1, e:"Tách lỗi tầng tích hợp với lỗi output: request đã sai thì sửa code trước, chưa cần đổi prompt hay model."},
+ {q:"Quy trình gồm 4 bước cố định: trích xuất, phân loại, tóm tắt, định dạng. Nên dùng gì?", o:["Agent tự do với nhiều tool","Workflow (chaining) với các bước cố định","Multi-agent có supervisor","Managed agents chạy hàng giờ"], a:1, e:"Bước biết trước thì workflow ổn định và dễ kiểm soát hơn agent."},
+ {q:"API key nên được quản lý thế nào giữa dev và production?", o:["Một key dùng chung, commit vào repo private","Lưu trong secret manager hoặc biến môi trường, tách key theo môi trường, xoay vòng, theo dõi usage","Đặt trong system prompt","Gửi qua chat nhóm"], a:1, e:"Identity, Secrets & Key Management."},
+ {q:"Agent có thể xóa bản ghi khách hàng qua tool. Biện pháp nào phù hợp nhất với secure-by-design?", o:["Ghi “cẩn thận khi xóa” vào system prompt","Tách tool đọc và tool xóa, chỉ cấp tool xóa khi cần, thêm bước người duyệt hoặc hook chặn trước khi thực thi","Dùng model mạnh hơn","Tăng max_tokens"], a:1, e:"Least privilege, guardrail nhiều lớp và human-in-the-loop cho hành động không hoàn tác."}
+],
+c1: [
+ {q:"Ràng buộc “không trả về số thẻ đầy đủ” nằm giữa system prompt 6.000 token và thỉnh thoảng bị vi phạm. Cách sửa tốt nhất?", o:["Viết hoa và thêm “RẤT QUAN TRỌNG”","Đưa lên đầu system prompt, nhắc lại ở cuối, cắt phần thừa, thêm lớp kiểm tra bằng code","Tăng temperature","Thêm nhiều ví dụ vào giữa prompt"], a:1, e:"Lost in the middle: model chú ý tốt phần đầu và cuối. Vấn đề nằm ở vị trí, không phải cách nhấn mạnh. Dữ liệu nhạy cảm nên có thêm lớp kiểm tra phía backend."},
+ {q:"Chatbot nội bộ trích dẫn một điều khoản không tồn tại của chính sách ban hành tháng trước. Hướng sửa đúng?", o:["Đổi sang model lớn hơn","Viết prompt dài hơn","Dùng RAG lấy văn bản hiện hành và yêu cầu trích dẫn nguồn","Giảm temperature về 0"], a:2, e:"Next Token Prediction + Knowledge: thông tin sau cutoff và bịa chi tiết cụ thể. Model lớn hơn cũng không biết chính sách sau cutoff."},
+ {q:"Bảo model “viết ngắn lại” nhưng yêu cầu duyệt ngân sách vẫn bị chôn ở cuối email. Bước tiếp theo?", o:["Lặp lại “viết ngắn lại nữa”","Nêu rõ mục tiêu: sếp đọc lướt vẫn thấy ngay yêu cầu duyệt ngân sách","Đổi model","Tăng max tokens"], a:1, e:"Letter over spirit: nêu mục tiêu thay vì lặp lại chỉ dẫn mạnh hơn."},
+ {q:"Kỹ thuật sampling nào tự co giãn số lựa chọn còn lại theo độ tự tin của model?", o:["Top-k","Top-p","Temperature","Max tokens"], a:1, e:"Top-p giữ nhóm nhỏ nhất có tổng xác suất đạt p: model chắc chắn thì ít lựa chọn, phân vân thì nhiều hơn. Top-k luôn giữ đúng k lựa chọn."},
+ {q:"Hôm qua bạn đã sửa model về quy ước đặt tên. Hôm nay mở phiên mới, model lại mắc đúng lỗi cũ. Giải thích và cách làm đúng?", o:["Model bị lỗi, cần báo Anthropic","Model không học từ chỉnh sửa; đưa quy ước vào system prompt, project instructions hoặc memory","Phải dùng temperature thấp hơn","Phải dùng model mạnh hơn"], a:1, e:"Model chỉ phản hồi theo context hiện tại. Muốn nhớ giữa các phiên thì phải đưa thông tin vào context mỗi lần."},
+ {q:"Bạn hỏi “Chiến lược này chắc chắn ổn đúng không?” và model đồng ý ngay. Đây là dấu vân tay nào và nên làm gì?", o:["Verbosity; yêu cầu trả lời ngắn","Sycophancy; mời model phản biện thẳng nếu thấy sai","Over-caution; nói rõ là an toàn","Hallucination; bật web search"], a:1, e:"Fine-tuning tạo xu hướng đồng ý với tiền đề người dùng. Mời phản biện rõ ràng để giảm hiệu ứng này."},
+ {q:"Model tính tổng tiền của 40 dòng hóa đơn và sai vài nghìn đồng mà vẫn rất tự tin. Cách khắc phục hợp lý nhất?", o:["Yêu cầu model kiểm tra lại cẩn thận","Chuyển phần tính toán cho code execution hoặc tính ở backend","Dùng model lớn hơn","Bật streaming"], a:1, e:"Tính toán chính xác là vùng yếu của steerability. Đẩy sang code để có kết quả kiểm chứng được."}
+],
+c2: [
+ {q:"Code AI viết qua hết unit test nhưng lỗi khi nhiều người dùng cùng lúc. Thuộc lăng kính đánh giá nào?", o:["Problem fit","Experience quality","Production readiness","Responsible impact"], a:2, e:"Concurrency là điểm mù điển hình của code AI viết, thuộc lăng kính sẵn sàng cho production."},
+ {q:"Giai đoạn nào an toàn nhất để giao phần lớn cho AI?", o:["Empathy: hiểu nhu cầu người dùng","Implementation: viết code theo spec có acceptance test","Judgment: quyết định có ship không","Shipping: chịu trách nhiệm sau khi ra mắt"], a:1, e:"Implementation là vùng AI mạnh nhất. Judgment và empathy vẫn là việc của builder."},
+ {q:"Mọi test đều pass nhưng người dùng vẫn không hài lòng. Theo khóa học, lỗi nằm ở đâu?", o:["Model chưa đủ mạnh","Test mô tả sai ý định; lỗi ở một mắt xích phía trước trong Description Chain","Thiếu prompt engineering","Thiếu dữ liệu huấn luyện"], a:1, e:"Test là dạng mô tả chính xác nhất. Test xanh mà người dùng không vui nghĩa là bạn đã mô tả sai ý định."},
+ {q:"Hai năng lực thuộc “vòng trong”, dùng trong từng lần tương tác hằng ngày?", o:["Delegation và Diligence","Description và Discernment","Delegation và Description","Discernment và Diligence"], a:1, e:"Vòng trong: Description và Discernment. Vòng ngoài: Delegation và Diligence."},
+ {q:"AI viết xong API mới nhưng không nhắc gì về migration DB và rate limit. Theo khóa học, đây là trách nhiệm của ai?", o:["Của AI, vì nó nên tự nhắc","Của builder: phải chủ động hỏi vì AI không tự nêu","Của QA","Không quan trọng nếu test pass"], a:1, e:"Diligence: bạn sở hữu kết quả. Thuật ngữ khi ship như migration, versioning, rate limit, feature flag thì AI không tự nêu nếu bạn không hỏi."}
+],
+c3: [
+ {q:"Tính lãi kép cho kịch bản danh mục có 5 biến. Cách nào cho kết quả đáng tin nhất?", o:["Hỏi trong Chat rồi tự soát lại","Dùng Code Execution chạy phép tính","Dùng Research tìm kịch bản tương tự","Hỏi Opus thay vì Sonnet"], a:1, e:"Code Execution trả về kết quả đã tính thật. Sinh chữ chỉ cho ra ước lượng nghe hợp lý."},
+ {q:"Sau 2 giờ làm việc trong một phiên, model không còn theo framework đặt ra từ đầu. Nên làm gì?", o:["Chuyển sang Opus","Dán lại framework vào phiên hiện tại","Mở phiên mới, dán tóm tắt quyết định và tiến độ","Bật Research"], a:2, e:"Context đã suy giảm. Kéo dài phiên hay đổi model không giải quyết được."},
+ {q:"Mỗi thứ Hai bạn soạn báo cáo tuần cùng format, cùng bối cảnh dự án. Entry point phù hợp?", o:["Chat mới mỗi tuần","Project với instructions và knowledge base","Research","Incognito"], a:1, e:"Task lặp lại, context ổn định, format cố định: đủ điều kiện dựng Project."},
+ {q:"Phân loại 500 hợp đồng theo rubric rõ ràng, chạy một lần. Model nào hợp nhất?", o:["Haiku","Sonnet","Opus","Fable"], a:0, e:"Phân loại có cấu trúc, khối lượng lớn, rubric rõ ràng là vùng của Haiku."},
+ {q:"Làm cho hai khách hàng khác nhau và không muốn context của A lẫn sang B. Cấu hình đúng?", o:["Dùng Incognito cho mọi phiên","Xóa Memory thủ công mỗi lần đổi khách","Mỗi khách một Project, dùng memory theo phạm vi Project","Dùng model khác nhau cho mỗi khách"], a:2, e:"Memory theo phạm vi Project giữ context tách biệt cho từng workstream."}
+],
+c4: [
+ {q:"Tóm tắt 50 bài báo mỗi ngày thành 3 gạch đầu dòng. Model nào để bắt đầu?", o:["Haiku","Opus","Fable","Tùy hứng"], a:0, e:"Trích xuất và tóm tắt đơn giản, khối lượng lớn là vùng của Haiku."},
+ {q:"Task phân tích chạy bằng Sonnet nhưng hay bỏ sót lập luận quan trọng. Bước tiếp theo?", o:["Chuyển sang Haiku","Thử Opus trên cùng bộ ví dụ và so sánh","Giữ Sonnet, tăng max tokens","Chuyển sang Fable ngay"], a:1, e:"Nâng model khi model hiện tại đã thử mà không đạt, và so sánh trên cùng dữ liệu."},
+ {q:"Cần câu trả lời nhanh và tiết kiệm rate limit cho câu hỏi đơn giản trên model đang dùng. Chỉnh gì?", o:["Hạ mức effort","Tăng mức effort lên max","Bật extended thinking","Chuyển sang Fable"], a:0, e:"Effort thấp hơn cho câu trả lời nhanh hơn và tốn ít rate limit hơn."},
+ {q:"Dự án dài nhiều bước liên kết, bạn muốn mô tả kết quả và để model tự lên kế hoạch, Opus đã thử nhưng chưa đạt. Model nào?", o:["Haiku","Sonnet","Fable","Giữ Opus, hạ effort"], a:2, e:"Fable dành cho task dài, nhiều bước, cần tự kiểm tra và ít phải can thiệp giữa chừng."}
+],
+c5: [
+ {q:"Đọc response.content[0].text thỉnh thoảng bị undefined sau khi bật thinking. Nguyên nhân?", o:["Bị rate limit","Cần tăng max_tokens","content là mảng block; block đầu có thể là thinking hoặc tool_use","Phải bật streaming"], a:2, e:"Luôn lặp qua content và lọc theo type === \"text\"."},
+ {q:"Agent gọi get_order lặp mãi với cùng input, không đến end_turn. Nguyên nhân khả dĩ nhất?", o:["Description tool quá ngắn","Không đẩy response.content của assistant vào messages, hoặc tool_use_id không khớp","Cần model mạnh hơn","Phải dùng server tool"], a:1, e:"Claude không thấy kết quả tool nên gọi lại. Mỗi lượt phải đẩy assistant content rồi user tool_result đúng id."},
+ {q:"Cần fact-check số liệu với web, ít công sức nhất?", o:["Khai báo server tool web search trong tools","Tự viết tool gọi Google API và agent loop","Viết MCP server riêng","Bật extended thinking"], a:0, e:"Server tool do Anthropic chạy, kết quả nằm ngay trong response, không cần agent loop."},
+ {q:"Agent cần đọc Jira và Slack nhưng không được ghi, và bạn không muốn bảo trì wrapper API. Cách làm?", o:["Thêm “không được ghi” vào system prompt","MCP server của họ với mcp_toolset, default_config tắt, chỉ bật tool đọc","Dùng Skill kết nối Jira","Tự viết custom tool"], a:1, e:"MCP chuyển việc bảo trì cho nhà cung cấp; quyền khóa ở tầng cấu hình."},
+ {q:"Dùng managed agents, UI mất các sự kiện agent.tool_use đầu tiên. Lỗi ở đâu?", o:["Environment không có mạng","Agent thiếu system prompt","Mở stream sau khi đã gửi tin nhắn khởi động","Thiếu tool_choice"], a:2, e:"Stream chỉ nhận sự kiện sau khi đã mở. Mở stream trước, gửi kickoff sau."},
+ {q:"Đặt tham số effort ở đâu trong request khi dùng adaptive thinking?", o:["Trong khối thinking","Trong output_config","Trong system prompt","Trong metadata"], a:1, e:"effort nằm trong output_config, không đặt cạnh thinking."},
+ {q:"Endpoint phân loại email thành 5 nhóm. Có nên bật extended thinking?", o:["Có, luôn bật cho chính xác","Không, với phân loại đơn giản nó chỉ thêm độ trễ và chi phí","Có, nhưng effort max","Chỉ bật khi dùng Haiku"], a:1, e:"Thinking hữu ích cho toán, logic nhiều bước, debug, đánh đổi; không cho phân loại, trích xuất."},
+ {q:"Agent có tool search_orders nhưng thường không gọi, tự trả lời bằng đoán. Nên sửa gì trước?", o:["Đổi model","Viết description cụ thể: tool làm gì, khi nào dùng, trả về gì","Tăng max_tokens","Thêm tool khác"], a:1, e:"Description mơ hồ là lý do số một khiến agent gọi sai hoặc không gọi tool."},
+ {q:"Chuẩn bị chọn model cho tính năng mới. Cách làm theo khóa học?", o:["Chọn model mạnh nhất cho chắc","Lấy 20–30 ví dụ thật làm eval, chạy từ Haiku lên, dừng ở model rẻ nhất mà output đủ để ship","Chọn theo cảm nhận vài lần thử","Chọn model rẻ nhất luôn"], a:1, e:"Model đúng là model rẻ nhất mà output vẫn đủ tốt để ship, quyết định bằng eval."},
+ {q:"Agent compliance nhồi bộ quy chuẩn 600 trang vào system prompt, ngày càng chậm, đắt và lỗi khi hội thoại dài. Hướng sửa?", o:["Chuyển sang model context lớn hơn, giữ nguyên","Tool lookup lấy đúng mục cần, cache phần ổn định, bật compaction","Cắt ngẫu nhiên nửa tài liệu","Tăng max_tokens"], a:1, e:"Just-in-time context + prompt caching + server-side compaction."},
+ {q:"Agent cần nhớ sở thích người dùng giữa các phiên. Theo khóa học, dùng primitive nào và ai lưu trữ?", o:["Prompt caching; Anthropic lưu","Memory tool; bạn tự triển khai lưu trữ phía client","Compaction; Anthropic lưu","System prompt dài hơn"], a:1, e:"Memory tool: Claude đọc/ghi thư mục memory qua tool call, backend lưu trữ do bạn quyết định."},
+ {q:"Team muốn mọi báo cáo trạng thái do Claude tạo đều cùng cấu trúc và giọng văn, không phải dán template vào prompt. Dùng gì?", o:["Custom tool","Skill gắn qua container.skills","MCP server","Tăng temperature"], a:1, e:"Tool là Claude làm được gì; Skill là bạn muốn việc đó làm theo cách nào."}
+],
+c6: [
+ {q:"Muốn mọi file Claude sửa đều được chạy formatter, không ngoại lệ. Dùng gì?", o:["Ghi vào CLAUDE.md","PostToolUse hook","Skill","Nhắc trong từng prompt"], a:1, e:"Việc bắt buộc lần nào cũng phải xảy ra thì đặt vào hook."},
+ {q:"Sắp làm thay đổi lớn trên codebase lạ. Bước đầu nên làm?", o:["Cho Claude sửa luôn","Explore rồi dùng Plan mode để Claude đưa kế hoạch trước khi code","Chạy /clear","Bật bypass permissions"], a:1, e:"Workflow Explore → Plan → Code → Commit."},
+ {q:"Muốn cả team tự có cùng cấu hình MCP server khi clone repo. Đặt ở đâu?", o:["~/.claude","Trong .mcp.json của project","Trong CLAUDE.md local","Gửi qua Slack"], a:1, e:"Cấu hình MCP theo phạm vi project nằm trong .mcp.json, commit cùng repo."},
+ {q:"Xong một task, chuyển sang task hoàn toàn khác trong cùng repo. Lệnh nào hợp lý?", o:["/compact","/clear","/hooks","/agents"], a:1, e:"/clear bắt đầu context sạch. /compact dùng khi muốn tiếp tục nhưng tóm tắt bớt."}
+],
+c7: [
+ {q:"Đã ghi “không push lên main” trong CLAUDE.md nhưng cần đảm bảo tuyệt đối. Cách chắc chắn?", o:["Viết hoa dòng đó","Luôn ở plan mode","PreToolUse hook trả permissionDecision deny","Thêm vào CLAUDE.md local"], a:2, e:"CLAUDE.md là hướng dẫn. Hook mới chặn được thật."},
+ {q:"Auto mode cho qua một refactor sai logic. Vì sao?", o:["Classifier chỉ kiểm tra ý định nguy hiểm, không kiểm tra tính đúng","Classifier bị tắt","Phải dùng bypass","Do model yếu"], a:0, e:"Tính đúng phải kiểm bằng test, diff và review."},
+ {q:"Muốn đưa lại một số context quan trọng sau mỗi lần compaction. Hook nào?", o:["PostCompact","SessionStart với matcher compact","PreToolUse","Stop"], a:1, e:"SessionStart với matcher compact mới đưa được output trở lại hội thoại."},
+ {q:"Stop hook chạy test và thấy fail. Exit code nào giúp đẩy lỗi về cho Claude tự sửa?", o:["0","1","2","127"], a:2, e:"Exit 2 đưa thông báo lỗi trở lại cho Claude."},
+ {q:"Dịch vụ Code Review có sẵn của Anthropic làm được gì?", o:["Approve PR khi không có lỗi","Block PR có lỗi nghiêm trọng","Bình luận inline theo mức nghiêm trọng; không approve, không block, không tự sửa","Tự push bản sửa"], a:2, e:"Quyết định vẫn thuộc về người. Sửa ở local bằng /code-review --fix."},
+ {q:"Một job chạy qua đêm không ai theo dõi báo đã xong. Kiểm tra bắt đầu từ đâu?", o:["Đọc bản tóm tắt của Claude","Đọc diff","Chạy lại toàn bộ job","Hỏi Claude có chắc không"], a:1, e:"Bản tóm tắt gọn gàng không chứng minh code sạch. Diff cho thấy file nào thực sự bị đụng."},
+ {q:"Bypass permissions nên dùng ở đâu?", o:["Máy cá nhân hằng ngày","Chỉ trong container hoặc VM cô lập","Trên server production","Khi gấp"], a:1, e:"Bypass bỏ mọi kiểm tra, chỉ an toàn trong môi trường cô lập."}
+],
+c8: [
+ {q:"Ứng dụng muốn đưa nội dung một file cấu hình vào context để model tham khảo, không cần model “gọi” gì. Primitive phù hợp?", o:["Tool","Resource","Prompt","Sampling"], a:1, e:"Resource là dữ liệu do ứng dụng cung cấp."},
+ {q:"Primitive nào do model quyết định khi nào sử dụng?", o:["Tool","Resource","Prompt","Root"], a:0, e:"Tool là hành động model chọn gọi. Prompt do người dùng chọn, resource do ứng dụng cung cấp."},
+ {q:"Lý do chính dùng MCP server của Asana thay vì tự viết custom tool bọc API Asana?", o:["MCP nhanh hơn","Nhà cung cấp tự bảo trì integration khi API của họ thay đổi","MCP miễn phí","Custom tool không gọi được API ngoài"], a:1, e:"MCP chuyển việc bảo trì sang phía nhà cung cấp."},
+ {q:"Server Inspector dùng để làm gì?", o:["Deploy server lên cloud","Test và gọi thử tools, resources, prompts của server mà không cần client thật","Giám sát chi phí token","Mã hóa kết nối"], a:1, e:"Inspector giúp kiểm tra server trong quá trình phát triển."},
+ {q:"Bật 6 MCP server cùng lúc, context luôn đầy dù chưa làm gì nhiều. Nguyên nhân và cách sửa?", o:["Lỗi của model","Định nghĩa tool của các server chiếm context; tắt server không dùng hoặc chỉ bật tool cần","Cần model context lớn hơn","Do thinking"], a:1, e:"Mỗi tool được bật đều thêm định nghĩa vào context."}
+],
+c9: [
+ {q:"Skill “perf-review” không tự kích hoạt khi bạn hỏi “sao chỗ này chậm vậy”. Sửa ở đâu trước?", o:["Thêm cụm từ người dùng hay nói vào description","Đổi model trong frontmatter","Chuyển sang CLAUDE.md","Thêm allowed-tools"], a:0, e:"Claude so khớp yêu cầu với description."},
+ {q:"Bạn và tổ chức đều có skill tên “code-review”. Skill nào được dùng?", o:["Personal","Project","Enterprise","Plugin"], a:2, e:"Thứ tự ưu tiên: Enterprise > Personal > Project > Plugins."},
+ {q:"Subagent tự tạo không áp dụng skill của project. Vì sao?", o:["Subagent không bao giờ dùng được skill","Phải liệt kê skill trong frontmatter của subagent","Skill chỉ chạy với Opus","Phải restart máy"], a:1, e:"Subagent bắt đầu với context sạch, chỉ nạp skill được khai báo. Agent có sẵn thì không dùng skill."},
+ {q:"Skill có script check.sh dài 800 dòng. Script này tốn context thế nào?", o:["Nạp toàn bộ 800 dòng","Chỉ output của script tốn token, nội dung không nạp vào context","Nạp một nửa","Không chạy được"], a:1, e:"Script được thực thi chứ không đọc vào context."},
+ {q:"Skill không hiện trong danh sách skill khả dụng. Kiểm tra gì trước?", o:["Description","File có đúng tên SKILL.md và nằm trong thư mục có tên riêng không","Model","Quyền mạng"], a:1, e:"SKILL.md phải nằm trong thư mục con, không nằm ở gốc skills. Dùng claude --debug để xem lỗi."},
+ {q:"Quy tắc “luôn dùng TypeScript strict mode” cho mọi việc trong project nên đặt ở đâu?", o:["Skill","CLAUDE.md","Subagent","MCP"], a:1, e:"Chuẩn luôn áp dụng thì đặt vào CLAUDE.md. Skill dành cho chuyên môn theo task."}
+],
+c10: [
+ {q:"Subagent nghiên cứu chạy rất lâu và trả kết quả lộn xộn. Cải tiến hiệu quả nhất?", o:["Đổi model mạnh hơn","Cho thêm nhiều tool","Định nghĩa output format rõ ràng trong system prompt","Tăng max tokens"], a:2, e:"Output format tạo điểm dừng và giúp agent chính dùng được kết quả."},
+ {q:"Vì sao nên review code bằng subagent thay vì hỏi agent chính đã viết code?", o:["Subagent có context riêng nên nhìn code như của người khác viết","Subagent luôn dùng model mạnh hơn","Agent chính không đọc được diff","Subagent rẻ hơn"], a:0, e:"Agent tham gia viết code khó nhìn ra lỗi của chính nó."},
+ {q:"Task có các bước phụ thuộc chặt: mỗi bước cần kết quả chi tiết của bước trước. Có nên tách subagent?", o:["Có, càng nhiều càng tốt","Không, giữ trong luồng chính vì chi phí khởi tạo và mất ngữ cảnh","Chỉ khi dùng Opus","Luôn luôn"], a:1, e:"Subagent hợp khi chỉ cần kết quả, không cần quá trình."},
+ {q:"Thêm vào description của subagent “phải nêu chính xác file cần review” có tác dụng gì?", o:["Không tác dụng","Agent chính sẽ viết prompt giao việc có liệt kê file cụ thể","Subagent tự đọc toàn repo","Đổi model"], a:1, e:"Description vừa quyết định khi nào gọi, vừa định hình prompt giao việc."},
+ {q:"Cấu hình tool hợp lý cho subagent review code?", o:["Đầy đủ quyền sửa file","Chỉ đọc và chạy lệnh để xem diff, không cần quyền sửa","Chỉ MCP","Không tool nào"], a:1, e:"Giới hạn tool theo đúng việc: reviewer đọc và phân tích, không sửa."}
+]
+};
+</script>
+<script>
+(function(){
+  var KEY = "ccdvf-path-notes-done";
+  var done = {};
+  try { done = JSON.parse(localStorage.getItem(KEY) || "{}") || {}; } catch (e) { done = {}; }
+  function save(){ try { localStorage.setItem(KEY, JSON.stringify(done)); } catch (e) {} }
+
+  var sections = Array.prototype.slice.call(document.querySelectorAll("section.course"));
+  var navcore = document.getElementById("navcore");
+  var navrole = document.getElementById("navrole");
+  var navextra = document.getElementById("navextra");
+  var jump = document.getElementById("jump");
+  var opt0 = document.createElement("option"); opt0.textContent = "Chọn khóa…"; opt0.value = "#top"; jump.appendChild(opt0);
+
+  sections.forEach(function(s, i){
+    var id = s.id, title = s.getAttribute("data-title"), isCore = s.classList.contains("core");
+    var li = document.createElement("li");
+    var a = document.createElement("a");
+    var isExtra = s.classList.contains("extra");
+    a.href = "#" + id; a.className = isCore ? "core" : (isExtra ? "extra" : "role");
+    a.innerHTML = '<span class="n"><span>' + (i + 1) + '</span></span><span></span>';
+    a.lastChild.textContent = title;
+    li.appendChild(a);
+    (isCore ? navcore : (isExtra ? navextra : navrole)).appendChild(li);
+    var o = document.createElement("option"); o.value = "#" + id; o.textContent = (i + 1) + ". " + title; jump.appendChild(o);
+
+    var btn = s.querySelector(".donebtn");
+    btn.addEventListener("click", function(){ done[id] = !done[id]; save(); render(); });
+  });
+
+  jump.addEventListener("change", function(){ location.hash = jump.value; });
+
+  function render(){
+    var n = 0;
+    sections.forEach(function(s){
+      var d = !!done[s.id];
+      if (d) n++;
+      s.classList.toggle("isdone", d);
+      s.querySelector(".donebtn").textContent = d ? "Đã học ✓ (bấm để bỏ)" : "Đã học xong";
+      var link = document.querySelector('nav.side a[href="#' + s.id + '"]');
+      if (link) link.classList.toggle("done", d);
+    });
+    document.getElementById("pbar").style.width = (n / sections.length * 100) + "%";
+    document.getElementById("ptxt").textContent = n + "/" + sections.length + " phần đã học";
+  }
+
+  var LETTERS = ["A","B","C","D","E"];
+  function shuffle(arr){ for (var i = arr.length - 1; i > 0; i--){ var j = Math.floor(Math.random() * (i + 1)); var t = arr[i]; arr[i] = arr[j]; arr[j] = t; } return arr; }
+  function buildQuiz(box){
+    var cid = box.getAttribute("data-course");
+    var items = (window.QUIZ && window.QUIZ[cid]) || [];
+    box.innerHTML = "";
+    var h = document.createElement("h4");
+    h.textContent = "Bài test cuối khóa (" + items.length + " câu)";
+    box.appendChild(h);
+    var score = { right: 0, answered: 0 };
+    var result = document.createElement("div");
+    result.className = "result";
+    items.forEach(function(it, qi){
+      var q = document.createElement("div"); q.className = "q";
+      var p = document.createElement("div"); p.className = "p"; p.textContent = (qi + 1) + ". " + it.q; q.appendChild(p);
+      var order = shuffle(it.o.map(function(_, i){ return i; }));
+      var btns = [];
+      order.forEach(function(oi, pos){
+        var b = document.createElement("button"); b.type = "button";
+        b.textContent = LETTERS[pos] + ". " + it.o[oi];
+        b.addEventListener("click", function(){
+          if (q.classList.contains("answered")) return;
+          q.classList.add("answered");
+          score.answered++;
+          if (oi === it.a) score.right++; else b.classList.add("wrong");
+          btns[order.indexOf(it.a)].classList.add("right");
+          btns.forEach(function(x){ x.setAttribute("disabled", ""); });
+          if (score.answered === items.length) {
+            var pct = Math.round(score.right / items.length * 100);
+            result.innerHTML = "";
+            var t = document.createElement("span");
+            t.textContent = "Kết quả: " + score.right + "/" + items.length + " câu đúng (" + pct + "%). " + (pct >= 72 ? "Đạt mức an toàn." : "Nên đọc lại phần ghi chú rồi làm lại.");
+            result.appendChild(t);
+            var again = document.createElement("button"); again.type = "button"; again.className = "retry"; again.textContent = "Làm lại (đảo đáp án)";
+            again.addEventListener("click", function(){ buildQuiz(box); });
+            result.appendChild(again);
+            result.classList.add("show");
+          }
+        });
+        btns.push(b); q.appendChild(b);
+      });
+      var ex = document.createElement("div"); ex.className = "ex"; ex.textContent = it.e; q.appendChild(ex);
+      box.appendChild(q);
+    });
+    box.appendChild(result);
+  }
+  document.querySelectorAll(".quiz[data-course]").forEach(buildQuiz);
+
+  render();
+})();
+</script>
+</body>
+</html>

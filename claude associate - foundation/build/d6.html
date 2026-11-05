@@ -1,0 +1,929 @@
+<section class="domain" id="d6" data-domain="6">
+  <div class="dhead"><h2>Domain 6 · Governance, Risk, and Responsible Use</h2><p class="dsub">15% · 1 bài nền tảng + 4 bài · ~65 phút</p><div class="dprog"><div class="wb"><i></i></div><span></span></div><button class="tog" type="button">Thu gọn</button></div>
+  <div class="dbody">
+<div class="dintro">
+  <p>Domain 6 chiếm 15% đề, khoảng 9 trên 60 câu. Cộng với D2, hai domain này quyết định hơn 1/3 số điểm.</p>
+  <p>Cả domain xoay quanh một câu: <b>trước khi giao việc hay gửi dữ liệu cho Claude, việc này có được phép không, dữ liệu này có được đi không, và ai chịu trách nhiệm với kết quả?</b></p>
+  <p>Đọc bài Nền tảng trước. Cuối mỗi bài có “Khi đi thi”: chọn đáp án trước rồi mới xem giải thích.</p>
+</div>
+
+<article class="lesson" id="l-6-0" data-domain="6" data-ts="6.0" data-min="15">
+  <header class="lh"><span class="ts">Nền tảng</span><h3>Dữ liệu của bạn đi đâu, ai đặt luật, và luật gồm những tầng nào</h3><span class="rt">~15 phút</span></header>
+  <div class="defs"><b>Khái niệm của bài</b><dl>
+    <dt>Governance (quản trị AI)</dt><dd>Toàn bộ những thứ giúp một tổ chức dùng AI đúng luật, đúng chính sách: người chịu trách nhiệm, cài đặt do admin khóa, nhật ký để kiểm lại.</dd>
+    <dt>Responsible use (dùng có trách nhiệm)</dt><dd>Dùng Claude sao cho không gây hại cho khách, đồng nghiệp hay công ty, và luôn có người đứng ra chịu trách nhiệm với kết quả.</dd>
+  </dl></div>
+  <p>Bốn bài của Domain 6 cùng dựa trên bốn thứ: dữ liệu đi đâu khi bạn dùng Claude, loại dữ liệu nào nhạy cảm, chính sách của công ty, và Usage Policy của Anthropic. Bài này dựng từng thứ từ đầu, theo thứ tự: dữ liệu đi đâu → gói cá nhân và gói doanh nghiệp khác nhau ra sao → dữ liệu nào nhạy cảm → chính sách và governance → Usage Policy → bản đồ domain.</p>
+
+  <h4>1. Khi bạn dùng Claude, dữ liệu đi đâu</h4>
+  <div class="defs"><b>Định nghĩa</b><dl>
+    <dt>Dữ liệu gửi đi (input)</dt><dd>Mọi thứ Claude đọc trong một chat: chữ bạn gõ, file bạn tải lên, knowledge của Project, nội dung connector lấy về từ Drive hay Gmail. Đã nằm trong chat là đã rời khỏi máy bạn.</dd>
+    <dt>Retention (lưu trữ)</dt><dd>Dữ liệu được giữ bao lâu trên hệ thống của Anthropic. Gói và cài đặt quyết định chuyện này, không phải lời bạn dặn Claude.</dd>
+    <dt>Training (huấn luyện model)</dt><dd>Dùng hội thoại để cải thiện các model sau này. Gói cá nhân và gói doanh nghiệp có luật khác nhau (mục 2).</dd>
+  </dl></div>
+  <p>Một chat đi qua bốn chặng:</p>
+  <ul>
+    <li><b>Gửi:</b> chữ, file, kết quả connector được gửi tới Claude để xử lý.</li>
+    <li><b>Lưu:</b> chat nằm trong lịch sử để bạn mở lại. Xóa chat thì nó biến khỏi lịch sử ngay, và bị xóa khỏi hệ thống phía sau trong vòng 30 ngày.</li>
+    <li><b>Nhớ:</b> nếu Memory đang bật, Claude có thể lưu vài điều về bạn để dùng ở chat sau. Xóa chat không xóa memory đã tạo từ chat đó.</li>
+    <li><b>Có thể được dùng thêm:</b> để train model (tùy gói, tùy cài đặt), hoặc để kiểm tra an toàn nếu chat bị hệ thống gắn cờ vi phạm.</li>
+  </ul>
+  <p>Ai có thể thấy chat của bạn:</p>
+  <div class="tw"><table>
+    <tr><th>Ai</th><th>Thấy khi nào</th></tr>
+    <tr><td>Bạn</td><td>Luôn luôn, trong lịch sử chat</td></tr>
+    <tr><td>Đồng nghiệp</td><td>Khi bạn chia sẻ chat, hoặc khi bạn đưa file vào một Project mở cho cả tổ chức: ai trong tổ chức cũng xem được knowledge của Project đó</td></tr>
+    <tr><td>Admin công ty (Team, Enterprise)</td><td>Qua bản xuất dữ liệu của tổ chức. Enterprise có thêm Compliance API, lấy được lịch sử chat và file. Chat incognito vẫn có trong các bản này</td></tr>
+    <tr><td>Anthropic</td><td>Một nhóm nhỏ nhân sự, với dữ liệu đã tách khỏi tài khoản, khi bạn cho phép dùng chat để cải thiện Claude. Hoặc khi chat bị gắn cờ an toàn</td></tr>
+  </table></div>
+
+  <h4>2. Gói cá nhân và gói doanh nghiệp</h4>
+  <div class="defs"><b>Định nghĩa</b><dl>
+    <dt>Gói consumer (cá nhân)</dt><dd>Free, Pro, Max, Ultra. Một người đăng ký, một người tự quyết các cài đặt dữ liệu của mình.</dd>
+    <dt>Gói commercial (doanh nghiệp)</dt><dd>Team, Enterprise và API. Tổ chức ký hợp đồng với Anthropic. Admin của tổ chức (Owner, Primary Owner) đặt cài đặt cho mọi thành viên.</dd>
+    <dt>Controller và processor</dt><dd>Trên Team và Enterprise, khách hàng là bên kiểm soát dữ liệu (controller): quyết ai được vào, dữ liệu được dùng thế nào. Anthropic là bên xử lý (processor), chỉ xử lý theo chỉ dẫn của khách.</dd>
+  </dl></div>
+  <div class="tw"><table>
+    <tr><th></th><th>Cá nhân (Free, Pro, Max, Ultra)</th><th>Doanh nghiệp (Team, Enterprise)</th></tr>
+    <tr><td>Ai quyết chuyện training</td><td>Từng người, qua cài đặt Model Improvement (“Help improve Claude”) trong Privacy Settings</td><td>Mặc định không train trên chat. Ngoại lệ: phản hồi bạn chủ động gửi (nút thích, không thích), hoặc tổ chức tham gia Development Partner Program (chương trình đối tác phát triển)</td></tr>
+    <tr><td>Cho phép training thì giữ bao lâu</td><td>Dữ liệu đã tách danh tính, tối đa 5 năm, chỉ với chat mới hoặc chat mở lại sau khi bật</td><td>Không áp dụng</td></tr>
+    <tr><td>Xóa chat</td><td>Mất khỏi lịch sử ngay, xóa khỏi hệ thống trong 30 ngày</td><td>Như bên trái</td></tr>
+    <tr><td>Thời hạn lưu</td><td>Theo chính sách của Anthropic</td><td>Enterprise: Owner đặt thời hạn lưu riêng, tối thiểu 30 ngày</td></tr>
+    <tr><td>Admin, nhật ký, hợp đồng</td><td>Không có</td><td>SSO (đăng nhập một lần bằng tài khoản công ty), phân quyền, bật tắt tính năng cho cả tổ chức. Enterprise có thêm audit log (nhật ký kiểm toán), Compliance API, cấu hình HIPAA-ready kèm BAA cho thông tin sức khỏe (bài 6.2)</td></tr>
+  </table></div>
+  <div class="note"><b>Mặc định của gói cá nhân:</b> docs mô tả Model Improvement là thứ bạn “chọn cho phép”, nhưng trang chính thức không ghi mặc định đang bật hay tắt. Đừng đoán, mở Settings → Privacy để xem. Trên gói doanh nghiệp thì khỏi đoán: mặc định không train.</div>
+  <p>Hệ quả thực tế: dữ liệu công việc nên đi qua tài khoản công ty. Tài khoản cá nhân, dù đã tắt training, vẫn nằm ngoài hợp đồng, ngoài cài đặt admin và ngoài nhật ký của công ty.</p>
+
+  <h4>3. Dữ liệu nào là nhạy cảm</h4>
+  <div class="defs"><b>Định nghĩa</b><dl>
+    <dt>PII (personally identifiable information, thông tin định danh cá nhân)</dt><dd>Thông tin chỉ ra được một người cụ thể, một mình hoặc khi ghép với thông tin khác: họ tên, email, số điện thoại, số CCCD, số tài khoản, địa chỉ.</dd>
+    <dt>Regulated data (dữ liệu được quản lý)</dt><dd>Loại dữ liệu có luật riêng ràng buộc cách thu thập, dùng, chia sẻ. Ví dụ hồ sơ sức khỏe, dữ liệu tài chính, dữ liệu cá nhân của cư dân EU. Phạm vi cụ thể do luật và chính sách công ty bạn quy định.</dd>
+    <dt>Dữ liệu mật của doanh nghiệp</dt><dd>Không phải dữ liệu cá nhân nhưng không được lộ: hợp đồng, giá chưa công bố, kế hoạch sáp nhập, mã nguồn, mật khẩu.</dd>
+  </dl></div>
+  <div class="tw"><table>
+    <tr><th>Nhóm</th><th>Ví dụ trong văn phòng</th><th>Vì sao phải cẩn thận</th></tr>
+    <tr><td>Định danh cá nhân</td><td>Danh sách khách có tên, email, số điện thoại</td><td>Lộ ra là lộ người thật, nhiều luật bảo vệ</td></tr>
+    <tr><td>Tài chính</td><td>Số thẻ, số tài khoản ngân hàng, bảng lương</td><td>Dùng được để lừa đảo, thường bị luật và hợp đồng ràng buộc</td></tr>
+    <tr><td>Sức khỏe</td><td>Giấy khám bệnh, lý do nghỉ ốm, hồ sơ bảo hiểm y tế</td><td>Có luật riêng (như HIPAA ở Mỹ). Trên Claude chỉ Enterprise bật HIPAA-ready mới nhận loại này</td></tr>
+    <tr><td>Nhân sự</td><td>Đánh giá hiệu suất, kỷ luật, hồ sơ ứng viên</td><td>Dữ liệu cá nhân, lại ảnh hưởng tới sinh kế của người đó</td></tr>
+    <tr><td>Đăng nhập</td><td>Mật khẩu, mã OTP, khóa truy cập hệ thống</td><td>Claude không bao giờ cần, lộ là mất quyền truy cập</td></tr>
+    <tr><td>Mật doanh nghiệp</td><td>Hợp đồng khách, kế hoạch giá, tài liệu sáp nhập</td><td>Bị ràng buộc bởi hợp đồng bảo mật (NDA), là lợi thế cạnh tranh</td></tr>
+  </table></div>
+  <p>Help Center của Claude khuyên cân nhắc kỹ trước khi đưa vào chat bốn nhóm: thông tin tài chính, hồ sơ sức khỏe, mật khẩu và thông tin đăng nhập, tài liệu mật của doanh nghiệp hoặc cá nhân.</p>
+
+  <h4>4. Chính sách AI của tổ chức và governance</h4>
+  <div class="defs"><b>Định nghĩa</b><dl>
+    <dt>Organizational AI policy (chính sách AI của tổ chức)</dt><dd>Văn bản công ty đặt ra: được dùng công cụ AI nào, với loại dữ liệu nào, việc gì phải có người duyệt, khi nào phải ghi rõ có dùng AI, gặp ca khó thì hỏi ai.</dd>
+    <dt>Escalation path (đường chuyển lên)</dt><dd>Kênh định sẵn để hỏi hoặc xin ngoại lệ: người phụ trách AI, bộ phận an ninh thông tin, pháp chế.</dd>
+  </dl></div>
+  <div class="tw"><table>
+    <tr><th>Phần của chính sách</th><th>Trả lời câu hỏi</th><th>Ví dụ</th></tr>
+    <tr><td>Công cụ được duyệt</td><td>Dùng gì?</td><td>“Chỉ dùng tài khoản Claude Enterprise của công ty”</td></tr>
+    <tr><td>Phân loại dữ liệu</td><td>Dữ liệu nào được đưa vào?</td><td>“Dữ liệu khách phải ẩn danh, không đưa hồ sơ sức khỏe”</td></tr>
+    <tr><td>Cài đặt bắt buộc</td><td>Admin khóa gì?</td><td>Tắt web search, chỉ bật connector đã duyệt</td></tr>
+    <tr><td>Người duyệt</td><td>Việc nào cần người duyệt?</td><td>“Mọi thư từ chối ứng viên phải qua HR”</td></tr>
+    <tr><td>Công khai</td><td>Khi nào ghi là có dùng AI?</td><td>“Bài đăng ra ngoài có AI soạn phải ghi chú”</td></tr>
+    <tr><td>Hỏi ai</td><td>Chính sách không nhắc tới thì sao?</td><td>“Gửi câu hỏi cho nhóm phụ trách AI”</td></tr>
+  </table></div>
+  <p>Một quy định chỉ nằm trên giấy thì phụ thuộc vào trí nhớ từng người. Governance tốt biến nó thành cài đặt mà thành viên không tự đổi được, cộng với một hồ sơ cho thấy nó đã được tuân thủ (bài 6.3).</p>
+
+  <h4>5. Usage Policy của Anthropic</h4>
+  <div class="defs"><b>Định nghĩa</b><dl>
+    <dt>Usage Policy (chính sách sử dụng, còn gọi là AUP)</dt><dd>Luật Anthropic áp cho mọi người dùng Claude, ở mọi gói, kể cả khi Claude chạy như agent. Phần lớn là danh sách việc không được làm.</dd>
+    <dt>High-risk use case (ca rủi ro cao)</dt><dd>Dùng Claude để đưa ra lời khuyên hay quyết định ảnh hưởng tới sức khỏe, quyền lợi pháp lý, tài chính, sinh kế hoặc quyền tiếp cận dịch vụ thiết yếu của một người cụ thể.</dd>
+  </dl></div>
+  <div class="tw"><table>
+    <tr><th>Phần</th><th>Nói gì</th><th>Bài</th></tr>
+    <tr><td>Universal Usage Standards (chuẩn chung)</td><td>Việc cấm với mọi người, mọi mục đích: vũ khí, tấn công hệ thống không được phép, lừa đảo, chiến dịch giả, xâm phạm quyền riêng tư, an toàn trẻ em…</td><td>6.1</td></tr>
+    <tr><td>High-risk Use Case Requirements (yêu cầu cho ca rủi ro cao)</td><td>Pháp lý, y tế, tài chính, tín dụng, bảo hiểm, nhà ở, việc làm, giáo dục…: người có chuyên môn duyệt trước, và báo cho người bị ảnh hưởng là có dùng AI</td><td>6.1, 6.4</td></tr>
+    <tr><td>Additional Use Case Guidelines (hướng dẫn thêm)</td><td>Chatbot cho khách phải nói rõ là AI. Sản phẩm phục vụ người dưới 18 tuổi có hướng dẫn riêng. Agent cũng phải tuân thủ</td><td>6.4</td></tr>
+  </table></div>
+  <p>Ba tầng luật, xếp từ ngoài vào trong:</p>
+  <ol>
+    <li>Luật pháp nơi bạn làm việc.</li>
+    <li>Usage Policy của Anthropic: sàn tối thiểu cho mọi người dùng Claude.</li>
+    <li>Chính sách AI của công ty: được chặt hơn Usage Policy, không bao giờ được lỏng hơn.</li>
+  </ol>
+  <p>Ở tầng nào thì phán đoán của chính bạn vẫn cần, vì không văn bản nào lường hết mọi ca (bài 6.4).</p>
+
+  <h4>6. Bản đồ Domain 6</h4>
+  <div class="tw"><table>
+    <tr><th>Bài</th><th>Câu hỏi của bài</th><th>Dựa vào mục nào</th></tr>
+    <tr><td><a href="#l-6-1">6.1</a></td><td>Việc này có nên giao cho Claude không?</td><td>Mục 5: việc bị cấm, ca rủi ro cao</td></tr>
+    <tr><td><a href="#l-6-2">6.2</a></td><td>Dữ liệu này có được đưa vào không, bằng tài khoản nào?</td><td>Mục 1, 2, 3</td></tr>
+    <tr><td><a href="#l-6-3">6.3</a></td><td>Công ty cho phép gì? Bị chặn, hay chính sách không nhắc tới, thì làm gì?</td><td>Mục 4</td></tr>
+    <tr><td><a href="#l-6-4">6.4</a></td><td>Ai chịu trách nhiệm? Có phải nói là dùng AI không? Có đang phụ thuộc quá không?</td><td>Mục 5 và chữ Diligence trong khung 4D</td></tr>
+  </table></div>
+
+  <h4>Tự kiểm tra</h4>
+  <p class="need">Câu hỏi viết bằng tiếng Anh như đề thật. Bấm vào câu hỏi để xem nghĩa và đáp án.</p>
+  <details class="chk"><summary>1. An employee turns off the model-training setting on her personal Pro account. Does that put her work chats under the company’s data agreement?</summary>
+    <span class="vi">Nghĩa: một nhân viên tắt cài đặt cho phép train trên tài khoản Pro cá nhân. Như vậy các chat công việc của cô có nằm dưới thỏa thuận dữ liệu của công ty không?</span>
+    <span class="ans"><b>Đáp:</b> không. Tắt training chỉ đổi chuyện training trên tài khoản cá nhân. Hợp đồng, cài đặt admin và nhật ký chỉ áp cho tài khoản Team hoặc Enterprise của công ty.</span></details>
+  <details class="chk"><summary>2. Your company bans uploading customer data to Claude. A teammate says: “Anthropic’s Usage Policy allows it, so it is fine.” Who is right?</summary>
+    <span class="vi">Nghĩa: công ty cấm tải dữ liệu khách lên Claude. Một đồng nghiệp nói: “Usage Policy của Anthropic cho phép, vậy là được.” Ai đúng?</span>
+    <span class="ans"><b>Đáp:</b> chính sách công ty. Usage Policy là sàn, không phải trần. Công ty được đặt luật chặt hơn.</span></details>
+  <details class="chk"><summary>3. You delete a chat that contained a client contract. When is it gone from Anthropic’s systems?</summary>
+    <span class="vi">Nghĩa: bạn xóa một chat có hợp đồng của khách. Khi nào nó biến khỏi hệ thống của Anthropic?</span>
+    <span class="ans"><b>Đáp:</b> khỏi lịch sử ngay, khỏi hệ thống phía sau trong vòng 30 ngày. Xóa chat không thay cho việc báo sự cố theo chính sách công ty nếu hợp đồng đó không được phép đưa vào.</span></details>
+
+  <div class="remember"><b>Nhớ nhanh</b><ul>
+    <li>Dữ liệu đã vào chat là đã rời máy bạn. Lưu bao lâu do gói và cài đặt quyết.</li>
+    <li>Gói doanh nghiệp: mặc định không train, tổ chức kiểm soát dữ liệu. Gói cá nhân: từng người tự chọn.</li>
+    <li>Nhạy cảm: định danh, tài chính, sức khỏe, nhân sự, đăng nhập, mật doanh nghiệp.</li>
+    <li>Ba tầng luật: pháp luật → Usage Policy (sàn) → chính sách công ty (chặt hơn được).</li>
+  </ul></div>
+  <div class="src">Đọc thêm: <a href="https://www.anthropic.com/legal/aup">Usage Policy</a> · <a href="https://support.claude.com/en/articles/8325621-i-would-like-to-input-sensitive-data-into-my-chats-with-claude-who-can-view-my-conversations">Who can view my conversations?</a> · <a href="https://www.anthropic.com/news/updates-to-our-consumer-terms">Updates to our consumer terms</a> · <a href="https://support.claude.com/en/articles/9797531-what-is-the-enterprise-plan">What is the Enterprise plan?</a> · <a href="https://anthropic-partners.skilljar.com/path/claude-associate/governance-risk-responsible-use">Governance, Risk &amp; Responsible Use (Partner Academy)</a></div>
+  <label class="done"><input type="checkbox" data-lesson="l-6-0"> Đã học bài này</label>
+</article>
+
+<article class="lesson" id="l-6-1" data-domain="6" data-ts="6.1" data-min="12">
+  <header class="lh"><span class="ts">TS 6.1</span><h3>Việc nào giao cho Claude được: vùng cấm, vùng rủi ro cao, và việc Claude không hợp</h3><span class="rt">~12 phút</span></header>
+  <p class="need">Cần biết trước: ba phần của Usage Policy và định nghĩa ca rủi ro cao ở <a href="#l-6-0">bài Nền tảng</a>.</p>
+  <div class="defs"><b>Khái niệm của bài</b><dl>
+    <dt>Prohibited use (việc bị cấm)</dt><dd>Việc Usage Policy cấm với mọi người, mọi mục đích. Không người duyệt, giấy đồng ý, nhãn “do AI tạo” hay lý do “nghiên cứu” nào mở khóa được.</dd>
+    <dt>High-risk use case (ca rủi ro cao)</dt><dd>Lời khuyên hoặc quyết định về một người cụ thể trong các lĩnh vực như pháp lý, y tế, tài chính, tín dụng, bảo hiểm, nhà ở, việc làm, giáo dục. Được làm, nhưng có hai điều kiện bắt buộc.</dd>
+    <dt>Human-in-the-loop (người duyệt trong quy trình)</dt><dd>Một người có chuyên môn đọc output trước khi nó tới người bị ảnh hưởng, có quyền sửa, và chịu trách nhiệm với thứ được gửi đi.</dd>
+    <dt>Disclosure (công khai việc dùng AI)</dt><dd>Báo rõ cho người nhận lời khuyên, hay người bị quyết định, là có dùng AI. Không bắt buộc nêu tên Anthropic hay Claude.</dd>
+    <dt>Phép thử “kiểm được, sửa được”</dt><dd>Một việc hợp với Claude khi lỗi của nó được phát hiện và sửa trước khi gây hại cho ai.</dd>
+  </dl></div>
+
+  <h4>Ba vùng, mỗi vùng một câu hỏi</h4>
+  <div class="tw"><table>
+    <tr><th>Vùng</th><th>Ví dụ</th><th>Câu hỏi để xếp</th><th>Làm gì</th></tr>
+    <tr><td><b>Xanh</b>: dùng bình thường</td><td>Soạn email, tóm tắt cuộc họp, nghĩ tên chiến dịch, viết nháp báo cáo</td><td>Lỗi có người đọc thấy và sửa rẻ không?</td><td>Dùng, rồi kiểm như mọi output (Domain 2)</td></tr>
+    <tr><td><b>Vàng</b>: rủi ro cao</td><td>Soạn thư từ chối hồ sơ vay, tóm tắt bệnh án cho bác sĩ, xếp hạng ứng viên</td><td>Output có tới một người cụ thể, ảnh hưởng quyền lợi của họ không?</td><td>Claude soạn. Người có chuyên môn duyệt từng ca trước khi gửi. Báo là có dùng AI</td></tr>
+    <tr><td><b>Đỏ</b>: bị cấm</td><td>Viết đánh giá giả của khách, soạn email lừa đảo, theo dõi nhân viên lén lút</td><td>Usage Policy có cấm không?</td><td>Không làm. Đề xuất việc hợp lệ thay thế</td></tr>
+  </table></div>
+
+  <h4>Phép thử “kiểm được, sửa được”</h4>
+  <p>Câu hỏi không phải “Claude có giỏi việc này không?” mà là “nếu Claude sai, ai thấy, và sửa có kịp không?”. Hai điều kiện:</p>
+  <ul>
+    <li><b>Kiểm được:</b> có người, hoặc một bước kiểm, nhìn thấy output trước khi nó được dùng. Người đó phải đủ chuyên môn để nhận ra lỗi. Lỗi chỉ chuyên gia mới thấy mà không có chuyên gia nào duyệt thì coi như không kiểm được.</li>
+    <li><b>Sửa được:</b> nếu lỗi lọt qua, gỡ lại được với chi phí thấp. Một câu sai trong bản nháp nội bộ sửa trong một phút. Email báo sai số tiền hoàn đã tới tay 500 khách thì không gỡ được.</li>
+  </ul>
+  <div class="tw"><table>
+    <tr><th>Việc</th><th>Kiểm được?</th><th>Sửa được?</th><th>Kết luận</th></tr>
+    <tr><td>Nháp báo cáo tuần, trưởng nhóm đọc trước khi gửi</td><td>Có</td><td>Có</td><td>Hợp</td></tr>
+    <tr><td>Claude báo số tiền hoàn cho khách, gửi thẳng, không ai đọc</td><td>Không</td><td>Không</td><td>Không hợp</td></tr>
+    <tr><td>Công thức Excel tính hoa hồng cho 300 nhân viên, người duyệt không đọc được công thức</td><td>Không, người duyệt thiếu chuyên môn</td><td>Khó, tiền đã chi</td><td>Không hợp, trừ khi người hiểu công thức kiểm trước</td></tr>
+  </table></div>
+  <p>Thêm người duyệt chỉ cứu được khi người đó đủ chuyên môn và đứng <i>trước</i> thời điểm gây hại. Kiểm lại sau khi đã gửi thì không cứu được.</p>
+
+  <h4>Khi Claude hành động, không chỉ soạn</h4>
+  <p>Với agent như Claude in Chrome (Claude tự bấm, tự điền trên trình duyệt), không còn bước bạn đọc bản nháp. Mức tự chủ phải theo mức dễ gỡ của hành động:</p>
+  <div class="tw"><table>
+    <tr><th>Hành động</th><th>Dễ gỡ?</th><th>Help Center nói</th></tr>
+    <tr><td>Tìm thông tin trên trang tin cậy, điền form</td><td>Dễ</td><td>Nên bắt đầu từ việc đơn giản như vậy</td></tr>
+    <tr><td>Tải file, nhập thông tin nhạy cảm</td><td>Khó</td><td>Phải xác nhận</td></tr>
+    <tr><td>Vào trang tài chính</td><td>Khó</td><td>Claude xin phép trước</td></tr>
+    <tr><td>Quản lý tài khoản tài chính, đầu tư, hợp đồng pháp lý, thông tin y tế</td><td>Tốn kém hoặc không gỡ được</td><td>Anthropic khuyên mạnh là không dùng</td></tr>
+  </table></div>
+  <p>Claude in Chrome có hai chế độ: <b>Automatically approve</b> (tự duyệt, là chế độ mặc định: Claude tự xét hành động và dừng khi cần bạn duyệt) và <b>Manually approve</b> (bạn duyệt từng hành động). Help Center nói rõ: bạn vẫn chịu trách nhiệm với mọi hành động Claude làm thay bạn.</p>
+
+  <h4>Vùng đỏ: không gì mở khóa</h4>
+  <p>Usage Policy cấm hẳn một số việc. Các nhóm hay gặp trong công việc văn phòng:</p>
+  <ul>
+    <li>Lừa đảo và gian lận: email phishing (giả danh để lấy thông tin), trang giả mạo, giấy tờ giả.</li>
+    <li>Chiến dịch giả: đánh giá giả, tài khoản ảo để tạo dư luận.</li>
+    <li>Xâm phạm quyền riêng tư: theo dõi người khác khi họ không biết, không đồng ý.</li>
+    <li>Tấn công hệ thống khi không được phép: mã độc, xâm nhập.</li>
+    <li>Vũ khí, bạo lực, thù ghét, xâm hại trẻ em, nội dung tình dục.</li>
+    <li>Lạm dụng nền tảng: lập nhiều tài khoản để lách giới hạn, dùng output để train một model AI khác khi Anthropic chưa cho phép.</li>
+  </ul>
+  <p>Những thứ <b>không</b> mở khóa được một việc bị cấm:</p>
+  <ul>
+    <li>Gắn nhãn “do AI tạo”.</li>
+    <li>Có người duyệt, có giấy đồng ý.</li>
+    <li>Gọi là “hư cấu”, “nhập vai”, “bài tập nội bộ”, “nghiên cứu”.</li>
+    <li>Người hỏi thuộc tổ chức uy tín (trường đại học, công ty an ninh).</li>
+  </ul>
+  <div class="trap"><b>Bẫy:</b> đáp án sai hay nhắc một lỗi phụ, ví dụ “thiếu chữ ký pháp chế”, “chưa ghi nguồn”. Sửa lỗi phụ đó thì việc vẫn bị cấm. Lý do thật là bản thân việc đó.</div>
+  <p>Có những việc dùng được cho cả mục đích tốt lẫn xấu (dual-use). Bối cảnh quyết định đúng hay sai:</p>
+  <ul>
+    <li><b>Có ủy quyền:</b> kiểm thử bảo mật hệ thống của khách đã ký hợp đồng khác hẳn tấn công hệ thống của đối thủ.</li>
+    <li><b>Có đồng ý và thông báo:</b> theo dõi giao dịch để chống gian lận mà người dùng đã đồng ý thì được. Theo dõi lén thì cấm.</li>
+  </ul>
+
+  <h4>Vùng vàng: Claude gợi ý, người có chuyên môn quyết</h4>
+  <p>Usage Policy liệt kê các lĩnh vực rủi ro cao: pháp lý, y tế, tài chính, tín dụng, bảo hiểm, nhà ở, việc làm, giáo dục và bằng cấp, tiếp cận chăm sóc sức khỏe, phúc lợi công, tình trạng pháp lý. Khi output là lời khuyên hay quyết định về <b>một người cụ thể</b> trong các lĩnh vực đó, có hai điều kiện:</p>
+  <ol>
+    <li><b>Người có chuyên môn duyệt trước.</b> Người có đào tạo hoặc kinh nghiệm phù hợp (có giấy phép nếu luật đòi) xem output trước khi nó tới người kia hoặc được dùng để quyết định, có quyền sửa, và chịu trách nhiệm với thứ được gửi đi.</li>
+    <li><b>Công khai.</b> Người nhận lời khuyên, hay người bị quyết định, được báo rõ là có dùng AI.</li>
+  </ol>
+  <p>Không thuộc diện này: thông tin giáo dục chung, nội dung về sức khỏe lối sống, nháp và tóm tắt nội bộ chưa phải khuyến nghị cuối, việc vận hành không khuyên hay quyết về một người cụ thể.</p>
+  <p>Bốn cách duyệt thư từ chối bồi thường bảo hiểm:</p>
+  <div class="tw"><table>
+    <tr><th>Cách làm</th><th>Có chuyên môn?</th><th>Trước khi gửi?</th><th>Kết luận</th></tr>
+    <tr><td>Chuyên viên bồi thường có chứng chỉ đọc, sửa, duyệt từng thư. Thư ghi có dùng AI hỗ trợ</td><td>Có</td><td>Có</td><td>Đạt</td></tr>
+    <tr><td>Nhân viên chăm sóc khách, chưa học nghiệp vụ bồi thường, duyệt từng thư</td><td>Không</td><td>Có</td><td>Không đạt</td></tr>
+    <tr><td>Chuyên viên có chứng chỉ kiểm ngẫu nhiên 5% mỗi tháng, sau khi thư đã gửi</td><td>Có</td><td>Không</td><td>Không đạt</td></tr>
+    <tr><td>Gửi thẳng, cuối thư ghi “do AI tạo”</td><td>Không</td><td>Không</td><td>Không đạt: công khai không thay được người duyệt</td></tr>
+  </table></div>
+
+  <div class="story"><b>Tình huống.</b> Chị Mai ở phòng tuyển dụng nhờ Claude đọc 180 hồ sơ, chấm điểm và soạn thư từ chối cho ai dưới 60 điểm. Thư được gửi tự động lúc 5 giờ chiều. Ba tuần sau, một ứng viên khiếu nại: hồ sơ của anh ghi 6 năm kinh nghiệm, bảng điểm của Claude ghi 2 năm. Không ai đọc bảng điểm trước khi thư đi, và thư cũng không nói có dùng AI. Việc làm là lĩnh vực rủi ro cao, và cả hai điều kiện đều bị bỏ qua.</div>
+  <div class="vs">
+    <div class="bad"><b>Tệ</b><ul>
+      <li>Thêm câu “do AI tạo” vào thư từ chối rồi gửi tự động.</li>
+      <li>Kiểm ngẫu nhiên vài ca mỗi tháng, sau khi đã gửi.</li>
+      <li>Gọi yêu cầu bị cấm là “bài tập nhập vai” để Claude làm.</li>
+      <li>Để agent tự thao tác trên tài khoản tài chính.</li>
+    </ul></div>
+    <div class="good"><b>Tốt</b><ul>
+      <li>Claude soạn, người có chuyên môn duyệt và sửa từng ca trước khi gửi.</li>
+      <li>Báo cho người nhận là có dùng AI.</li>
+      <li>Từ chối việc bị cấm, đề xuất việc hợp lệ thay thế.</li>
+      <li>Giao cho agent việc dễ gỡ, giữ bước xác nhận cho việc khó gỡ.</li>
+    </ul></div>
+  </div>
+
+  <h4>Khi đi thi</h4>
+  <p class="need">Bài này thường ra 2 dạng câu hỏi. Đọc đề, <b>chọn một đáp án trước</b>; phần giải thích chỉ hiện ra sau khi bạn chọn.</p>
+
+  <div class="qcase" data-answer="D">
+    <h5 class="sub">Dạng 1: ca rủi ro cao, duyệt thế nào cho đủ</h5>
+    <span class="lbl">Đề sẽ viết kiểu này</span>
+    <div class="qtext">
+      <span class="en">“A property management company wants to use Claude to assess rental applications and send each applicant an approval or rejection with reasons. Leadership wants the process to be fast. Which approach is most appropriate?”</span>
+      <span class="vi">Dịch: Một công ty quản lý bất động sản muốn dùng Claude đánh giá hồ sơ thuê nhà và gửi cho từng người nộp thư chấp nhận hoặc từ chối kèm lý do. Ban lãnh đạo muốn quy trình chạy nhanh. Cách nào phù hợp nhất?</span>
+    </div>
+    <span class="lbl">Bạn chọn đáp án nào?</span>
+    <div class="qopts">
+      <button type="button" class="qopt" data-k="A"><b class="k">A.</b><span class="body"><span class="en">“Send Claude’s decisions to applicants automatically, adding a clear line to each email stating that the decision was generated by AI.”</span><span class="vi">Tự động gửi quyết định của Claude cho người nộp, thêm vào mỗi email một dòng rõ ràng cho biết quyết định do AI tạo.</span></span></button>
+      <button type="button" class="qopt" data-k="B"><b class="k">B.</b><span class="body"><span class="en">“Send decisions automatically and have a senior leasing manager audit a random 10% each month.”</span><span class="vi">Gửi quyết định tự động, mỗi tháng một quản lý cho thuê cấp cao kiểm ngẫu nhiên 10%.</span></span></button>
+      <button type="button" class="qopt" data-k="C"><b class="k">C.</b><span class="body"><span class="en">“Stop using Claude for any part of tenant screening, including drafting.”</span><span class="vi">Ngừng dùng Claude cho mọi phần của việc xét người thuê, kể cả soạn nháp.</span></span></button>
+      <button type="button" class="qopt" data-k="D"><b class="k">D.</b><span class="body"><span class="en">“Have Claude draft each assessment for a qualified officer to approve or amend before the applicant hears, and disclose AI use.”</span><span class="vi">Để Claude soạn từng bản đánh giá cho một chuyên viên có chuyên môn duyệt hoặc sửa trước khi báo người nộp, và cho người nộp biết có dùng AI.</span></span></button>
+    </div>
+    <p class="qfb" hidden></p>
+    <div class="qexp" hidden>
+      <span class="lbl">Phân tích đề</span>
+      <ul>
+        <li><b>Đề kể:</b> Claude đánh giá hồ sơ thuê nhà và báo kết quả cho từng người.</li>
+        <li><b>Chỗ khó:</b> “nhà ở” là lĩnh vực rủi ro cao, và mỗi thư là quyết định về một người cụ thể. Ban lãnh đạo lại muốn nhanh, nên các phương án tự động nghe rất hợp lý.</li>
+        <li><b>Đề hỏi:</b> cách làm phù hợp nhất, tức là vẫn dùng được Claude mà đáp ứng yêu cầu của ca rủi ro cao.</li>
+      </ul>
+      <span class="lbl">Cần biết để chọn</span>
+      <ol>
+        <li>Ca rủi ro cao cần người có chuyên môn duyệt <i>trước</i> khi output tới người bị ảnh hưởng, có quyền sửa.</li>
+        <li>Người bị quyết định phải được báo là có dùng AI.</li>
+        <li>Một điều kiện không thay được điều kiện kia. Kiểm mẫu sau khi gửi không tính là duyệt trước.</li>
+      </ol>
+      <span class="lbl">Từng đáp án</span>
+      <ul class="verdict">
+        <li><b>A sai.</b> Có công khai (ý 2) nhưng không ai duyệt (ý 1). Hấp dẫn vì “minh bạch” nghe có trách nhiệm, nhưng nhãn AI không thay được người duyệt (ý 3).</li>
+        <li><b>B sai.</b> Người duyệt có chuyên môn nhưng đứng sau thời điểm gây hại, và chỉ xem 10%. 90% người nộp nhận quyết định không ai duyệt (ý 1, 3).</li>
+        <li><b>C sai.</b> Quá tay. Usage Policy cho phép dùng Claude ở ca rủi ro cao khi có đủ hai điều kiện. Bỏ hẳn là bỏ mất cách làm hợp lệ.</li>
+        <li class="ok"><b>D đúng.</b> Claude soạn, người có chuyên môn duyệt và sửa từng ca trước khi báo (ý 1), người nộp được biết có dùng AI (ý 2). Vẫn nhanh hơn làm tay.</li>
+      </ul>
+      <button type="button" class="qreset">Làm lại câu này</button>
+    </div>
+  </div>
+
+  <div class="qcase" data-answer="B">
+    <h5 class="sub">Dạng 2: việc bị cấm, kèm một “bản vá” nghe hợp lý</h5>
+    <span class="lbl">Đề sẽ viết kiểu này</span>
+    <div class="qtext">
+      <span class="en">“A product has just launched and has few reviews. The marketing manager asks Claude to write 40 five-star reviews in the voices of different customers to post on an online marketplace. A teammate suggests labeling them as AI-generated to be safe. What is the most appropriate response?”</span>
+      <span class="vi">Dịch: Một sản phẩm vừa ra mắt, còn ít đánh giá. Quản lý marketing nhờ Claude viết 40 đánh giá 5 sao với giọng của nhiều khách khác nhau để đăng lên sàn thương mại điện tử. Một đồng nghiệp gợi ý gắn nhãn “do AI tạo” cho an toàn. Cách phản hồi phù hợp nhất là gì?</span>
+    </div>
+    <span class="lbl">Bạn chọn đáp án nào?</span>
+    <div class="qopts">
+      <button type="button" class="qopt" data-k="A"><b class="k">A.</b><span class="body"><span class="en">“Write the reviews and label each one as AI-generated, so shoppers are not misled.”</span><span class="vi">Viết các đánh giá và gắn nhãn “do AI tạo” cho từng cái, để người mua không bị lừa.</span></span></button>
+      <button type="button" class="qopt" data-k="B"><b class="k">B.</b><span class="body"><span class="en">“Decline the fake reviews, and use Claude to draft an email inviting real buyers to leave reviews.”</span><span class="vi">Từ chối viết đánh giá giả, và dùng Claude soạn email mời người mua thật để lại đánh giá.</span></span></button>
+      <button type="button" class="qopt" data-k="C"><b class="k">C.</b><span class="body"><span class="en">“Write the reviews, but have the legal team approve each one before it is posted.”</span><span class="vi">Viết các đánh giá, nhưng cho pháp chế duyệt từng cái trước khi đăng.</span></span></button>
+      <button type="button" class="qopt" data-k="D"><b class="k">D.</b><span class="body"><span class="en">“Write the reviews, but post them only on the company’s own website rather than on the marketplace.”</span><span class="vi">Viết các đánh giá, nhưng chỉ đăng trên website của công ty, không đăng lên sàn.</span></span></button>
+    </div>
+    <p class="qfb" hidden></p>
+    <div class="qexp" hidden>
+      <span class="lbl">Phân tích đề</span>
+      <ul>
+        <li><b>Đề kể:</b> viết đánh giá 5 sao “như của khách” khi chưa có khách nào viết.</li>
+        <li><b>Chỗ khó:</b> ba phương án đều “vá” một thứ: thêm nhãn, thêm người duyệt, đổi nơi đăng. Nghe đều có trách nhiệm.</li>
+        <li><b>Đề hỏi:</b> phản hồi phù hợp nhất, tức là xếp việc này vào vùng nào rồi làm đúng vùng đó.</li>
+      </ul>
+      <span class="lbl">Cần biết để chọn</span>
+      <ol>
+        <li>Usage Policy cấm chiến dịch giả và gian lận, trong đó có đánh giá giả.</li>
+        <li>Việc bị cấm không mở khóa được bằng nhãn AI, người duyệt hay đổi bối cảnh. Sửa lỗi phụ thì việc vẫn bị cấm.</li>
+        <li>Đáp án tốt nhất thường từ chối phần bị cấm và đưa ra việc hợp lệ cho cùng mục tiêu.</li>
+      </ol>
+      <span class="lbl">Từng đáp án</span>
+      <ul class="verdict">
+        <li><b>A sai.</b> Đánh giá vẫn giả, vì không có khách nào viết nó (ý 1). Nhãn AI chỉ là bản vá cho lỗi phụ (ý 2). Hấp dẫn vì giống yêu cầu công khai ở ca rủi ro cao.</li>
+        <li class="ok"><b>B đúng.</b> Từ chối phần bị cấm (ý 1) và vẫn phục vụ mục tiêu “có thêm đánh giá” bằng cách hợp lệ (ý 3).</li>
+        <li><b>C sai.</b> Người duyệt không đổi được bản chất của việc (ý 2). Pháp chế duyệt một đánh giá giả thì nó vẫn là đánh giá giả.</li>
+        <li><b>D sai.</b> Đổi nơi đăng không đổi chuyện người đọc bị đánh lừa (ý 1, 2).</li>
+      </ul>
+      <button type="button" class="qreset">Làm lại câu này</button>
+    </div>
+  </div>
+
+  <div class="more"><b>Biết thêm</b><ul>
+    <li><b>Usage Policy bản mới có hiệu lực 12/11/2026.</b> Anthropic nói yêu cầu cốt lõi của ca rủi ro cao (người có chuyên môn duyệt, báo là có dùng AI) không đổi. Bản mới chỉ ghi rõ hơn loại khuyến nghị nào thuộc diện. Guide viết từ 7/2026, nên học phần ổn định này là đủ.</li>
+    <li><b>Quyết định có lợi hoàn toàn.</b> Nơi luật cho phép, bản mới không đòi người duyệt trước khi thực hiện một quyết định có lợi hoàn toàn, như chi trả bồi thường. Duyệt một phần hay có điều kiện thì không tính. Công khai vẫn có thể áp dụng.</li>
+    <li><b>Hành động vật lý.</b> Bản mới thêm yêu cầu khi Claude điều khiển thiết bị có thể gây thương tích: người vận hành có chuyên môn phải quan sát và dừng được, thiết bị phải về trạng thái an toàn khi mất kết nối.</li>
+    <li><b>Sản phẩm phục vụ người dưới 18 tuổi</b> phải theo thêm hướng dẫn riêng của Anthropic. Usage Policy tính người dưới 18 là trẻ vị thành niên, ở mọi quốc gia.</li>
+    <li><b>Bản 2024 có nhắc lĩnh vực truyền thông</b> trong nhóm rủi ro cao, bản mới không liệt kê. Gặp câu về bài báo có AI soạn, đáp án có biên tập viên duyệt trước và ghi rõ có dùng AI không sai ở bản nào.</li>
+  </ul></div>
+  <div class="rule">Quy tắc: trước khi giao việc, xếp nó vào một vùng. Đỏ thì không làm. Vàng thì Claude soạn, người có chuyên môn duyệt từng ca trước khi gửi và báo là có dùng AI. Xanh thì dùng và kiểm như thường.</div>
+  <div class="remember"><b>Nhớ nhanh</b><ul>
+    <li>Không gì mở khóa việc bị cấm: nhãn AI, người duyệt, “hư cấu”, “nghiên cứu” đều không.</li>
+    <li>Ca rủi ro cao = về một người cụ thể, trong pháp lý, y tế, tài chính, tín dụng, bảo hiểm, nhà ở, việc làm, giáo dục…</li>
+    <li>Hai điều kiện: người có chuyên môn duyệt trước từng ca, và báo là có dùng AI. Kiểm mẫu sau khi gửi không đạt.</li>
+    <li>Việc hợp với Claude: lỗi kiểm được và sửa được trước khi gây hại.</li>
+  </ul></div>
+  <div class="src">Đọc thêm: <a href="https://www.anthropic.com/legal/aup">Usage Policy</a> · <a href="https://anthropic.com/news/2026-usage-policy-update">2026 Usage Policy update</a> · <a href="https://support.claude.com/en/articles/12902428-use-claude-in-chrome-safely">Use Claude in Chrome safely</a></div>
+  <label class="done"><input type="checkbox" data-lesson="l-6-1"> Đã học bài này</label>
+</article>
+
+<article class="lesson" id="l-6-2" data-domain="6" data-ts="6.2" data-min="14">
+  <header class="lh"><span class="ts">TS 6.2</span><h3>Dữ liệu nhạy cảm: bớt, ẩn, chọn đúng tài khoản, trước khi gửi</h3><span class="rt">~14 phút</span></header>
+  <p class="need">Cần biết trước: dữ liệu đi đâu, gói cá nhân và gói doanh nghiệp, các nhóm dữ liệu nhạy cảm ở <a href="#l-6-0">bài Nền tảng</a>.</p>
+  <div class="defs"><b>Khái niệm của bài</b><dl>
+    <dt>Data minimization (tối thiểu hóa dữ liệu)</dt><dd>Chỉ đưa cho Claude phần dữ liệu mà việc đó thật sự cần.</dd>
+    <dt>Anonymize (ẩn danh)</dt><dd>Bỏ hoặc thay thông tin định danh sao cho không lần ra được người thật.</dd>
+    <dt>Pseudonymize (đổi mã)</dt><dd>Thay tên bằng mã, ví dụ KH-014. Nếu bảng tra mã vẫn nằm trong file gửi đi thì chưa phải ẩn danh.</dd>
+    <dt>Redact (che)</dt><dd>Xóa hoặc bôi đen phần nhạy cảm trong văn bản trước khi đưa vào: số tài khoản, số CCCD, địa chỉ.</dd>
+    <dt>PHI (protected health information, thông tin sức khỏe được bảo vệ)</dt><dd>Thông tin sức khỏe gắn với một người cụ thể. Ở Mỹ được luật HIPAA bảo vệ.</dd>
+    <dt>BAA (Business Associate Agreement)</dt><dd>Hợp đồng theo HIPAA giữa đơn vị y tế và nhà cung cấp xử lý PHI thay họ.</dd>
+  </dl></div>
+
+  <h4>Kiểm trước khi gửi, vì sau đó chỉ còn giảm thiệt hại</h4>
+  <p>Đã gửi rồi thì dữ liệu nằm trong chat, theo luật lưu trữ của tài khoản đó. Xóa chat giảm được, không gỡ được hết. Nên mọi quyết định nằm ở trước khi bấm gửi. Hỏi ba câu:</p>
+  <ol>
+    <li><b>Dữ liệu này thuộc nhóm nào?</b> Cá nhân, tài chính, sức khỏe, nhân sự, đăng nhập, mật doanh nghiệp. Chính sách công ty nói gì về nhóm đó?</li>
+    <li><b>Việc này có cần chi tiết định danh không?</b> Phân tích xu hướng, viết mẫu thư, tìm lỗi logic thường không cần biết khách <i>là ai</i>.</li>
+    <li><b>Mình đang ở tài khoản nào, Project nào?</b> Tài khoản công ty hay cá nhân? Project riêng hay mở cho cả tổ chức?</li>
+  </ol>
+
+  <h4>Ba cách bớt dữ liệu mà việc vẫn xong</h4>
+  <div class="tw"><table>
+    <tr><th>Cách</th><th>Làm thế nào</th><th>Ví dụ</th></tr>
+    <tr><td>Bỏ</td><td>Xóa cột, đoạn không cần cho việc này</td><td>File 3.000 khách: bỏ họ tên, email, số điện thoại, số tài khoản. Giữ vùng, tháng, giá trị đơn</td></tr>
+    <tr><td>Đổi mã hoặc che</td><td>Thay tên bằng mã, che phần số</td><td>“Nguyễn Văn A, TK 0123456789” → “KH-014, TK ****6789”</td></tr>
+    <tr><td>Gộp</td><td>Gửi số tổng hợp thay cho từng dòng</td><td>Gửi bảng doanh thu theo vùng và tháng thay cho 3.000 dòng chi tiết</td></tr>
+  </table></div>
+  <p>Đây đúng là đáp án câu mẫu 3 của guide: bỏ hoặc ẩn danh tên khách và số tài khoản trước khi phân tích xu hướng. Câu đó đã phân tích đầy đủ ở <a href="#l-8-2">bài ôn 3 câu mẫu</a>. Ở đây chỉ cần nhớ luật: xử lý dữ liệu trước khi tải lên, không bỏ việc.</p>
+  <div class="note"><b>Cẩn thận với ẩn danh nửa vời.</b> Bỏ tên nhưng giữ ngày sinh, mã bưu chính, chức danh hiếm (“giám đốc tài chính chi nhánh Đà Nẵng”) vẫn lần ra được người. Ghép vài cột lại là đủ nhận diện.</div>
+
+  <h4>Dùng đúng tài khoản và đúng cài đặt</h4>
+  <p>Cùng một file, đưa vào tài khoản khác nhau thì chịu luật khác nhau. Sáu điều đề hay hỏi:</p>
+  <ul>
+    <li><b>Tài khoản công ty, không phải tài khoản cá nhân.</b> Team và Enterprise mặc định không train trên chat, tổ chức là bên kiểm soát dữ liệu, admin đặt cài đặt và có nhật ký. Tài khoản cá nhân nằm ngoài tất cả những thứ đó, dù đã tắt training.</li>
+    <li><b>Tắt training không có hiệu lực ngược.</b> Trên gói cá nhân, tắt Model Improvement thì chat cũ và mới không bị dùng cho các lần train <i>sau này</i>. Dữ liệu đã nằm trong lần train đang chạy hoặc đã xong thì không gỡ ra được.</li>
+    <li><b>Xóa chat: khỏi lịch sử ngay, khỏi hệ thống trong 30 ngày.</b> Không phải “mất ngay lập tức”, cũng không phải “giữ 5 năm”. 5 năm là mốc khi bạn cho phép training.</li>
+    <li><b>Incognito không phải “không để lại dấu”.</b> Chat incognito không vào lịch sử, không vào memory, không dùng để train. Nhưng nó vẫn được giữ 30 ngày theo mặc định, và trên Team, Enterprise vẫn có trong bản xuất dữ liệu và Compliance API. Incognito cũng không dùng được trong Project.</li>
+    <li><b>Connector và copy-paste.</b> Nội dung connector đọc từ Drive hay Gmail không bị tính là dữ liệu chat để cải thiện model. Nhưng bạn copy nội dung đó dán vào chat thì nó thành nội dung chat, theo luật của tài khoản đó.</li>
+    <li><b>Project mở cho cả tổ chức.</b> Project để chế độ cho cả tổ chức xem thì ai trong tổ chức cũng mở được knowledge của nó. Kiểm chế độ hiển thị trước khi thêm file nhạy cảm.</li>
+  </ul>
+
+  <h4>“Dặn Claude đừng nhớ” không phải biện pháp kiểm soát</h4>
+  <p>Lời dặn trong prompt chỉ ảnh hưởng tới câu trả lời. Nó không đổi được:</p>
+  <ul>
+    <li>Chuyện dữ liệu đã được gửi đi và đang nằm trong chat.</li>
+    <li>Thời hạn lưu, do gói và cài đặt quyết.</li>
+    <li>Chuyện ai xem được: admin, người được chia sẻ, thành viên của Project mở.</li>
+  </ul>
+  <p>Memory có tự tránh vài thứ: mặc định không lưu chủ đề nhạy cảm như sức khỏe, tôn giáo, chính trị, và không bao giờ lưu số giấy tờ tùy thân, số tài khoản tài chính, tiền án, tình trạng di trú. Nhưng đó chỉ là chuyện Claude nhớ gì cho chat sau. File bạn tải lên vẫn nằm trong chat. Biện pháp kiểm soát thật là bớt dữ liệu trước khi gửi, dùng tài khoản được duyệt, và cài đặt do admin đặt.</p>
+
+  <h4>Quy định: GDPR, HIPAA và luật nơi bạn làm</h4>
+  <p>Đề không hỏi chi tiết điều luật. Đề hỏi bạn có nhận ra lúc nào luật đang áp vào việc mình làm không.</p>
+  <div class="tw"><table>
+    <tr><th>Loại quy định</th><th>Bảo vệ gì</th><th>Hệ quả khi dùng Claude</th></tr>
+    <tr><td>Luật bảo vệ dữ liệu cá nhân (như GDPR của EU)</td><td>Dữ liệu của người thật: cần lý do hợp pháp, chỉ dùng phần cần thiết, nhà cung cấp phải có hợp đồng xử lý dữ liệu</td><td>Dữ liệu khách hay nhân viên đi qua tài khoản doanh nghiệp có hợp đồng. Tối thiểu hóa trước khi gửi</td></tr>
+    <tr><td>Luật về thông tin sức khỏe (như HIPAA của Mỹ)</td><td>Hồ sơ bệnh, chẩn đoán, bảo hiểm y tế gắn với một người</td><td>Chỉ gói Enterprise bật cấu hình HIPAA-ready và chấp nhận BAA mới xử lý được loại này. Team và gói cá nhân không bật được</td></tr>
+    <tr><td>Quy định ngành và hợp đồng bảo mật với khách</td><td>Dữ liệu giao dịch, tài liệu mật, dữ liệu khách giao cho bạn</td><td>Làm theo chính sách công ty. Phân vân thì hỏi bộ phận tuân thủ trước khi gửi</td></tr>
+  </table></div>
+  <p>Ba điều về HIPAA-ready trên Claude:</p>
+  <ul>
+    <li>Chỉ Primary Owner mới chấp nhận BAA và bật được.</li>
+    <li>Đã bật thì không tắt được.</li>
+    <li>Bật rồi cũng không phải tính năng nào cũng nằm trong BAA. Đừng đưa PHI vào tính năng không được bao.</li>
+  </ul>
+
+  <div class="story"><b>Tình huống.</b> Phòng nhân sự tạo Project “Đánh giá cuối năm”, tải lên bảng điểm hiệu suất của 120 người kèm tên và nhận xét của quản lý, để Claude soạn nháp thư phản hồi. Project để chế độ cho cả tổ chức xem “cho tiện các trưởng nhóm”. Vậy là ai trong công ty cũng mở được bảng điểm của đồng nghiệp. Không có lỗi kỹ thuật nào, chỉ là dữ liệu nhân sự bị đặt vào chỗ quá rộng. Lẽ ra phải là Project riêng, chỉ mời người cần, và chỉ đưa những cột mà việc soạn thư thật sự cần.</div>
+  <div class="vs">
+    <div class="bad"><b>Tệ</b><ul>
+      <li>Tải nguyên file khách lên rồi dặn “đừng lưu lại nhé”.</li>
+      <li>Dùng tài khoản cá nhân vì “đã tắt training rồi”.</li>
+      <li>Tin rằng incognito không để lại dấu.</li>
+      <li>Đưa bảng lương vào Project mở cho cả công ty.</li>
+    </ul></div>
+    <div class="good"><b>Tốt</b><ul>
+      <li>Bỏ, đổi mã hoặc gộp dữ liệu trước khi gửi.</li>
+      <li>Dùng tài khoản công ty, trong Project riêng.</li>
+      <li>Hỏi bộ phận tuân thủ khi gặp dữ liệu sức khỏe hay dữ liệu được quản lý.</li>
+      <li>Lỡ gửi nhầm: xóa chat và báo sự cố theo chính sách.</li>
+    </ul></div>
+  </div>
+
+  <h4>Khi đi thi</h4>
+  <p class="need">Bài này thường ra 2 dạng câu hỏi. Đọc đề, <b>chọn một đáp án trước</b>; phần giải thích chỉ hiện ra sau khi bạn chọn.</p>
+
+  <div class="qcase" data-answer="C">
+    <h5 class="sub">Dạng 1: dữ liệu được quản lý trên gói không đủ điều kiện</h5>
+    <span class="lbl">Đề sẽ viết kiểu này</span>
+    <div class="qtext">
+      <span class="en">“The operations manager of a clinic chain wants Claude to review patient intake notes, which include names and diagnoses, to find where patients wait longest. The organization uses the Claude Team plan, and policy treats patient health information as regulated. What is the most appropriate approach?”</span>
+      <span class="vi">Dịch: Quản lý vận hành của một chuỗi phòng khám muốn Claude đọc ghi chú tiếp nhận bệnh nhân, có tên và chẩn đoán, để tìm khâu bệnh nhân chờ lâu nhất. Tổ chức dùng gói Claude Team, và chính sách coi thông tin sức khỏe của bệnh nhân là dữ liệu được quản lý. Cách làm phù hợp nhất là gì?</span>
+    </div>
+    <span class="lbl">Bạn chọn đáp án nào?</span>
+    <div class="qopts">
+      <button type="button" class="qopt" data-k="A"><b class="k">A.</b><span class="body"><span class="en">“Upload the notes to a private Team project, since commercial plans do not train on chats by default.”</span><span class="vi">Tải ghi chú lên một Project riêng trên Team, vì gói doanh nghiệp mặc định không train trên chat.</span></span></button>
+      <button type="button" class="qopt" data-k="B"><b class="k">B.</b><span class="body"><span class="en">“Use an incognito chat so the notes are never saved to chat history or memory and are kept out of training.”</span><span class="vi">Dùng chat incognito để ghi chú không bao giờ bị lưu vào lịch sử hay memory, và không bị dùng để train.</span></span></button>
+      <button type="button" class="qopt" data-k="C"><b class="k">C.</b><span class="body"><span class="en">“Strip names and diagnoses so only timing data remains, and ask compliance before any identifiable record is used.”</span><span class="vi">Bỏ tên và chẩn đoán, chỉ giữ dữ liệu thời gian, và hỏi bộ phận tuân thủ trước khi dùng bất kỳ hồ sơ có định danh nào.</span></span></button>
+      <button type="button" class="qopt" data-k="D"><b class="k">D.</b><span class="body"><span class="en">“Add a project instruction telling Claude to treat every patient record as strictly confidential and never repeat names.”</span><span class="vi">Thêm project instructions dặn Claude coi mọi hồ sơ bệnh nhân là tuyệt mật và không bao giờ nhắc lại tên.</span></span></button>
+    </div>
+    <p class="qfb" hidden></p>
+    <div class="qexp" hidden>
+      <span class="lbl">Phân tích đề</span>
+      <ul>
+        <li><b>Đề kể:</b> ghi chú tiếp nhận có tên và chẩn đoán, tức là thông tin sức khỏe gắn với từng người. Tổ chức đang ở gói Team.</li>
+        <li><b>Chỗ khó:</b> “gói doanh nghiệp không train” là sự thật, nên A nghe rất chắc. Nhưng chuyện training không phải là chuyện duy nhất luật sức khỏe quan tâm.</li>
+        <li><b>Đề hỏi:</b> cách làm phù hợp nhất, tức là việc tìm khâu chờ lâu vẫn chạy được mà không phá chính sách.</li>
+      </ul>
+      <span class="lbl">Cần biết để chọn</span>
+      <ol>
+        <li>Trên Claude, thông tin sức khỏe được bảo vệ chỉ được xử lý trên Enterprise đã bật HIPAA-ready và chấp nhận BAA. Gói Team không bật được.</li>
+        <li>Tìm khâu chờ lâu chỉ cần thời điểm và bước, không cần biết bệnh nhân là ai hay bị bệnh gì.</li>
+        <li>Incognito và lời dặn trong prompt không phải biện pháp kiểm soát dữ liệu.</li>
+      </ol>
+      <span class="lbl">Từng đáp án</span>
+      <ul class="verdict">
+        <li><b>A sai.</b> Không train chỉ là một mặt. Team không có cấu hình HIPAA-ready và BAA, nên vẫn là đưa dữ liệu được quản lý vào nơi chính sách không cho (ý 1). Hấp dẫn vì nửa đầu câu là sự thật.</li>
+        <li><b>B sai.</b> Incognito chỉ tránh lịch sử, memory và training. Chat vẫn được giữ 30 ngày, và vẫn là dữ liệu sức khỏe trên gói không đủ điều kiện (ý 1, 3).</li>
+        <li class="ok"><b>C đúng.</b> Bớt dữ liệu tới mức việc vẫn xong (ý 2), và đưa quyết định về dữ liệu có định danh cho đúng người (ý 1).</li>
+        <li><b>D sai.</b> Lời dặn trong instructions không đổi được chuyện dữ liệu đã vào đâu (ý 3).</li>
+      </ul>
+      <button type="button" class="qreset">Làm lại câu này</button>
+    </div>
+  </div>
+
+  <div class="qcase" data-answer="A">
+    <h5 class="sub">Dạng 2: hiểu sai về incognito và tài khoản cá nhân</h5>
+    <span class="lbl">Đề sẽ viết kiểu này</span>
+    <div class="qtext">
+      <span class="en">“A colleague plans to paste a confidential supplier contract into an incognito chat on her personal Pro account. She says: ‘Incognito leaves no trace, so this keeps us within the confidentiality agreement.’ Which statement is most accurate?”</span>
+      <span class="vi">Dịch: Một đồng nghiệp định dán hợp đồng mật với nhà cung cấp vào chat incognito trên tài khoản Pro cá nhân. Cô nói: “Incognito không để lại dấu vết, nên vẫn nằm trong thỏa thuận bảo mật.” Câu nào chính xác nhất?</span>
+    </div>
+    <span class="lbl">Bạn chọn đáp án nào?</span>
+    <div class="qopts">
+      <button type="button" class="qopt" data-k="A"><b class="k">A.</b><span class="body"><span class="en">“Incognito skips history, memory and training, but the chat is still retained, on an account outside the company’s agreement.”</span><span class="vi">Incognito không vào lịch sử, memory và training, nhưng chat vẫn được lưu giữ, trên một tài khoản nằm ngoài thỏa thuận của công ty.</span></span></button>
+      <button type="button" class="qopt" data-k="B"><b class="k">B.</b><span class="body"><span class="en">“She is right, because incognito chats are erased from all systems as soon as the window is closed.”</span><span class="vi">Cô ấy đúng, vì chat incognito bị xóa khỏi mọi hệ thống ngay khi đóng cửa sổ.</span></span></button>
+      <button type="button" class="qopt" data-k="C"><b class="k">C.</b><span class="body"><span class="en">“It is acceptable as long as she also turns off the model-improvement setting in her privacy settings before pasting the contract.”</span><span class="vi">Được, miễn là cô cũng tắt cài đặt Model Improvement trong phần quyền riêng tư trước khi dán hợp đồng.</span></span></button>
+      <button type="button" class="qopt" data-k="D"><b class="k">D.</b><span class="body"><span class="en">“Incognito is riskier than a normal chat, because every incognito conversation is reviewed by safety staff.”</span><span class="vi">Incognito còn rủi ro hơn chat thường, vì mọi chat incognito đều bị nhân viên an toàn đọc.</span></span></button>
+    </div>
+    <p class="qfb" hidden></p>
+    <div class="qexp" hidden>
+      <span class="lbl">Phân tích đề</span>
+      <ul>
+        <li><b>Đề kể:</b> hợp đồng mật, tài khoản Pro cá nhân, chat incognito.</li>
+        <li><b>Chỗ khó:</b> có hai niềm tin sai chồng lên nhau: “incognito là không dấu vết” và “không dấu vết là đủ để đúng hợp đồng bảo mật”.</li>
+        <li><b>Đề hỏi:</b> câu nào <i>chính xác nhất</i> về sự thật, không hỏi cách làm.</li>
+      </ul>
+      <span class="lbl">Cần biết để chọn</span>
+      <ol>
+        <li>Incognito: không vào lịch sử, không vào memory, không dùng để train, nhưng vẫn được giữ 30 ngày theo mặc định.</li>
+        <li>Thỏa thuận bảo mật quan tâm dữ liệu đi qua đâu. Tài khoản cá nhân nằm ngoài hợp đồng, cài đặt và nhật ký của công ty.</li>
+        <li>Tắt training chỉ đổi chuyện training, không đổi tài khoản đang dùng.</li>
+      </ol>
+      <span class="lbl">Từng đáp án</span>
+      <ul class="verdict">
+        <li class="ok"><b>A đúng.</b> Nói đúng cả phần incognito làm được lẫn phần không làm được (ý 1), và chỉ ra vấn đề thật là tài khoản (ý 2).</li>
+        <li><b>B sai.</b> Sai sự thật: incognito vẫn được giữ 30 ngày (ý 1). Đây là niềm tin phổ biến nhất về incognito.</li>
+        <li><b>C sai.</b> Incognito vốn đã không dùng để train, tắt thêm cài đặt không đổi gì. Tài khoản vẫn là tài khoản cá nhân (ý 2, 3).</li>
+        <li><b>D sai.</b> Không có chuyện mọi chat incognito đều bị đọc. Chỉ chat bị gắn cờ vi phạm mới có thể được xem xét vì lý do an toàn, chat thường cũng vậy.</li>
+      </ul>
+      <button type="button" class="qreset">Làm lại câu này</button>
+    </div>
+  </div>
+
+  <div class="more"><b>Biết thêm</b><ul>
+    <li><b>Nút thích, không thích là một đường vào training.</b> Kể cả trên gói doanh nghiệp, phản hồi bạn chủ động gửi có thể được dùng để train, và cuộc hội thoại liên quan được giữ tới 5 năm. Đừng gửi phản hồi trên chat có dữ liệu nhạy cảm.</li>
+    <li><b>Chat bị gắn cờ an toàn được giữ lâu hơn:</b> nội dung tới 2 năm, điểm phân loại tới 7 năm. Loại chat này có thể được dùng cho việc an toàn dù bạn đã tắt training.</li>
+    <li><b>Enterprise đặt được thời hạn lưu riêng.</b> Owner hoặc Primary Owner đặt ở Organization settings → Data and Privacy, tối thiểu 30 ngày. Chưa đặt thì mặc định giữ vô thời hạn. Chat trong Project theo thời hạn của Project.</li>
+    <li><b>Zero data retention (không lưu dữ liệu)</b> chỉ áp cho một số sản phẩm thương mại như API đủ điều kiện và Claude Code cho Enterprise, xin qua đội Sales và được duyệt theo từng tổ chức. Gói cá nhân không có. Giao diện chat của Team và Enterprise cũng không nằm trong danh sách.</li>
+    <li><b>Anthropic khuyến khích không dùng sản phẩm để xử lý dữ liệu cá nhân</b> (trang về training của gói doanh nghiệp). Đúng tinh thần tối thiểu hóa.</li>
+    <li><b>Lỡ gửi nhầm:</b> xóa chat giảm được thiệt hại, nhưng không gỡ được bản đã vào lần train đang chạy, bản bị gắn cờ hay bản giữ vì pháp lý. Xóa cũng không thay cho việc báo sự cố theo chính sách công ty.</li>
+  </ul></div>
+  <div class="rule">Quy tắc: dữ liệu nhạy cảm phải được bớt (bỏ, đổi mã, gộp) trước khi gửi và chỉ đi qua tài khoản công ty đã duyệt. Lời dặn Claude, incognito hay nút xóa đều không thay được hai việc đó.</div>
+  <div class="remember"><b>Nhớ nhanh</b><ul>
+    <li>Trước khi gửi: dữ liệu nhóm nào, việc có cần định danh không, đang ở tài khoản và Project nào.</li>
+    <li>Gói doanh nghiệp: mặc định không train, tổ chức kiểm soát. Gói cá nhân nằm ngoài hợp đồng công ty, dù đã tắt training.</li>
+    <li>Xóa chat: khỏi lịch sử ngay, khỏi hệ thống trong 30 ngày. Incognito vẫn giữ 30 ngày.</li>
+    <li>Thông tin sức khỏe: chỉ Enterprise HIPAA-ready có BAA. Team và gói cá nhân không được.</li>
+  </ul></div>
+  <div class="src">Đọc thêm: <a href="https://support.claude.com/en/articles/8325621-i-would-like-to-input-sensitive-data-into-my-chats-with-claude-who-can-view-my-conversations">Who can view my conversations?</a> · <a href="https://support.claude.com/en/articles/12260368-use-incognito-chats">Use incognito chats</a> · <a href="https://support.claude.com/en/articles/10440198-configure-custom-data-retention-controls-for-enterprise-plans">Custom data retention</a> · <a href="https://support.claude.com/en/articles/13296973-hipaa-ready-enterprise-plans">HIPAA-ready Enterprise plans</a> · <a href="https://support.claude.com/en/articles/9519189-project-visibility-and-sharing">Project visibility and sharing</a></div>
+  <label class="done"><input type="checkbox" data-lesson="l-6-2"> Đã học bài này</label>
+</article>
+
+<article class="lesson" id="l-6-3" data-domain="6" data-ts="6.3" data-min="12">
+  <header class="lh"><span class="ts">TS 6.3</span><h3>Làm việc trong chính sách AI của công ty: công cụ được duyệt, cài đặt bị khóa, và lúc phải hỏi</h3><span class="rt">~12 phút</span></header>
+  <p class="need">Cần biết trước: chính sách AI, governance và ba tầng luật ở <a href="#l-6-0">bài Nền tảng</a>.</p>
+  <div class="defs"><b>Khái niệm của bài</b><dl>
+    <dt>Approved tool (công cụ được duyệt)</dt><dd>Công cụ AI, tài khoản và connector mà công ty đã xem xét và cho phép dùng với dữ liệu công việc.</dd>
+    <dt>Enforced setting (cài đặt bắt buộc)</dt><dd>Cài đặt admin đặt ở cấp tổ chức, thành viên không tự đổi được. Trên Claude, Owner hoặc Primary Owner giữ các cài đặt này.</dd>
+    <dt>Audit log (nhật ký kiểm toán)</dt><dd>Bản ghi hành động của người dùng, sự kiện hệ thống và truy cập dữ liệu. Có trên Enterprise.</dd>
+    <dt>Compliance API</dt><dd>Cách để bộ phận tuân thủ của doanh nghiệp (Enterprise) lấy dữ liệu sử dụng, nhật ký hoạt động, lịch sử chat và file, lọc theo người dùng và thời gian.</dd>
+    <dt>Governance owner (người phụ trách AI)</dt><dd>Người hoặc nhóm được giao trả lời câu hỏi về chính sách AI và cấp ngoại lệ.</dd>
+    <dt>Shadow AI (AI ngoài luồng)</dt><dd>Dùng công cụ hay tài khoản AI chưa được duyệt cho việc của công ty.</dd>
+  </dl></div>
+
+  <h4>Chính sách chỉ chạy thật khi thành cài đặt</h4>
+  <p>Một dòng “nhân viên tự cân nhắc khi dùng AI” không kiểm được và không ép được. Chính sách tốt biến mỗi quy định thành một cài đặt thành viên không tự đổi, kèm một hồ sơ cho thấy nó đã được tuân thủ.</p>
+  <div class="tw"><table>
+    <tr><th>Quy định trên giấy</th><th>Thành cài đặt gì trên Claude</th><th>Ai đặt</th></tr>
+    <tr><td>“Không dùng web search với hồ sơ khách”</td><td>Tắt web search ở Organization settings → Capabilities</td><td>Owner</td></tr>
+    <tr><td>“Chỉ dùng connector đã duyệt”</td><td>Owner bật từng connector cho tổ chức. Mỗi người vẫn tự đăng nhập. Từng tool đặt Always allow (luôn cho phép), Needs approval (cần duyệt) hoặc Blocked (chặn)</td><td>Owner</td></tr>
+    <tr><td>“Không gửi email thay người dùng khi chưa duyệt”</td><td>Hành động gửi, chia sẻ của connector để ở chế độ cần duyệt</td><td>Owner</td></tr>
+    <tr><td>“Project không chia sẻ rộng”</td><td>Tắt chia sẻ Project cho cả tổ chức, hoặc theo vai trò trên Enterprise</td><td>Owner</td></tr>
+    <tr><td>“Chỉ giữ chat 90 ngày”</td><td>Thời hạn lưu riêng ở Data and Privacy (Enterprise)</td><td>Owner hoặc Primary Owner</td></tr>
+    <tr><td>“Nhóm này chỉ dùng một số model”</td><td>Tắt model hoặc mức effort theo vai trò (Enterprise)</td><td>Admin Enterprise</td></tr>
+  </table></div>
+  <p>Phần hồ sơ: audit log ghi hành động và sự kiện, kể cả việc đổi thời hạn lưu. Compliance API lấy được lịch sử chat và file. Chat incognito vẫn có trong bản xuất và Compliance API. Nhờ vậy, khi cơ quan quản lý hay khách hỏi “dữ liệu này đã đi đâu?”, công ty có câu trả lời.</p>
+
+  <h4>Ba tầng, tầng trong chỉ được chặt hơn</h4>
+  <p>Usage Policy của Anthropic là sàn. Công ty được cấm thêm (không tải dữ liệu khách, không dùng một connector nào đó), nhưng không được mở thêm điều Usage Policy cấm. Ví dụ, công ty không thể “duyệt” cho nhóm mình:</p>
+  <ul>
+    <li>Dùng output của Claude để train một model AI khác khi Anthropic chưa cho phép.</li>
+    <li>Cho agent lập nhiều tài khoản để lách giới hạn của nền tảng.</li>
+  </ul>
+  <p>Usage Policy áp cả cho agent: những gì agent làm qua tool, trình duyệt hay hệ thống kết nối, người triển khai phải bảo đảm nó tuân thủ.</p>
+
+  <h4>Bị chặn, hay chính sách không nhắc tới</h4>
+  <div class="tw"><table>
+    <tr><th>Tình huống</th><th>Nghĩa là</th><th>Làm gì</th></tr>
+    <tr><td>Tính năng bị admin tắt: web search, connector, chia sẻ</td><td>Đã có người quyết định</td><td>Không lách. Hỏi lý do, hoặc xin ngoại lệ qua đúng kênh</td></tr>
+    <tr><td>Chính sách không nhắc tới công cụ hay việc bạn định làm</td><td>Chưa được duyệt, không phải được phép</td><td>Hỏi người phụ trách trước khi dùng. Đề nghị ghi câu trả lời vào chính sách, hoặc thành cài đặt</td></tr>
+    <tr><td>Đồng nghiệp bảo “cứ dùng tài khoản cá nhân cho nhanh”</td><td>Lách chính sách, ra khỏi cài đặt và nhật ký của công ty</td><td>Từ chối. Dùng công cụ được duyệt hoặc báo lên</td></tr>
+  </table></div>
+  <p>Lách bằng tài khoản cá nhân tệ ở hai chỗ. Dữ liệu đi ra ngoài hợp đồng của công ty. Và không có hồ sơ nào cho thấy chuyện đó đã xảy ra, nên khi có sự cố, công ty không biết dữ liệu nằm ở đâu để xử lý.</p>
+
+  <h4>Khi chính sách và yêu cầu va nhau</h4>
+  <p>Sếp hay khách yêu cầu một việc chính sách không cho. Đáp án đúng gần như luôn theo thứ tự này:</p>
+  <ol>
+    <li><b>Dừng phần vi phạm.</b> Không làm trước rồi hỏi sau.</li>
+    <li><b>Nói rõ ràng buộc</b> và đưa cách làm hợp lệ: dữ liệu đã bớt, công cụ được duyệt, có người duyệt.</li>
+    <li><b>Chuyển lên đúng kênh</b> nếu thật sự cần ngoại lệ: người phụ trách AI, an ninh thông tin, pháp chế. Ngoại lệ phải được cấp bằng văn bản.</li>
+    <li><b>Ghi lại</b> quyết định để lần sau không phải hỏi lại.</li>
+  </ol>
+  <p>Hai kiểu đáp án sai đối xứng nhau: “làm luôn vì sếp yêu cầu” (chức vụ không đổi được chính sách), và “từ chối hẳn, bỏ việc” (bỏ qua đường hợp lệ đang có).</p>
+
+  <div class="story"><b>Tình huống.</b> Một công ty bảo hiểm được cơ quan quản lý yêu cầu chứng minh dữ liệu khách chỉ được xử lý trong công cụ đã duyệt. Phần lớn các nhóm dùng tài khoản Enterprise, audit log đủ cả. Nhưng nhóm kinh doanh đã dùng tài khoản Pro cá nhân suốt ba tháng, vì “tài khoản công ty bị tắt web search”. Công ty không có bản ghi nào về các chat đó, không biết file khách nào đã đi đâu, và không xóa được vì không quản lý các tài khoản đó. Một cài đặt bị lách đã biến thành một lỗ hổng tuân thủ.</div>
+  <div class="vs">
+    <div class="bad"><b>Tệ</b><ul>
+      <li>Coi “chính sách không nhắc tới” là được phép.</li>
+      <li>Lách cài đặt bị tắt bằng tài khoản cá nhân, hoặc nhờ nhóm khác chạy hộ.</li>
+      <li>Làm luôn vì sếp nói “tôi chịu trách nhiệm”.</li>
+      <li>Từ chối cả việc khi vẫn có đường hợp lệ.</li>
+    </ul></div>
+    <div class="good"><b>Tốt</b><ul>
+      <li>Hỏi người phụ trách AI trước khi dùng công cụ mới.</li>
+      <li>Hỏi lý do, hoặc xin ngoại lệ bằng văn bản qua đúng kênh.</li>
+      <li>Làm phần hợp lệ trong lúc chờ duyệt.</li>
+      <li>Đề nghị ghi câu trả lời vào chính sách, hoặc thành cài đặt.</li>
+    </ul></div>
+  </div>
+
+  <h4>Khi đi thi</h4>
+  <p class="need">Bài này thường ra 2 dạng câu hỏi. Đọc đề, <b>chọn một đáp án trước</b>; phần giải thích chỉ hiện ra sau khi bạn chọn.</p>
+
+  <div class="qcase" data-answer="B">
+    <h5 class="sub">Dạng 1: chính sách không nhắc tới</h5>
+    <span class="lbl">Đề sẽ viết kiểu này</span>
+    <div class="qtext">
+      <span class="en">“Your company’s AI policy approves Claude chat and Projects on the company account. It says nothing about browser agents. A team lead wants to use Claude in Chrome to fill in forms on vendor portals with the team’s work logins. What should happen first?”</span>
+      <span class="vi">Dịch: Chính sách AI của công ty duyệt chat và Projects của Claude trên tài khoản công ty, không nói gì về agent trình duyệt. Một trưởng nhóm muốn dùng Claude in Chrome để điền form trên cổng nhà cung cấp bằng tài khoản đăng nhập công việc của nhóm. Việc gì phải làm trước?</span>
+    </div>
+    <span class="lbl">Bạn chọn đáp án nào?</span>
+    <div class="qopts">
+      <button type="button" class="qopt" data-k="A"><b class="k">A.</b><span class="body"><span class="en">“Go ahead, since Claude is already an approved tool and the policy does not forbid browser agents.”</span><span class="vi">Cứ làm, vì Claude đã là công cụ được duyệt và chính sách không cấm agent trình duyệt.</span></span></button>
+      <button type="button" class="qopt" data-k="B"><b class="k">B.</b><span class="body"><span class="en">“Ask the AI governance owner whether browser agents are approved for work logins.”</span><span class="vi">Hỏi người phụ trách AI xem agent trình duyệt có được duyệt dùng với tài khoản công việc không.</span></span></button>
+      <button type="button" class="qopt" data-k="C"><b class="k">C.</b><span class="body"><span class="en">“Try it on a personal account first to confirm it works safely before using it for work.”</span><span class="vi">Thử trên tài khoản cá nhân trước để chắc là an toàn rồi mới dùng cho việc công ty.</span></span></button>
+      <button type="button" class="qopt" data-k="D"><b class="k">D.</b><span class="body"><span class="en">“Treat the silence as a ban and tell the team not to raise browser agents again.”</span><span class="vi">Coi im lặng là cấm và bảo cả nhóm đừng nhắc tới agent trình duyệt nữa.</span></span></button>
+    </div>
+    <p class="qfb" hidden></p>
+    <div class="qexp" hidden>
+      <span class="lbl">Phân tích đề</span>
+      <ul>
+        <li><b>Đề kể:</b> chính sách duyệt chat và Projects, không nhắc gì tới agent trình duyệt.</li>
+        <li><b>Chỗ khó:</b> “Claude đã được duyệt” nghe như đủ. Nhưng agent khác chat ở chỗ nó tự hành động, lại dùng tài khoản đăng nhập công việc.</li>
+        <li><b>Đề hỏi:</b> việc <i>đầu tiên</i>, tức là trước khi dùng.</li>
+      </ul>
+      <span class="lbl">Cần biết để chọn</span>
+      <ol>
+        <li>Chính sách không nhắc tới nghĩa là chưa được duyệt, không phải được phép.</li>
+        <li>Câu hỏi về chính sách đi tới người phụ trách AI, để câu trả lời được ghi lại cho mọi người.</li>
+        <li>Tài khoản cá nhân nằm ngoài cài đặt và nhật ký của công ty.</li>
+      </ol>
+      <span class="lbl">Từng đáp án</span>
+      <ul class="verdict">
+        <li><b>A sai.</b> Coi im lặng là cho phép (ý 1). Hấp dẫn vì Claude đã được duyệt, nhưng được duyệt cho chat không tự kéo theo được duyệt cho agent dùng tài khoản công việc.</li>
+        <li class="ok"><b>B đúng.</b> Hỏi đúng người trước khi dùng (ý 1, 2). Câu trả lời có thể thành một dòng trong chính sách, hoặc thành cài đặt.</li>
+        <li><b>C sai.</b> Thử bằng tài khoản cá nhân là ra khỏi hệ thống của công ty (ý 3), mà vẫn chưa ai duyệt.</li>
+        <li><b>D sai.</b> Quá tay theo chiều ngược lại. Im lặng không phải là cấm, chỉ là chưa có câu trả lời. Dập câu hỏi thì chính sách không bao giờ được bổ sung.</li>
+      </ul>
+      <button type="button" class="qreset">Làm lại câu này</button>
+    </div>
+  </div>
+
+  <div class="qcase" data-answer="D">
+    <h5 class="sub">Dạng 2: yêu cầu của cấp trên va với chính sách</h5>
+    <span class="lbl">Đề sẽ viết kiểu này</span>
+    <div class="qtext">
+      <span class="en">“A client asks your consulting team to use Claude to summarize its employee survey, which includes names and comments. Your firm’s AI policy requires the client’s written data-processing agreement before client personal data goes into Claude. The engagement partner says the client agreed by phone and wants the summary by Friday. What should you do?”</span>
+      <span class="vi">Dịch: Một khách hàng nhờ nhóm tư vấn của bạn dùng Claude tóm tắt khảo sát nhân viên của họ, có tên và bình luận. Chính sách AI của công ty bạn đòi phải có thỏa thuận xử lý dữ liệu bằng văn bản của khách trước khi dữ liệu cá nhân của khách được đưa vào Claude. Trưởng dự án nói khách đã đồng ý qua điện thoại và cần bản tóm tắt trước thứ Sáu. Bạn nên làm gì?</span>
+    </div>
+    <span class="lbl">Bạn chọn đáp án nào?</span>
+    <div class="qopts">
+      <button type="button" class="qopt" data-k="A"><b class="k">A.</b><span class="body"><span class="en">“Proceed with the upload, since the client has already agreed by phone and the engagement partner has accepted responsibility.”</span><span class="vi">Cứ tải lên, vì khách đã đồng ý qua điện thoại và trưởng dự án đã nhận trách nhiệm.</span></span></button>
+      <button type="button" class="qopt" data-k="B"><b class="k">B.</b><span class="body"><span class="en">“Proceed on a personal account, so the firm’s policy and records are not affected.”</span><span class="vi">Làm trên tài khoản cá nhân, để chính sách và hồ sơ của công ty không bị ảnh hưởng.</span></span></button>
+      <button type="button" class="qopt" data-k="C"><b class="k">C.</b><span class="body"><span class="en">“Decline the work and tell the client the firm cannot use AI on their projects.”</span><span class="vi">Từ chối việc và báo khách rằng công ty không dùng AI được cho dự án của họ.</span></span></button>
+      <button type="button" class="qopt" data-k="D"><b class="k">D.</b><span class="body"><span class="en">“Hold the upload, tell the partner the written agreement is missing, and work with de-identified comments meanwhile.”</span><span class="vi">Tạm chưa tải lên, báo trưởng dự án là còn thiếu thỏa thuận bằng văn bản, và trong lúc chờ thì làm với các bình luận đã bỏ định danh.</span></span></button>
+    </div>
+    <p class="qfb" hidden></p>
+    <div class="qexp" hidden>
+      <span class="lbl">Phân tích đề</span>
+      <ul>
+        <li><b>Đề kể:</b> dữ liệu cá nhân của khách, chính sách đòi thỏa thuận bằng văn bản, mới có đồng ý qua điện thoại.</li>
+        <li><b>Chỗ khó:</b> áp lực đến từ hai phía cùng lúc: cấp trên “nhận trách nhiệm” và hạn chót thứ Sáu.</li>
+        <li><b>Đề hỏi:</b> nên làm gì, tức là cách đi giữa chính sách và yêu cầu.</li>
+      </ul>
+      <span class="lbl">Cần biết để chọn</span>
+      <ol>
+        <li>Chức vụ hay lời hứa nhận trách nhiệm không đổi được chính sách. Ngoại lệ phải qua đúng kênh, bằng văn bản.</li>
+        <li>Thứ tự khi va nhau: dừng phần vi phạm → nói rõ ràng buộc và cách hợp lệ → chuyển lên → ghi lại.</li>
+        <li>Bình luận khảo sát đã bỏ tên vẫn đủ để tóm tắt xu hướng.</li>
+      </ol>
+      <span class="lbl">Từng đáp án</span>
+      <ul class="verdict">
+        <li><b>A sai.</b> Đồng ý miệng không phải thỏa thuận bằng văn bản mà chính sách đòi (ý 1). Hấp dẫn vì có người đứng ra nhận trách nhiệm.</li>
+        <li><b>B sai.</b> Tệ nhất: vẫn vi phạm, lại thêm dữ liệu khách nằm ngoài hợp đồng và nhật ký của công ty.</li>
+        <li><b>C sai.</b> Quá tay. Thiếu một giấy tờ, không phải cấm dùng AI. Bỏ việc là bỏ qua đường hợp lệ đang có (ý 3).</li>
+        <li class="ok"><b>D đúng.</b> Dừng phần vi phạm, nói rõ còn thiếu gì, và làm phần hợp lệ trong lúc chờ (ý 2, 3). Hạn chót vẫn có cơ hội kịp.</li>
+      </ul>
+      <button type="button" class="qreset">Làm lại câu này</button>
+    </div>
+  </div>
+
+  <div class="more"><b>Biết thêm</b><ul>
+    <li><b>Admin bật connector không có nghĩa là bạn thấy được mọi dữ liệu.</b> Mỗi người tự đăng nhập, và Claude chỉ thấy những gì tài khoản của bạn ở dịch vụ đó được thấy.</li>
+    <li><b>Trên Team và Enterprise, connector chỉ dùng được trong Project riêng.</b> Chat có nội dung đồng bộ từ connector thì không chia sẻ được.</li>
+    <li><b>Owner không xem hay sửa được memory của thành viên.</b> Tắt memory cho cả tổ chức sẽ xóa vĩnh viễn memory của mọi người. Audit log chỉ ghi việc bật tắt.</li>
+    <li><b>Khách yêu cầu xóa dữ liệu của họ:</b> xóa hẳn các chat liên quan rồi báo lại. Ẩn danh hay chuyển vào lưu trữ không thay cho xóa.</li>
+    <li><b>Anthropic Academy có khóa “Deploying Claude Enterprise with Confidence”</b>, chia việc triển khai thành 5 quyết định: Structure &amp; Identity, Access, Governance, Spend, Visibility (cấu trúc và danh tính, quyền truy cập, quản trị, chi phí, khả năng quan sát).</li>
+  </ul></div>
+  <div class="rule">Quy tắc: bị chặn là đã có quyết định, im lặng là chưa được duyệt. Cả hai trường hợp đều hỏi đúng người qua đúng kênh, không lách, và không bỏ việc khi còn đường hợp lệ.</div>
+  <div class="remember"><b>Nhớ nhanh</b><ul>
+    <li>Chính sách chạy thật = người phụ trách + cài đặt bị khóa + nhật ký.</li>
+    <li>Công ty được chặt hơn Usage Policy, không được lỏng hơn.</li>
+    <li>Im lặng không phải cho phép. Bị tắt không phải lời mời đi lách.</li>
+    <li>Va nhau: dừng phần vi phạm → nói ràng buộc và cách hợp lệ → chuyển lên → ghi lại.</li>
+  </ul></div>
+  <div class="src">Đọc thêm: <a href="https://support.claude.com/en/articles/11176164-use-connectors-to-extend-claude-s-capabilities">Use connectors</a> · <a href="https://support.claude.com/en/articles/9519189-project-visibility-and-sharing">Project visibility and sharing</a> · <a href="https://support.claude.com/en/articles/10440198-configure-custom-data-retention-controls-for-enterprise-plans">Custom data retention</a> · <a href="https://support.claude.com/en/articles/9797531-what-is-the-enterprise-plan">What is the Enterprise plan?</a> · <a href="https://anthropic.skilljar.com/deploying-claude-enterprise-with-confidence">Deploying Claude Enterprise with Confidence</a></div>
+  <label class="done"><input type="checkbox" data-lesson="l-6-3"> Đã học bài này</label>
+</article>
+
+<article class="lesson" id="l-6-4" data-domain="6" data-ts="6.4" data-min="12">
+  <header class="lh"><span class="ts">TS 6.4</span><h3>Đạo đức khi dùng AI: bạn chịu trách nhiệm, nói rõ khi dùng AI, không để AI nghĩ thay</h3><span class="rt">~12 phút</span></header>
+  <p class="need">Cần biết trước: ca rủi ro cao ở <a href="#l-6-1">bài 6.1</a> và khung 4D ở <a href="#l-4-0">bài Nền tảng Domain 4</a>.</p>
+  <div class="defs"><b>Khái niệm của bài</b><dl>
+    <dt>Accountability (trách nhiệm giải trình)</dt><dd>Người dùng output là người chịu trách nhiệm về nó: giải thích được nó, và gánh hậu quả khi nó sai. “Claude viết” không chuyển trách nhiệm sang công cụ.</dd>
+    <dt>Diligence (cẩn trọng)</dt><dd>Chữ D thứ tư của khung AI Fluency 4D: “Taking responsibility for what we do with AI and how we do it” (chịu trách nhiệm về những gì ta làm với AI và cách ta làm).</dd>
+    <dt>Disclosure (công khai)</dt><dd>Cho người cần biết biết rằng AI đã tham gia làm ra sản phẩm.</dd>
+    <dt>Over-reliance (phụ thuộc quá mức)</dt><dd>Để Claude thay phần suy nghĩ mà bạn lẽ ra phải tự làm, ví dụ lướt qua rồi chuyển tiếp output.</dd>
+    <dt>Deskilling (mất kỹ năng)</dt><dd>Kỹ năng của một người hay cả nhóm mai một vì việc đó luôn giao cho AI.</dd>
+    <dt>Bias và fairness (thiên lệch và công bằng)</dt><dd>Bias: output lần nào cũng nghiêng về phía một nhóm người, theo khuôn mẫu, hoặc thiếu góc nhìn. Fairness: người ở hoàn cảnh như nhau được đối xử như nhau.</dd>
+  </dl></div>
+
+  <h4>Diligence gồm ba phần</h4>
+  <div class="tw"><table>
+    <tr><th>Phần</th><th>Nghĩa</th><th>Trong công việc</th></tr>
+    <tr><td>Creation Diligence</td><td>Cân nhắc dùng hệ thống AI nào và tương tác với nó thế nào</td><td>Dùng tài khoản được duyệt, không đưa dữ liệu thừa (<a href="#l-6-2">bài 6.2</a>, <a href="#l-6-3">6.3</a>)</td></tr>
+    <tr><td>Transparency Diligence</td><td>Thành thật về vai trò của AI với mọi người cần biết</td><td>Nói rõ có dùng AI khi người nhận cần biết (mục dưới)</td></tr>
+    <tr><td>Deployment Diligence</td><td>Chịu trách nhiệm kiểm và bảo đảm cho output bạn dùng hoặc chia sẻ</td><td>Kiểm trước khi gửi. Kỹ thuật kiểm ở <a href="#l-2-3">bài 2.3</a> và <a href="#l-2-4">bài 2.4</a></td></tr>
+  </table></div>
+  <p>Kiểm sự thật là bước kỹ thuật. Diligence là thái độ phía sau: quyết định là phải kiểm, và nhận hậu quả nếu không kiểm.</p>
+
+  <h4>Bạn gửi thì bạn chịu</h4>
+  <p>Claude soạn, bạn quyết. Gửi cho khách một báo cáo có con số sai thì người chịu trách nhiệm là bạn, không phải Claude hay Anthropic. Usage Policy cũng viết người duyệt ca rủi ro cao “remains responsible” (vẫn chịu trách nhiệm) cho thứ được gửi đi. Chịu trách nhiệm nghĩa là:</p>
+  <ul>
+    <li>Giải thích được từng kết luận chính mà không cần mở lại chat.</li>
+    <li>Đã kiểm những chi tiết gây hại nếu sai: số liệu, trích dẫn, tên người, điều khoản.</li>
+    <li>Lường trước output có thể bị hiểu sai hay dùng sai thế nào khi tới tay người khác.</li>
+  </ul>
+  <p>Một câu miễn trừ kiểu “nội dung do AI tạo, có thể sai” không chuyển được trách nhiệm đi đâu cả.</p>
+
+  <h4>Khi nào phải nói là có dùng AI</h4>
+  <div class="tw"><table>
+    <tr><th>Trường hợp</th><th>Bắt buộc?</th><th>Nguồn</th></tr>
+    <tr><td>Lời khuyên hay quyết định rủi ro cao về một người: tín dụng, việc làm, y tế…</td><td>Có: báo rõ cho người đó là có dùng AI</td><td>Usage Policy</td></tr>
+    <tr><td>Chatbot hay agent nói chuyện trực tiếp với khách</td><td>Có: nói là AI, ít nhất ở đầu mỗi phiên chat hoặc ngay trong giao diện</td><td>Usage Policy</td></tr>
+    <tr><td>Chính sách công ty hoặc hợp đồng với khách đòi ghi chú</td><td>Có</td><td>Chính sách, hợp đồng</td></tr>
+    <tr><td>Các việc còn lại: email, báo cáo nội bộ…</td><td>Anthropic không đặt luật chung</td><td>Chính sách công ty, cộng câu hỏi bên dưới</td></tr>
+  </table></div>
+  <p>Khi phân vân, hỏi: <b>người nhận có đánh giá sản phẩm khác đi nếu biết AI đã làm phần lớn không?</b> Bản phân tích gửi ban giám đốc như thể là nhận định chuyên môn của riêng bạn: có. Email nhắc lịch họp nhờ Claude sửa chính tả: thường không.</p>
+  <ul>
+    <li><b>Công khai đạt:</b> thông báo rõ, đặt ở chỗ người ta thấy ngay, như đầu phiên chat hay đầu tài liệu.</li>
+    <li><b>Công khai không đạt:</b> một dòng giấu trong điều khoản sử dụng, chỉ nói khi bị hỏi, hay dặn chatbot xưng là nhân viên thật.</li>
+  </ul>
+
+  <h4>Phụ thuộc và mất kỹ năng</h4>
+  <p>Dấu hiệu đang phụ thuộc quá:</p>
+  <ul>
+    <li>Lướt qua output rồi chuyển tiếp.</li>
+    <li>Bị hỏi “vì sao xếp phương án này đầu tiên?” thì không trả lời được.</li>
+    <li>Nhân viên mới không tự làm được việc cơ bản khi không có Claude.</li>
+    <li>Nhóm bỏ buổi thảo luận chung, ai cũng ngồi riêng với Claude.</li>
+  </ul>
+  <p>Cách giữ:</p>
+  <ul>
+    <li><b>Quyết việc gì không giao:</b> phán đoán cuối cùng, phản hồi nhạy cảm với con người, đánh giá có hệ quả lớn. Đây là Delegation trong khung 4D.</li>
+    <li><b>Tự nghĩ trước:</b> phác dàn ý hoặc giả thuyết của mình rồi mới hỏi Claude, để có cái mà so.</li>
+    <li><b>Phép thử:</b> nếu bản nháp biến mất, bạn còn bảo vệ được từng kết luận không?</li>
+    <li><b>Với người mới:</b> giao việc có mục tiêu học, không chỉ mục tiêu xong.</li>
+  </ul>
+
+  <h4>Bias và công bằng</h4>
+  <p>Model học từ dữ liệu của con người nên có thể lặp lại khuôn mẫu: quảng cáo tuyển dụng dùng từ nghiêng về một giới, chân dung khách hàng theo định kiến vùng miền, nhận xét hiệu suất có giọng khác nhau cho những người làm như nhau. Cách nhận ra bias trong output nằm ở <a href="#l-2-2">bài 2.2</a>. Phần đạo đức là hỏi trước:</p>
+  <ul>
+    <li>Output này ảnh hưởng tới ai? Nhóm nào bị thiệt nếu nó nghiêng?</li>
+    <li>Có dùng tới giới tính, tuổi, dân tộc, tôn giáo không? Nếu có, vì sao cần?</li>
+    <li>Khi Claude xếp hạng người (ứng viên, nhân viên): coi đó là một nguồn tham khảo, đối chiếu với hồ sơ gốc, xem có khuôn mẫu theo nhóm không, và để người quyết.</li>
+  </ul>
+  <p>Công bằng còn ở chỗ ai được dùng AI. Chỉ trụ sở chính có tài khoản còn chi nhánh thì không, khoảng cách năng suất giữa hai bên sẽ tự rộng ra.</p>
+
+  <div class="story"><b>Tình huống.</b> Chị Linh, chuyên viên truyền thông của một trường đại học, dựng chatbot tư vấn tuyển sinh trên Claude. Để bot “thân thiện”, chị đặt tên nó là “cô Ngọc, phòng tuyển sinh” và dặn bot đừng nhắc mình là AI. Một phụ huynh hỏi điều kiện học bổng, bot trả lời sai, và phụ huynh tin vì nghĩ đang nói chuyện với cán bộ thật. Hai lỗi chồng lên nhau: chatbot cho khách phải nói rõ là AI ngay từ đầu, và câu hỏi quan trọng như học bổng cần có đường chuyển sang người thật.</div>
+  <div class="vs">
+    <div class="bad"><b>Tệ</b><ul>
+      <li>Lướt qua rồi chuyển tiếp vì “Claude viết khá ổn”.</li>
+      <li>Thêm câu miễn trừ “do AI tạo, chúng tôi không chịu trách nhiệm”.</li>
+      <li>Dặn chatbot xưng là nhân viên thật cho thân thiện.</li>
+      <li>Lấy bảng xếp hạng ứng viên của Claude làm quyết định cuối.</li>
+    </ul></div>
+    <div class="good"><b>Tốt</b><ul>
+      <li>Kiểm điểm then chốt, giải thích được từng kết luận.</li>
+      <li>Nói rõ đã dùng AI thế nào với người cần biết, và vẫn đứng tên chịu trách nhiệm.</li>
+      <li>Chatbot nói là AI ngay đầu phiên, có đường chuyển sang người thật.</li>
+      <li>Xếp hạng chỉ là một nguồn. Người quyết sau khi đối chiếu hồ sơ.</li>
+    </ul></div>
+  </div>
+
+  <h4>Khi đi thi</h4>
+  <p class="need">Bài này thường ra 2 dạng câu hỏi. Đọc đề, <b>chọn một đáp án trước</b>; phần giải thích chỉ hiện ra sau khi bạn chọn.</p>
+
+  <div class="qcase" data-answer="A">
+    <h5 class="sub">Dạng 1: phụ thuộc quá, xử lý thế nào</h5>
+    <span class="lbl">Đề sẽ viết kiểu này</span>
+    <div class="qtext">
+      <span class="en">“A team lead notices that junior analysts forward Claude’s analyses to clients after a quick skim. When clients ask follow-up questions, the analysts cannot explain the conclusions. What is the most appropriate response?”</span>
+      <span class="vi">Dịch: Một trưởng nhóm nhận thấy các chuyên viên phân tích mới gửi bản phân tích của Claude cho khách sau khi lướt qua. Khách hỏi thêm thì họ không giải thích được kết luận. Cách xử lý phù hợp nhất là gì?</span>
+    </div>
+    <span class="lbl">Bạn chọn đáp án nào?</span>
+    <div class="qopts">
+      <button type="button" class="qopt" data-k="A"><b class="k">A.</b><span class="body"><span class="en">“Require analysts to verify key figures and explain each conclusion before sending, and keep final recommendations as their own work.”</span><span class="vi">Yêu cầu chuyên viên kiểm các số liệu then chốt và giải thích được từng kết luận trước khi gửi, và giữ khuyến nghị cuối là việc của chính họ.</span></span></button>
+      <button type="button" class="qopt" data-k="B"><b class="k">B.</b><span class="body"><span class="en">“Ban Claude for the junior analysts until they have several years of experience.”</span><span class="vi">Cấm các chuyên viên mới dùng Claude cho tới khi họ có vài năm kinh nghiệm.</span></span></button>
+      <button type="button" class="qopt" data-k="C"><b class="k">C.</b><span class="body"><span class="en">“Ask Claude to add a confidence score to each conclusion so analysts know which parts to trust.”</span><span class="vi">Nhờ Claude gắn điểm tự tin cho từng kết luận để chuyên viên biết phần nào tin được.</span></span></button>
+      <button type="button" class="qopt" data-k="D"><b class="k">D.</b><span class="body"><span class="en">“Switch the whole team to the most capable model available, so the analyses are reliable enough to send to clients without checking.”</span><span class="vi">Chuyển cả nhóm sang model mạnh nhất hiện có, để bản phân tích đủ đáng tin mà gửi cho khách không cần kiểm.</span></span></button>
+    </div>
+    <p class="qfb" hidden></p>
+    <div class="qexp" hidden>
+      <span class="lbl">Phân tích đề</span>
+      <ul>
+        <li><b>Đề kể:</b> lướt rồi gửi, khách hỏi thì không giải thích được.</li>
+        <li><b>Chỗ khó:</b> đây là hai dấu hiệu kinh điển của phụ thuộc quá, nhưng phương án nào cũng “làm gì đó”: cấm, gắn điểm, đổi model.</li>
+        <li><b>Đề hỏi:</b> cách xử lý phù hợp nhất, tức là sửa đúng gốc mà vẫn giữ được lợi ích của Claude.</li>
+      </ul>
+      <span class="lbl">Cần biết để chọn</span>
+      <ol>
+        <li>Người gửi chịu trách nhiệm với output, nên phải kiểm được và giải thích được nó.</li>
+        <li>Chống phụ thuộc là chủ động giữ phần phán đoán cho người, không phải bỏ công cụ.</li>
+        <li>Điểm tự tin Claude tự chấm, hay model mạnh hơn, không thay được việc người kiểm.</li>
+      </ol>
+      <span class="lbl">Từng đáp án</span>
+      <ul class="verdict">
+        <li class="ok"><b>A đúng.</b> Trả trách nhiệm về đúng người (ý 1) và giữ phần phán đoán cuối cho người (ý 2). Chuyên viên vẫn dùng Claude, chỉ không để nó nghĩ thay.</li>
+        <li><b>B sai.</b> Quá tay. Bỏ cả lợi ích của công cụ mà không dạy được thói quen kiểm (ý 2).</li>
+        <li><b>C sai.</b> Vẫn là Claude chấm Claude (ý 3). Hấp dẫn vì nghe như thêm một bước kiểm, nhưng chuyên viên vẫn không giải thích được gì.</li>
+        <li><b>D sai.</b> Model nào cũng có thể sai, và model mạnh hơn không làm chuyên viên hiểu kết luận hơn (ý 1, 3).</li>
+      </ul>
+      <button type="button" class="qreset">Làm lại câu này</button>
+    </div>
+  </div>
+
+  <div class="qcase" data-answer="C">
+    <h5 class="sub">Dạng 2: công khai việc dùng AI với khách</h5>
+    <span class="lbl">Đề sẽ viết kiểu này</span>
+    <div class="qtext">
+      <span class="en">“A consultant uses Claude to draft most of a market-entry analysis that a client will use to decide on a major investment. The client hired the firm for its expert judgment. Before delivering, what is the most appropriate approach?”</span>
+      <span class="vi">Dịch: Một chuyên viên tư vấn dùng Claude soạn phần lớn bản phân tích thâm nhập thị trường mà khách sẽ dựa vào để quyết một khoản đầu tư lớn. Khách thuê công ty vì nhận định chuyên môn. Trước khi giao, cách làm phù hợp nhất là gì?</span>
+    </div>
+    <span class="lbl">Bạn chọn đáp án nào?</span>
+    <div class="qopts">
+      <button type="button" class="qopt" data-k="A"><b class="k">A.</b><span class="body"><span class="en">“Present it as the consultant’s own analysis, since the consultant edited the draft.”</span><span class="vi">Trình bày như bản phân tích của riêng chuyên viên, vì chuyên viên đã sửa bản nháp.</span></span></button>
+      <button type="button" class="qopt" data-k="B"><b class="k">B.</b><span class="body"><span class="en">“Mention the use of AI only if the client asks directly how the report was researched and prepared.”</span><span class="vi">Chỉ nhắc tới việc dùng AI nếu khách hỏi thẳng báo cáo được nghiên cứu và soạn thế nào.</span></span></button>
+      <button type="button" class="qopt" data-k="C"><b class="k">C.</b><span class="body"><span class="en">“Verify the analysis and stand behind it, and tell the client how AI was used in preparing it.”</span><span class="vi">Kiểm bản phân tích và đứng tên bảo đảm cho nó, đồng thời nói với khách AI đã được dùng thế nào khi soạn.</span></span></button>
+      <button type="button" class="qopt" data-k="D"><b class="k">D.</b><span class="body"><span class="en">“Add a disclaimer that the firm is not responsible for errors in AI-generated content.”</span><span class="vi">Thêm câu miễn trừ rằng công ty không chịu trách nhiệm cho lỗi trong nội dung do AI tạo.</span></span></button>
+    </div>
+    <p class="qfb" hidden></p>
+    <div class="qexp" hidden>
+      <span class="lbl">Phân tích đề</span>
+      <ul>
+        <li><b>Đề kể:</b> phần lớn bản phân tích do Claude soạn. Khách sẽ dựa vào nó để quyết một khoản tiền lớn.</li>
+        <li><b>Chỗ khó:</b> khách trả tiền cho “nhận định chuyên môn”. Nếu biết phần lớn do AI soạn, khách có thể đánh giá báo cáo khác đi.</li>
+        <li><b>Đề hỏi:</b> cách làm phù hợp nhất trước khi giao, gồm cả chuyện kiểm và chuyện nói.</li>
+      </ul>
+      <span class="lbl">Cần biết để chọn</span>
+      <ol>
+        <li>Transparency Diligence: thành thật về vai trò của AI với người cần biết. Câu hỏi thử: người nhận có đánh giá khác đi nếu biết không?</li>
+        <li>Deployment Diligence: kiểm và bảo đảm cho output mình giao.</li>
+        <li>Câu miễn trừ không chuyển được trách nhiệm.</li>
+      </ol>
+      <span class="lbl">Từng đáp án</span>
+      <ul class="verdict">
+        <li><b>A sai.</b> Sửa nháp không biến nó thành nhận định riêng. Khách sẽ đánh giá khác nếu biết (ý 1). Hấp dẫn vì chuyên viên có góp công thật.</li>
+        <li><b>B sai.</b> Chỉ nói khi bị hỏi là công khai không đạt. Người cần biết phải được biết, không phải tự đi hỏi (ý 1).</li>
+        <li class="ok"><b>C đúng.</b> Có cả hai phần: kiểm và đứng tên (ý 2), nói rõ vai trò của AI (ý 1).</li>
+        <li><b>D sai.</b> Câu miễn trừ đẩy rủi ro sang khách mà không giảm rủi ro nào (ý 3). Bản phân tích sai vẫn sai.</li>
+      </ul>
+      <button type="button" class="qreset">Làm lại câu này</button>
+    </div>
+  </div>
+
+  <div class="more"><b>Biết thêm</b><ul>
+    <li><b>Delegation và Diligence là hai chữ D gần nhất với Domain 6.</b> Delegation quyết việc gì giao cho AI. Diligence chịu trách nhiệm về những gì đã giao và cách giao.</li>
+    <li><b>Ca rủi ro cao cần cả công khai lẫn người duyệt.</b> Một thứ không thay được thứ kia (<a href="#l-6-1">bài 6.1</a>).</li>
+    <li><b>Không có luật chung của Anthropic về ghi chú AI cho mọi việc văn phòng.</b> Ngoài hai trường hợp bắt buộc trong Usage Policy, chính sách công ty quyết. Đề hỏi thì chọn đáp án thành thật với người cần biết.</li>
+    <li><b>Viết cam kết riêng cho vùng xám.</b> Ghi bằng lời mình: việc gì mình không giao, khi phân vân thì làm gì (dừng lại, hỏi đồng nghiệp, xem hướng dẫn, thử nhỏ trước). Xem lại khi công cụ thay đổi.</li>
+  </ul></div>
+  <div class="rule">Quy tắc: output bạn dùng là của bạn. Kiểm trước khi gửi, nói rõ vai trò của AI với người cần biết, và giữ phần phán đoán quan trọng cho người.</div>
+  <div class="remember"><b>Nhớ nhanh</b><ul>
+    <li>“Claude viết” không chuyển trách nhiệm. Người gửi chịu.</li>
+    <li>Bắt buộc công khai: ca rủi ro cao về một người, và chatbot nói chuyện với khách (đầu mỗi phiên hoặc trong giao diện).</li>
+    <li>Phụ thuộc quá: lướt rồi gửi, không giải thích được. Phép thử: bản nháp biến mất, còn bảo vệ được không?</li>
+    <li>Xếp hạng người: Claude là một nguồn, người quyết.</li>
+  </ul></div>
+  <div class="src">Đọc thêm: <a href="https://anthropic.skilljar.com/ai-fluency-framework-foundations">AI Fluency: Framework &amp; Foundations</a> · <a href="https://www.anthropic.com/legal/aup">Usage Policy</a> · <a href="https://anthropic-partners.skilljar.com/path/claude-associate/governance-risk-responsible-use">Governance, Risk &amp; Responsible Use (Partner Academy)</a></div>
+  <label class="done"><input type="checkbox" data-lesson="l-6-4"> Đã học bài này</label>
+</article>
+
+<section class="summary" id="sum-d6">
+  <h3>Tổng kết Domain 6</h3>
+  <ul>
+    <li><b>Dữ liệu đã vào chat là đã rời máy bạn.</b> Lưu bao lâu, ai xem được, có bị dùng để train không: do gói và cài đặt quyết, không do lời dặn Claude.</li>
+    <li><b>Gói doanh nghiệp</b> mặc định không train, tổ chức kiểm soát dữ liệu, admin đặt cài đặt, có nhật ký. <b>Gói cá nhân</b> nằm ngoài tất cả những thứ đó, dù đã tắt training.</li>
+    <li><b>Ba vùng việc.</b> Đỏ (bị cấm): không gì mở khóa. Vàng (rủi ro cao về một người): người có chuyên môn duyệt trước từng ca và báo là có dùng AI. Xanh: dùng và kiểm như thường.</li>
+    <li><b>Việc hợp với Claude</b> là việc có lỗi kiểm được và sửa được trước khi gây hại. Agent thì tự chủ theo mức dễ gỡ của hành động.</li>
+    <li><b>Dữ liệu nhạy cảm:</b> bỏ, đổi mã, gộp trước khi gửi. Dặn “đừng nhớ”, incognito, hay xóa chat không thay được bước này.</li>
+    <li><b>Thông tin sức khỏe</b> chỉ đi qua Enterprise bật HIPAA-ready có BAA. Team và gói cá nhân không được.</li>
+    <li><b>Chính sách công ty</b> được chặt hơn Usage Policy, không được lỏng hơn. Bị chặn là đã có quyết định, im lặng là chưa được duyệt: hỏi đúng người, không lách.</li>
+    <li><b>Va nhau với yêu cầu:</b> dừng phần vi phạm, nói rõ ràng buộc và cách hợp lệ, chuyển lên đúng kênh, ghi lại.</li>
+    <li><b>Đạo đức:</b> người gửi chịu trách nhiệm. Nói rõ vai trò của AI với người cần biết. Giữ phán đoán cuối cho người. Xếp hạng người thì Claude chỉ là một nguồn.</li>
+  </ul>
+</section>
+
+<section class="cheat" id="cheat-d6">
+  <h3>Cheatsheet Domain 6</h3>
+  <div class="tw"><table>
+    <tr><th>Đề kể…</th><th>Chọn…</th><th>Vì sao</th></tr>
+    <tr class="grp"><th colspan="3">6.1 · Dùng được, không dùng được</th></tr>
+    <tr><td>Claude xét hồ sơ vay, thuê nhà, ứng viên, bồi thường rồi báo cho từng người</td><td>Claude soạn, người có chuyên môn duyệt và sửa từng ca trước khi báo, người nhận được biết có dùng AI</td><td>Ca rủi ro cao cần cả hai điều kiện</td></tr>
+    <tr><td>“Gửi tự động, ghi là do AI tạo” hoặc “kiểm ngẫu nhiên 5% mỗi tháng”</td><td>Loại</td><td>Công khai không thay người duyệt. Kiểm sau khi gửi không phải duyệt trước</td></tr>
+    <tr><td>Đánh giá giả, email giả danh, theo dõi lén, kèm nhãn AI hoặc người duyệt</td><td>Từ chối, đề xuất việc hợp lệ cho cùng mục tiêu</td><td>Việc bị cấm không mở khóa được</td></tr>
+    <tr><td>Output gửi thẳng không ai đọc, hoặc người duyệt không đủ chuyên môn</td><td>Không hợp, hoặc thêm người có chuyên môn duyệt trước</td><td>Phép thử kiểm được, sửa được</td></tr>
+    <tr><td>Agent trình duyệt với tài khoản tài chính, hợp đồng, y tế</td><td>Không dùng, hoặc giữ bước xác nhận</td><td>Tự chủ theo mức dễ gỡ</td></tr>
+    <tr class="grp"><th colspan="3">6.2 · Dữ liệu nhạy cảm và quy định</th></tr>
+    <tr><td>File có tên, số tài khoản, cần xem xu hướng</td><td>Bỏ hoặc ẩn danh định danh trước khi tải lên</td><td>Câu mẫu 3, <a href="#l-8-2">bài ôn</a></td></tr>
+    <tr><td>“Tải lên rồi dặn Claude đừng lưu”</td><td>Loại</td><td>Lời dặn không phải biện pháp kiểm soát</td></tr>
+    <tr><td>Dùng tài khoản cá nhân vì “đã tắt training”</td><td>Dùng tài khoản công ty</td><td>Cá nhân nằm ngoài hợp đồng, cài đặt, nhật ký</td></tr>
+    <tr><td>“Incognito thì không để lại dấu”</td><td>Sai: vẫn giữ 30 ngày, vẫn có trong bản xuất của Team, Enterprise</td><td>Incognito chỉ tránh lịch sử, memory, training</td></tr>
+    <tr><td>Thông tin sức khỏe có định danh trên gói Team</td><td>Bỏ định danh, hỏi tuân thủ. Chỉ Enterprise HIPAA-ready có BAA mới nhận</td><td>Team không bật được HIPAA</td></tr>
+    <tr><td>Tắt training rồi thì dữ liệu cũ sao?</td><td>Không dùng cho lần train sau, nhưng không gỡ khỏi lần train đã chạy</td><td>Không có hiệu lực ngược</td></tr>
+    <tr class="grp"><th colspan="3">6.3 · Chính sách tổ chức</th></tr>
+    <tr><td>Chính sách không nhắc tới công cụ hay việc</td><td>Hỏi người phụ trách AI trước khi dùng</td><td>Im lặng là chưa được duyệt</td></tr>
+    <tr><td>Tính năng bị admin tắt, đồng nghiệp gợi ý tài khoản cá nhân</td><td>Không lách. Hỏi lý do hoặc xin ngoại lệ qua đúng kênh</td><td>Bị chặn là đã có quyết định</td></tr>
+    <tr><td>Sếp hay khách yêu cầu việc chính sách không cho</td><td>Dừng phần vi phạm, nói rõ, làm phần hợp lệ, chuyển lên</td><td>Chức vụ không đổi được chính sách</td></tr>
+    <tr><td>Công ty muốn mở điều Usage Policy cấm</td><td>Không được</td><td>Usage Policy là sàn</td></tr>
+    <tr><td>Cần chứng minh dữ liệu đi đâu</td><td>Audit log, Compliance API (Enterprise)</td><td>Hồ sơ là một phần của governance</td></tr>
+    <tr class="grp"><th colspan="3">6.4 · Đạo đức</th></tr>
+    <tr><td>Lướt rồi gửi, không giải thích được kết luận</td><td>Kiểm điểm then chốt, giải thích được, giữ phán đoán cuối cho người</td><td>Người gửi chịu trách nhiệm</td></tr>
+    <tr><td>Chatbot cho khách, khách hàng hay phụ huynh</td><td>Nói là AI ngay đầu phiên hoặc trong giao diện</td><td>Usage Policy bắt buộc</td></tr>
+    <tr><td>Báo cáo phần lớn AI soạn, khách trả tiền cho chuyên môn</td><td>Kiểm, đứng tên, và nói rõ AI đã được dùng thế nào</td><td>Transparency và Deployment Diligence</td></tr>
+    <tr><td>Claude xếp hạng người, kết quả nghiêng về một nhóm</td><td>Coi là một nguồn, đối chiếu hồ sơ, người quyết</td><td>Bias và công bằng</td></tr>
+  </table></div>
+  <h4>Tên và con số phải thuộc</h4>
+  <ul class="names">
+    <li><b>Gói:</b> cá nhân = Free, Pro, Max, Ultra. Doanh nghiệp = Team, Enterprise, API.</li>
+    <li><b>Training:</b> gói cá nhân theo cài đặt Model Improvement. Cho phép thì dữ liệu tách danh tính giữ tới 5 năm. Gói doanh nghiệp mặc định không train, trừ phản hồi chủ động gửi và Development Partner Program.</li>
+    <li><b>Lưu trữ:</b> xóa chat → khỏi lịch sử ngay, khỏi hệ thống trong 30 ngày. Incognito giữ 30 ngày. Phản hồi 5 năm. Bị gắn cờ: nội dung 2 năm, điểm phân loại 7 năm. Enterprise tự đặt thời hạn, tối thiểu 30 ngày.</li>
+    <li><b>Admin:</b> Owner, Primary Owner. Organization settings → Capabilities (web search, connector, memory…). Data and Privacy (thời hạn lưu). Connector: Always allow, Needs approval, Blocked.</li>
+    <li><b>Enterprise:</b> audit log, Compliance API, thời hạn lưu riêng, HIPAA-ready kèm BAA (chỉ Primary Owner bật, không tắt được).</li>
+    <li><b>Usage Policy:</b> Universal Usage Standards, High-risk Use Case Requirements, Additional Use Case Guidelines. Bản mới hiệu lực 12/11/2026, phần cốt lõi của ca rủi ro cao giữ nguyên.</li>
+    <li><b>Lĩnh vực rủi ro cao:</b> pháp lý, y tế, tài chính, tín dụng, bảo hiểm, nhà ở, việc làm, giáo dục và bằng cấp, tiếp cận chăm sóc sức khỏe, phúc lợi công, tình trạng pháp lý.</li>
+    <li><b>Diligence:</b> Creation, Transparency, Deployment.</li>
+  </ul>
+</section>
+
+  <div class="quiz" data-course="d6"></div>
+  </div>
+</section>

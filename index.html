@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Chứng chỉ Claude</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F4F5F9; --surface:#FFFFFF; --ink:#1B2130; --muted:#5D6779; --line:#DADEE7;
+  --accent:#2F55B4; --accent-soft:#E3E9F8; --ok:#1E8A5A; --ok-soft:#E2F3EA; --warn:#A45A10; --warn-soft:#FBF0E2;
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){
+  :root{
+    --bg:#0F131B; --surface:#171D28; --ink:#E5E9F2; --muted:#9AA5B8; --line:#2B3343;
+    --accent:#8FA9EE; --accent-soft:#1E2A47; --ok:#4CC38A; --ok-soft:#163A2B; --warn:#F0A960; --warn-soft:#3A2A14;
+    color-scheme:dark;
+  }
+}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Be Vietnam Pro",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;font-size:16px;line-height:1.6}
+.wrap{max-width:980px;margin:0 auto;padding:32px 16px 48px}
+header h1{font-size:1.6rem;margin:0 0 4px}
+header p{margin:0;color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin-top:24px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px;display:flex;flex-direction:column}
+.card .code{display:inline-block;font-size:.75rem;font-weight:700;letter-spacing:.04em;color:var(--accent);background:var(--accent-soft);border-radius:6px;padding:2px 8px}
+.card h2{font-size:1.1rem;line-height:1.35;margin:10px 0 4px}
+.card .meta{font-size:.85rem;color:var(--muted);margin:0 0 4px}
+.badge{display:inline-block;font-size:.78rem;font-weight:600;border-radius:6px;padding:2px 8px;margin-top:6px}
+.badge.warn{color:var(--warn);background:var(--warn-soft)}
+.badge.ok{color:var(--ok);background:var(--ok-soft)}
+.links{list-style:none;padding:0;margin:14px 0 0;display:flex;flex-direction:column;gap:8px}
+.links a{display:block;text-decoration:none;color:var(--ink);border:1px solid var(--line);border-radius:10px;padding:10px 12px}
+.links a:hover,.links a:focus-visible{border-color:var(--accent);background:var(--accent-soft);outline:none}
+.links a b{display:block;font-weight:600}
+.links a small{display:block;color:var(--muted);font-size:.8rem;line-height:1.4}
+.more{margin:14px 0 0;padding-top:10px;border-top:1px dashed var(--line);font-size:.82rem;color:var(--muted)}
+.more a{color:var(--accent)}
+.prog{font-size:.8rem;color:var(--ok);font-weight:600}
+footer{margin-top:28px;font-size:.8rem;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Chứng chỉ Claude</h1>
+    <p>Mục lục tài liệu ôn thi. Mỗi thẻ là một folder chứng chỉ.</p>
+  </header>
+
+  <div class="grid">
+    <section class="card">
+      <span class="code">CCAR-F</span>
+      <h2>Claude Certified Architect – Foundations</h2>
+      <p class="meta">Folder: claude architect - foundation</p>
+      <span class="badge warn" id="ccarf-deadline">Hạn thi: 30/11/2026</span>
+      <ul class="links">
+        <li><a href="claude%20architect%20-%20foundation/claude-architect-foundations-notes-public.html">
+          <b>Ôn thi CCAR-F</b>
+          <small>Bài học theo domain, cheatsheet, quiz · <span class="prog" data-key="ccarf-v2-done"></span></small>
+        </a></li>
+        <li><a href="claude%20architect%20-%20foundation/cca-f-de-thi-thu.html">
+          <b>Đề thi thử</b>
+          <small>192 câu tiếng Anh, chế độ thi 120 phút</small>
+        </a></li>
+        <li><a href="claude%20architect%20-%20foundation/so-on-certsafari.html">
+          <b>Sổ ôn certsafari</b>
+          <small>9 đề, phân tích từng câu</small>
+        </a></li>
+      </ul>
+      <p class="more" id="local-notes" hidden>Chỉ có ở máy này:
+        <a href="claude%20architect%20-%20foundation/claude-architect-foundations-notes-drillpark.html">bản notes đầy đủ (có khối dự án)</a></p>
+    </section>
+
+    <section class="card">
+      <span class="code">CCAO-F</span>
+      <h2>Claude Certified Associate – Foundations</h2>
+      <p class="meta">Folder: claude associate - foundation</p>
+      <span class="badge warn">Chưa chốt ngày thi</span>
+      <ul class="links">
+        <li><a href="claude%20associate%20-%20foundation/claude-associate-foundations-notes.html">
+          <b>Ôn thi CCAO-F</b>
+          <small>45 bài, 7 domain, quiz tiếng Anh · <span class="prog" data-key="ccaof-v1-done"></span></small>
+        </a></li>
+      </ul>
+      <p class="more">Nguồn:
+        <a href="claude%20associate%20-%20foundation/nguon/ccao-f-exam-guide.pdf">exam guide (PDF)</a> ·
+        <a href="claude%20associate%20-%20foundation/nguon/facts-sheet.md">facts-sheet.md</a></p>
+    </section>
+
+    <section class="card">
+      <span class="code">CCDV-F</span>
+      <h2>Claude Developer – Foundations</h2>
+      <p class="meta">Folder: claude developer - foundation</p>
+      <ul class="links">
+        <li><a href="claude%20developer%20-%20foundation/claude-developer-path-notes.html">
+          <b>Ghi chú path Claude Developer</b>
+          <small>Ghi chú theo từng khóa · <span class="prog" data-key="ccdvf-path-notes-done"></span></small>
+        </a></li>
+      </ul>
+    </section>
+  </div>
+
+  <footer>Tiến độ đọc từ bộ nhớ trình duyệt của từng file notes; trống nghĩa là chưa đánh dấu bài nào (hoặc trình duyệt không chia sẻ bộ nhớ giữa các file local).</footer>
+</div>
+<script>
+(function(){
+  // Count lessons ticked "Đã học" in each notes file (same browser storage when opened via file://)
+  document.querySelectorAll(".prog").forEach(function(el){
+    var n = 0;
+    try {
+      var done = JSON.parse(localStorage.getItem(el.dataset.key) || "{}") || {};
+      for (var k in done) if (done[k]) n++;
+    } catch (e) {}
+    el.textContent = n ? "đã học " + n + " bài" : "";
+  });
+
+  // The full notes file is git-ignored, so only offer it when opened from the local folder
+  if (location.protocol === "file:") document.getElementById("local-notes").hidden = false;
+
+  var dl = document.getElementById("ccarf-deadline");
+  var days = Math.ceil((new Date(2026, 10, 30) - new Date().setHours(0, 0, 0, 0)) / 864e5);
+  if (days >= 0) dl.textContent += " · còn " + days + " ngày";
+})();
+</script>
+</body>
+</html>

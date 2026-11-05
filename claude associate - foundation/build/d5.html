@@ -1,0 +1,876 @@
+<section class="domain" id="d5" data-domain="5">
+  <div class="dhead"><h2>Domain 5 · Configuration and Knowledge Management</h2><p class="dsub">12% · 1 bài nền tảng + 4 bài · ~63 phút</p><div class="dprog"><div class="wb"><i></i></div><span></span></div><button class="tog" type="button">Thu gọn</button></div>
+  <div class="dbody">
+<div class="dintro">
+  <p>Domain 5 chiếm 12% đề, khoảng 7 trên 60 câu.</p>
+  <p>Cả domain xoay quanh một câu: <b>mỗi thứ Claude cần biết phải nằm đúng chỗ (instructions, knowledge, connector hay tin nhắn), và phải có người giữ cho nó còn đúng theo thời gian.</b></p>
+  <p>Đọc bài Nền tảng trước. Cuối mỗi bài có “Khi đi thi”: chọn đáp án trước rồi mới xem giải thích.</p>
+</div>
+
+<article class="lesson" id="l-5-0" data-domain="5" data-ts="5.0" data-min="15">
+  <header class="lh"><span class="ts">Nền tảng</span><h3>Project là gì, và Claude thấy những gì khi bạn mở một chat</h3><span class="rt">~15 phút</span></header>
+  <p>Bốn bài của Domain 5 cùng nói về <b>cấu hình</b> (configuration): những thứ bạn đặt sẵn một lần để mọi chat sau đều dùng. Bài này dựng nó từ đầu, theo thứ tự: Project gồm những phần nào → tài liệu đến tay Claude bằng đường nào → chỉ dẫn có mấy tầng → chạy thử một ca thật. Chọn Project hay chat thường là chuyện của Domain 3 (<a href="#l-3-1">bài 3.1</a>). Ở đây coi như đã chọn Project, và câu hỏi là: dựng thế nào cho đúng.</p>
+
+  <h4>1. Project gồm những phần nào</h4>
+  <div class="defs"><b>Định nghĩa</b><dl>
+    <dt>Project</dt><dd>Một không gian làm việc khép kín trong app Claude. Docs mô tả là “self-contained workspaces with their own chat histories and knowledge bases” (không gian làm việc khép kín, có lịch sử chat và kho tài liệu riêng).</dd>
+    <dt>Project knowledge (kho tài liệu của project)</dt><dd>Tài liệu, văn bản, đoạn code bạn tải vào project. Mọi chat trong project đều dùng được.</dd>
+    <dt>Project instructions (chỉ dẫn của project)</dt><dd>Đoạn chữ nói Claude phải làm việc thế nào trong project: vai, giọng, người đọc, định dạng, quy trình. Đặt bằng nút “Set project instructions” (đặt chỉ dẫn cho project), áp cho mọi chat trong project.</dd>
+  </dl></div>
+  <div class="tw"><table>
+    <tr><th>Phần</th><th>Là gì</th><th>Claude có thấy không</th><th>Áp cho</th></tr>
+    <tr><td>Tên và mô tả</td><td>Nhãn để người tìm ra project</td><td><b>Không.</b> Docs ghi rõ Claude không truy cập được hai thứ này</td><td>Chỉ người xem</td></tr>
+    <tr><td>Instructions</td><td>Cách làm việc</td><td>Có</td><td>Mọi chat trong project</td></tr>
+    <tr><td>Knowledge</td><td>Tư liệu để tra</td><td>Có</td><td>Mọi chat trong project</td></tr>
+    <tr><td>Các chat</td><td>Mỗi chat có lịch sử riêng</td><td>Chỉ trong chính chat đó</td><td>Chat đó. Chat khác không thấy</td></tr>
+    <tr><td>Memory của project</td><td>Những điều Claude tự ghi nhớ qua các chat trong project</td><td>Có</td><td>Chat trong project này, cộng memory chung của tài khoản. Không bao giờ lấy memory của project khác</td></tr>
+  </table></div>
+  <p>Câu quan trọng nhất của cả domain: <b>Claude không mang ngữ cảnh từ chat này sang chat khác, trừ khi nó nằm trong knowledge.</b> Thứ Hai bạn chốt giá với Claude trong một chat. Thứ Tư mở chat mới trong cùng project, Claude không biết gì về giá đã chốt. Muốn chat sau biết, lưu quyết định đó thành một tài liệu trong knowledge.</p>
+  <div class="note">Free tạo được tối đa 5 project. Memory và lúc nào nên mở chat mới nằm ở <a href="#l-3-4">bài 3.4</a>.</div>
+
+  <h4>2. Knowledge đến tay Claude bằng cách nào</h4>
+  <div class="defs"><b>Định nghĩa</b><dl>
+    <dt>Context window (cửa sổ ngữ cảnh)</dt><dd>Lượng chữ tối đa Claude đọc được trong một lần trả lời: instructions, tài liệu, lịch sử chat, câu hỏi, tất cả cộng lại.</dd>
+    <dt>RAG (retrieval-augmented generation)</dt><dd>“Tìm rồi mới đọc”: thay vì nạp hết tài liệu, Claude tìm những đoạn liên quan tới câu hỏi và chỉ đọc những đoạn đó.</dd>
+  </dl></div>
+  <div class="tw"><table>
+    <tr><th></th><th>Nạp hết vào context</th><th>RAG</th></tr>
+    <tr><td>Khi nào</td><td>Knowledge còn vừa context window</td><td>Knowledge gần chạm giới hạn context window. Claude tự bật</td></tr>
+    <tr><td>Claude đọc gì</td><td>Toàn bộ tài liệu, ở mọi chat</td><td>Những đoạn tìm được qua công cụ “project knowledge search” (tìm trong knowledge của project)</td></tr>
+    <tr><td>Chứa được bao nhiêu</td><td>Bằng context window</td><td>Tới khoảng 10 lần</td></tr>
+    <tr><td>Gói</td><td>Mọi gói</td><td>Chỉ gói trả phí: Pro, Max, Ultra, Team, Enterprise</td></tr>
+  </table></div>
+  <ul>
+    <li><b>Không có nút bật RAG.</b> Claude tự chuyển khi cần, có dấu hiệu hiện trên màn hình. Knowledge ít lại thì có thể quay về nạp hết.</li>
+    <li><b>Free không có RAG</b>, nên knowledge của Free phải vừa context window.</li>
+    <li><b>Docs không cho con số ngưỡng chính xác</b>, chỉ nói “approaches the context window limit” (gần chạm giới hạn context window). Đừng học thuộc con số nào trên mạng.</li>
+    <li><b>Dưới RAG, tên file rõ giúp Claude tìm trúng.</b> Docs khuyên: tải hết tài liệu lên từ đầu, đặt tên file rõ ràng, gom các file liên quan, và nêu tên tài liệu trong câu hỏi.</li>
+  </ul>
+
+  <h4>3. Ba đường đưa tài liệu cho Claude</h4>
+  <div class="defs"><b>Định nghĩa</b><dl>
+    <dt>File đính kèm chat</dt><dd>File bạn kéo vào một chat. Chỉ chat đó thấy.</dd>
+    <dt>File trong project</dt><dd>File nằm trong knowledge. Mọi chat trong project thấy.</dd>
+    <dt>Connector (kết nối)</dt><dd>Cho Claude vào một ứng dụng khác (Gmail, Calendar, Drive…) để tìm và đọc dữ liệu đúng lúc bạn hỏi, với đúng quyền của tài khoản bạn ở ứng dụng đó.</dd>
+  </dl></div>
+  <div class="tw"><table>
+    <tr><th></th><th>File đính kèm chat</th><th>File trong project</th><th>Connector</th></tr>
+    <tr><td>Ai thấy</td><td>Chỉ chat đó</td><td>Mọi chat trong project</td><td>Chat có bật connector, theo quyền của người đang hỏi</td></tr>
+    <tr><td>Độ mới</td><td>Bản chụp lúc tải</td><td>Bản chụp lúc tải. Riêng Google Doc thêm từ Drive thì tự đồng bộ bản mới nhất</td><td>Lấy đúng lúc hỏi</td></tr>
+    <tr><td>Giới hạn cần nhớ</td><td>20 file một chat</td><td>30MB một file</td><td>Chỉ thấy cái tài khoản của bạn thấy</td></tr>
+    <tr><td>Hợp với</td><td>Tài liệu dùng một lần</td><td>Tư liệu nhiều chat cần</td><td>Dữ liệu đổi liên tục: hộp thư, lịch, thư mục lớn</td></tr>
+  </table></div>
+  <p>Hình dung: file tải lên là một bản photo. Google Doc thêm từ Drive là đường link luôn mở bản mới nhất. Connector là chiếc chìa để Claude tự vào lấy khi cần, nhưng chỉ mở được những cửa bạn mở được. Chi tiết ở <a href="#l-5-2">bài 5.2</a>.</p>
+
+  <h4>4. Chỉ dẫn có mấy tầng</h4>
+  <div class="defs"><b>Định nghĩa</b><dl>
+    <dt>System-level instructions (chỉ dẫn cấp hệ thống)</dt><dd>Chữ của guide. Là chỉ dẫn đặt một lần, áp cho mọi chat trong một phạm vi. Trong app hiện tại, nó gồm organization instructions, Instructions for Claude và project instructions.</dd>
+  </dl></div>
+  <div class="tw"><table>
+    <tr><th>Tầng</th><th>Ai đặt, ở đâu</th><th>Áp cho</th></tr>
+    <tr><td>Organization instructions (chỉ dẫn của tổ chức)</td><td>Owner hoặc Primary Owner (hai vai trò quản trị cao nhất) của gói Team, Enterprise, trong Organization settings</td><td>Mọi chat của mọi người trong tổ chức</td></tr>
+    <tr><td>Instructions for Claude (trước gọi là profile preferences)</td><td>Từng người, trong Settings → Your Claude</td><td>Mọi chat của người đó</td></tr>
+    <tr><td>Project instructions</td><td>Người có quyền sửa project</td><td>Chat trong project đó</td></tr>
+    <tr><td>Style (kiểu trình bày)</td><td>Từng người chọn, đổi được giữa chừng</td><td>Cách trình bày câu trả lời. App có sẵn vài kiểu như Normal, Concise, Formal, Explanatory, và cho tạo kiểu riêng từ mẫu viết của bạn</td></tr>
+    <tr><td>Skill</td><td>Có sẵn, hoặc tải lên. Claude tự nạp khi việc cần</td><td>Một quy trình cho một loại việc</td></tr>
+    <tr><td>Tin nhắn</td><td>Bạn, mỗi lần gửi</td><td>Riêng yêu cầu này</td></tr>
+  </table></div>
+  <p>Docs nói rõ một thứ tự: <b>organization instructions thắng instructions của từng người khi hai bên mâu thuẫn trực tiếp</b>. Notes này suy ra thêm: chỗ nào tổ chức không nói tới thì instructions của từng người vẫn áp, vì không có gì để mâu thuẫn. Giữa project instructions và Instructions for Claude, docs không đặt thứ tự ưu tiên. Vì vậy đừng trông vào chuyện “tầng nào thắng”: viết sao cho các tầng không đá nhau (<a href="#l-5-3">bài 5.3</a>).</p>
+
+  <h4>5. Chạy thử một ca thật</h4>
+  <p>Phòng nhân sự một công ty 200 người, gói Team. Chị Hạnh dựng project “Hỏi đáp chính sách nhân sự” và chia sẻ cho cả công ty với quyền xem (Can view).</p>
+  <ul>
+    <li><b>Mô tả:</b> “HR Q&amp;A 2026. Phụ trách: Hạnh. Cập nhật 01/10.” Nhân viên đọc được, Claude không đọc.</li>
+    <li><b>Instructions:</b> vai chuyên viên nhân sự, người đọc là nhân viên văn phòng, luôn ghi mục sổ tay đã dùng, sổ tay không nói thì bảo là không có và chỉ tới hộp thư HR.</li>
+    <li><b>Knowledge:</b> “So-tay-nhan-su-2026.pdf” và “Lich-nghi-le-2026.pdf”.</li>
+    <li><b>Vì project đã chia sẻ</b>, chị không thêm được Google Doc từ Drive. Chị tải bản sao lên, và phải tự thay khi sổ tay đổi.</li>
+  </ul>
+  <div class="tw"><table>
+    <tr><th>Nhân viên hỏi</th><th>Phần nào làm việc</th><th>Claude trả lời</th></tr>
+    <tr><td>“Nghỉ cưới được mấy ngày?”</td><td>Knowledge có câu trả lời, instructions quy định cách viết</td><td>Câu ngắn, cuối có “(Sổ tay 2026, mục 4.2)”</td></tr>
+    <tr><td>“Tôi còn bao nhiêu ngày phép?”</td><td>Knowledge không có số dư phép từng người. Instructions có dòng “khi không có”</td><td>Nói rõ sổ tay không có thông tin này, chỉ chỗ tra</td></tr>
+    <tr><td>Chat mới: “như tôi hỏi hôm qua đó”</td><td>Chat mới không thấy chat cũ</td><td>Không biết “hôm qua” là gì, phải hỏi lại</td></tr>
+  </table></div>
+
+  <h4>6. Bản đồ Domain 5</h4>
+  <div class="tw"><table>
+    <tr><th>Bài</th><th>Đụng vào phần nào</th></tr>
+    <tr><td><a href="#l-5-1">5.1</a></td><td>Dựng project: chia instructions và knowledge, chọn và đặt tên tài liệu, chia sẻ, mức quyền</td></tr>
+    <tr><td><a href="#l-5-2">5.2</a></td><td>Ba đường đưa tài liệu: file tải lên, Google Doc đồng bộ, connector. Ai bật, ai được thấy gì</td></tr>
+    <tr><td><a href="#l-5-3">5.3</a></td><td>Viết chỉ dẫn cấp hệ thống: vai, phạm vi, người đọc, định dạng, khi không chắc, xung đột, thử</td></tr>
+    <tr><td><a href="#l-5-4">5.4</a></td><td>Giữ cấu hình còn đúng: tài liệu cũ, bản trùng, người phụ trách, lịch rà soát, archive</td></tr>
+  </table></div>
+
+  <h4>Tự kiểm tra</h4>
+  <p class="need">Câu hỏi viết bằng tiếng Anh như đề thật. Bấm vào câu hỏi để xem nghĩa và đáp án.</p>
+  <details class="chk"><summary>1. You write “Always answer in Vietnamese” in a project’s description. Will Claude follow it?</summary>
+    <span class="vi">Nghĩa: bạn ghi “Luôn trả lời bằng tiếng Việt” vào phần mô tả của project. Claude có làm theo không?</span>
+    <span class="ans"><b>Đáp:</b> không. Claude không thấy tên và mô tả project. Câu đó phải nằm trong project instructions.</span></details>
+  <details class="chk"><summary>2. Your Team-plan project’s knowledge is approaching the context window limit. What do you need to switch on?</summary>
+    <span class="vi">Nghĩa: knowledge của project (gói Team) sắp chạm giới hạn context window. Bạn cần bật gì?</span>
+    <span class="ans"><b>Đáp:</b> không cần bật gì. Ở gói trả phí, Claude tự chuyển sang RAG. Việc của bạn là đặt tên file rõ và nêu tên tài liệu khi hỏi.</span></details>
+  <details class="chk"><summary>3. A private project holds a price list uploaded as a PDF and a FAQ added as a Google Doc from Drive. Tomorrow marketing edits the originals of both. Which one will Claude see in its updated form?</summary>
+    <span class="vi">Nghĩa: một project private có bảng giá tải lên dạng PDF và một FAQ thêm từ Drive dạng Google Doc. Mai marketing sửa bản gốc của cả hai. Claude sẽ thấy bản đã sửa của cái nào?</span>
+    <span class="ans"><b>Đáp:</b> chỉ Google Doc. File tải lên là bản chụp lúc tải. Google Doc từ Drive tự đồng bộ bản mới nhất. PDF bảng giá phải có người thay bằng tay.</span></details>
+
+  <div class="remember"><b>Nhớ nhanh</b><ul>
+    <li>Project = instructions + knowledge + các chat riêng + memory riêng. Claude không thấy tên và mô tả.</li>
+    <li>Chat không thấy nhau. Thứ nhiều chat cần thì đưa vào knowledge.</li>
+    <li>RAG tự bật ở gói trả phí khi knowledge gần đầy, không có nút. Free phải vừa context window.</li>
+    <li>File tải lên = bản chụp. Google Doc từ Drive = luôn bản mới. Connector = lấy lúc hỏi, theo quyền của bạn.</li>
+  </ul></div>
+  <div class="src">Đọc thêm: <a href="https://support.claude.com/en/articles/9517075-what-are-projects-and-how-do-i-use-them">What are projects</a> · <a href="https://support.claude.com/en/articles/9519177-how-can-i-create-and-manage-projects">Create and manage projects</a> · <a href="https://support.claude.com/en/articles/11473015-retrieval-augmented-generation-rag-for-projects">RAG for projects</a> · <a href="https://support.claude.com/en/articles/10185728-understanding-claude-s-personalization-features">Personalization features</a></div>
+  <label class="done"><input type="checkbox" data-lesson="l-5-0"> Đã học bài này</label>
+</article>
+
+<article class="lesson" id="l-5-1" data-domain="5" data-ts="5.1" data-min="12">
+  <header class="lh"><span class="ts">TS 5.1</span><h3>Dựng một Project: cái gì vào instructions, cái gì vào knowledge, chia sẻ cho ai</h3><span class="rt">~12 phút</span></header>
+  <p class="need">Cần biết trước: các phần của một Project, RAG, và chuyện chat không thấy nhau ở <a href="#l-5-0">bài Nền tảng</a>.</p>
+  <div class="defs"><b>Khái niệm của bài</b><dl>
+    <dt>Project instructions</dt><dd>Chỉ dẫn cách làm, áp cho mọi chat trong project: vai, giọng, người đọc, định dạng, quy trình.</dd>
+    <dt>Project knowledge</dt><dd>Tư liệu Claude dùng để trả lời: sổ tay, báo cáo, bảng giá, mẫu văn bản. Claude dùng nó như tài liệu tham khảo.</dd>
+    <dt>Visibility (chế độ hiển thị)</dt><dd>Private (chỉ người được mời mới xem và dùng) hoặc chia sẻ cho cả tổ chức (ai trong tổ chức cũng xem và dùng được). Chỉ có ở gói Team và Enterprise.</dd>
+    <dt>Can view, Can edit</dt><dd>Hai mức quyền của thành viên project. Can view (được xem): xem nội dung, knowledge, instructions, và tự mở chat với Claude trong project. Can edit (được sửa): thêm quyền sửa instructions, knowledge và danh sách thành viên.</dd>
+  </dl></div>
+
+  <h4>Instructions hay knowledge: hỏi “đây là cách làm, hay là tư liệu?”</h4>
+  <div class="tw"><table>
+    <tr><th>Thứ cần đưa vào</th><th>Để ở đâu</th><th>Vì sao</th></tr>
+    <tr><td>“Trả lời như chuyên viên hỗ trợ cấp cao, giọng trang trọng”</td><td>Project instructions</td><td>Cách làm, cần áp cho mọi chat</td></tr>
+    <tr><td>Sổ tay thương hiệu 40 trang</td><td>Knowledge, kèm một dòng trong instructions: “Viết theo sổ tay thương hiệu trong knowledge”</td><td>Sổ tay là tư liệu. Dòng instructions nói khi nào phải dùng nó</td></tr>
+    <tr><td>Báo cáo quý trước, bảng giá hiện hành</td><td>Knowledge</td><td>Tư liệu để tra</td></tr>
+    <tr><td>Quyết định đã chốt trong một chat (giá, phạm vi, tên chiến dịch) mà các chat sau cần</td><td>Viết thành một tài liệu ngắn, đưa vào knowledge</td><td>Chat sau không thấy chat trước</td></tr>
+    <tr><td>Thuật ngữ bạn dùng ở mọi việc, không riêng project này</td><td>Instructions for Claude của tài khoản</td><td>Áp cho mọi chat của bạn</td></tr>
+    <tr><td>“Dự án Acme, giọng trang trọng” ghi trong tên hoặc mô tả</td><td>Không có tác dụng gì</td><td>Claude không thấy tên và mô tả</td></tr>
+    <tr><td>File “instructions.txt” tải vào knowledge</td><td>Không thay được project instructions</td><td>Nó vẫn chỉ là một file trong knowledge. Khi RAG bật, Claude chỉ lấy đoạn liên quan tới câu hỏi, nên có lúc file đó không được đọc tới</td></tr>
+  </table></div>
+
+  <h4>Chọn tài liệu và đặt tên</h4>
+  <ul>
+    <li><b>Chỉ đưa bản hiện hành, đã duyệt.</b> Bản nháp và bản cũ để ngoài project. Hai bản cùng chủ đề cùng nằm đó thì Claude có thể dùng bản nào cũng được (<a href="#l-5-4">bài 5.4</a>).</li>
+    <li><b>Mỗi file một chủ đề.</b> “Chinh-sach-nghi-phep-2026.pdf” dễ tìm hơn “Tong-hop-HR-final-v3.pdf”.</li>
+    <li><b>Tên file nói rõ nội dung và thời điểm.</b> Khi RAG bật, tên rõ giúp Claude tìm trúng. Khi hỏi, nêu tên tài liệu: “theo bảng giá Q4/2026, gói Doanh nghiệp giá bao nhiêu?”.</li>
+    <li><b>Gom file liên quan, tải hết lên từ đầu</b>, thay vì đính kèm lẻ tẻ vào từng chat.</li>
+    <li><b>Bỏ thứ không cần.</b> File thừa làm nhiễu chuyện tìm, và docs khuyên gỡ file không dùng để đỡ tốn usage (hạn mức sử dụng).</li>
+    <li><b>Giới hạn:</b> mỗi file trong project tối đa 30MB. Free không có RAG nên tổng knowledge phải vừa context window.</li>
+  </ul>
+
+  <h4>Chia sẻ với team: ai thấy, ai sửa</h4>
+  <ul>
+    <li><b>Chỉ Team và Enterprise chia sẻ được project</b>, và chỉ trong cùng tổ chức. Người dùng Pro hay Max không mời được ai vào project.</li>
+    <li><b>Private hay chia sẻ cho tổ chức.</b> Chia sẻ cho tổ chức thì project hiện ở tab “Organization” (tổ chức). Người tạo đổi được bất cứ lúc nào qua nút Share.</li>
+    <li><b>Can view cho người dùng, Can edit cho người bảo trì.</b> Một người Can edit sửa sai instructions hay thay nhầm file là mọi chat của mọi người bị ảnh hưởng.</li>
+    <li><b>Chia sẻ project không chia sẻ chat.</b> Chat của mỗi người vẫn riêng, trừ khi họ chia sẻ từng chat.</li>
+    <li><b>Owner tắt được chia sẻ project cho cả tổ chức</b> (Enterprise: theo từng vai trò). Lượt chia sẻ cũ vẫn giữ, project đang công khai chuyển thành private.</li>
+    <li><b>Trên Team và Enterprise, connector chỉ dùng được trong project private</b>, và Google Doc từ Drive cũng chỉ thêm được vào project private (<a href="#l-5-2">bài 5.2</a>).</li>
+  </ul>
+
+  <div class="story"><b>Tình huống.</b> Anh Minh, trưởng nhóm khách hàng ở một agency quảng cáo (gói Team), dựng project cho khách Acme. Anh ghi “Giọng trang trọng, luôn nhắc ưu đãi gói năm” vào phần mô tả, rồi tải lên 14 file: ba bản brief nháp, brief chốt, sáu báo cáo tháng, bảng giá cũ và bảng giá mới. Anh chia sẻ cho cả agency, ai cũng Can edit “cho tiện thêm file”. Hai tuần sau: câu trả lời không trang trọng, không nhắc ưu đãi, có lúc trích bảng giá cũ, và một bạn thực tập đã sửa instructions để thử viết giọng vui.</div>
+  <div class="vs">
+    <div class="bad"><b>Tệ</b><ul>
+      <li>Viết chỉ dẫn vào tên hoặc mô tả.</li>
+      <li>Tải cả nháp lẫn bản chốt, cả giá cũ lẫn giá mới.</li>
+      <li>Ai cũng Can edit.</li>
+      <li>Chốt giá trong một chat rồi mong chat sau tự biết.</li>
+    </ul></div>
+    <div class="good"><b>Tốt</b><ul>
+      <li>Giọng và ưu đãi cần nhắc vào project instructions.</li>
+      <li>Knowledge chỉ giữ brief chốt và bảng giá hiện hành, tên file rõ.</li>
+      <li>Người dùng Can view, hai người bảo trì Can edit.</li>
+      <li>Quyết định đã chốt ghi thành tài liệu ngắn trong knowledge.</li>
+    </ul></div>
+  </div>
+
+  <h4>Khi đi thi</h4>
+  <p class="need">Bài này thường ra 2 dạng câu hỏi. Đọc đề, <b>chọn một đáp án trước</b>; phần giải thích chỉ hiện ra sau khi bạn chọn.</p>
+
+  <div class="qcase" data-answer="C">
+    <h5 class="sub">Dạng 1: chỉ dẫn đặt sai chỗ</h5>
+    <span class="lbl">Đề sẽ viết kiểu này</span>
+    <div class="qtext">
+      <span class="en">“An HR coordinator creates a project for employee leave questions. She uploads the 2026 employee handbook and writes in the project description: ‘Act as an HR advisor, cite the handbook section in every answer, and refer anything the handbook does not cover to hr@company.com.’ In testing, Claude answers in a generic tone, cites no sections, and guesses when the handbook is silent. What is the most likely cause?”</span>
+      <span class="vi">Dịch: Một nhân viên điều phối nhân sự tạo project để trả lời câu hỏi về nghỉ phép. Chị tải lên sổ tay nhân viên 2026 và ghi vào phần mô tả project: “Đóng vai chuyên viên nhân sự, câu trả lời nào cũng trích mục sổ tay, việc gì sổ tay không nói thì chuyển tới hr@company.com.” Khi thử, Claude trả lời giọng chung chung, không trích mục nào, và tự đoán khi sổ tay không nói tới. Nguyên nhân nhiều khả năng nhất là gì?</span>
+    </div>
+    <span class="lbl">Bạn chọn đáp án nào?</span>
+    <div class="qopts">
+      <button type="button" class="qopt" data-k="A"><b class="k">A.</b><span class="body"><span class="en">“The handbook is too long, so Claude cannot reach the sections it should cite in its answers.”</span><span class="vi">Sổ tay quá dài nên Claude không đọc tới được các mục cần trích trong câu trả lời.</span></span></button>
+      <button type="button" class="qopt" data-k="B"><b class="k">B.</b><span class="body"><span class="en">“RAG has not been turned on in the project settings, so the handbook is not being searched.”</span><span class="vi">Chưa bật RAG trong phần cài đặt project, nên sổ tay không được tìm tới.</span></span></button>
+      <button type="button" class="qopt" data-k="C"><b class="k">C.</b><span class="body"><span class="en">“Claude cannot see the project description; the guidance belongs in the project instructions.”</span><span class="vi">Claude không thấy phần mô tả project. Chỗ của các chỉ dẫn này là project instructions.</span></span></button>
+      <button type="button" class="qopt" data-k="D"><b class="k">D.</b><span class="body"><span class="en">“Project text is not kept between chats, so the guidance must be repeated at the start of every conversation.”</span><span class="vi">Chữ trong project không được giữ giữa các chat, nên phải nhắc lại chỉ dẫn ở đầu mỗi cuộc hội thoại.</span></span></button>
+    </div>
+    <p class="qfb" hidden></p>
+    <div class="qexp" hidden>
+      <span class="lbl">Phân tích đề</span>
+      <ul>
+        <li><b>Đề kể:</b> sổ tay nằm trong knowledge, còn chỉ dẫn (vai, trích mục, khi không có thì chuyển) nằm trong phần mô tả.</li>
+        <li><b>Chỗ khó:</b> Claude sai cả ba thứ cùng lúc: giọng, trích dẫn, cách xử lý khi thiếu. Ba lỗi cùng một gốc thì gốc đó là chỗ chỉ dẫn được đặt.</li>
+        <li><b>Đề hỏi:</b> nguyên nhân nhiều khả năng nhất.</li>
+      </ul>
+      <span class="lbl">Cần biết để chọn</span>
+      <ol>
+        <li>Claude không thấy tên và mô tả project. Đó là nhãn cho người.</li>
+        <li>Cách làm việc phải nằm trong project instructions, và khi đó nó áp cho mọi chat.</li>
+        <li>RAG tự bật ở gói trả phí khi knowledge gần đầy. Không có nút bật.</li>
+      </ol>
+      <span class="lbl">Từng đáp án</span>
+      <ul class="verdict">
+        <li><b>A sai.</b> Sổ tay dài thì ở gói trả phí Claude tự chuyển sang tìm đoạn liên quan (ý 3). Và độ dài không giải thích được vì sao giọng văn chung chung hay vì sao Claude đoán thay vì chuyển cho HR.</li>
+        <li><b>B sai.</b> Không có cài đặt nào để bật RAG (ý 3). Hấp dẫn vì nghe kỹ thuật, nhưng nó đánh vào chuyện tìm tài liệu, không đụng tới chỉ dẫn bị đặt sai chỗ.</li>
+        <li class="ok"><b>C đúng.</b> Chỉ dẫn nằm ở chỗ Claude không đọc (ý 1). Chuyển nó vào project instructions là mọi chat đều theo (ý 2).</li>
+        <li><b>D sai.</b> Instructions và knowledge vốn áp cho mọi chat, không cần nhắc lại (ý 2). Ở đây chỉ dẫn chưa từng tới Claude lần nào, nên nhắc lại mỗi chat chỉ là vá triệu chứng.</li>
+      </ul>
+      <button type="button" class="qreset">Làm lại câu này</button>
+    </div>
+  </div>
+
+  <div class="qcase" data-answer="A">
+    <h5 class="sub">Dạng 2: chia quyền cho project dùng chung</h5>
+    <span class="lbl">Đề sẽ viết kiểu này</span>
+    <div class="qtext">
+      <span class="en">“A sales operations manager on a Team plan built a pricing project that 40 sales reps use every day. Last month a rep replaced the approved price list with a draft, and for a week every chat quoted draft prices. She wants the reps to keep using the project, but only two pricing analysts should be able to change its knowledge and instructions. What should she do?”</span>
+      <span class="vi">Dịch: Một quản lý vận hành kinh doanh (gói Team) dựng một project về giá mà 40 nhân viên bán hàng dùng hằng ngày. Tháng trước, một nhân viên thay bảng giá đã duyệt bằng một bản nháp, và suốt một tuần mọi chat đều báo giá nháp. Chị muốn nhân viên bán hàng vẫn dùng project, nhưng chỉ hai chuyên viên định giá được sửa knowledge và instructions. Chị nên làm gì?</span>
+    </div>
+    <span class="lbl">Bạn chọn đáp án nào?</span>
+    <div class="qopts">
+      <button type="button" class="qopt" data-k="A"><b class="k">A.</b><span class="body"><span class="en">“Share the project with the reps as Can view and give Can edit only to the two analysts.”</span><span class="vi">Chia sẻ project cho nhân viên bán hàng với quyền Can view, chỉ hai chuyên viên định giá có Can edit.</span></span></button>
+      <button type="button" class="qopt" data-k="B"><b class="k">B.</b><span class="body"><span class="en">“Keep everyone on Can edit and add a project instruction stating that only the pricing analysts may upload or replace files.”</span><span class="vi">Giữ mọi người ở Can edit và thêm một dòng instructions ghi rằng chỉ chuyên viên định giá được tải lên hay thay file.</span></span></button>
+      <button type="button" class="qopt" data-k="C"><b class="k">C.</b><span class="body"><span class="en">“Make the project private and have each rep paste the current price list into their own chats whenever they need it.”</span><span class="vi">Chuyển project về private, mỗi nhân viên tự dán bảng giá hiện hành vào chat của mình khi cần.</span></span></button>
+      <button type="button" class="qopt" data-k="D"><b class="k">D.</b><span class="body"><span class="en">“Ask each rep to create a personal copy of the project so that a mistake in one copy cannot affect the others.”</span><span class="vi">Bảo mỗi nhân viên tự tạo một bản sao project riêng, để lỗi ở bản này không ảnh hưởng bản khác.</span></span></button>
+    </div>
+    <p class="qfb" hidden></p>
+    <div class="qexp" hidden>
+      <span class="lbl">Phân tích đề</span>
+      <ul>
+        <li><b>Đề kể:</b> 40 người dùng chung một project, một người thay nhầm bảng giá, cả tuần sai giá.</li>
+        <li><b>Chỗ khó:</b> có hai yêu cầu cùng lúc. Nhân viên vẫn phải dùng được project, nhưng chỉ hai người được sửa.</li>
+        <li><b>Đề hỏi:</b> thiết lập nào đáp ứng cả hai.</li>
+      </ul>
+      <span class="lbl">Cần biết để chọn</span>
+      <ol>
+        <li>Can view vẫn xem được knowledge và vẫn chat với Claude trong project. Chỉ không sửa được gì.</li>
+        <li>Can edit sửa được instructions, knowledge và thành viên. Sửa một lần là mọi chat của mọi người đổi theo.</li>
+        <li>Instructions chỉ dẫn câu trả lời của Claude. Nó không khóa được quyền của người dùng.</li>
+      </ol>
+      <span class="lbl">Từng đáp án</span>
+      <ul class="verdict">
+        <li class="ok"><b>A đúng.</b> Nhân viên vẫn dùng đủ (ý 1), quyền sửa chỉ nằm ở hai người chịu trách nhiệm (ý 2). Đúng cả hai yêu cầu của đề.</li>
+        <li><b>B sai.</b> Một dòng chữ cho Claude đọc không ngăn được ai bấm thay file (ý 3). Hấp dẫn vì “đã có quy định”, nhưng quyền vẫn mở cho cả 40 người.</li>
+        <li><b>C sai.</b> Bỏ mất lợi ích của project dùng chung. Mỗi người dán một kiểu, người dán nhầm bản cũ thì không ai biết.</li>
+        <li><b>D sai.</b> 40 bản sao là 40 chỗ phải cập nhật mỗi khi giá đổi, chắc chắn lệch nhau. Nghe như cách ly lỗi, thật ra nhân lỗi lên.</li>
+      </ul>
+      <button type="button" class="qreset">Làm lại câu này</button>
+    </div>
+  </div>
+
+  <div class="more"><b>Biết thêm</b><ul>
+    <li><b>Trang Projects có ba tab:</b> “Your projects” (project bạn tạo), “Organization” (project chia sẻ cho cả tổ chức), “Shared with you” (project người khác mời bạn). Không thấy project thì xem cả ba. Gắn sao cho project để mở nhanh.</li>
+    <li><b>Free tạo tối đa 5 project</b>, và không có RAG.</li>
+    <li><b>Mỗi project có memory riêng.</b> Tắt “Use account memory” (dùng memory của tài khoản) trong project để tách hẳn project đó khỏi memory chung (<a href="#l-3-4">bài 3.4</a>).</li>
+    <li><b>Nội dung project được lưu tạm (cache).</b> Dùng lại thì tính ít usage hơn. Nghỉ lâu rồi hỏi lại thì lần đầu tính đủ.</li>
+    <li><b>Chia sẻ theo nhóm người</b> chỉ có ở Enterprise, đang ở dạng beta (thử nghiệm).</li>
+  </ul></div>
+  <div class="rule">Quy tắc: cách làm vào instructions, tư liệu vào knowledge, tên và mô tả chỉ để người đọc; quyền sửa chỉ giao cho người bảo trì.</div>
+  <div class="remember"><b>Nhớ nhanh</b><ul>
+    <li>Hỏi “cách làm hay tư liệu?” để chọn instructions hay knowledge.</li>
+    <li>Knowledge: bản hiện hành, mỗi file một chủ đề, tên rõ, nêu tên khi hỏi.</li>
+    <li>Chia sẻ chỉ Team và Enterprise. Can view cho người dùng, Can edit cho người bảo trì.</li>
+    <li>Chia sẻ project không chia sẻ chat.</li>
+  </ul></div>
+  <div class="src">Đọc thêm: <a href="https://support.claude.com/en/articles/9519177-how-can-i-create-and-manage-projects">Create and manage projects</a> · <a href="https://support.claude.com/en/articles/9519189-project-visibility-and-sharing">Project visibility and sharing</a> · <a href="https://support.claude.com/en/articles/11473015-retrieval-augmented-generation-rag-for-projects">RAG for projects</a></div>
+  <label class="done"><input type="checkbox" data-lesson="l-5-1"> Đã học bài này</label>
+</article>
+
+<article class="lesson" id="l-5-2" data-domain="5" data-ts="5.2" data-min="13">
+  <header class="lh"><span class="ts">TS 5.2</span><h3>File tải lên và connector: Claude thấy gì, mới tới đâu, theo quyền của ai</h3><span class="rt">~13 phút</span></header>
+  <p class="need">Cần biết trước: ba đường đưa tài liệu cho Claude ở <a href="#l-5-0">bài Nền tảng</a>. Dữ liệu nhạy cảm nào được phép đưa vào là chuyện của <a href="#l-6-2">bài 6.2</a>; bài này không dạy lại.</p>
+  <div class="defs"><b>Khái niệm của bài</b><dl>
+    <dt>Uploaded file (file tải lên)</dt><dd>Bản sao của file tại lúc tải. Sửa file gốc sau đó, Claude không thấy.</dd>
+    <dt>Drive-synced doc (Google Doc đồng bộ từ Drive)</dt><dd>Google Doc thêm vào chat hoặc project qua “Add from Google Drive” (thêm từ Google Drive). Luôn đồng bộ bản mới nhất trên Drive.</dd>
+    <dt>Connector</dt><dd>Kết nối cho Claude vào một ứng dụng khác để tìm, đọc và làm việc thay bạn. Claude kế thừa đúng quyền của tài khoản bạn ở ứng dụng đó.</dd>
+    <dt>Tool permission (quyền từng công cụ)</dt><dd>Mức Owner đặt cho từng thao tác của connector: Always allow (luôn cho), Needs approval (cần người dùng duyệt), Blocked (chặn).</dd>
+  </dl></div>
+
+  <h4>File tải lên: Claude đọc được gì</h4>
+  <div class="tw"><table>
+    <tr><th>Loại file</th><th>Claude đọc được</th></tr>
+    <tr><td>PDF tới 100 trang</td><td>Chữ, và cả hình, biểu đồ</td></tr>
+    <tr><td>PDF 101–1000 trang</td><td>Chỉ chữ. Biểu đồ bị bỏ qua</td></tr>
+    <tr><td>PDF trên 1000 trang</td><td>Báo lỗi, không tải được</td></tr>
+    <tr><td>DOCX, TXT, CSV, HTML, RTF, ODT, EPUB, JSON</td><td>Chữ. Trong project, ảnh nhúng trong file không được xử lý</td></tr>
+    <tr><td>XLSX</td><td>Được, khi đã bật tính năng tạo và sửa file (code execution)</td></tr>
+    <tr><td>Ảnh JPEG, PNG, GIF, WebP</td><td>Đọc trực tiếp</td></tr>
+  </table></div>
+  <p>Hai giới hạn cần thuộc: <b>20 file một chat</b> và <b>30MB một file trong project</b>. Docs ghi kích thước tối đa của một file đính kèm chat không thống nhất, nên đừng học con số đó.</p>
+
+  <h4>Connector Google Workspace: mỗi cái cho Claude làm gì</h4>
+  <div class="tw"><table>
+    <tr><th>Connector</th><th>Claude làm được</th><th>Cần lưu ý</th></tr>
+    <tr><td>Gmail</td><td>Tìm, đọc, soạn nháp thư. Gửi, trả lời, chuyển tiếp</td><td>Gửi, trả lời, chuyển tiếp: mặc định phải bạn duyệt. File đính kèm: <b>chỉ thấy thông tin file</b> (tên, loại), không thấy nội dung</td></tr>
+    <tr><td>Google Calendar</td><td>Xem, tạo, sửa, xóa sự kiện. Tìm giờ trống chung</td><td>Chỉ trong những lịch bạn được xem</td></tr>
+    <tr><td>Google Drive</td><td>Tìm và đọc Docs, Sheets, Slides, PDF, file Office</td><td>Chỉ lấy chữ, ảnh trong tài liệu không được xử lý. Chia sẻ, di chuyển, xóa file: mặc định phải bạn duyệt</td></tr>
+  </table></div>
+  <ul>
+    <li><b>Muốn Claude đọc file đính kèm email:</b> tải file về rồi đính kèm vào chat.</li>
+    <li><b>Connector khác:</b> Docs, Sheets, Slides (sửa trực tiếp), Slack, GitHub, Microsoft 365… Tất cả nằm ở Customize → Connectors.</li>
+    <li><b>Connector tự thêm</b> (custom connector, nối tới một máy chủ remote MCP, tức máy chủ theo chuẩn MCP chạy trên internet): Customize → Connectors → Add → Custom → Web, nhập tên và địa chỉ máy chủ. Máy chủ phải truy cập được từ internet. Anthropic không kiểm định connector tự thêm, nên chỉ dùng máy chủ tin cậy. Có ở mọi gói, Free tối đa 1.</li>
+    <li><b>Bật đúng thứ đang cần.</b> Connector và công cụ tốn nhiều token (đơn vị đo lượng chữ Claude xử lý), tức là tốn hạn mức. Bật, tắt cho từng chat ở “+” → Connectors.</li>
+  </ul>
+
+  <h4>Bản chụp, bản đồng bộ, hay lấy lúc hỏi</h4>
+  <div class="tw"><table>
+    <tr><th></th><th>Tải file lên</th><th>Google Doc thêm từ Drive</th><th>Connector tìm lúc hỏi</th></tr>
+    <tr><td>Độ mới</td><td>Đứng yên tại lúc tải</td><td>Luôn là bản mới nhất trên Drive</td><td>Lấy đúng lúc bạn hỏi</td></tr>
+    <tr><td>Dùng được ở đâu</td><td>Chat, mọi loại project</td><td>Chat, và <b>chỉ project private</b>. Project đã chia sẻ thì tùy chọn này bị tắt</td><td>Chat có bật connector. Trên Team và Enterprise: chỉ trong project private</td></tr>
+    <tr><td>Ai cập nhật</td><td>Bạn, bằng tay</td><td>Tự động</td><td>Không cần</td></tr>
+    <tr><td>Hợp với</td><td>Văn bản đã chốt: hợp đồng đã ký, chính sách đã ban hành</td><td>Tài liệu còn sửa: FAQ, bảng giá đang chạy</td><td>Hộp thư, lịch, thư mục lớn đổi liên tục</td></tr>
+  </table></div>
+  <p>Dữ liệu connector lấy về được lưu cùng chat đã dùng nó. Xóa chat thì dữ liệu đó bị xóa theo. Trên Team và Enterprise, chat có nội dung đồng bộ thì không chia sẻ được.</p>
+
+  <h4>Ai bật, ai được thấy: bốn lớp quyền</h4>
+  <ol>
+    <li><b>Owner hoặc Primary Owner bật connector cho tổ chức</b> (Team, Enterprise). Bật xong chưa ai có quyền gì thêm. Connector chỉ xuất hiện để mọi người dùng.</li>
+    <li><b>Từng người tự đăng nhập tài khoản của mình</b> (authenticate). Claude chỉ thấy dữ liệu của tài khoản đã kết nối.</li>
+    <li><b>Owner đặt quyền từng công cụ:</b> Always allow, Needs approval, Blocked, và quyết định thành viên có được gửi, chia sẻ mà không cần duyệt hay không. Các giới hạn này chỉ thu hẹp quyền, không mở rộng, và thành viên không ghi đè được.</li>
+    <li><b>Quyền ở dịch vụ gốc là trần.</b> File bạn không mở được trên Google, Claude cũng không mở được, dù công cụ đặt Always allow.</li>
+  </ol>
+  <ul>
+    <li><b>Xin bật connector:</b> thành viên gửi yêu cầu được. Team mặc định cho phép, Enterprise mặc định tắt.</li>
+    <li><b>Lỗi “Access blocked”</b> (bị chặn truy cập) khi nối Google: admin Google Workspace của công ty phải đánh dấu Claude là ứng dụng tin cậy. Việc này làm ở phía Google, không nằm trong cài đặt của Claude.</li>
+    <li><b>Tắt và ngắt là hai việc khác nhau.</b> Tắt ở “+” → Connectors chỉ tắt cho chat đó. Ngắt hẳn: Customize → Connectors → chọn connector → Disconnect.</li>
+  </ul>
+
+  <div class="story"><b>Tình huống.</b> Chị Thu là account manager (người phụ trách khách hàng) ở một công ty phần mềm (gói Team). Sáng thứ Hai, khách gửi hợp đồng PDF đính kèm email. Chị bảo Claude qua Gmail connector: “Tóm tắt hợp đồng khách ABC vừa gửi.” Claude kể được nội dung email và tên file, nhưng không nói được điều khoản nào. Chiều cùng ngày, Claude trong project báo giá của chị trích thông số sản phẩm cũ. Bản PDF chị tải lên từ tháng 3. Còn Google Doc gốc thì đội sản phẩm sửa mỗi tuần.</div>
+  <div class="vs">
+    <div class="bad"><b>Tệ</b><ul>
+      <li>Hỏi lại Gmail connector nhiều lần, mong Claude “mở” được file đính kèm.</li>
+      <li>Mỗi tuần xuất PDF mới tải lên, để chồng các bản cũ.</li>
+      <li>Nghĩ rằng Owner bật connector là ai cũng thấy hộp thư của nhau.</li>
+    </ul></div>
+    <div class="good"><b>Tốt</b><ul>
+      <li>Tải hợp đồng về, đính kèm vào chat rồi mới nhờ tóm tắt.</li>
+      <li>Project private: gỡ PDF, thêm Google Doc từ Drive để tự đồng bộ.</li>
+      <li>Nhớ bốn lớp: Owner bật, từng người đăng nhập, Owner đặt quyền công cụ, quyền gốc là trần.</li>
+    </ul></div>
+  </div>
+
+  <h4>Khi đi thi</h4>
+  <p class="need">Bài này thường ra 2 dạng câu hỏi. Đọc đề, <b>chọn một đáp án trước</b>; phần giải thích chỉ hiện ra sau khi bạn chọn.</p>
+
+  <div class="qcase" data-answer="D">
+    <h5 class="sub">Dạng 1: tài liệu được sửa hằng tuần</h5>
+    <span class="lbl">Đề sẽ viết kiểu này</span>
+    <div class="qtext">
+      <span class="en">“A marketing coordinator uses a private project to answer partner questions about product specifications. The specifications live in a Google Doc that the product team edits every week. In March she uploaded a PDF export of that document to the project. Claude now keeps quoting specifications that changed weeks ago. What is the best way to keep the project current with the least ongoing effort?”</span>
+      <span class="vi">Dịch: Một nhân viên điều phối marketing dùng một project private để trả lời đối tác về thông số sản phẩm. Thông số nằm trong một Google Doc mà đội sản phẩm sửa mỗi tuần. Hồi tháng 3, chị xuất tài liệu đó ra PDF và tải vào project. Giờ Claude cứ trích những thông số đã đổi từ nhiều tuần trước. Cách nào giữ project luôn cập nhật mà tốn ít công duy trì nhất?</span>
+    </div>
+    <span class="lbl">Bạn chọn đáp án nào?</span>
+    <div class="qopts">
+      <button type="button" class="qopt" data-k="A"><b class="k">A.</b><span class="body"><span class="en">“Export a fresh PDF every Friday and upload it, keeping the older exports in the project as a history.”</span><span class="vi">Mỗi thứ Sáu xuất PDF mới và tải lên, giữ các bản cũ trong project làm lịch sử.</span></span></button>
+      <button type="button" class="qopt" data-k="B"><b class="k">B.</b><span class="body"><span class="en">“Add a project instruction telling Claude to always use the most recent specification it can find.”</span><span class="vi">Thêm một dòng instructions bảo Claude luôn dùng bản thông số mới nhất mà nó tìm được.</span></span></button>
+      <button type="button" class="qopt" data-k="C"><b class="k">C.</b><span class="body"><span class="en">“Paste the current specification text into each chat before asking, and keep the PDF as a fallback.”</span><span class="vi">Dán nội dung thông số hiện hành vào mỗi chat trước khi hỏi, giữ PDF làm phương án dự phòng.</span></span></button>
+      <button type="button" class="qopt" data-k="D"><b class="k">D.</b><span class="body"><span class="en">“Replace the PDF with the Google Doc itself, added to the project files from Google Drive.”</span><span class="vi">Thay PDF bằng chính Google Doc đó, thêm vào file của project từ Google Drive.</span></span></button>
+    </div>
+    <p class="qfb" hidden></p>
+    <div class="qexp" hidden>
+      <span class="lbl">Phân tích đề</span>
+      <ul>
+        <li><b>Đề kể:</b> tài liệu gốc là Google Doc, sửa mỗi tuần. Trong project chỉ có bản PDF xuất từ tháng 3.</li>
+        <li><b>Chỗ khó:</b> đề nói rõ project là <i>private</i>, và đòi “ít công duy trì nhất”. Cách nào phải làm tay mỗi tuần đều thua.</li>
+        <li><b>Đề hỏi:</b> cách tốt nhất để project luôn mới.</li>
+      </ul>
+      <span class="lbl">Cần biết để chọn</span>
+      <ol>
+        <li>File tải lên là bản chụp. Sửa Google Doc gốc không chạm tới PDF đã tải.</li>
+        <li>Google Doc thêm từ Drive tự đồng bộ bản mới nhất, và chỉ thêm được vào project private.</li>
+        <li>Tải bản mới không làm bản cũ biến mất. Hai bản cùng nằm đó thì bản cũ vẫn có thể được trích.</li>
+      </ol>
+      <span class="lbl">Từng đáp án</span>
+      <ul class="verdict">
+        <li><b>A sai.</b> Vẫn là bản chụp, chỉ dày lên mỗi tuần (ý 1). Giữ các bản cũ trong project còn làm Claude trích nhầm (ý 3). Tốn công nhất trong bốn cách.</li>
+        <li><b>B sai.</b> Một dòng chữ không làm PDF tháng 3 mới hơn. Trong knowledge không có bản nào mới để Claude tìm.</li>
+        <li><b>C sai.</b> Chạy được nhưng phải làm tay mỗi chat, trái với “ít công nhất”. Giữ PDF làm dự phòng thì nguồn sai vẫn còn đó.</li>
+        <li class="ok"><b>D đúng.</b> Gỡ bản chụp cũ (ý 3), thay bằng bản đồng bộ (ý 2). Project private nên làm được, và từ đó không ai phải cập nhật tay.</li>
+      </ul>
+      <button type="button" class="qreset">Làm lại câu này</button>
+    </div>
+  </div>
+
+  <div class="qcase" data-answer="B">
+    <h5 class="sub">Dạng 2: bật connector rồi thì ai thấy gì</h5>
+    <span class="lbl">Đề sẽ viết kiểu này</span>
+    <div class="qtext">
+      <span class="en">“On a Team plan, a team lead asks the Owner to enable the Gmail connector so that Claude can help draft replies from client threads. The Owner enables it for the organization. The next morning, one member says Claude still cannot see her inbox, and another worries that Claude can now read everyone’s email. Which statement is accurate?”</span>
+      <span class="vi">Dịch: Ở một công ty dùng gói Team, một trưởng nhóm nhờ Owner bật Gmail connector để Claude giúp soạn trả lời từ các luồng thư của khách. Owner bật cho cả tổ chức. Sáng hôm sau, một thành viên nói Claude vẫn chưa thấy hộp thư của chị, một người khác lo rằng giờ Claude đọc được thư của tất cả mọi người. Câu nào đúng?</span>
+    </div>
+    <span class="lbl">Bạn chọn đáp án nào?</span>
+    <div class="qopts">
+      <button type="button" class="qopt" data-k="A"><b class="k">A.</b><span class="body"><span class="en">“The Owner’s enablement should already have connected every inbox, so the Owner needs to enable it again.”</span><span class="vi">Owner bật là lẽ ra mọi hộp thư đã được nối, nên Owner cần bật lại.</span></span></button>
+      <button type="button" class="qopt" data-k="B"><b class="k">B.</b><span class="body"><span class="en">“Each member must connect their own Google account; Claude then sees only what that account can access.”</span><span class="vi">Từng thành viên phải tự nối tài khoản Google của mình. Khi đó Claude chỉ thấy những gì tài khoản đó vốn xem được.</span></span></button>
+      <button type="button" class="qopt" data-k="C"><b class="k">C.</b><span class="body"><span class="en">“Claude can now read every mailbox in the company, so sensitive threads should be moved out of Gmail first.”</span><span class="vi">Giờ Claude đọc được mọi hộp thư trong công ty, nên phải chuyển các luồng thư nhạy cảm ra khỏi Gmail trước.</span></span></button>
+      <button type="button" class="qopt" data-k="D"><b class="k">D.</b><span class="body"><span class="en">“Connectors work only inside shared projects, so the member should move her chat into the team’s shared project.”</span><span class="vi">Connector chỉ chạy trong project đã chia sẻ, nên thành viên đó nên chuyển chat vào project chung của nhóm.</span></span></button>
+    </div>
+    <p class="qfb" hidden></p>
+    <div class="qexp" hidden>
+      <span class="lbl">Phân tích đề</span>
+      <ul>
+        <li><b>Đề kể:</b> Owner đã bật Gmail cho tổ chức. Một người chưa dùng được, một người lo Claude thấy hết thư.</li>
+        <li><b>Chỗ khó:</b> hai lo lắng ngược chiều nhau (“chưa thấy gì” và “thấy hết”), nhưng cùng một cơ chế giải thích được cả hai.</li>
+        <li><b>Đề hỏi:</b> câu mô tả đúng cơ chế.</li>
+      </ul>
+      <span class="lbl">Cần biết để chọn</span>
+      <ol>
+        <li>Owner bật connector chỉ làm nó có sẵn trong tổ chức. Bật không cấp quyền vào dữ liệu của ai.</li>
+        <li>Từng người tự đăng nhập tài khoản của mình. Claude kế thừa đúng quyền của tài khoản đó.</li>
+        <li>Trên Team và Enterprise, connector chỉ dùng được trong project private.</li>
+      </ol>
+      <span class="lbl">Từng đáp án</span>
+      <ul class="verdict">
+        <li><b>A sai.</b> Hiểu nhầm bước bật là bước cấp quyền (ý 1). Bật lại bao nhiêu lần thì thành viên vẫn phải tự đăng nhập.</li>
+        <li class="ok"><b>B đúng.</b> Giải thích cả hai chuyện: người chưa đăng nhập thì chưa thấy gì (ý 2), người đã đăng nhập cũng chỉ thấy thư của chính mình (ý 1, 2).</li>
+        <li><b>C sai.</b> Claude không vượt quyền tài khoản (ý 2). Hấp dẫn vì nghe cẩn thận, nhưng là làm quá tay vì một rủi ro không có thật.</li>
+        <li><b>D sai.</b> Ngược hẳn: trên Team và Enterprise, connector chỉ có trong project private (ý 3).</li>
+      </ul>
+      <button type="button" class="qreset">Làm lại câu này</button>
+    </div>
+  </div>
+
+  <div class="more"><b>Biết thêm</b><ul>
+    <li><b>Thêm Google Doc vào chat:</b> “+” → Add from Google Drive, chọn file hoặc dán đường link. Thêm nhiều file được, nhưng tổng phải vừa context window.</li>
+    <li><b>Chế độ dùng công cụ:</b> Auto (mặc định) hoặc On demand (khi được gọi). Docs gợi ý On demand khi bạn có từ 10 connector trở lên.</li>
+    <li><b>Anthropic nói không train model trên dữ liệu connector</b> Gmail, Drive, Calendar. Còn dữ liệu nào được phép đưa vào Claude: <a href="#l-6-2">bài 6.2</a>.</li>
+    <li><b>Sửa lỗi “Access blocked”:</b> admin Google Workspace vào phần API controls, thêm ứng dụng Claude và đặt là Trusted (tin cậy). Docs nói chờ khoảng 15 phút để có hiệu lực.</li>
+    <li><b>Guide v1.0 nêu Google Drive, Gmail làm ví dụ.</b> App hiện tại có thêm Calendar, Docs, Sheets, Slides, Slack, GitHub, Microsoft 365 và connector tự thêm. Khi thi, connector nào cũng theo cùng một luật: Claude chỉ thấy theo quyền của bạn, và trên Team, Enterprise thì Owner bật cho tổ chức trước.</li>
+  </ul></div>
+  <div class="rule">Quy tắc: tài liệu đã chốt thì tải lên, tài liệu còn sửa thì đồng bộ từ Drive, dữ liệu sống thì dùng connector; và Claude không bao giờ thấy nhiều hơn tài khoản của người đang hỏi.</div>
+  <div class="remember"><b>Nhớ nhanh</b><ul>
+    <li>PDF tới 100 trang: chữ và hình. 101–1000: chỉ chữ. Trên 1000: lỗi. 20 file một chat, 30MB một file project.</li>
+    <li>Gmail: chỉ thấy thông tin file đính kèm. Drive: chỉ lấy chữ.</li>
+    <li>Google Doc từ Drive tự đồng bộ, chỉ ở project private.</li>
+    <li>Owner bật → từng người đăng nhập → Owner đặt quyền công cụ → quyền gốc là trần.</li>
+  </ul></div>
+  <div class="src">Đọc thêm: <a href="https://support.claude.com/en/articles/8241126-uploading-files-to-claude">Uploading files</a> · <a href="https://support.claude.com/en/articles/11176164-use-connectors-to-extend-claude-s-capabilities">Use connectors</a> · <a href="https://support.claude.com/en/articles/10166901-use-google-workspace-connectors">Google Workspace connectors</a></div>
+  <label class="done"><input type="checkbox" data-lesson="l-5-2"> Đã học bài này</label>
+</article>
+
+<article class="lesson" id="l-5-3" data-domain="5" data-ts="5.3" data-min="12">
+  <header class="lh"><span class="ts">TS 5.3</span><h3>Viết chỉ dẫn cấp hệ thống: vai, phạm vi, người đọc, và lúc Claude không chắc</h3><span class="rt">~12 phút</span></header>
+  <p class="need">Cần biết trước: các tầng chỉ dẫn ở <a href="#l-5-0">bài Nền tảng</a>. Cách viết một prompt tốt nằm ở <a href="#l-1-1">bài 1.1</a>; bài này nói về chỉ dẫn đặt sẵn, áp cho nhiều chat.</p>
+  <div class="defs"><b>Khái niệm của bài</b><dl>
+    <dt>System-level instructions</dt><dd>Chữ của guide: chỉ dẫn đặt một lần, áp cho mọi chat trong một phạm vi. Trong app: organization instructions, Instructions for Claude, project instructions.</dd>
+    <dt>Scope (phạm vi)</dt><dd>Claude làm việc gì và không làm việc gì trong project. Cũng dùng để nói một quy tắc chạm tới những chat nào.</dd>
+    <dt>Fallback (cách xử lý khi không chắc)</dt><dd>Câu nói rõ Claude làm gì khi tài liệu không có câu trả lời, câu hỏi mơ hồ, hoặc việc nằm ngoài phạm vi.</dd>
+    <dt>Conflict (xung đột)</dt><dd>Hai quy tắc không thể cùng đúng một lúc. Có thể cùng tầng (hai dòng trong cùng project instructions) hoặc khác tầng (tổ chức và cá nhân).</dd>
+  </dl></div>
+
+  <h4>Cái gì đáng thành chỉ dẫn, cái gì để trong tin nhắn</h4>
+  <div class="tw"><table>
+    <tr><th>Đặt sẵn trong instructions (lặp lại ở mọi chat)</th><th>Nói trong tin nhắn (riêng lần này)</th></tr>
+    <tr><td>Người đọc là ai, họ đã biết gì</td><td>Việc cần làm hôm nay</td></tr>
+    <tr><td>Giọng, cách xưng hô</td><td>Dữ liệu, file của riêng yêu cầu này</td></tr>
+    <tr><td>Định dạng chuẩn: memo một trang, bảng ba cột</td><td>Biến thể một lần: “tuần này sếp chỉ cần 5 gạch đầu dòng”</td></tr>
+    <tr><td>Ràng buộc lâu dài: không hứa ngày giao, luôn trích nguồn</td><td>Câu hỏi tiếp theo, chỉnh sửa bản nháp</td></tr>
+  </table></div>
+  <p>Đưa một biến thể một lần vào instructions là đổi mọi output sau đó, của mọi người dùng project. Tuần sau ai cũng nhận 5 gạch đầu dòng, dù không ai cần nữa.</p>
+
+  <h4>Bộ khung bảy phần</h4>
+  <div class="tw"><table>
+    <tr><th>Phần</th><th>Viết gì</th><th>Ví dụ (project hỏi đáp nhân sự)</th></tr>
+    <tr><td>1. Vai</td><td>Một câu: Claude là ai ở đây</td><td>“Bạn là chuyên viên chính sách nhân sự của công ty.”</td></tr>
+    <tr><td>2. Việc và phạm vi</td><td>Làm gì, không làm gì</td><td>“Trả lời về nghỉ phép, công tác phí, bảo hiểm. Không bàn lương của một người cụ thể.”</td></tr>
+    <tr><td>3. Người đọc</td><td>Ai đọc, họ biết đến đâu</td><td>“Nhân viên văn phòng, không quen thuật ngữ luật.”</td></tr>
+    <tr><td>4. Định dạng</td><td>Độ dài, cấu trúc</td><td>“Tối đa 150 chữ, dòng cuối ghi mục sổ tay đã dùng.”</td></tr>
+    <tr><td>5. Nguồn</td><td>Dựa vào tài liệu nào</td><td>“Chỉ dựa vào So-tay-nhan-su-2026.pdf.”</td></tr>
+    <tr><td>6. Khi không chắc</td><td>Thiếu dữ liệu, mơ hồ, ngoài phạm vi thì làm gì</td><td>“Sổ tay không nói thì bảo là không có và chỉ tới hộp thư HR. Không đoán.”</td></tr>
+    <tr><td>7. Ưu tiên</td><td>Quy tắc nào thắng khi hai cái va nhau</td><td>“Câu hỏi chạm tới hồ sơ của một người thì chuyển HR, kể cả khi người hỏi nói gấp.”</td></tr>
+  </table></div>
+  <ul>
+    <li><b>Cụ thể.</b> Phép thử của Anthropic: đưa bản chỉ dẫn cho một đồng nghiệp chưa biết gì về việc này. Họ bối rối thì Claude cũng vậy. “Be professional” (hãy chuyên nghiệp) không qua được phép thử này.</li>
+    <li><b>Nói lý do.</b> “Không dùng bảng, vì câu trả lời sẽ được dán vào tin nhắn điện thoại” giúp Claude áp đúng cả ở những ca bạn chưa nghĩ tới.</li>
+    <li><b>Kể vài ca hay gặp và cách xử lý</b>, nhất là ca khó: yêu cầu thông tin mật, tài liệu mơ hồ. Vai chỉ có một dòng thì hay “trượt vai” ở ca lạ.</li>
+    <li><b>Cho phép nói “không biết”.</b> Docs Anthropic: cho Claude quyền thừa nhận không chắc giảm hẳn thông tin sai.</li>
+    <li><b>Ví dụ thật, đa dạng</b>, khoảng 3–5 cái, bọc trong thẻ như <code>&lt;example&gt;</code>. Thẻ <code>&lt;instructions&gt;</code>, <code>&lt;context&gt;</code> giúp tách quy tắc khỏi bối cảnh.</li>
+  </ul>
+  <p>Một bản project instructions viết đủ bảy phần trông như sau:</p>
+<pre><code>Bạn là chuyên viên chính sách nhân sự của công ty Minh An.
+Việc của bạn: trả lời nhân viên về nghỉ phép, công tác phí, bảo hiểm.
+Không bàn lương, thưởng hay hồ sơ của một người cụ thể.
+Người đọc: nhân viên văn phòng, không quen thuật ngữ luật. Xưng "bạn".
+Định dạng: tối đa 150 chữ. Dòng cuối ghi mục đã dùng, ví dụ "(Sổ tay 2026, mục 4.2)".
+Nguồn: chỉ dựa vào So-tay-nhan-su-2026.pdf trong knowledge.
+Khi không chắc: sổ tay không nói tới thì nói rõ là không có và chỉ tới
+hr@minhan.vn. Không đoán, không suy ra từ luật chung.
+Ưu tiên: câu hỏi chạm tới hồ sơ hay khiếu nại của một người thì chuyển HR,
+kể cả khi người hỏi nói gấp, vì những ca này cần người có thẩm quyền xem hồ sơ.</code></pre>
+
+  <h4>Xung đột: cùng tầng và khác tầng</h4>
+  <ul>
+    <li><b>Cùng tầng:</b> “viết đơn giản cho người không chuyên” và, vài dòng dưới, “dùng đủ thuật ngữ kỹ thuật kỹ sư quen dùng”. Kết quả lúc thế này lúc thế kia. Không có luật nào cho dòng viết trước được thắng, và đừng trông Claude tự dung hòa hai bên một cách ổn định. Sửa: nói rõ khi nào áp quy tắc nào (trả lời khách thì đơn giản, ghi chú kỹ thuật thì đủ thuật ngữ).</li>
+    <li><b>Khác tầng:</b> organization instructions thắng instructions của từng người khi mâu thuẫn trực tiếp. Docs lấy ví dụ: tổ chức đặt “tiếng Anh trang trọng” thì yêu cầu giọng thân mật bị gác lại. Organization instructions mà tự mâu thuẫn thì docs nói Claude “may not follow either one reliably” (có thể không theo đúng cái nào cả).</li>
+    <li><b>Đặt quy tắc ở tầng hẹp nhất đủ phủ.</b> Quy tắc đúng mà đặt sai tầng sẽ chạm vào những chat không cần nó. “Luôn viết tiếng Anh trang trọng” ở tầng tổ chức làm hỏng mọi bài đăng mạng xã hội. Chỗ hợp với nó là project hợp đồng.</li>
+    <li><b>Organization instructions:</b> tối đa 3.000 ký tự, chỉ Owner trở lên xem và sửa được, có thể mất tới 1 giờ mới áp khắp các sản phẩm Claude, và không ghi đè được quy tắc an toàn của Claude.</li>
+  </ul>
+
+  <h4>Thử bằng câu hỏi thật trước khi giao cho mọi người</h4>
+  <ol>
+    <li>Lưu, rồi mở một chat mới. Organization instructions có thể mất tới 1 giờ mới có hiệu lực, nên thử sau khoảng đó.</li>
+    <li>Hỏi một loạt câu lấy từ việc thật: vài câu hay gặp, một câu ngoài phạm vi, một câu tài liệu không có, một câu mơ hồ, một câu chạm quy tắc ưu tiên.</li>
+    <li>So với câu trả lời mong đợi bạn viết sẵn. Đừng nhờ Claude tự chấm bản chỉ dẫn: đó vẫn là Claude chấm Claude.</li>
+    <li>Sai ở đâu sửa đúng dòng đó, mỗi lần đổi một chỗ, rồi chạy lại cả loạt câu. Giữ loạt câu này để chạy lại mỗi khi sửa (<a href="#l-5-4">bài 5.4</a>).</li>
+  </ol>
+
+  <div class="story"><b>Tình huống.</b> Chị Vy, trưởng nhóm chăm sóc khách hàng của một chuỗi điện máy, viết project instructions đúng một dòng: “Bạn là trợ lý chăm sóc khách hàng. Hãy chuyên nghiệp và hữu ích.” Knowledge có chính sách đổi trả và bảo hành. Một tuần sau: có bạn nhận câu trả lời dài cả trang, có bạn nhận ba dòng. Khách hỏi về sản phẩm không có trong chính sách, Claude tự suy ra một thời hạn bảo hành. Khách đòi bồi thường, Claude hứa “sẽ hoàn tiền trong 3 ngày”, trong khi quy định là phải chuyển quản lý duyệt.</div>
+  <div class="vs">
+    <div class="bad"><b>Tệ</b><ul>
+      <li>Một dòng vai chung chung: “chuyên nghiệp, hữu ích”.</li>
+      <li>Không nói độ dài, định dạng.</li>
+      <li>Không nói khi tài liệu không có thì làm gì.</li>
+      <li>Lưu xong giao cho cả nhóm, không thử.</li>
+    </ul></div>
+    <div class="good"><b>Tốt</b><ul>
+      <li>Đủ vai, phạm vi, người đọc, nguồn, và định dạng (ví dụ tối đa 120 chữ).</li>
+      <li>“Không có trong chính sách thì nói rõ, chuyển quản lý ca.”</li>
+      <li>Ghi rõ ca bồi thường phải chuyển người duyệt, không hứa.</li>
+      <li>Thử bằng loạt câu thật, có cả ca khó, rồi mới giao.</li>
+    </ul></div>
+  </div>
+
+  <h4>Khi đi thi</h4>
+  <p class="need">Bài này thường ra 2 dạng câu hỏi. Đọc đề, <b>chọn một đáp án trước</b>; phần giải thích chỉ hiện ra sau khi bạn chọn.</p>
+
+  <div class="qcase" data-answer="A">
+    <h5 class="sub">Dạng 1: chỉ dẫn quá chung chung</h5>
+    <span class="lbl">Đề sẽ viết kiểu này</span>
+    <div class="qtext">
+      <span class="en">“An IT helpdesk project has these instructions: ‘You are a helpful IT assistant. Be professional.’ Its knowledge holds 60 how-to articles. Employees report that Claude sometimes walks them through resetting another user’s password, which company policy says must go through a ticket, and sometimes invents steps when no article covers the question. What is the most effective improvement?”</span>
+      <span class="vi">Dịch: Một project hỗ trợ IT có instructions: “Bạn là trợ lý IT hữu ích. Hãy chuyên nghiệp.” Knowledge có 60 bài hướng dẫn. Nhân viên báo rằng có lúc Claude hướng dẫn họ đặt lại mật khẩu của người khác, việc mà chính sách công ty bắt phải đi qua ticket (phiếu yêu cầu), và có lúc Claude tự bịa ra các bước khi không bài nào nói tới câu hỏi. Cải thiện nào hiệu quả nhất?</span>
+    </div>
+    <span class="lbl">Bạn chọn đáp án nào?</span>
+    <div class="qopts">
+      <button type="button" class="qopt" data-k="A"><b class="k">A.</b><span class="body"><span class="en">“Rewrite the instructions to define scope, list the requests that need a ticket, and say what to do when no article applies.”</span><span class="vi">Viết lại instructions: nêu phạm vi, liệt kê các yêu cầu phải đi qua ticket, và nói phải làm gì khi không có bài nào phù hợp.</span></span></button>
+      <button type="button" class="qopt" data-k="B"><b class="k">B.</b><span class="body"><span class="en">“Switch to the most capable model available so it can work out the company’s escalation policy from the 60 articles on its own.”</span><span class="vi">Chuyển sang model mạnh nhất hiện có để nó tự suy ra chính sách chuyển cấp của công ty từ 60 bài.</span></span></button>
+      <button type="button" class="qopt" data-k="C"><b class="k">C.</b><span class="body"><span class="en">“Ask employees to remind Claude of the ticket policy at the start of each conversation.”</span><span class="vi">Bảo nhân viên nhắc Claude về chính sách ticket ở đầu mỗi cuộc hội thoại.</span></span></button>
+      <button type="button" class="qopt" data-k="D"><b class="k">D.</b><span class="body"><span class="en">“Upload more how-to articles, including one on password resets, so that fewer questions fall outside the knowledge base.”</span><span class="vi">Tải thêm bài hướng dẫn, có cả một bài về đặt lại mật khẩu, để ít câu hỏi nằm ngoài knowledge hơn.</span></span></button>
+    </div>
+    <p class="qfb" hidden></p>
+    <div class="qexp" hidden>
+      <span class="lbl">Phân tích đề</span>
+      <ul>
+        <li><b>Đề kể:</b> instructions chỉ có vai và một tính từ. Hai lỗi: làm việc lẽ ra phải chuyển ticket, và bịa bước khi tài liệu không có.</li>
+        <li><b>Chỗ khó:</b> cả hai lỗi đều là chuyện instructions không nói. Không ai bảo Claude việc nào ngoài phạm vi, và không ai bảo khi không có bài thì làm gì.</li>
+        <li><b>Đề hỏi:</b> cải thiện hiệu quả nhất, tức là sửa đúng gốc cho mọi chat.</li>
+      </ul>
+      <span class="lbl">Cần biết để chọn</span>
+      <ol>
+        <li>Chỉ dẫn mơ hồ kiểu “be professional” không qua được phép thử đồng nghiệp: người mới đọc không biết phải làm gì ở ca khó.</li>
+        <li>Một bản instructions tốt có phạm vi, các ca phải chuyển người, và cách xử lý khi không chắc.</li>
+        <li>Instructions áp cho mọi chat. Thứ không được viết ra thì đổi model hay thêm tài liệu cũng không tự sinh ra.</li>
+      </ol>
+      <span class="lbl">Từng đáp án</span>
+      <ul class="verdict">
+        <li class="ok"><b>A đúng.</b> Sửa đúng hai chỗ instructions đang bỏ trống (ý 2): việc nào phải chuyển ticket, và không có bài thì làm gì. Viết một lần, mọi chat theo (ý 3).</li>
+        <li><b>B sai.</b> Kiểu “dùng model đắt nhất cho chắc”. Chính sách chuyển ticket không nằm trong 60 bài, nên model nào cũng không suy ra được thứ không có (ý 3).</li>
+        <li><b>C sai.</b> Đẩy việc của cấu hình sang từng người dùng. Người quên nhắc thì lỗi quay lại, và vẫn chưa có quy tắc cho ca không có bài.</li>
+        <li><b>D sai.</b> Thêm tài liệu không thay được quy tắc. Bài về đặt lại mật khẩu còn làm Claude hướng dẫn chuyện đó tự tin hơn, đúng chỗ chính sách cấm.</li>
+      </ul>
+      <button type="button" class="qreset">Làm lại câu này</button>
+    </div>
+  </div>
+
+  <div class="qcase" data-answer="D">
+    <h5 class="sub">Dạng 2: hai tầng chỉ dẫn đá nhau</h5>
+    <span class="lbl">Đề sẽ viết kiểu này</span>
+    <div class="qtext">
+      <span class="en">“At a company on the Team plan, the Owner set an organization instruction: ‘Always respond in formal English.’ A social media specialist’s personal instructions say ‘Use a casual, friendly tone,’ and her social posts project asks for short, playful captions. Every caption still comes out stiff and formal. What is the most accurate explanation and fix?”</span>
+      <span class="vi">Dịch: Ở một công ty dùng gói Team, Owner đặt organization instruction: “Luôn trả lời bằng tiếng Anh trang trọng.” Instructions cá nhân của một chuyên viên mạng xã hội ghi “Dùng giọng thân mật, gần gũi”, và project bài đăng của chị yêu cầu chú thích ngắn, vui. Chú thích nào ra cũng cứng và trang trọng. Giải thích và cách sửa nào đúng nhất?</span>
+    </div>
+    <span class="lbl">Bạn chọn đáp án nào?</span>
+    <div class="qopts">
+      <button type="button" class="qopt" data-k="A"><b class="k">A.</b><span class="body"><span class="en">“Personal instructions are meant to override organization ones, so the setting is faulty and she should re-save her personal instructions.”</span><span class="vi">Instructions cá nhân lẽ ra thắng instructions của tổ chức, nên cài đặt đang lỗi, chị nên lưu lại instructions cá nhân.</span></span></button>
+      <button type="button" class="qopt" data-k="B"><b class="k">B.</b><span class="body"><span class="en">“She should write ‘casual tone’ in the project description, because Claude reads the description before any instructions.”</span><span class="vi">Chị nên ghi “giọng thân mật” vào phần mô tả project, vì Claude đọc mô tả trước mọi instructions.</span></span></button>
+      <button type="button" class="qopt" data-k="C"><b class="k">C.</b><span class="body"><span class="en">“She should switch to the Concise style, because styles take priority over every kind of instruction.”</span><span class="vi">Chị nên chuyển sang style Concise, vì style được ưu tiên hơn mọi loại instructions.</span></span></button>
+      <button type="button" class="qopt" data-k="D"><b class="k">D.</b><span class="body"><span class="en">“The organization instruction wins this conflict, so she should ask the Owner to limit it to the cases it is meant for.”</span><span class="vi">Organization instruction thắng trong mâu thuẫn này, nên chị nên nhờ Owner giới hạn nó vào đúng những việc nó nhắm tới.</span></span></button>
+    </div>
+    <p class="qfb" hidden></p>
+    <div class="qexp" hidden>
+      <span class="lbl">Phân tích đề</span>
+      <ul>
+        <li><b>Đề kể:</b> tầng tổ chức đòi trang trọng, tầng cá nhân và project đòi thân mật. Kết quả nghiêng hẳn về trang trọng.</li>
+        <li><b>Chỗ khó:</b> chị không có quyền sửa tầng tổ chức. Cách sửa phải đi qua người có quyền.</li>
+        <li><b>Đề hỏi:</b> giải thích đúng cơ chế, và cách sửa đúng chỗ.</li>
+      </ul>
+      <span class="lbl">Cần biết để chọn</span>
+      <ol>
+        <li>Organization instructions do Owner đặt, áp cho mọi chat của mọi người, và thắng instructions cá nhân khi mâu thuẫn trực tiếp. Ví dụ trong docs chính là trang trọng thắng thân mật.</li>
+        <li>Claude không thấy tên và mô tả project.</li>
+        <li>Quy tắc nên nằm ở tầng hẹp nhất đủ phủ. Quy tắc đúng mà đặt quá rộng sẽ chạm vào những việc không cần nó.</li>
+      </ol>
+      <span class="lbl">Từng đáp án</span>
+      <ul class="verdict">
+        <li><b>A sai.</b> Ngược với docs (ý 1). Lưu lại bao nhiêu lần thì tầng tổ chức vẫn thắng.</li>
+        <li><b>B sai.</b> Claude không đọc mô tả (ý 2). Hấp dẫn vì mô tả “đứng đầu” project, nhưng nó chỉ là nhãn cho người.</li>
+        <li><b>C sai.</b> Docs không nói style đứng trên instructions. Concise chỉ làm câu ngắn lại, không làm nó vui hơn, còn quy tắc trang trọng vẫn nguyên đó.</li>
+        <li class="ok"><b>D đúng.</b> Giải thích đúng thứ tự giữa hai tầng (ý 1), và sửa ở gốc: quy tắc trang trọng đang đặt quá rộng (ý 3), người có quyền thu hẹp nó là Owner.</li>
+      </ul>
+      <button type="button" class="qreset">Làm lại câu này</button>
+    </div>
+  </div>
+
+  <div class="more"><b>Biết thêm</b><ul>
+    <li><b>Guide v1.0 gọi là “system-level instructions”;</b> app hiện tại gọi là Instructions for Claude, project instructions và organization instructions. Khi thi chọn theo guide: chỉ dẫn đặt một lần, áp cho mọi chat trong phạm vi của nó.</li>
+    <li><b>Instructions for Claude</b> nằm ở Settings → Your Claude → Instructions, áp cho mọi chat của bạn. Docs gợi ý ghi: cách làm bạn thích, thuật ngữ hay dùng, các tình huống hay gặp, cách giao tiếp.</li>
+    <li><b>Organization instructions</b> nằm ở Organization settings → Organization and access. Thành viên thường không xem được nội dung.</li>
+    <li><b>Người Can view đọc được project instructions</b> nhưng không sửa được.</li>
+    <li><b>Một quy trình dùng ở nhiều project</b> (ví dụ soạn biên bản họp theo mẫu) có thể đóng gói thành Skill: Claude tự nạp khi việc cần.</li>
+    <li><b>Chỉ dẫn không phải hàng rào.</b> Dặn Claude “đừng lưu dữ liệu khách” không thay được bước xử lý dữ liệu trước khi đưa vào (<a href="#l-6-2">bài 6.2</a>).</li>
+  </ul></div>
+  <div class="rule">Quy tắc: viết cụ thể vào instructions những gì lặp lại ở mọi chat, kèm lý do và cách xử lý khi không chắc, rồi thử bằng câu hỏi thật trước khi giao cho mọi người.</div>
+  <div class="remember"><b>Nhớ nhanh</b><ul>
+    <li>Bảy phần: vai, phạm vi, người đọc, định dạng, nguồn, khi không chắc, ưu tiên.</li>
+    <li>Hai quy tắc cùng tầng đá nhau: nói rõ khi nào áp cái nào.</li>
+    <li>Organization instructions thắng instructions cá nhân. Đặt quy tắc ở tầng hẹp nhất đủ phủ.</li>
+    <li>Thử ở chat mới, bằng câu thật có cả ca khó.</li>
+  </ul></div>
+  <div class="src">Đọc thêm: <a href="https://support.claude.com/en/articles/14546867-set-organization-instructions">Set organization instructions</a> · <a href="https://support.claude.com/en/articles/10185728-understanding-claude-s-personalization-features">Personalization features</a> · <a href="https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices">Prompting best practices</a> · <a href="https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-hallucinations">Reduce hallucinations</a></div>
+  <label class="done"><input type="checkbox" data-lesson="l-5-3"> Đã học bài này</label>
+</article>
+
+<article class="lesson" id="l-5-4" data-domain="5" data-ts="5.4" data-min="11">
+  <header class="lh"><span class="ts">TS 5.4</span><h3>Giữ cấu hình còn đúng: tài liệu cũ, bản trùng, người phụ trách, lịch rà soát</h3><span class="rt">~11 phút</span></header>
+  <p class="need">Cần biết trước: knowledge và instructions áp cho mọi chat (<a href="#l-5-0">bài Nền tảng</a>), Google Doc từ Drive chỉ đồng bộ ở project private (<a href="#l-5-2">bài 5.2</a>), loạt câu hỏi thử (<a href="#l-5-3">bài 5.3</a>).</p>
+  <div class="defs"><b>Khái niệm của bài</b><dl>
+    <dt>Stale knowledge (tài liệu lỗi thời)</dt><dd>File còn nằm trong knowledge nhưng nội dung đã hết hiệu lực. Nó vẫn được nạp vào mọi chat như thường.</dd>
+    <dt>Superseded version (bản đã bị thay)</dt><dd>Bản cũ của một tài liệu đã có bản mới. Tải bản mới lên không làm bản cũ biến mất.</dd>
+    <dt>Maintainer (người phụ trách)</dt><dd>Người có quyền Can edit, chịu trách nhiệm một mảng tài liệu và phần instructions đi kèm.</dd>
+    <dt>Review cadence (lịch rà soát)</dt><dd>Nhịp kiểm lại cấu hình định kỳ, cộng thêm những lần kiểm ngay khi nguồn thay đổi.</dd>
+    <dt>Archive (lưu trữ)</dt><dd>Cất project khỏi danh sách đang dùng mà giữ nguyên chat, thành viên, quyền và knowledge.</dd>
+  </dl></div>
+
+  <h4>Cấu hình cũ đi thế nào, và nhìn triệu chứng để biết sửa ở đâu</h4>
+  <p>Knowledge và instructions được nạp vào mọi chat. Một file hết hiệu lực vẫn định hình mọi câu trả lời, nhiều tháng sau khi được tải lên. Mở chat mới không giúp gì: chat mới nạp lại đúng những file đó. Hỏi kiểu nào cũng ra cùng một con số sai thì lỗi nằm ở nguồn, không nằm ở cách hỏi.</p>
+  <div class="tw"><table>
+    <tr><th>Triệu chứng</th><th>Sửa ở đâu</th></tr>
+    <tr><td>Cùng một con số sai, hỏi kiểu nào, chat nào cũng ra</td><td>Knowledge: thay hoặc gỡ file cũ</td></tr>
+    <tr><td>Lúc ra số này, lúc ra số kia</td><td>Knowledge có hai bản trùng chủ đề, hoặc hai dòng instructions đá nhau</td></tr>
+    <tr><td>Mọi chat đều dùng mẫu, giọng của năm ngoái</td><td>Instructions</td></tr>
+    <tr><td>Hôm qua đã sửa trong chat, hôm nay Claude lại sai</td><td>Đưa lời sửa vào instructions hoặc knowledge. Nó chỉ sống trong chat cũ</td></tr>
+    <tr><td>Nguồn đúng, Claude hiểu sai đúng câu hỏi này</td><td>Viết lại câu hỏi trong chat (<a href="#l-7-1">bài 7.1</a>)</td></tr>
+  </table></div>
+
+  <h4>Thay một tài liệu: bốn bước</h4>
+  <ol>
+    <li><b>Gỡ bản cũ</b> khỏi knowledge.</li>
+    <li><b>Tải bản mới</b> lên.</li>
+    <li><b>Rà instructions:</b> còn dòng nào nhắc tên file cũ, con số cũ, quy tắc cũ không.</li>
+    <li><b>Thử:</b> hỏi một câu mà đáp án đã đổi, xác nhận Claude trả lời theo bản mới.</li>
+  </ol>
+  <ul>
+    <li><b>Không có gì tự đánh dấu file cũ là hết hiệu lực.</b> Project không tự lưu trữ bản cũ, cũng không từ chối file trùng. Dặn “ưu tiên file mới nhất” cũng không chắc ăn: bản cũ vẫn nằm đó và vẫn có thể được trích.</li>
+    <li><b>Ghi phiên bản và ngày hiệu lực</b> ở tên file và dòng đầu tài liệu: “Cong-tac-phi_hieu-luc-2026-09-01.pdf”.</li>
+    <li><b>Một chủ đề, một bản hiện hành trong project.</b> Cần tra lịch sử thì cất bản cũ ở thư mục lưu trữ bên ngoài project.</li>
+    <li><b>Tài liệu sửa thường xuyên:</b> project private thì thêm Google Doc từ Drive cho nó tự đồng bộ. Project chia sẻ thì không được, phải có người thay bằng tay.</li>
+  </ul>
+
+  <h4>Instructions cũng cũ đi</h4>
+  <ul>
+    <li><b>Phải nhắc cùng một lời sửa lần thứ hai là thiếu một dòng instructions.</b> Lời sửa trong chat không sang chat khác.</li>
+    <li><b>Dòng thêm vào phải cụ thể:</b> “Báo cáo tài chính dùng mẫu quý (Mau-bao-cao-quy.docx), không dùng mẫu tháng”, chứ không phải “luôn dùng mẫu đúng”.</li>
+    <li><b>Tài liệu đổi thì rà instructions đi kèm.</b> Instructions nhắc tới tài liệu nào, con số nào, cũng phải đổi theo.</li>
+    <li><b>Xóa quy tắc hết hạn, sửa chỗ mâu thuẫn.</b> Docs về organization instructions cũng khuyên rà và gỡ chỉ dẫn lỗi thời định kỳ.</li>
+    <li><b>Sửa xong, chạy lại loạt câu hỏi thử</b> của bài 5.3.</li>
+  </ul>
+
+  <h4>Người phụ trách, lịch rà soát, báo cho người dùng</h4>
+  <ul>
+    <li><b>Mỗi mảng một người phụ trách</b> có Can edit: bảng giá thuộc chị A, quy trình onboarding (đón nhân viên mới) thuộc anh B. Tránh cảnh ba người cùng tải ba bản.</li>
+    <li><b>Người Can view thấy sai thì báo người phụ trách.</b> Họ không tự sửa được knowledge hay instructions.</li>
+    <li><b>Lịch rà soát hai loại:</b> định kỳ (ví dụ đầu mỗi quý), và ngay khi nguồn đổi: chính sách mới ban hành, bảng giá mới, sản phẩm đổi tên.</li>
+    <li><b>Ghi thay đổi ở chỗ người dùng thấy.</b> Phần mô tả project hợp cho dòng “Cập nhật 01/10: bảng giá Q4. Phụ trách: Lan”: người dùng đọc được, Claude không đọc nên không lẫn vào câu trả lời. Thay đổi lớn thì báo thêm trong kênh chung của nhóm.</li>
+    <li><b>Nhắc người dùng về chat cũ.</b> Câu trả lời cũ trong lịch sử chat vẫn mang số cũ. Đừng chép lại từ chat cũ sau khi chính sách đổi.</li>
+  </ul>
+
+  <h4>Dự án xong: archive, gỡ người, hay xóa</h4>
+  <div class="tw"><table>
+    <tr><th>Muốn</th><th>Làm</th></tr>
+    <tr><td>Cất project, vẫn đọc lại được chat</td><td><b>Archive.</b> Giữ nguyên chat, thành viên, quyền, knowledge. Project chuyển xuống cuối danh sách</td></tr>
+    <tr><td>Dùng lại project đã cất</td><td><b>Unarchive.</b> Mọi thứ trở lại như cũ</td></tr>
+    <tr><td>Một người không được vào nữa (hết hợp đồng, chuyển bộ phận)</td><td><b>Gỡ người đó trong menu Share.</b> Archive không gỡ quyền của ai</td></tr>
+    <tr><td>Xóa hẳn</td><td><b>Unarchive trước</b>, rồi xóa ở menu ba chấm, xác nhận “Yes, delete” (đồng ý xóa). Không khôi phục được</td></tr>
+  </table></div>
+
+  <div class="story"><b>Tình huống.</b> Phòng hành chính có project “Công tác phí”. Tháng 1, chị Lan tải chính sách lên: khách sạn tối đa 1,5 triệu đồng một đêm. Tháng 9, chính sách mới nâng lên 1,8 triệu. Chị tải bản mới lên, không gỡ bản cũ, và instructions vẫn còn dòng “Mức khách sạn theo chính sách tháng 1/2026”. Tháng 10, nhân viên báo Claude lúc nói 1,5 lúc nói 1,8. Một người mở chat mới cho “sạch”, vẫn ra 1,5. Người khác chép lại câu trả lời từ một chat tháng 8.</div>
+  <div class="vs">
+    <div class="bad"><b>Tệ</b><ul>
+      <li>Tải bản mới chồng lên, để bản cũ nằm đó.</li>
+      <li>Mở chat mới, mong Claude “quên” số cũ.</li>
+      <li>Thêm dòng “ưu tiên file mới nhất”.</li>
+      <li>Không ai biết ai phụ trách, đổi lúc nào.</li>
+    </ul></div>
+    <div class="good"><b>Tốt</b><ul>
+      <li>Gỡ bản tháng 1, giữ một bản, tên file có ngày hiệu lực.</li>
+      <li>Sửa dòng instructions còn nhắc chính sách tháng 1.</li>
+      <li>Hỏi thử “khách sạn tối đa bao nhiêu một đêm?”, thấy 1,8 triệu.</li>
+      <li>Ghi “Cập nhật 09/2026, phụ trách: Lan” ở mô tả, báo nhóm đừng dùng câu trả lời cũ.</li>
+    </ul></div>
+  </div>
+
+  <h4>Khi đi thi</h4>
+  <p class="need">Bài này thường ra 2 dạng câu hỏi. Đọc đề, <b>chọn một đáp án trước</b>; phần giải thích chỉ hiện ra sau khi bạn chọn.</p>
+
+  <div class="qcase" data-answer="B">
+    <h5 class="sub">Dạng 1: câu trả lời sai vì nguồn cũ</h5>
+    <span class="lbl">Đề sẽ viết kiểu này</span>
+    <div class="qtext">
+      <span class="en">“A support team’s project keeps telling agents that customers have 14 days to return an item. The policy changed to 30 days in August. Agents have rephrased the question several ways and opened new chats, and the answer is still 14 days. What should the project maintainer check first?”</span>
+      <span class="vi">Dịch: Project của một nhóm hỗ trợ khách hàng cứ nói với nhân viên rằng khách có 14 ngày để trả hàng. Chính sách đã đổi thành 30 ngày từ tháng 8. Nhân viên đã hỏi lại bằng nhiều cách và mở chat mới, câu trả lời vẫn là 14 ngày. Người phụ trách project nên kiểm tra gì trước?</span>
+    </div>
+    <span class="lbl">Bạn chọn đáp án nào?</span>
+    <div class="qopts">
+      <button type="button" class="qopt" data-k="A"><b class="k">A.</b><span class="body"><span class="en">“Whether the agents are wording their questions clearly enough for Claude to find the newer rule.”</span><span class="vi">Nhân viên đã đặt câu hỏi đủ rõ để Claude tìm thấy quy định mới hay chưa.</span></span></button>
+      <button type="button" class="qopt" data-k="B"><b class="k">B.</b><span class="body"><span class="en">“Whether the project knowledge still holds the old returns policy that needs replacing.”</span><span class="vi">Knowledge của project còn giữ chính sách đổi trả cũ cần thay hay không.</span></span></button>
+      <button type="button" class="qopt" data-k="C"><b class="k">C.</b><span class="body"><span class="en">“Whether a more capable model would recognize that the 14-day figure is out of date.”</span><span class="vi">Một model mạnh hơn có nhận ra con số 14 ngày đã lỗi thời không.</span></span></button>
+      <button type="button" class="qopt" data-k="D"><b class="k">D.</b><span class="body"><span class="en">“Whether adding an instruction that return windows ‘may have changed recently’ stops the wrong answers.”</span><span class="vi">Thêm một dòng instructions rằng thời hạn trả hàng “có thể vừa thay đổi” có chặn được câu trả lời sai không.</span></span></button>
+    </div>
+    <p class="qfb" hidden></p>
+    <div class="qexp" hidden>
+      <span class="lbl">Phân tích đề</span>
+      <ul>
+        <li><b>Đề kể:</b> cùng một con số sai, đã đổi cách hỏi, đã mở chat mới.</li>
+        <li><b>Chỗ khó:</b> hai cách nhân viên đã thử loại sẵn hai nguyên nhân: cách hỏi và lịch sử chat. Thứ còn lại theo vào mọi chat là knowledge và instructions.</li>
+        <li><b>Đề hỏi:</b> kiểm tra gì <i>trước</i>, tức là bước rẻ nhất trúng gốc nhất.</li>
+      </ul>
+      <span class="lbl">Cần biết để chọn</span>
+      <ol>
+        <li>Knowledge được nạp vào mọi chat. Chat mới nạp lại đúng những file cũ.</li>
+        <li>Sai giống nhau dù hỏi kiểu nào thì lỗi ở nguồn, không ở cách hỏi.</li>
+        <li>Sửa ở nguồn. Thêm lời rào đón chỉ che triệu chứng.</li>
+      </ol>
+      <span class="lbl">Từng đáp án</span>
+      <ul class="verdict">
+        <li><b>A sai.</b> Đề đã nói nhân viên hỏi nhiều cách mà vẫn ra 14 (ý 2). Cách hỏi đã bị loại.</li>
+        <li class="ok"><b>B đúng.</b> Con số đi theo mọi chat thì nằm ở thứ đi theo mọi chat (ý 1). Kiểm knowledge là bước rẻ và trúng gốc nhất, rồi thay bằng bản hiện hành (ý 3).</li>
+        <li><b>C sai.</b> Kiểu “dùng model đắt nhất cho chắc”. Model không biết chính sách nội bộ đổi tháng 8; nó đọc đúng cái file 14 ngày bạn đưa.</li>
+        <li><b>D sai.</b> Vá triệu chứng (ý 3). File cũ vẫn ở đó, nhân viên chỉ nhận thêm một câu rào đón cạnh con số sai.</li>
+      </ul>
+      <button type="button" class="qreset">Làm lại câu này</button>
+    </div>
+  </div>
+
+  <div class="qcase" data-answer="C">
+    <h5 class="sub">Dạng 2: kế hoạch bảo trì project dùng chung</h5>
+    <span class="lbl">Đề sẽ viết kiểu này</span>
+    <div class="qtext">
+      <span class="en">“A company’s onboarding project on the Team plan is used by 60 employees and has five editors. After a year it holds three versions of the IT setup guide, two instructions that disagree on the welcome-email format, and nobody can say what changed or when. Which plan will best keep the project reliable?”</span>
+      <span class="vi">Dịch: Project onboarding (đón nhân viên mới) của một công ty, gói Team, có 60 nhân viên dùng và năm người được sửa. Sau một năm, trong đó có ba bản hướng dẫn cài đặt IT, hai dòng instructions trái nhau về định dạng email chào mừng, và không ai nói được đã đổi gì, đổi lúc nào. Kế hoạch nào giữ project đáng tin nhất?</span>
+    </div>
+    <span class="lbl">Bạn chọn đáp án nào?</span>
+    <div class="qopts">
+      <button type="button" class="qopt" data-k="A"><b class="k">A.</b><span class="body"><span class="en">“Give every employee Can edit access so that whoever spots a mistake can fix it right away.”</span><span class="vi">Cho mọi nhân viên quyền Can edit để ai thấy lỗi cũng sửa được ngay.</span></span></button>
+      <button type="button" class="qopt" data-k="B"><b class="k">B.</b><span class="body"><span class="en">“Start a fresh project every quarter, copy the current files and instructions into it, and archive the old one so that drafts never pile up.”</span><span class="vi">Mỗi quý tạo một project mới, chép file và instructions hiện hành sang, rồi archive project cũ để bản nháp không bao giờ dồn lại.</span></span></button>
+      <button type="button" class="qopt" data-k="C"><b class="k">C.</b><span class="body"><span class="en">“Assign one editor and one current document per subject, review on a schedule and when sources change, and post visible change notes.”</span><span class="vi">Mỗi chủ đề một người phụ trách và một bản hiện hành, rà soát theo lịch và khi nguồn đổi, ghi chú thay đổi ở chỗ mọi người thấy.</span></span></button>
+      <button type="button" class="qopt" data-k="D"><b class="k">D.</b><span class="body"><span class="en">“Add an instruction telling Claude to prefer the newest version of each guide and to warn the reader whenever an answer might be out of date.”</span><span class="vi">Thêm instructions bảo Claude ưu tiên bản mới nhất của mỗi hướng dẫn và cảnh báo người đọc mỗi khi câu trả lời có thể đã cũ.</span></span></button>
+    </div>
+    <p class="qfb" hidden></p>
+    <div class="qexp" hidden>
+      <span class="lbl">Phân tích đề</span>
+      <ul>
+        <li><b>Đề kể:</b> nhiều người sửa, bản trùng, instructions trái nhau, không có dấu vết thay đổi.</li>
+        <li><b>Chỗ khó:</b> đây là ba triệu chứng của cùng một chuyện: không ai chịu trách nhiệm. Đáp án phải sửa cách quản lý, không chỉ dọn một lần.</li>
+        <li><b>Đề hỏi:</b> kế hoạch giữ project đáng tin <i>lâu dài</i>.</li>
+      </ul>
+      <span class="lbl">Cần biết để chọn</span>
+      <ol>
+        <li>Hai bản cùng chủ đề trong knowledge thì Claude có thể trích bản nào cũng được. Không có gì tự đánh dấu bản cũ.</li>
+        <li>Mỗi mảng một người phụ trách thì hết cảnh nhiều người cùng tải nhiều bản.</li>
+        <li>Rà soát theo lịch và khi nguồn đổi, ghi thay đổi ở chỗ người dùng thấy, thì ai cũng biết bản nào đang dùng.</li>
+      </ol>
+      <span class="lbl">Từng đáp án</span>
+      <ul class="verdict">
+        <li><b>A sai.</b> Năm người sửa đã ra ba bản. 60 người sửa thì còn tệ hơn (ý 2). Nghe nhanh gọn, nhưng nhân đúng cái gốc của lỗi.</li>
+        <li><b>B sai.</b> Làm quá tay: mỗi quý chép lại cả project, chat cũ nằm rải rác ở nhiều nơi. Chép sang thì bản trùng và instructions trái nhau cũng sang theo, vì vẫn không có ai phụ trách.</li>
+        <li class="ok"><b>C đúng.</b> Gỡ đúng gốc: có người chịu trách nhiệm (ý 2), mỗi chủ đề một bản (ý 1), có lịch và có dấu vết thay đổi (ý 3).</li>
+        <li><b>D sai.</b> Để Claude tự đoán bản nào mới trong khi cả ba bản vẫn nằm đó (ý 1). Lời cảnh báo chung chung chỉ làm người đọc mất tin vào mọi câu trả lời.</li>
+      </ul>
+      <button type="button" class="qreset">Làm lại câu này</button>
+    </div>
+  </div>
+
+  <div class="more"><b>Biết thêm</b><ul>
+    <li><b>Project đã archive vẫn mở được chat</b>, chỉ chuyển xuống cuối danh sách. Không xóa được khi chưa unarchive.</li>
+    <li><b>Ai gỡ được thành viên: hai trang docs ghi khác nhau.</b> Trang Create and manage projects ghi người tạo project gỡ được (Remove access, tức gỡ quyền). Trang Project visibility and sharing ghi cả người có quyền Can edit cũng gỡ được qua menu Share. Khi thi, người tạo project hay người Can edit đều là đáp án an toàn.</li>
+    <li><b>Enterprise có thời hạn lưu dữ liệu tự đặt:</b> chat trong project theo thời hạn của project. Chuyện lưu và xóa dữ liệu thuộc <a href="#d6">Domain 6</a>.</li>
+    <li><b>Docs không đưa ra quy ước đặt tên file hay nhịp rà soát cụ thể.</b> Tên có ngày hiệu lực và lịch đầu mỗi quý trong bài là cách làm hay gặp, không phải quy định của sản phẩm.</li>
+  </ul></div>
+  <div class="rule">Quy tắc: tài liệu đổi thì gỡ bản cũ, tải bản mới, rà instructions, hỏi thử; mỗi mảng có một người phụ trách và một lịch rà soát.</div>
+  <div class="remember"><b>Nhớ nhanh</b><ul>
+    <li>Sai như nhau dù hỏi kiểu nào, chat nào: kiểm knowledge trước.</li>
+    <li>Tải bản mới không xóa bản cũ. Một chủ đề, một bản.</li>
+    <li>Nhắc cùng một lời sửa lần hai: thêm một dòng instructions cụ thể.</li>
+    <li>Archive giữ mọi thứ kể cả quyền. Gỡ người ở menu Share. Xóa phải unarchive trước.</li>
+  </ul></div>
+  <div class="src">Đọc thêm: <a href="https://support.claude.com/en/articles/9519177-how-can-i-create-and-manage-projects">Create and manage projects</a> · <a href="https://support.claude.com/en/articles/9519189-project-visibility-and-sharing">Project visibility and sharing</a> · <a href="https://support.claude.com/en/articles/14546867-set-organization-instructions">Set organization instructions</a></div>
+  <label class="done"><input type="checkbox" data-lesson="l-5-4"> Đã học bài này</label>
+</article>
+
+<section class="summary" id="sum-d5">
+  <h3>Tổng kết Domain 5</h3>
+  <ul>
+    <li><b>Project</b> = instructions + knowledge + các chat riêng + memory riêng. Claude không thấy tên và mô tả project.</li>
+    <li><b>Chat không thấy nhau.</b> Thứ nhiều chat cần thì vào knowledge. Cách làm thì vào instructions. Việc một lần thì để trong tin nhắn.</li>
+    <li><b>Knowledge lớn:</b> gói trả phí tự chuyển sang RAG (tới khoảng 10 lần), không có nút bật. Free phải vừa context window. Tên file rõ, nêu tên tài liệu khi hỏi.</li>
+    <li><b>Chia sẻ chỉ Team và Enterprise.</b> Can view cho người dùng, Can edit cho người bảo trì. Chia sẻ project không chia sẻ chat.</li>
+    <li><b>File tải lên là bản chụp.</b> Google Doc từ Drive tự đồng bộ, chỉ ở project private. Connector lấy dữ liệu lúc hỏi, theo quyền tài khoản của từng người.</li>
+    <li><b>Connector trên Team và Enterprise:</b> Owner bật → từng người đăng nhập → Owner đặt quyền từng công cụ → quyền ở dịch vụ gốc là trần. Gmail không đọc nội dung file đính kèm.</li>
+    <li><b>Chỉ dẫn tốt</b> có vai, phạm vi, người đọc, định dạng, nguồn, cách xử lý khi không chắc, thứ tự ưu tiên. Viết cụ thể, có lý do, thử bằng câu hỏi thật.</li>
+    <li><b>Xung đột:</b> cùng tầng thì nói rõ khi nào áp quy tắc nào. Organization instructions thắng instructions cá nhân. Đặt quy tắc ở tầng hẹp nhất đủ phủ.</li>
+    <li><b>Bảo trì:</b> gỡ bản cũ, tải bản mới, rà instructions, hỏi thử. Một chủ đề một bản, một người phụ trách, có lịch rà soát.</li>
+    <li><b>Archive</b> giữ mọi thứ kể cả quyền. Gỡ người ở menu Share. Muốn xóa phải unarchive trước.</li>
+  </ul>
+</section>
+
+<section class="cheat" id="cheat-d5">
+  <h3>Cheatsheet Domain 5</h3>
+  <div class="tw"><table>
+    <tr><th>Đề kể…</th><th>Chọn…</th><th>Vì sao</th></tr>
+    <tr class="grp"><th colspan="3">5.1 · Dựng project</th></tr>
+    <tr><td>Giọng, vai viết trong tên hoặc mô tả, Claude làm lơ</td><td>Chuyển vào project instructions</td><td>Claude không thấy tên và mô tả</td></tr>
+    <tr><td>Chat mới không biết điều đã chốt ở chat cũ</td><td>Viết quyết định thành tài liệu trong knowledge</td><td>Chat không thấy nhau</td></tr>
+    <tr><td>Knowledge sắp chạm giới hạn (gói trả phí)</td><td>Không cần bật gì; đặt tên file rõ</td><td>RAG tự bật</td></tr>
+    <tr><td>Nhiều người dùng, ít người được sửa</td><td>Can view cho người dùng, Can edit cho người bảo trì</td><td>Can edit sửa một lần là mọi chat đổi theo</td></tr>
+    <tr><td>Người dùng Pro muốn mời đồng nghiệp vào project</td><td>Không được; cần Team hoặc Enterprise</td><td>Chia sẻ chỉ trong một tổ chức</td></tr>
+    <tr class="grp"><th colspan="3">5.2 · File và connector</th></tr>
+    <tr><td>Tài liệu sửa hằng tuần, project private</td><td>Gỡ bản tải lên, thêm Google Doc từ Drive</td><td>Bản Drive tự đồng bộ</td></tr>
+    <tr><td>Project đã chia sẻ, muốn thêm file từ Drive</td><td>Tải bản sao lên, giao người thay khi đổi</td><td>Drive chỉ thêm được vào project private</td></tr>
+    <tr><td>Claude không đọc được hợp đồng đính kèm email</td><td>Tải file về, đính kèm vào chat</td><td>Gmail chỉ thấy thông tin file</td></tr>
+    <tr><td>PDF 400 trang, biểu đồ không được phân tích</td><td>Tách phần biểu đồ ra PDF không quá 100 trang</td><td>PDF trên 100 trang chỉ đọc chữ</td></tr>
+    <tr><td>Owner đã bật connector, thành viên vẫn chưa dùng được</td><td>Từng người tự đăng nhập tài khoản</td><td>Bật không phải cấp quyền</td></tr>
+    <tr><td>Lo Claude đọc được dữ liệu của người khác</td><td>Claude chỉ theo quyền tài khoản của người hỏi</td><td>Quyền ở dịch vụ gốc là trần</td></tr>
+    <tr><td>Lỗi “Access blocked” khi nối Google</td><td>Admin Google Workspace đặt Claude là ứng dụng tin cậy</td><td>Bị chặn ở phía Google</td></tr>
+    <tr class="grp"><th colspan="3">5.3 · Viết chỉ dẫn</th></tr>
+    <tr><td>Instructions “chuyên nghiệp, hữu ích”, output mỗi lúc một kiểu</td><td>Viết rõ vai, phạm vi, người đọc, định dạng, nguồn, khi không chắc</td><td>Qua được phép thử đồng nghiệp</td></tr>
+    <tr><td>Claude đoán khi tài liệu không có</td><td>Thêm dòng “không thấy thì nói không có, chỉ tới ai”</td><td>Cho phép nói không biết</td></tr>
+    <tr><td>Hai quy tắc cùng project đá nhau</td><td>Nói rõ khi nào áp quy tắc nào</td><td>Không dòng nào tự thắng</td></tr>
+    <tr><td>Organization instruction ép mọi thứ trang trọng</td><td>Nhờ Owner thu hẹp phạm vi của nó</td><td>Tầng tổ chức thắng tầng cá nhân</td></tr>
+    <tr><td>Chỉ tuần này cần định dạng khác</td><td>Nói trong tin nhắn, giữ nguyên instructions</td><td>Instructions áp cho mọi chat</td></tr>
+    <tr class="grp"><th colspan="3">5.4 · Bảo trì</th></tr>
+    <tr><td>Cùng số sai dù hỏi kiểu nào, mở chat mới vẫn vậy</td><td>Kiểm knowledge, thay file cũ</td><td>Chat mới nạp lại cùng file</td></tr>
+    <tr><td>Đã tải bản mới, bản cũ vẫn còn</td><td>Gỡ cũ, tải mới, rà instructions, hỏi thử câu đã đổi</td><td>Không gì tự đánh dấu bản cũ</td></tr>
+    <tr><td>Tuần nào cũng phải nhắc cùng một lời sửa</td><td>Thêm một dòng instructions cụ thể</td><td>Lời sửa trong chat không sang chat khác</td></tr>
+    <tr><td>Nhiều người sửa, nhiều bản trùng</td><td>Mỗi mảng một người phụ trách, mỗi chủ đề một bản, có lịch rà soát</td><td>Có người chịu trách nhiệm</td></tr>
+    <tr><td>Dự án xong, giữ lại để tra; một người phải mất quyền</td><td>Gỡ người đó ở menu Share, rồi archive</td><td>Archive không gỡ quyền</td></tr>
+  </table></div>
+  <h4>Tên và con số phải thuộc</h4>
+  <ul class="names">
+    <li><b>Project:</b> Free tối đa 5 project. Claude không thấy tên và mô tả. Ba tab: Your projects, Organization, Shared with you.</li>
+    <li><b>RAG:</b> chỉ gói trả phí (Pro, Max, Ultra, Team, Enterprise), tự bật khi knowledge gần chạm giới hạn context window, tới khoảng 10 lần, không có nút bật. Không có con số ngưỡng chính thức.</li>
+    <li><b>File:</b> 20 file một chat. 30MB một file trong project. PDF tới 100 trang: chữ và hình; 101–1000 trang: chỉ chữ; trên 1000 trang: lỗi.</li>
+    <li><b>Quyền project:</b> Can view (xem, tự chat trong project), Can edit (sửa instructions, knowledge, thành viên). Chia sẻ chỉ Team và Enterprise. Owner tắt chia sẻ thì lượt cũ vẫn giữ.</li>
+    <li><b>Connector:</b> Customize → Connectors. Owner hoặc Primary Owner bật cho tổ chức, từng người tự đăng nhập. Quyền công cụ: Always allow, Needs approval, Blocked. Team và Enterprise: chỉ trong project private.</li>
+    <li><b>Google Workspace:</b> Gmail chỉ thấy thông tin file đính kèm; gửi thư mặc định phải duyệt. Drive chỉ lấy chữ. Google Doc từ Drive tự đồng bộ, chỉ project private. Custom connector: Free tối đa 1.</li>
+    <li><b>Organization instructions:</b> Team và Enterprise, Owner đặt, tối đa 3.000 ký tự, tới 1 giờ mới áp, thắng instructions cá nhân khi mâu thuẫn.</li>
+    <li><b>Instructions for Claude:</b> Settings → Your Claude, áp cho mọi chat của bạn, trước gọi là profile preferences. <b>Project instructions:</b> nút “Set project instructions”, áp cho chat trong project.</li>
+    <li><b>Archive:</b> giữ chat, thành viên, quyền, knowledge. Xóa phải unarchive trước, xác nhận “Yes, delete”.</li>
+  </ul>
+</section>
+  <div class="quiz" data-course="d5"></div>
+  </div>
+</section>
