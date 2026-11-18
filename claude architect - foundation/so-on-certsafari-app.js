@@ -1,9 +1,13 @@
 // Sổ ôn: thẻ câu hỏi, cửa sổ giải thích, menu đề thu gọn được, điều hướng theo hash.
-// Hash: #de-N (xem đề N), #deN-qM (nhảy tới câu M của đề N), #stats (thống kê).
-// Cần NOTES, DOMAINS, SCENARIOS, DE, ENTRIES (trang + file dữ liệu) và renderStats (so-on-certsafari-stats.js).
+// Hash: #de-N (xem đề N), #deN-qM (nhảy tới câu M của đề N), #stats (thống kê), #notes (take note),
+// #sai / #sai-N (làm lại câu sai của mọi đề / đề N).
+// Cần NOTES, DOMAINS, SCENARIOS, DE, ENTRIES (trang + file dữ liệu), renderStats (so-on-certsafari-stats.js),
+// renderTakeNotes (so-on-certsafari-take-notes.js), wrongIdsFromLog và renderRetry (so-on-certsafari-retry-wrong.js).
 // Đáp án là chuỗi chữ cái xếp tăng dần: "D", hoặc "BD" cho câu chọn hai (chọn đủ số phương án mới chấm).
 (function () {
-  var KEY = "so-on-certsafari-picks", LOG_KEY = "so-on-certsafari-log";
+  // Trang khác dùng chung file này (vd sổ ôn CCAO-F) đặt var SO_ON_STORE riêng để không ghi đè đáp án của sổ CCAR-F.
+  var STORE = typeof SO_ON_STORE === "string" ? SO_ON_STORE : "so-on-certsafari";
+  var KEY = STORE + "-picks", LOG_KEY = STORE + "-log";
   function load(key) { try { return JSON.parse(localStorage.getItem(key)); } catch (e) { return null; } }
   function store(key, v) { try { localStorage.setItem(key, JSON.stringify(v)); } catch (e) {} }
   var picks = load(KEY) || {};      // id câu → đáp án đang chọn; nút làm lại xóa nó
@@ -19,7 +23,9 @@
   var route = { view: "de", de: deNums[0] };
   var openGroups = {};              // đề nào đang mở trong menu; giữ qua các lần vẽ lại
   var fresh = null;                 // id câu vừa chọn: chỉ thẻ và ô số của câu này chạy hiệu ứng khi vẽ lại
+  var round = null;                 // lượt làm lại câu sai {de, ids, picks}: tạo mỗi lần vào #sai, picks riêng của lượt
   var list = $("list"), onlyMissed = $("only-missed");
+  function wrongIds(de) { return wrongIdsFromLog(ENTRIES, log, idOf, de); }
 
   // Chạy lại một animation CSS trên phần tử (bỏ class, ép reflow, gắn lại).
   function replay(el, cls) { if (!el) return; el.classList.remove(cls); void el.offsetWidth; el.classList.add(cls); }
@@ -35,8 +41,9 @@
     return '<a class="' + cls + '" href="#' + idOf(x) + '" title="Câu ' + x.n + " · " + x.sub + " " + x.subName + '">' + (label || x.n) + "</a>";
   }
 
-  function card(x) {
-    var id = idOf(x), p = picks[id], done = !!p, multi = x.answer.length > 1, sel = pending[id] || "";
+  // p = đáp án đang hiện trên thẻ: picks ở trang đề, round.picks ở lượt làm lại câu sai.
+  function card(x, p) {
+    var id = idOf(x), done = !!p, multi = x.answer.length > 1, sel = pending[id] || "";
     var opts = x.opts.map(function (o) {
       var ok = has(x.answer, o.k);
       var cls = "opt" + (done && ok ? " right" : "") + (done && has(p, o.k) ? " chosen" : "") + (!done && has(sel, o.k) ? " picked" : "");
@@ -115,6 +122,9 @@
         '<div class="chips">' + items.map(function (x) { return chip(x); }).join("") + "</div></details>";
     }).join("") || '<p class="muted">Chưa có đề nào.</p>';
     $("nav-stats").setAttribute("aria-current", String(route.view === "stats"));
+    $("nav-notes").setAttribute("aria-current", String(route.view === "notes"));
+    $("nav-sai").setAttribute("aria-current", String(route.view === "sai"));
+    $("nav-sai").textContent = "Làm lại câu sai · " + wrongIds().length + " câu";
   }
 
   function renderDe() {
@@ -124,11 +134,15 @@
     var answered = items.filter(function (x) { return picks[idOf(x)]; });
     var right = answered.filter(function (x) { return picks[idOf(x)] === x.answer; }).length;
     $("stat").textContent = "Đề " + route.de + " · " + DE[route.de] + " · đã trả lời " + answered.length + "/" + items.length + " · đúng " + right;
+    var nWrong = wrongIds(route.de).length, retry = $("retry-de");
+    retry.hidden = !nWrong;
+    retry.href = "#sai-" + route.de;
+    retry.textContent = "Làm lại " + nWrong + " câu sai";
     var prev = null;
     list.innerHTML = shown.length ? shown.map(function (x) {
       var box = x.scen && x.scen !== prev ? scenBox(x.scen) : "";
       prev = x.scen;
-      return box + card(x);
+      return box + card(x, picks[idOf(x)]);
     }).join("") :
       '<p class="empty">' + (items.length ? "Đề này không có câu nào lần đầu làm sai." : "Đề này chưa có câu nào. Gửi ảnh câu quiz để thêm vào.") + "</p>";
   }
@@ -136,9 +150,15 @@
   function render() {
     $("view-de").hidden = route.view !== "de";
     $("view-stats").hidden = route.view !== "stats";
+    $("view-notes").hidden = route.view !== "notes";
+    $("view-sai").hidden = route.view !== "sai";
+    if (route.view !== "de") list.innerHTML = "";   // thẻ câu chỉ nằm ở một view, id thẻ không bị trùng
+    if (route.view !== "sai") $("view-sai").innerHTML = "";
     if (route.view === "stats") {
       renderStats($("view-stats"), { entries: ENTRIES, picks: picks, log: log, domains: DOMAINS, idOf: idOf, chip: chip, multi: deNums.length > 1 });
-    } else renderDe();
+    } else if (route.view === "notes") renderTakeNotes($("view-notes"), { entries: ENTRIES, idOf: idOf, chip: chip });
+    else if (route.view === "sai") renderRetry($("view-sai"), { round: round, find: find, idOf: idOf, card: card, scenBox: scenBox, DE: DE });
+    else renderDe();
     renderMenu();
   }
 
@@ -146,20 +166,25 @@
 
   function readHash() {
     var h = location.hash.slice(1), m, q = null;
-    if (h === "stats") route = { view: "stats" };
-    else if ((m = /^de(\d+)-q\d+$/.exec(h)) && DE[m[1]]) { route = { view: "de", de: Number(m[1]) }; q = h; }
+    if (h === "stats" || h === "notes") route = { view: h };
+    else if ((m = /^sai(?:-(\d+))?$/.exec(h))) {   // vào (hoặc bấm lại) #sai: lượt mới gồm các câu đang sai lúc này
+      var d = m[1] && DE[m[1]] ? Number(m[1]) : null;
+      route = { view: "sai" };
+      round = { de: d, ids: wrongIds(d), picks: {} };
+    } else if ((m = /^de(\d+)-q\d+$/.exec(h)) && DE[m[1]]) { route = { view: "de", de: Number(m[1]) }; q = h; }
     else if ((m = /^de-(\d+)$/.exec(h)) && DE[m[1]]) route = { view: "de", de: Number(m[1]) };
     else route = { view: "de", de: deNums[0] };
     if (route.view === "de") openGroups[route.de] = true;
     render();
     if (q && !$(q) && onlyMissed.checked) { onlyMissed.checked = false; render(); }   // bộ lọc đang ẩn câu cần tới
     closeMenu();
-    replay(q ? $(q) : $(route.view === "stats" ? "view-stats" : "view-de"), q ? "flash" : "view-in");
+    replay(q ? $(q) : $("view-" + route.view), q ? "flash" : "view-in");
     if (q && $(q)) $(q).scrollIntoView({ block: "start" });
     else window.scrollTo(0, 0);
   }
 
-  list.addEventListener("click", function (e) {
+  // Bấm trên thẻ câu, dùng chung cho trang đề và lượt làm lại câu sai.
+  function onCardClick(e) {
     var opt = e.target.closest("button.opt");
     if (opt && !opt.disabled) {
       var id = opt.getAttribute("data-id"), k = opt.getAttribute("data-k"), need = find(id).answer.length;
@@ -169,6 +194,7 @@
         delete pending[id]; k = s;
       }
       picks[id] = k;
+      if (route.view === "sai") round.picks[id] = k;
       log.push({ id: id, k: k, t: Date.now() });
       store(KEY, picks); store(LOG_KEY, log);
       fresh = id; render(); fresh = null; return;
@@ -180,8 +206,13 @@
       return;
     }
     var redo = e.target.closest("button[data-redo]");
-    if (redo) { delete picks[redo.getAttribute("data-redo")]; store(KEY, picks); render(); }
-  });
+    if (!redo) return;
+    if (route.view === "sai") delete round.picks[redo.getAttribute("data-redo")];   // trang đề vẫn giữ đáp án cũ
+    else { delete picks[redo.getAttribute("data-redo")]; store(KEY, picks); }
+    render();
+  }
+  list.addEventListener("click", onCardClick);
+  $("view-sai").addEventListener("click", onCardClick);
   $("x-close").addEventListener("click", closeExplain);
   dlg.addEventListener("click", function (e) { if (e.target === dlg) closeExplain(); });   // bấm ra ngoài khung thì đóng
   onlyMissed.addEventListener("change", render);

@@ -86,6 +86,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .stat{font-variant-numeric:tabular-nums;font-weight:600;color:var(--ink)}
 .bar button{font:inherit;font-size:.86rem;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:3px 12px;cursor:pointer}
 .bar label{display:inline-flex;gap:6px;align-items:center;cursor:pointer}
+.bar .btn{font-size:.86rem;border:1px solid var(--accent);background:var(--accent-soft);color:var(--accent);font-weight:600;border-radius:999px;padding:3px 12px;text-decoration:none}
 .list{display:grid;gap:16px}
 .card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px 18px;min-width:0}
 .head{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:0 0 10px;font-size:.86rem;color:var(--muted)}
@@ -174,6 +175,19 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .d.ok{background:var(--ok-soft);color:var(--ok)}
 .d.bad{background:var(--bad-soft);color:var(--bad)}
 .stats-foot{margin:20px 0 0}
+/* Take note: mỗi ghi chú một khung; ý nào cần thì kèm ô số các câu liên quan */
+.notes h2,.retry h2{font-size:1.25rem;line-height:1.3;margin:0 0 6px;text-wrap:balance}
+.retry-de{font-size:1rem;margin:12px 0 -4px}
+.tn{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:0 0 16px;min-width:0;scroll-margin-top:72px}
+.tn h3{font-size:1.1rem;line-height:1.35;margin:0 0 2px;text-wrap:balance}
+.tn h4{font-size:.78rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin:18px 0 6px}
+.tn-sec.ok h4{color:var(--ok)}
+.tn-sec.bad h4{color:var(--bad)}
+.tn-sec p{margin:0 0 6px}
+.tn ul{margin:0;padding-left:20px}
+.tn li + li{margin-top:8px}
+.tn li li + li{margin-top:2px}
+.tn li .chips{margin-top:6px}
 /* Chuyển động: chỉ chạy khi có tương tác (chọn đáp án, đổi trang, mở nhóm); tắt hẳn khi máy bật giảm chuyển động */
 @keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 @keyframes fade{from{opacity:0}to{opacity:1}}
@@ -215,6 +229,8 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
   <nav class="side" id="side" aria-label="Đề và thống kê">
     <div class="side-head"><span class="side-title">Sổ ôn certsafari</span><button type="button" class="side-close" id="menu-close" aria-label="Đóng menu">✕</button></div>
     <a class="nav-stats" id="nav-stats" href="#stats">Thống kê câu và domain hay sai</a>
+    <a class="nav-stats" id="nav-notes" href="#notes">Take note: những ý hay nhầm</a>
+    <a class="nav-stats" id="nav-sai" href="#sai">Làm lại câu sai</a>
     <p class="side-label">Đề</p>
     <div class="menu" id="menu"></div>
     <p class="legend"><span class="chip ok">1</span> đúng <span class="chip bad">2</span> sai <span class="chip">3</span> chưa làm</p>
@@ -224,15 +240,18 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
     <div class="topbar"><button type="button" class="menu-btn" id="menu-open">☰ Đề và thống kê</button></div>
     <h1>Sổ ôn certsafari</h1>
     <section id="view-de">
-      <p class="lede">Các câu quiz đã gửi (certsafari, Udemy), chia theo đề. Đề Udemy có scenario như đề thật: khung scenario đứng trước các câu thuộc nó; câu “Choose two” chọn đủ hai phương án mới chấm. Chọn đáp án rồi mới hiện đúng sai và nút “Giải thích”: bấm vào để xem phân tích đề, vì sao từng phương án đúng hay sai, và bài cần đọc lại trong <a href="https://claude.ai/artifact/Ca5wyF54DWXiUwH98KPH6D" target="_blank" rel="noopener">notes ôn thi</a>. Đề và đáp án bằng tiếng Anh như đề thi, viết lại bằng lời riêng chứ không chép nguyên văn; giải thích bằng tiếng Việt. Menu đề (☰ trên điện thoại) để chuyển đề, nhảy tới từng câu và xem thống kê. Đáp án đã chọn được giữ lại khi tải lại trang; bấm “Làm lại cả đề” để xóa và làm lại.</p>
+      <p class="lede">Các câu quiz đã gửi (certsafari, Udemy), chia theo đề. Đề Udemy có scenario như đề thật: khung scenario đứng trước các câu thuộc nó; câu “Choose two” chọn đủ hai phương án mới chấm. Chọn đáp án rồi mới hiện đúng sai và nút “Giải thích”: bấm vào để xem phân tích đề, vì sao từng phương án đúng hay sai, và bài cần đọc lại trong <a href="https://claude.ai/artifact/Ca5wyF54DWXiUwH98KPH6D" target="_blank" rel="noopener">notes ôn thi</a>. Đề và đáp án bằng tiếng Anh như đề thi, viết lại bằng lời riêng chứ không chép nguyên văn; giải thích bằng tiếng Việt. Menu đề (☰ trên điện thoại) để chuyển đề, nhảy tới từng câu, xem thống kê và take note (ghi chú tổng hợp các ý hay nhầm). Đáp án đã chọn được giữ lại khi tải lại trang; bấm “Làm lại cả đề” để xóa và làm lại. Nút “Làm lại câu sai” (trên thanh đề và trong menu) gom các câu bạn trả lời sai ở lần gần nhất trên trang này để làm lại, không xóa lịch sử.</p>
       <div class="bar" id="bar">
         <span class="stat" id="stat"></span>
         <label><input type="checkbox" id="only-missed"> Chỉ câu lần đầu làm sai</label>
         <button type="button" id="redo-all">Làm lại cả đề</button>
+        <a class="btn" id="retry-de" href="#sai" hidden>Làm lại câu sai</a>
       </div>
       <div class="list" id="list"></div>
     </section>
     <section class="stats" id="view-stats" hidden></section>
+    <section class="notes" id="view-notes" hidden></section>
+    <section class="retry" id="view-sai" hidden></section>
     <dialog class="xdlg" id="explain" aria-labelledby="x-title">
       <div class="x-wrap">
         <div class="x-head"><h2 id="x-title"></h2><button type="button" class="x-close" id="x-close" aria-label="Đóng giải thích">✕</button></div>
@@ -287,6 +306,8 @@ var ENTRIES = [];
 <script src="so-on-certsafari-de-8.js"></script>
 <script src="so-on-certsafari-de-9.js"></script>
 <script src="so-on-certsafari-stats.js"></script>
+<script src="so-on-certsafari-take-notes.js"></script>
+<script src="so-on-certsafari-retry-wrong.js"></script>
 <script src="so-on-certsafari-app.js"></script>
 </body>
 </html>

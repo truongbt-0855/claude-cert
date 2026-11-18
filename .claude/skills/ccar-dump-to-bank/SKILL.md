@@ -19,6 +19,7 @@ Mỗi ảnh câu hỏi user gửi thành một thẻ câu hỏi trong sổ ôn (
 | Trang sổ ôn | `$DIR/so-on-certsafari.html`: CSS, khung trang, cấu hình (`NOTES`, `DOMAINS`) và các thẻ `<script src>`; mở thẳng bằng trình duyệt được |
 | Dữ liệu từng đề | `$DIR/so-on-certsafari-de-<N>.js`: `DE[N] = "nhãn"` rồi `ENTRIES.push({...}, ...)` |
 | Giao diện | `$DIR/so-on-certsafari-app.js` (thẻ câu, cửa sổ “Giải thích”, menu đề, điều hướng `#de-N` / `#deN-qM` / `#stats`) và `$DIR/so-on-certsafari-stats.js` (thống kê câu/domain hay sai). Thẻ câu chỉ hiện đề, phương án, đúng/sai; chọn xong mới có nút “Giải thích” mở cửa sổ nổi chứa phân tích đề, từng phương án, ghi chú đáp án gốc, bài đọc lại. Thêm câu không cần sửa hai file này |
+| Take note | `$DIR/so-on-certsafari-take-notes.js`: ghi chú tổng hợp theo chủ đề (route `#notes`, link “Take note” trong menu). Thêm ghi chú = thêm một object vào `TAKE_NOTES` (`sections[].items` là chuỗi HTML hoặc `{ t, qs: ["de1-q50", ...] }`); ô số câu tự tô màu đúng/sai. Lệnh kiểm báo lỗi nếu `qs` trỏ tới câu không có hay ref vào notes sai anchor |
 | Notes (nguồn kiến thức + anchor) | `$DIR/claude-architect-foundations-notes-drillpark.html`, ~1,1 MB: chỉ Grep, đừng Read cả file |
 | Notes trên web | https://claude.ai/artifact/Ca5wyF54DWXiUwH98KPH6D (biến `NOTES` trong trang) |
 | Sổ ôn trên web | https://claude.ai/artifact/AojtXbesyoXfDHgfjbZyRM (chỉ đụng tới khi user bảo publish) |
