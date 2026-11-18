@@ -28,12 +28,13 @@ function loadBank(pagePath) {
     try { vm.runInContext(m[1], ctx, { filename: "page-inline" }); }
     catch (e) { fail(`script inline của trang: ${e.message}`); }
   }
-  for (const f of dataFiles) {
+  // File take note chỉ khai báo hàm vẽ và mảng TAKE_NOTES, nên chạy thử được như file dữ liệu.
+  for (const f of files.filter((f) => /-de-\d+\.js$|-take-notes\.js$/.test(f))) {
     const p = path.join(path.dirname(pagePath), f);
     try { vm.runInContext(fs.readFileSync(p, "utf8"), ctx, { filename: p }); }
     catch (e) { fail(`${f}: ${e.stack.split("\n").slice(0, 3).join(" | ")}`); }
   }
-  return { html, notesUrl, files, dataFiles, DE: ctx.DE, ENTRIES: ctx.ENTRIES, SCENARIOS: ctx.SCENARIOS || {} };
+  return { html, notesUrl, files, dataFiles, DE: ctx.DE, ENTRIES: ctx.ENTRIES, SCENARIOS: ctx.SCENARIOS || {}, TAKE_NOTES: ctx.TAKE_NOTES || [] };
 }
 
 // Mọi chuỗi hiển thị của một câu, kèm tên trường để báo lỗi.
@@ -68,7 +69,7 @@ function checkEntry(x, bank, ids, seen, errors, warns) {
   if (seen.has(key)) err("trùng số câu trong đề");
   seen.add(key);
   if (!/^\d\.\d+$/.test(x.sub || "")) err('sub phải có dạng "X.Y"');
-  else if (!ids.has("l-" + x.sub.replace(".", "-"))) warns.push(`${at}: notes không có bài l-${x.sub.replace(".", "-")}`);
+  else if (ids && !ids.has("l-" + x.sub.replace(".", "-"))) warns.push(`${at}: notes không có bài l-${x.sub.replace(".", "-")}`);
   for (const f of ["subName", "ask", "answer"]) if (!nonEmpty(x[f])) err(`thiếu ${f}`);
   // Phần giải thích: phân tích đề (scene/asks/facts) rồi why dạng mảng cho từng phương án; trap, tip đã bỏ (03/11/2026).
   for (const f of ["scene", "asks"]) if (!nonEmpty(x[f]) && !nonEmptyList(x[f])) err(`thiếu ${f}`);
@@ -95,13 +96,14 @@ function checkEntry(x, bank, ids, seen, errors, warns) {
   let notesRefs = 0;
   for (const r of x.refs || []) {
     if (!nonEmpty(r.label) || !nonEmpty(r.href)) { err("ref thiếu label hoặc href"); continue; }
-    if (r.href.startsWith(bank.notesUrl + "#")) {
+    if (ids && r.href.startsWith(bank.notesUrl + "#")) {
       notesRefs++;
       const id = r.href.slice(bank.notesUrl.length + 1);
       if (!ids.has(id)) err(`anchor #${id} không có trong notes`);
     } else if (!r.href.startsWith("https://")) err(`href lạ: ${r.href}`);
   }
-  if (!notesRefs) err("cần ít nhất 1 ref trỏ vào notes (NOTES + \"#id\")");
+  if (ids && !notesRefs) err("cần ít nhất 1 ref trỏ vào notes (NOTES + \"#id\")");
+  if (!ids && !(x.refs || []).length) err("cần ít nhất 1 ref");
 
   for (const [name, s] of textFields(x)) {
     for (const t of ["code", "b", "i", "pre"]) {
@@ -114,8 +116,9 @@ function checkEntry(x, bank, ids, seen, errors, warns) {
 
 function check(pagePath, notesPath) {
   const bank = loadBank(pagePath);
-  const notes = fs.readFileSync(notesPath, "utf8");
-  const ids = new Set([...notes.matchAll(/\sid="([^"]+)"/g)].map((m) => m[1]));
+  // notesPath "-" = sổ chưa có notes (vd CCAR-P): refs trỏ thẳng docs chính thức, bỏ kiểm anchor.
+  const ids = notesPath === "-" ? null
+    : new Set([...fs.readFileSync(notesPath, "utf8").matchAll(/\sid="([^"]+)"/g)].map((m) => m[1]));
   const errors = [], warns = [], seen = new Set();
   for (const x of bank.ENTRIES) checkEntry(x, bank, ids, seen, errors, warns);
 
@@ -132,6 +135,17 @@ function check(pagePath, notesPath) {
       (missing.length ? ` · còn thiếu ${ranges(missing)}` : "") +
       (disputed.length ? ` · có ghi chú đáp án gốc: câu ${disputed.join(", ")}` : ""));
   }
+  // Take note: câu được nhắc tới phải có trong sổ, link vào notes phải có anchor.
+  const known = new Set(bank.ENTRIES.map((x) => `de${x.de}-q${x.n}`));
+  for (const n of bank.TAKE_NOTES) {
+    for (const sec of n.sections || []) for (const it of sec.items || []) {
+      for (const q of (it && it.qs) || []) if (!known.has(q)) errors.push(`Take note ${n.id}: không có câu ${q} trong sổ`);
+    }
+    for (const r of n.refs || []) {
+      if (ids && r.href.startsWith(bank.notesUrl + "#") && !ids.has(r.href.slice(bank.notesUrl.length + 1))) errors.push(`Take note ${n.id}: anchor ${r.href} không có trong notes`);
+    }
+  }
+  if (bank.TAKE_NOTES.length) console.log(`Take note: ${bank.TAKE_NOTES.map((n) => n.title).join(" · ")}`);
   warns.forEach((w) => console.log("Cảnh báo: " + w));
   errors.forEach((e) => console.log("LỖI: " + e));
   console.log(errors.length ? `${errors.length} lỗi.` : `Sạch: ${bank.ENTRIES.length} câu, ${bank.dataFiles.length} file dữ liệu.`);
