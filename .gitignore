@@ -10,7 +10,10 @@ claude architect - foundation/claude-architect-foundations-notes-drillpark.html
 # Raw data from a paid Udemy course
 claude architect - foundation/nguon-udemy/
 
-# Raw certsafari quiz captures (verbatim third-party questions and explanations)
+# Raw third-party quiz captures: certsafari, examtopics, freecram, examcademy (verbatim questions and explanations)
 claude associate - foundation/nguon/certsafari-*-raw.json
+claude associate - foundation/nguon/freecram-*-raw.json
+claude associate - foundation/nguon/examtopics-*-raw.json
+claude associate - foundation/nguon/examcademy-*-raw.json
 claude architect - professional/nguon/certsafari-*-raw.json
 claude architect - professional/nguon/farm-*-raw.json
